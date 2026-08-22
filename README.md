@@ -7,7 +7,7 @@ backup of the configuration in active use and an archive of past drafts.
 
 | File | Status | Notes |
 | --- | --- | --- |
-| [`AbcAct.edn`](./AbcAct.edn) | **Active** | Currently rsynced to `~/.config/karabiner.edn` and in daily use. Asterisk / Bra / Cket layer system with an Act-key axis. |
+| [`AbcAct.edn`](./AbcAct.edn) | **Active** | Currently symlinked to `~/.config/karabiner.edn` and in daily use. Asterisk / Bra / Cket layer system with an Act-key axis. See [`MANUAL.md`](./MANUAL.md) for the full keymap reference. |
 | [`HySCOT.edn`](./HySCOT.edn) | Archived draft | SCOT Matrix layout (Shift/Cmd/Opt/Ctrl priority rows on the right hand). |
 | [`HyMeCO.edn`](./HyMeCO.edn) | Archived draft | Hyper/Meh two-tier layer system with semicolon/quote/slash sub-layers. |
 
@@ -39,6 +39,5 @@ keep that class of bug out.
 
 ## Roadmap
 
-- Write a proper reference manual per layout (key charts, layer diagrams).
 - Separate concerns between the active configuration and the archive once the
   active layout stabilizes.
