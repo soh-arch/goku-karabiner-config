@@ -262,6 +262,10 @@ button{ font:inherit; color:inherit; background:none; border:none; cursor:pointe
   font-size:clamp(1.9rem, 4vw, 2.7rem); line-height:1; color:var(--faint);
   border-bottom:2px solid var(--a); padding-bottom:6px; flex-shrink:0;
 }
+.section:nth-of-type(4n+2) .sec-num{ border-bottom-color:var(--a); }
+.section:nth-of-type(4n+3) .sec-num{ border-bottom-color:var(--s); }
+.section:nth-of-type(4n+0) .sec-num{ border-bottom-color:var(--d); }
+.section:nth-of-type(4n+1) .sec-num{ border-bottom-color:var(--f); }
 .sec-head h2{ font-size:clamp(1.15rem, 2.4vw, 1.45rem); font-weight:800; letter-spacing:-.015em; margin-bottom:5px; }
 .sec-desc{ font-size:.86rem; color:var(--sub); line-height:1.7; max-width:760px; }
 .sec-desc strong{ color:var(--ink); }
@@ -350,8 +354,16 @@ button{ font:inherit; color:inherit; background:none; border:none; cursor:pointe
 .combo-body{ display:flex; flex-direction:column; gap:2px; min-width:0; }
 .combo-title{ font-size:.85rem; font-weight:800; }
 .combo-formula{ font-family:var(--font-mono); font-size:.66rem; color:var(--faint); }
-.combo-card.hero-card{ border:1.5px solid var(--a); background:linear-gradient(160deg, var(--a-soft), var(--surface-2) 55%); }
-.combo-card.hero-card .combo-title{ color:var(--a); }
+.combo-card{ width:100%; text-align:left; cursor:pointer; }
+.combo-card.active{
+  border-color:var(--ink); box-shadow:inset 0 0 0 1px var(--ink);
+  background:var(--surface);
+}
+.combo-group + .combo-group{ margin-top:18px; }
+.combo-group-label{
+  font-size:.63rem; font-weight:800; letter-spacing:.13em; text-transform:uppercase;
+  color:var(--faint); margin-bottom:9px;
+}
 
 /* ---------- Steps ---------- */
 .steps{ display:grid; grid-template-columns:repeat(auto-fit, minmax(230px, 1fr)); gap:12px; }
@@ -369,14 +381,18 @@ button{ font:inherit; color:inherit; background:none; border:none; cursor:pointe
 /* ---------- Tables ---------- */
 .table-wrap{
   border:1px solid var(--border); border-radius:var(--radius-m); overflow:auto;
-  background:var(--surface);
+  background:var(--surface); overscroll-behavior-x:contain; scrollbar-width:thin;
+}
+/* right-edge fade: only while there is more table to scroll to */
+.table-wrap.more{
+  -webkit-mask-image:linear-gradient(90deg, #000 calc(100% - 46px), transparent);
+          mask-image:linear-gradient(90deg, #000 calc(100% - 46px), transparent);
 }
 table{ width:100%; border-collapse:collapse; font-size:.8rem; }
 thead th{
   font-size:.68rem; font-weight:800; letter-spacing:.09em; text-transform:uppercase;
   color:var(--sub); text-align:left; white-space:nowrap;
   padding:11px 12px; background:var(--surface-2); border-bottom:1px solid var(--border);
-  position:sticky; top:0; z-index:1;
 }
 thead th.kcol{ font-family:var(--font-mono); font-size:.78rem; text-transform:none; letter-spacing:0; color:var(--ink); }
 tbody td{ padding:9px 12px; border-bottom:1px solid var(--border); vertical-align:middle; color:var(--ink); }
@@ -385,8 +401,44 @@ tbody tr{ transition:background .12s ease; }
 tbody tr:hover{ background:var(--surface-2); }
 td.dim{ color:var(--sub); }
 .row-label{ font-weight:700; font-size:.79rem; white-space:nowrap; }
+
+/* ---------- Wide tables: pin the identifying columns while scrolling sideways ---------- */
+.wide-table{ --c1:80px; }
+.equal-cols{ table-layout:fixed; min-width:880px; }
+.equal-cols th:first-child, .equal-cols td:first-child{ width:var(--c1); }
+.wide-table th:first-child,
+.wide-table td:first-child{
+  position:sticky; left:0; z-index:2;
+  width:var(--c1); min-width:var(--c1);
+  background:var(--surface);
+}
+.wide-table thead th:first-child{ background:var(--surface-2); }
+.wide-table tbody tr:hover td:first-child{ background:var(--surface-2); }
+
+.tier-table{ table-layout:fixed; --c2:152px; min-width:1000px; }
+.tier-table th:nth-child(2), .tier-table td:nth-child(2){ width:var(--c2); }
+.tier-table .row-label{ white-space:normal; }
+.tier-table th:nth-child(2),
+.tier-table td:nth-child(2){
+  position:sticky; left:var(--c1); z-index:2;
+  background:var(--surface); box-shadow:1px 0 0 var(--border);
+}
+.tier-table thead th:nth-child(2){ background:var(--surface-2); }
+.tier-table tbody tr:hover td:nth-child(2){ background:var(--surface-2); }
+.wide-table:not(.tier-table) td:first-child,
+.wide-table:not(.tier-table) th:first-child{ box-shadow:1px 0 0 var(--border); }
+
+/* group dividers: h j k l | u i o p , and home-row apps | upper-row apps */
+.tier-table th:nth-child(7), .tier-table td:nth-child(7),
+.launch-table{ min-width:900px; }
+.launch-table th:nth-child(6), .launch-table td:nth-child(6){
+  border-left:1px solid var(--border-strong);
+}
+
+/* rows carry the Act colour in the dots alone — keep the rest of the cell chrome quiet */
+tbody .act-badge{ background:none; border:none; padding:2px 0; }
 .row-label .formula{ display:block; font-family:var(--font-mono); font-size:.64rem; font-weight:500; color:var(--faint); letter-spacing:.02em; margin-top:2px; }
-.hint{ display:block; font-family:var(--font-mono); font-size:.65rem; color:var(--faint); margin-top:1px; }
+.hint{ display:block; font-family:var(--font-mono); font-size:.68rem; color:var(--sub); opacity:.85; margin-top:2px; letter-spacing:.02em; }
 
 .key{
   display:inline-block; min-width:24px; text-align:center;
@@ -394,8 +446,12 @@ td.dim{ color:var(--sub); }
   background:var(--keycap); border:1px solid var(--keycap-edge); border-bottom-width:2.5px;
   border-radius:6px; padding:3px 7px; margin:1px 2px; white-space:nowrap;
 }
+mark.hit{
+  background:color-mix(in srgb, var(--s) 40%, transparent);
+  color:inherit; border-radius:3px; padding:0 1px;
+}
 code{
-  font-family:var(--font-mono); font-size:.78em;
+  font-family:var(--font-mono); font-size:.78em; white-space:nowrap;
   background:var(--surface-2); border:1px solid var(--border);
   border-radius:5px; padding:1.5px 6px;
 }
@@ -433,6 +489,17 @@ code{
 .related-card .tag{ font-family:var(--font-mono); font-size:.68rem; color:var(--a); margin-right:6px; }
 
 /* ---------- No results ---------- */
+body.searching .hero{ display:none; }
+body.searching .chapter-nav{ margin-top:0; }
+.search-status{
+  display:none; align-items:center; gap:10px; flex-wrap:wrap;
+  margin:22px 0 -6px; font-size:.76rem; color:var(--sub);
+}
+.search-status b{ color:var(--ink); font-weight:800; }
+.search-status .esc{
+  font-family:var(--font-mono); font-size:.68rem; color:var(--faint);
+  border:1px solid var(--border); border-radius:4px; padding:1px 6px; background:var(--surface-2);
+}
 .no-results{
   display:none; text-align:center; padding:52px 20px;
   color:var(--sub); font-size:.88rem;
@@ -471,8 +538,10 @@ code{
   .footer-inner{ grid-template-columns:1fr; gap:24px; }
 }
 @media (max-width: 720px){
-  .header-search{ display:none; }
-  .header-inner{ padding:0 16px; }
+  .brand-tag{ display:none; }
+  .header-search{ flex:1; width:auto; min-width:0; margin-left:auto; }
+  .header-search .search-kbd{ display:none; }
+  .header-inner{ padding:0 14px; gap:10px; }
   .container{ padding:0 16px; }
   .hero{ padding:52px 0 28px; }
   .explorer{ grid-template-columns:1fr; }
@@ -480,6 +549,14 @@ code{
   .exp-key{ width:100%; height:64px; }
   .sec-head{ gap:13px; }
   .virt-key-grid{ grid-template-columns:repeat(2, 1fr); }
+  .wide-table{ --c1:60px; }
+  .tier-table{ --c2:108px; min-width:840px; }
+  .equal-cols{ min-width:760px; }
+  .launch-table{ min-width:780px; }
+  tbody td{ padding:9px 9px; }
+  thead th{ padding:10px 9px; }
+  tbody .dot{ width:8px; height:8px; }
+  tbody .dots{ gap:4px; }
 }
 
 /* ---------- Reduced motion ---------- */
@@ -530,7 +607,7 @@ code{
 <main class="container" id="top">
 
   <!-- ================= Hero ================= -->
-  <section class="hero" id="overview">
+  <section class="hero" id="intro">
     <div class="hero-eyebrow">macOS · Goku / Karabiner-Elements</div>
     <h1>AbcAct<br><span class="thin">Keymap</span></h1>
     <p class="hero-tagline">Hold one key. <em>The whole right hand changes meaning.</em></p>
@@ -597,10 +674,15 @@ code{
     </div>
   </nav>
 
+  <div class="search-status" id="searchStatus">
+    <span><b id="hitCount">0</b> matching entries</span>
+    <span class="esc">Esc to clear</span>
+  </div>
+
   <div class="no-results" id="noResults">No matching key, action, or layer found.</div>
 
   <!-- ================= 01 Overview ================= -->
-  <section class="section reveal" id="ch-overview" data-category="overview">
+  <section class="section reveal" id="overview" data-category="overview">
     <div class="sec-head">
       <span class="sec-num">01</span>
       <div>
@@ -758,11 +840,11 @@ code{
         <span class="exp-concept" id="expConcept">Direct navigation</span>
         <p class="exp-desc" id="expDesc">Plain arrows and page boundaries — the ground state.</p>
       </div>
-      <p class="exp-hint">Toggle the Act keys to walk all 16 tiers.</p>
+      <p class="exp-hint">Click the keys — or just press <b>a</b> <b>s</b> <b>d</b> <b>f</b> — to walk all 16 tiers.</p>
     </div>
 
     <div class="sub-head">2.1 — Combination map</div>
-    <div class="combo-grid" id="comboGrid"><!-- populated by script --></div>
+    <div id="comboGrid"><!-- populated by script --></div>
 
     <div class="sub-head">2.2 — Tier reference</div>
     <div class="table-wrap">
@@ -797,7 +879,7 @@ code{
 
     <div class="sub-head">3.1 — Launch targets</div>
     <div class="table-wrap">
-      <table>
+      <table class="wide-table launch-table">
         <thead><tr>
           <th>Act</th><th class="kcol">a</th><th class="kcol">s</th><th class="kcol">d</th><th class="kcol">f</th>
           <th class="kcol">q</th><th class="kcol">w</th><th class="kcol">e</th><th class="kcol">r</th><th class="kcol">t</th><th class="kcol">y</th><th class="kcol">g</th>
@@ -866,32 +948,32 @@ code{
 
     <div class="sub-head">4.1 — Moving &amp; selecting text</div>
     <div class="table-wrap">
-      <table>
+      <table class="wide-table tier-table">
         <thead><tr><th>Act</th><th>Tier</th><th class="kcol">h</th><th class="kcol">j</th><th class="kcol">k</th><th class="kcol">l</th><th class="kcol">u</th><th class="kcol">i</th><th class="kcol">o</th><th class="kcol">p</th></tr></thead>
         <tbody>
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span></span></td>
             <td class="row-label">Text Cursor<span class="formula">Cmd →</span></td>
-            <td>← Left</td><td>↓ Down</td><td>↑ Up</td><td>→ Right</td>
-            <td>Page Up</td><td>Line start</td><td>Line end</td><td>Page Down</td>
+            <td>←</td><td>↓</td><td>↑</td><td>→</td>
+            <td>Page up</td><td>Line start</td><td>Line end</td><td>Page down</td>
           </tr>
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot on-a"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span></span></td>
             <td class="row-label">Amplified Cursor<span class="formula">Cmd+A →</span></td>
-            <td>Word left<span class="hint">⌥←</span></td><td>Paragraph down<span class="hint">⌥↓</span></td><td>Paragraph up<span class="hint">⌥↑</span></td><td>Word right<span class="hint">⌥→</span></td>
-            <td>Document top<span class="hint">⌘↑</span></td><td>Line start<span class="hint">⌘←</span></td><td>Line end<span class="hint">⌘→</span></td><td>Document end<span class="hint">⌘↓</span></td>
+            <td>Word ←<span class="hint">⌥←</span></td><td>Paragraph ↓<span class="hint">⌥↓</span></td><td>Paragraph ↑<span class="hint">⌥↑</span></td><td>Word →<span class="hint">⌥→</span></td>
+            <td>Doc top<span class="hint">⌘↑</span></td><td>Line start<span class="hint">⌘←</span></td><td>Line end<span class="hint">⌘→</span></td><td>Doc end<span class="hint">⌘↓</span></td>
           </tr>
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot on-s"></span><span class="dot"></span><span class="dot"></span></span></span></td>
             <td class="row-label">Select<span class="formula">Cmd+S →</span></td>
-            <td>Select char left</td><td>Select line down</td><td>Select line up</td><td>Select char right</td>
-            <td>Select page up</td><td>Select to line start<span class="hint">⇧Home</span></td><td>Select to line end<span class="hint">⇧End</span></td><td>Select page down</td>
+            <td>Char ←<span class="hint">⇧←</span></td><td>Line ↓<span class="hint">⇧↓</span></td><td>Line ↑<span class="hint">⇧↑</span></td><td>Char →<span class="hint">⇧→</span></td>
+            <td>Page up<span class="hint">⇧PgUp</span></td><td>Line start<span class="hint">⇧Home</span></td><td>Line end<span class="hint">⇧End</span></td><td>Page down<span class="hint">⇧PgDn</span></td>
           </tr>
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot on-a"></span><span class="dot on-s"></span><span class="dot"></span><span class="dot"></span></span></span></td>
             <td class="row-label">Amplified Select<span class="formula">Cmd+A+S →</span></td>
-            <td>Select word left</td><td>Select paragraph down</td><td>Select paragraph up</td><td>Select word right</td>
-            <td>Select to doc top</td><td>Select to line start<span class="hint">⇧⌘←</span></td><td>Select to line end<span class="hint">⇧⌘→</span></td><td>Select to doc end</td>
+            <td>Word ←<span class="hint">⇧⌥←</span></td><td>Paragraph ↓<span class="hint">⇧⌥↓</span></td><td>Paragraph ↑<span class="hint">⇧⌥↑</span></td><td>Word →<span class="hint">⇧⌥→</span></td>
+            <td>Doc top<span class="hint">⇧⌘↑</span></td><td>Line start<span class="hint">⇧⌘←</span></td><td>Line end<span class="hint">⇧⌘→</span></td><td>Doc end<span class="hint">⇧⌘↓</span></td>
           </tr>
         </tbody>
       </table>
@@ -904,20 +986,20 @@ code{
 
     <div class="sub-head">4.2 — Deleting, undoing, clipboard</div>
     <div class="table-wrap">
-      <table>
+      <table class="wide-table tier-table">
         <thead><tr><th>Act</th><th>Tier</th><th class="kcol">h</th><th class="kcol">j</th><th class="kcol">k</th><th class="kcol">l</th><th class="kcol">u</th><th class="kcol">i</th><th class="kcol">o</th><th class="kcol">p</th></tr></thead>
         <tbody>
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot on-d"></span><span class="dot"></span></span></span></td>
             <td class="row-label">Delete<span class="formula">Cmd+D →</span></td>
-            <td>Backspace</td><td>Delete line below</td><td>Delete line above</td><td>Forward delete</td>
-            <td>Clear line + one above</td><td>Clear line, backwards</td><td>Clear line, forwards</td><td>Clear line + one below</td>
+            <td>Char back</td><td>Line below</td><td>Line above</td><td>Char forward</td>
+            <td>Line + one above</td><td>Line, backwards</td><td>Line, forwards</td><td>Line + one below</td>
           </tr>
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot on-a"></span><span class="dot"></span><span class="dot on-d"></span><span class="dot"></span></span></span></td>
             <td class="row-label">Amplified Delete<span class="formula">Cmd+A+D →</span></td>
-            <td>Delete word left<span class="hint">⌘⌫</span></td><td>Delete paragraph down</td><td>Delete paragraph up</td><td>Delete word right</td>
-            <td>Delete to doc top</td><td>Delete to line start</td><td>Delete to line end</td><td>Delete to doc end</td>
+            <td>Word ←<span class="hint">⌘Del</span></td><td>Paragraph ↓</td><td>Paragraph ↑</td><td>Word →<span class="hint">⌘FwdDel</span></td>
+            <td>Doc top</td><td>Line start</td><td>Line end</td><td>Doc end</td>
           </tr>
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot on-s"></span><span class="dot on-d"></span><span class="dot"></span></span></span></td>
@@ -942,32 +1024,32 @@ code{
 
     <div class="sub-head">4.3 — Mouse pointer</div>
     <div class="table-wrap">
-      <table>
+      <table class="wide-table tier-table">
         <thead><tr><th>Act</th><th>Tier</th><th class="kcol">h</th><th class="kcol">j</th><th class="kcol">k</th><th class="kcol">l</th><th class="kcol">u</th><th class="kcol">i</th><th class="kcol">o</th><th class="kcol">p</th></tr></thead>
         <tbody>
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot on-f"></span></span></span></td>
             <td class="row-label">Mouse Cursor<span class="formula">Cmd+F →</span></td>
-            <td>Pointer left</td><td>Pointer down</td><td>Pointer up</td><td>Pointer right</td>
+            <td>←</td><td>↓</td><td>↑</td><td>→</td>
             <td>Scroll ←</td><td>Scroll ↑</td><td>Scroll ↓</td><td>Scroll →</td>
           </tr>
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot on-a"></span><span class="dot"></span><span class="dot"></span><span class="dot on-f"></span></span></span></td>
             <td class="row-label">Fast Mouse Cursor<span class="formula">Cmd+A+F →</span></td>
-            <td>Pointer left ×2</td><td>Pointer down ×2</td><td>Pointer up ×2</td><td>Pointer right ×2</td>
+            <td>← ×2</td><td>↓ ×2</td><td>↑ ×2</td><td>→ ×2</td>
             <td>Scroll ← ×2</td><td>Scroll ↑ ×2</td><td>Scroll ↓ ×2</td><td>Scroll → ×2</td>
           </tr>
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot on-s"></span><span class="dot"></span><span class="dot on-f"></span></span></span></td>
             <td class="row-label">Drag &amp; Drop<span class="formula">Cmd+S+F →</span></td>
-            <td>Drag left</td><td>Drag down</td><td>Drag up</td><td>Drag right</td>
-            <td>Drag left ½</td><td>Drag down ½</td><td>Drag up ½</td><td>Drag right ½</td>
+            <td>←</td><td>↓</td><td>↑</td><td>→</td>
+            <td>← ½</td><td>↓ ½</td><td>↑ ½</td><td>→ ½</td>
           </tr>
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot on-a"></span><span class="dot on-s"></span><span class="dot"></span><span class="dot on-f"></span></span></span></td>
             <td class="row-label">Fast Drag &amp; Drop<span class="formula">Cmd+A+S+F →</span></td>
-            <td>Drag left ×2</td><td>Drag down ×2</td><td>Drag up ×2</td><td>Drag right ×2</td>
-            <td>Drag left ½</td><td>Drag down ½</td><td>Drag up ½</td><td>Drag right ½</td>
+            <td>← ×2</td><td>↓ ×2</td><td>↑ ×2</td><td>→ ×2</td>
+            <td>← ½</td><td>↓ ½</td><td>↑ ½</td><td>→ ½</td>
           </tr>
         </tbody>
       </table>
@@ -980,7 +1062,7 @@ code{
 
     <div class="sub-head">4.4 — Tabs, apps &amp; windows</div>
     <div class="table-wrap">
-      <table>
+      <table class="wide-table tier-table">
         <thead><tr><th>Act</th><th>Tier</th><th class="kcol">h</th><th class="kcol">j</th><th class="kcol">k</th><th class="kcol">l</th><th class="kcol">u</th><th class="kcol">i</th><th class="kcol">o</th><th class="kcol">p</th></tr></thead>
         <tbody>
           <tr>
@@ -1004,7 +1086,7 @@ code{
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot on-a"></span><span class="dot on-s"></span><span class="dot on-d"></span><span class="dot on-f"></span></span></span></td>
             <td class="row-label">Amplified Window<span class="formula">Cmd+A+S+D+F →</span></td>
-            <td>Left half<span class="hint">↻ ½ ⅔ ⅓</span></td><td>Bottom half<span class="hint">↻ ½ ⅔ ⅓</span></td><td>Top half<span class="hint">↻ ½ ⅔ ⅓</span></td><td>Right half<span class="hint">↻ ½ ⅔ ⅓</span></td>
+            <td>Left half<span class="hint">½ → ⅔ → ⅓</span></td><td>Bottom half<span class="hint">½ → ⅔ → ⅓</span></td><td>Top half<span class="hint">½ → ⅔ → ⅓</span></td><td>Right half<span class="hint">½ → ⅔ → ⅓</span></td>
             <td>Toggle fullscreen</td><td>Previous display</td><td>Next display</td><td>Hide app</td>
           </tr>
         </tbody>
@@ -1088,7 +1170,7 @@ code{
 
     <div class="sub-head">6.1 — Symbols</div>
     <div class="table-wrap">
-      <table>
+      <table class="wide-table equal-cols">
         <thead><tr><th>Act</th><th class="kcol">L-⇧</th><th class="kcol">z</th><th class="kcol">x</th><th class="kcol">c</th><th class="kcol">v</th><th class="kcol">b</th><th class="kcol">n</th><th class="kcol">m</th><th class="kcol">,</th><th class="kcol">.</th><th class="kcol">/</th><th class="kcol">R-⇧</th></tr></thead>
         <tbody>
           <tr>
@@ -1109,7 +1191,7 @@ code{
       <strong>store</strong>, hold <span class="key">d</span> to <strong>paste</strong>.
     </p>
     <div class="table-wrap">
-      <table>
+      <table class="wide-table equal-cols">
         <thead><tr><th>Act</th><th class="kcol">L-⇧</th><th class="kcol">z</th><th class="kcol">x</th><th class="kcol">c</th><th class="kcol">v</th><th class="kcol">b</th><th class="kcol">n</th><th class="kcol">m</th><th class="kcol">,</th><th class="kcol">.</th><th class="kcol">/</th><th class="kcol">R-⇧</th></tr></thead>
         <tbody>
           <tr>
@@ -1127,7 +1209,7 @@ code{
 
     <div class="sub-head">6.3 — Function keys</div>
     <div class="table-wrap">
-      <table>
+      <table class="wide-table equal-cols">
         <thead><tr><th>Act</th><th class="kcol">L-⇧</th><th class="kcol">z</th><th class="kcol">x</th><th class="kcol">c</th><th class="kcol">v</th><th class="kcol">b</th><th class="kcol">n</th><th class="kcol">m</th><th class="kcol">,</th><th class="kcol">.</th><th class="kcol">/</th><th class="kcol">R-⇧</th></tr></thead>
         <tbody>
           <tr>
@@ -1385,7 +1467,13 @@ code{
     "ASDF": { name:"Amplified Window",     concept:"Screen-scale placement", desc:"Half-screen toggles, display switching, fullscreen." }
   };
 
-  var COMBO_ORDER = ["A","S","D","F","AS","AD","AF","SD","SF","DF","ASD","ASF","ADF","SDF","ASDF"];
+  var COMBO_GROUPS = [
+    { label:"No Act key — the ground state", combos:[""] },
+    { label:"One Act key",  combos:["A","S","D","F"] },
+    { label:"Two Act keys", combos:["AS","AD","AF","SD","SF","DF"] },
+    { label:"Three Act keys", combos:["ASD","ASF","ADF","SDF"] },
+    { label:"All four", combos:["ASDF"] }
+  ];
 
   function dotsHTML(combo){
     return ACT_ORDER.map(function(k){
@@ -1398,17 +1486,22 @@ code{
 
   /* ---------- 2.1 combination map ---------- */
   var comboGrid = document.getElementById('comboGrid');
-  comboGrid.innerHTML = COMBO_ORDER.map(function(combo){
-    var L = LAYERS[combo];
-    var hero = combo === 'ASDF' ? ' hero-card' : '';
-    return '<div class="combo-card' + hero + '">' +
-      '<span class="act-badge bare"><span class="dots">' + dotsHTML(combo) + '</span></span>' +
-      '<div class="combo-body">' +
-        '<span class="combo-title">' + L.name + '</span>' +
-        '<span class="combo-formula">' + notation(combo) + '</span>' +
-      '</div>' +
+  comboGrid.innerHTML = COMBO_GROUPS.map(function(g){
+    return '<div class="combo-group">' +
+      '<div class="combo-group-label">' + g.label + '</div>' +
+      '<div class="combo-grid">' + g.combos.map(function(combo){
+        var L = LAYERS[combo];
+        return '<button class="combo-card" type="button" data-combo="' + combo + '">' +
+          '<span class="act-badge bare"><span class="dots">' + dotsHTML(combo) + '</span></span>' +
+          '<div class="combo-body">' +
+            '<span class="combo-title">' + L.name + '</span>' +
+            '<span class="combo-formula">' + notation(combo) + '</span>' +
+          '</div>' +
+        '</button>';
+      }).join('') + '</div>' +
     '</div>';
   }).join('');
+  var comboCards = Array.prototype.slice.call(comboGrid.querySelectorAll('.combo-card'));
 
   /* ---------- 2.2 tier reference ---------- */
   var matrixBody = document.getElementById('actMatrix');
@@ -1425,6 +1518,7 @@ code{
 
   /* ---------- Interactive explorer ---------- */
   var expState = [];
+  var explorerEl = document.getElementById('explorer');
   var expKeys = Array.prototype.slice.call(document.querySelectorAll('.exp-key'));
   var expName = document.getElementById('expName');
   var expFormula = document.getElementById('expFormula');
@@ -1445,13 +1539,27 @@ code{
       btn.classList.toggle('on', on);
       btn.setAttribute('aria-pressed', on ? 'true' : 'false');
     });
+    comboCards.forEach(function(card){
+      card.classList.toggle('active', card.dataset.combo === combo);
+    });
+  }
+  function toggleAct(k){
+    var i = expState.indexOf(k);
+    if (i === -1) expState.push(k); else expState.splice(i, 1);
+    renderExplorer();
+  }
+  function setActs(combo){
+    expState = combo.split('').filter(Boolean);
+    renderExplorer();
   }
   expKeys.forEach(function(btn){
-    btn.addEventListener('click', function(){
-      var k = btn.dataset.act;
-      var i = expState.indexOf(k);
-      if (i === -1) expState.push(k); else expState.splice(i, 1);
-      renderExplorer();
+    btn.addEventListener('click', function(){ toggleAct(btn.dataset.act); });
+  });
+  comboCards.forEach(function(card){
+    card.addEventListener('click', function(){
+      setActs(card.dataset.combo);
+      var r = explorerEl.getBoundingClientRect();
+      if (r.top < stickyOffset() || r.bottom > window.innerHeight) scrollToId('act');
     });
   });
   renderExplorer();
@@ -1518,29 +1626,77 @@ code{
   }, { threshold: 0.06 });
   document.querySelectorAll('.reveal').forEach(function(el){ revealIO.observe(el); });
 
-  /* ---------- Search filter ---------- */
+  /* ---------- Search: filter rows, highlight the matched text, count hits ---------- */
   var searchInput = document.getElementById('searchInput');
   var sections = Array.prototype.slice.call(document.querySelectorAll('.section'));
   var noResults = document.getElementById('noResults');
+  var searchStatus = document.getElementById('searchStatus');
+  var hitCount = document.getElementById('hitCount');
+  var ROWS = 'tbody tr, .combo-card, .glossary-item, .virt-key-card, .act-card, .step';
+
+  function clearMarks(root){
+    var marks = root.querySelectorAll('mark.hit');
+    for (var i = 0; i < marks.length; i++){
+      var m = marks[i], parent = m.parentNode;
+      parent.replaceChild(document.createTextNode(m.textContent), m);
+      parent.normalize();
+    }
+  }
+  function markMatches(root, q){
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
+    var nodes = [], n;
+    while ((n = walker.nextNode())) nodes.push(n);
+    nodes.forEach(function(node){
+      var text = node.nodeValue, lower = text.toLowerCase(), idx = lower.indexOf(q);
+      if (idx === -1) return;
+      var frag = document.createDocumentFragment(), pos = 0;
+      while (idx !== -1){
+        frag.appendChild(document.createTextNode(text.slice(pos, idx)));
+        var mark = document.createElement('mark');
+        mark.className = 'hit';
+        mark.textContent = text.slice(idx, idx + q.length);
+        frag.appendChild(mark);
+        pos = idx + q.length;
+        idx = lower.indexOf(q, pos);
+      }
+      frag.appendChild(document.createTextNode(text.slice(pos)));
+      node.parentNode.replaceChild(frag, node);
+    });
+  }
+
   function applyFilter(){
     var q = searchInput.value.toLowerCase().trim();
-    var visible = 0;
+    var visibleSections = 0, hits = 0;
+
     sections.forEach(function(sec){
-      var rows = sec.querySelectorAll('tbody tr, .combo-card, .glossary-item, .virt-key-card, .act-card, .step');
+      clearMarks(sec);
+      var rows = sec.querySelectorAll(ROWS);
       var count = 0;
       if (rows.length){
         rows.forEach(function(row){
           var hit = !q || row.textContent.toLowerCase().indexOf(q) !== -1;
           row.style.display = hit ? '' : 'none';
-          if (hit) count++;
+          if (hit){ count++; if (q) markMatches(row, q); }
         });
-      } else {
-        if (!q || sec.textContent.toLowerCase().indexOf(q) !== -1) count = 1;
+      } else if (!q || sec.textContent.toLowerCase().indexOf(q) !== -1){
+        count = 1;
+        if (q) markMatches(sec, q);
       }
       sec.style.display = count ? '' : 'none';
-      if (count) visible++;
+      if (count){ visibleSections++; hits += q ? count : 0; }
+      sec.querySelectorAll('.combo-group').forEach(function(g){
+        var any = Array.prototype.some.call(g.querySelectorAll('.combo-card'), function(c){
+          return c.style.display !== 'none';
+        });
+        g.style.display = any ? '' : 'none';
+      });
     });
-    noResults.style.display = visible === 0 ? 'block' : 'none';
+
+    noResults.style.display = visibleSections === 0 ? 'block' : 'none';
+    searchStatus.style.display = q ? 'flex' : 'none';
+    document.body.classList.toggle('searching', !!q);
+    hitCount.textContent = hits;
+    syncTableFades();
   }
   if (searchInput){
     searchInput.addEventListener('input', applyFilter);
@@ -1555,6 +1711,29 @@ code{
       }
     });
   }
+
+  /* ---------- Horizontal scroll affordance on wide tables ---------- */
+  var wraps = Array.prototype.slice.call(document.querySelectorAll('.table-wrap'));
+  function syncTableFades(){
+    wraps.forEach(function(w){
+      w.classList.toggle('more', w.scrollWidth - w.clientWidth - w.scrollLeft > 4);
+    });
+  }
+  wraps.forEach(function(w){ w.addEventListener('scroll', syncTableFades, { passive:true }); });
+  window.addEventListener('resize', syncTableFades, { passive:true });
+  syncTableFades();
+
+  /* ---------- Press a / s / d / f to drive the explorer ---------- */
+  document.addEventListener('keydown', function(e){
+    if (document.activeElement === searchInput) return;
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    var k = String(e.key || '').toUpperCase();
+    if (ACT_ORDER.indexOf(k) === -1) return;
+    var r = explorerEl.getBoundingClientRect();
+    if (r.bottom < 60 || r.top > window.innerHeight - 40) return;
+    e.preventDefault();
+    toggleAct(k);
+  });
 
   /* ---------- Theme toggle ---------- */
   var storedTheme = null;
