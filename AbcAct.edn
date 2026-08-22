@@ -37,8 +37,8 @@
 ;; ASdf: Amplified Select
 ;; asDf: Delete
 ;; AsDf: Amplified Delete
-;; aSDf: Undo, Navigate & Convert
-;; ASDf: Copy Paste
+;; aSDf: Reconversion & Copy Paste
+;; ASDf: Undo/Redo & Duplicate/Move Line
 ;; asdF: Mouse Cursor
 ;; AsdF: Fast Mouse Cursor
 ;; aSdF: Drag & Drop
@@ -258,22 +258,22 @@
     [:##p             [:!SCdown_arrow :delete_or_backspace] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :act-d :!act-f]]
 
     ;; ── aSDf ─────────────────────────
-    ;; Undo, Navigate & Convert
-    [:##h             :!Copen_bracket [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :act-d :!act-f]]
-    [:##j             :!Cz [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :act-d :!act-f]]
-    [:##k             :!SCz [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :act-d :!act-f]]
-    [:##l             :!Cclose_bracket [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :act-d :!act-f]]
-    [:##u             :!TSr [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :act-d :!act-f]]
-    [:##i             :!Tj [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :act-d :!act-f]]
-    [:##o             :!Tk [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :act-d :!act-f]]
-    [:##p             :!Tsemicolon [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :act-d :!act-f]]
+    ;; Reconversion & Copy Paste
+    [:##h             :!TSr [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :act-d :!act-f]]
+    [:##j             :!Tj [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :act-d :!act-f]]
+    [:##k             :!Tk [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :act-d :!act-f]]
+    [:##l             :!Tsemicolon [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :act-d :!act-f]]
+    [:##u             :!SCOv [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :act-d :!act-f]]
+    [:##i             :!Cv [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :act-d :!act-f]]
+    [:##o             :!Cc [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :act-d :!act-f]]
+    [:##p             :!Cx [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :act-d :!act-f]]
 
     ;; ── ASDf ─────────────────────────
-    ;; Copy Paste
-    [:##h             :!SCOv [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :!act-f]]
-    [:##j             :!Cv [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :!act-f]]
-    [:##k             :!Cc [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :!act-f]]
-    [:##l             :!Cx [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :!act-f]]
+    ;; Undo/Redo & Duplicate/Move Line
+    [:##h             :!Copen_bracket [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :!act-f]]
+    [:##j             :!Cz [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :!act-f]]
+    [:##k             :!SCz [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :!act-f]]
+    [:##l             :!Cclose_bracket [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :!act-f]]
     [:##u             :!SOup_arrow [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :!act-f]] ;; duplicate line up
     [:##i             :!Oup_arrow [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :!act-f]] ;; move line up
     [:##o             :!Odown_arrow [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :!act-f]] ;; move line down
