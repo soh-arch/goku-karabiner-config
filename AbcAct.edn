@@ -1,0 +1,491 @@
+;; ## AbcAct
+;; A: Asterisk / B: Bra / C: Cket + Act axis
+
+;; ### Legend
+;; > ### Goku Abbreviated Notation
+;; > S: L-Shift
+;; > C: L-Cmd
+;; > O: L-Opt
+;; > T: L-Ctrl
+;; > Q: R-Cmd
+;; > W: R-Ctrl
+;; > E: R-Opt
+;; > R: R-Shift
+;; > ### Layers
+;; > *: Asterisk (= layer-ast / L-Cmd held)
+;; > <: Bra       (= layer-bra / L-Shift held)
+;; > >: Cket      (= layer-cket / R-Shift held)
+;; > ### Asterisk Axes
+;; > Position — where you act
+;; >   L: Left   (home-row apps + act keys)
+;; >   R: Right  (navigation suite)
+;; >   B: Bottom (symbols / clips / fn)
+;; > Act — how the position behaves
+;; >   a: Amplify, Alter, App(L)
+;; >   s: Select, Store(B)
+;; >   d: Delete, Display, Draw(B)
+;; >   f: Focus, Function(B)
+;; > ### Chord (Act mask)
+;; > asdf = no acts
+;; > Asdf = act-a
+;; > aSdf = act-s
+;; > asDf = act-d
+;; > asdF = act-f
+;; > (Capitals combine; e.g. aSDf = act-s + act-d)
+
+;; ### Asterisk Right × Act
+;; asdf: Text Cursor
+;; Asdf: Amplified Text Cursor
+;; aSdf: Select
+;; ASdf: Amplified Select
+;; asDf: Delete
+;; AsDf: Amplified Delete
+;; aSDf: Undo, Navigate & Convert
+;; ASDf: Copy Paste
+;; asdF: Mouse Cursor
+;; AsdF: Fast Mouse Cursor
+;; aSdF: Drag & Drop
+;; ASdF: Fast Drag & Drop
+;; asDF: Tab Management
+;; AsDF: App Management
+;; aSDF: Window Management
+;; ASDF: Amplified Window Management
+
+;; ### Asterisk Left × Act
+;; asdf: Apps Primary
+;; Asdf: Apps Alternate
+
+;; ### Asterisk Bottom × Act
+;; asdf: Symbols Primary
+;; Asdf: Symbols Alternate
+;; aSdf: Save Clip
+;; asDf: Load Clip
+;; asdF: Function Keys
+
+;; ### Bra Suites
+;; Numpad:    virtual number pad
+;; Depiction: drawing palette
+
+;; ### Cket Suites
+;; Media: volume / brightness / illumination / playback
+
+{
+ :templates {
+  :app          "open -a '%s'"
+  :ray          "open -g 'raycast://extensions/%s'"
+  :wm           "open -g 'raycast://extensions/raycast/window-management/%s'"
+  :sys-evt      "osascript -e 'tell app \"System Events\" to %s'"
+  :pwr          "pmset %s"
+  :clip-save    "mkdir -p ~/.cache/abcact/clips && sleep 0.1 && pbpaste > ~/.cache/abcact/clips/%s"
+  :clip-load    "cat ~/.cache/abcact/clips/%s | pbcopy && sleep 0.1"
+  :clip-airdrop "osascript -e 'set tmp to POSIX path of (path to temporary items) & \"clip.png\"' -e 'try' -e 'set img to the clipboard as «class PNGf»' -e 'set f to open for access POSIX file tmp with write permission' -e 'set eof f to 0' -e 'write img to f' -e 'close access f' -e 'on error' -e 'display dialog \"No image available\" buttons {\"OK\"}' -e 'return' -e 'end try' -e 'tell application \"Finder\"' -e 'activate' -e 'reveal (POSIX file tmp as alias)' -e 'end tell' -e 'tell application \"System Events\" to tell process \"Finder\"' -e 'delay 0.1' -e 'click (first button of toolbar 1 of window 1 whose description is \"共有\" or description is \"Share\")' -e 'delay 0.1' -e 'key code 36' -e 'end tell'"
+ }
+
+ :input-sources {
+  :english {:input_source_id "com.apple.keylayout.USExtended"}
+  :french {:input_source_id "com.apple.keylayout.Canadian-CSA"}
+  :greek  {:input_source_id "com.apple.keylayout.Greek"}
+ }
+
+ :main [
+  {:des "Core: Layer Activators"
+   :rules [
+    [:##left_shift    ["layer-bra" 1] [:!layer-ast :!layer-cket] {:afterup ["layer-bra" 0] :alone :grave_accent_and_tilde}] ;; ) Bra / alone `
+    [:##left_shift    ["layer-bra" 1] [:!layer-ast :layer-cket] {:afterup ["layer-bra" 0] :alone :!Sgrave_accent_and_tilde}] ;; Shift+L-Shift → ~
+    [:##right_shift   ["layer-cket" 1] [:!layer-ast :!layer-bra] {:afterup ["layer-cket" 0] :alone :backslash}] ;; ( Cket / alone \
+    [:##right_shift   ["layer-cket" 1] [:!layer-ast :layer-bra] {:afterup ["layer-cket" 0] :alone :!Sbackslash}] ;; Shift+R-Shift → |
+    [:##left_control  :left_control nil {:alone :greek}]
+    [:##left_option   :left_option nil {:alone :french}]
+    [:##left_command  ["layer-ast" 1] nil {:afterup ["layer-ast" 0] :alone :english}]  ;; * Asterisk
+    [:##spacebar      :left_command nil {:alone :spacebar}]
+    [:##right_command :left_shift nil {:alone :japanese_kana}]
+    [:##right_option  :left_shift]
+   ]}
+
+  {:des "Core: Space & Return"
+   :rules [
+    [:##open_bracket  :spacebar [:layer-ast :!act-a :!act-s :!act-d :!act-f]]
+    [:##close_bracket :spacebar [:layer-ast :!act-a :!act-s :!act-d :!act-f]]
+    [:##backslash     :spacebar [:layer-ast :!act-a :!act-s :!act-d :!act-f]]
+    [:##semicolon     :return_or_enter [:layer-ast :!act-a :!act-s :!act-d :!act-f]]
+    [:##quote         :return_or_enter [:layer-ast :!act-a :!act-s :!act-d :!act-f]]
+   ]}
+
+  {:des "Core: Accents"
+   :rules [
+    [:open_bracket    :!Oe [:!layer-ast :!layer-cket]]
+    [:close_bracket   :!Ograve_accent_and_tilde [:!layer-ast :!layer-cket]]
+    [:backslash       :!Oq [:!layer-ast :!layer-cket]]
+    [:!Sopen_bracket  :!O6 [:!layer-ast :!layer-cket]]
+    [:!Sclose_bracket :!Ou [:!layer-ast :!layer-cket]]
+    [:!Sbackslash     :!Oc [:!layer-ast :!layer-cket]]
+   ]}
+
+  {:des "Core: Capslock Actions"
+   :rules [
+    [:##caps_lock     :delete_or_backspace [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f]] ;; テキスト選択後に削除するため
+    [:##caps_lock     :f13 [:layer-ast :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]] ;; 音声入力
+    [:##caps_lock     :!SCT4 [:layer-ast :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f]]
+    [:##caps_lock     :!SC5 [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :act-d :!act-f]]
+    [:##caps_lock     [:clip-airdrop] [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :act-f]]
+    [:##caps_lock     [:sys-evt "shut down"] [:layer-ast :!layer-bra :!layer-cket :!act-a :act-s :!act-d :act-f]]
+    [:##caps_lock     [:sys-evt "restart"] [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :act-d :act-f]]
+    [:##caps_lock     [:pwr "sleepnow"] [:layer-ast :!layer-bra :!layer-cket :!act-a :act-s :act-d :act-f]]
+    [:##caps_lock     :right_shift [:!layer-ast :!layer-bra :!layer-cket] {:alone :escape}]
+   ]}
+
+  {:des "Asterisk Left: Application Launcher"
+   :rules [
+    [:##a             ["act-a" 1] :layer-ast {:afterup ["act-a" 0] :alone :launchpad}]
+    [:##s             ["act-s" 1] [:layer-ast :!act-a] {:afterup ["act-s" 0] :alone [:app "Comet"]}]
+    [:##s             ["act-s" 1] [:layer-ast :act-a] {:afterup ["act-s" 0] :alone [:app "Google Chrome"]}]
+    [:##d             ["act-d" 1] [:layer-ast :!act-a] {:afterup ["act-d" 0] :alone [:app "Claude"]}]
+    [:##d             ["act-d" 1] [:layer-ast :act-a] {:afterup ["act-d" 0] :alone [:app "Chatgpt Classic"]}]
+    [:##f             ["act-f" 1] [:layer-ast :!act-a] {:afterup ["act-f" 0] :alone [:app "Finder"]}]
+    [:##f             ["act-f" 1] [:layer-ast :act-a] {:afterup ["act-f" 0] :alone [:app "iTerm"]}]
+    [:##q             [:ray "raycast/raycast-notes/raycast-notes"] [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f]]
+    [:##q             "open 'raycast://script-commands/open-abcact-manual'" [:layer-ast :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
+    [:##w             [:app "Obsidian"] [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f]]
+    [:##w             [:app "Bear"] [:layer-ast :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
+    [:##e             [:app "Cursor"] [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f]]
+    [:##e             [:app "Logseq"] [:layer-ast :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
+    [:##r             [:app "Raycast"] [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f]]
+    [:##r             [:app "Maccy"] [:layer-ast :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
+    [:##t             [:ray "mooxl/deepcast/japanese?arguments=%7B%22text%22%3A%22%22%7D"] [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f]]
+    [:##t             [:ray "mooxl/deepcast/englishUS?arguments=%7B%22text%22%3A%22%22%7D"] [:layer-ast :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
+    [:##y             [:app "Deepl"] [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f]]
+    [:##y             [:app "Dictionary"] [:layer-ast :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
+    [:##g             [:app "Slack"] [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f]]
+    [:##g             [:app "Spark Desktop"] [:layer-ast :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
+   ]}
+
+  {:des "Asterisk Right: Navigation Suite"
+   :rules [
+    ;; ── asdf ─────────────────────────
+    ;; Text Cursor
+    [:##h             :left_arrow [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f]]
+    [:##j             :down_arrow [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f]]
+    [:##k             :up_arrow [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f]]
+    [:##l             :right_arrow [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f]]
+    [:##u             :page_up [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f]]
+    [:##i             :home [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f]]
+    [:##o             :end [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f]]
+    [:##p             :page_down [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f]]
+
+    ;; ── Asdf ─────────────────────────
+    ;; Amplified Text Cursor
+    [:##h             :!Oleft_arrow [:layer-ast :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
+    [:##j             [:down_arrow :down_arrow :down_arrow] [:layer-ast :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
+    [:##k             [:up_arrow :up_arrow :up_arrow] [:layer-ast :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
+    [:##l             :!Oright_arrow [:layer-ast :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
+    [:##u             :!SOup_arrow [:layer-ast :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
+    [:##i             :!Oup_arrow [:layer-ast :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
+    [:##o             :!Odown_arrow [:layer-ast :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
+    [:##p             :!SOdown_arrow [:layer-ast :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
+
+    ;; ── aSdf ─────────────────────────
+    ;; Select
+    [:##h             :!Sleft_arrow [:layer-ast :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f]]
+    [:##j             :!Sdown_arrow [:layer-ast :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f]]
+    [:##k             :!Sup_arrow [:layer-ast :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f]]
+    [:##l             :!Sright_arrow [:layer-ast :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f]]
+    [:##u             :!Spage_up [:layer-ast :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f]]
+    [:##i             :!Shome [:layer-ast :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f]]
+    [:##o             :!Send [:layer-ast :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f]]
+    [:##p             :!Spage_down [:layer-ast :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f]]
+
+    ;; ── ASdf ─────────────────────────
+    ;; Amplified Select
+    [:##h             :!SOleft_arrow [:layer-ast :!layer-bra :!layer-cket :act-a :act-s :!act-d :!act-f]]
+    [:##j             [:!Sdown_arrow :!Sdown_arrow :!Sdown_arrow] [:layer-ast :!layer-bra :!layer-cket :act-a :act-s :!act-d :!act-f]]
+    [:##k             [:!Sup_arrow :!Sup_arrow :!Sup_arrow] [:layer-ast :!layer-bra :!layer-cket :act-a :act-s :!act-d :!act-f]]
+    [:##l             :!SOright_arrow [:layer-ast :!layer-bra :!layer-cket :act-a :act-s :!act-d :!act-f]]
+    [:##u             :!SOup_arrow [:layer-ast :!layer-bra :!layer-cket :act-a :act-s :!act-d :!act-f]]
+    [:##i             :!Oup_arrow [:layer-ast :!layer-bra :!layer-cket :act-a :act-s :!act-d :!act-f]]
+    [:##o             :!Odown_arrow [:layer-ast :!layer-bra :!layer-cket :act-a :act-s :!act-d :!act-f]]
+    [:##p             :!SOdown_arrow [:layer-ast :!layer-bra :!layer-cket :act-a :act-s :!act-d :!act-f]]
+
+    ;; ── asDf ─────────────────────────
+    ;; Delete
+    [:##h             :delete_or_backspace [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :act-d :!act-f]]
+    [:##j             [:!Sdown_arrow :delete_or_backspace] [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :act-d :!act-f]]
+    [:##k             [:!Sup_arrow :delete_or_backspace] [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :act-d :!act-f]]
+    [:##l             :delete_forward [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :act-d :!act-f]]
+    [:##u             [:end :!Shome :!Shome :delete_or_backspace] [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :act-d :!act-f]]
+    [:##i             [:end :!Shome :delete_or_backspace] [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :act-d :!act-f]]
+    [:##o             [:home :!Send :delete_or_backspace] [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :act-d :!act-f]]
+    [:##p             [:home :!Send :!Send :delete_or_backspace] [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :act-d :!act-f]]
+
+    ;; ── AsDf ─────────────────────────
+    ;; Amplified Delete
+    [:##h             :!Cdelete_or_backspace [:layer-ast :!layer-bra :!layer-cket :act-a :!act-s :act-d :!act-f]]
+    [:##j             [:!Sdown_arrow :!Sdown_arrow :!Sdown_arrow :delete_or_backspace] [:layer-ast :!layer-bra :!layer-cket :act-a :!act-s :act-d :!act-f]]
+    [:##k             [:!Sup_arrow :!Sup_arrow :!Sup_arrow :delete_or_backspace] [:layer-ast :!layer-bra :!layer-cket :act-a :!act-s :act-d :!act-f]]
+    [:##l             :!Cdelete_forward [:layer-ast :!layer-bra :!layer-cket :act-a :!act-s :act-d :!act-f]]
+    [:##u             [:!Spage_up :delete_or_backspace] [:layer-ast :!layer-bra :!layer-cket :act-a :!act-s :act-d :!act-f]]
+    [:##i             [:!Shome :delete_or_backspace] [:layer-ast :!layer-bra :!layer-cket :act-a :!act-s :act-d :!act-f]]
+    [:##o             [:!Send :delete_or_backspace] [:layer-ast :!layer-bra :!layer-cket :act-a :!act-s :act-d :!act-f]]
+    [:##p             [:!Spage_down :delete_or_backspace] [:layer-ast :!layer-bra :!layer-cket :act-a :!act-s :act-d :!act-f]]
+
+    ;; ── aSDf ─────────────────────────
+    ;; Undo, Navigate & Convert
+    [:##h             :!Copen_bracket [:layer-ast :!layer-bra :!layer-cket :!act-a :act-s :act-d :!act-f]]
+    [:##j             :!Cz [:layer-ast :!layer-bra :!layer-cket :!act-a :act-s :act-d :!act-f]]
+    [:##k             :!SCz [:layer-ast :!layer-bra :!layer-cket :!act-a :act-s :act-d :!act-f]]
+    [:##l             :!Cclose_bracket [:layer-ast :!layer-bra :!layer-cket :!act-a :act-s :act-d :!act-f]]
+    [:##u             :!TSr [:layer-ast :!layer-bra :!layer-cket :!act-a :act-s :act-d :!act-f]]
+    [:##i             :!Tj [:layer-ast :!layer-bra :!layer-cket :!act-a :act-s :act-d :!act-f]]
+    [:##o             :!Tk [:layer-ast :!layer-bra :!layer-cket :!act-a :act-s :act-d :!act-f]]
+    [:##p             :!Tsemicolon [:layer-ast :!layer-bra :!layer-cket :!act-a :act-s :act-d :!act-f]]
+
+    ;; ── ASDf ─────────────────────────
+    ;; Copy Paste
+    [:##h             :!SCOv [:layer-ast :!layer-bra :!layer-cket :act-a :act-s :act-d :!act-f]]
+    [:##j             :!Cv [:layer-ast :!layer-bra :!layer-cket :act-a :act-s :act-d :!act-f]]
+    [:##k             :!Cc [:layer-ast :!layer-bra :!layer-cket :act-a :act-s :act-d :!act-f]]
+    [:##l             :!Cx [:layer-ast :!layer-bra :!layer-cket :act-a :act-s :act-d :!act-f]]
+    [:##u             [:!Ca :!SCOv] [:layer-ast :!layer-bra :!layer-cket :act-a :act-s :act-d :!act-f]]
+    [:##i             [:!Ca :!Cv] [:layer-ast :!layer-bra :!layer-cket :act-a :act-s :act-d :!act-f]]
+    [:##o             [:!Ca :!Cc] [:layer-ast :!layer-bra :!layer-cket :act-a :act-s :act-d :!act-f]]
+    [:##p             [:!Ca :!Cx] [:layer-ast :!layer-bra :!layer-cket :act-a :act-s :act-d :!act-f]]
+
+    ;; ── asdF ─────────────────────────
+    ;; Mouse Cursor
+    [:##h             {:mkey {:x -1600}} [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :act-f]]
+    [:##j             {:mkey {:y 1600}} [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :act-f]]
+    [:##k             {:mkey {:y -1600}} [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :act-f]]
+    [:##l             {:mkey {:x 1600}} [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :act-f]]
+    [:##u             {:mkey {:hwheel 32}} [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :act-f]]
+    [:##i             {:mkey {:vwheel 32}} [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :act-f]]
+    [:##o             {:mkey {:vwheel -32}} [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :act-f]]
+    [:##p             {:mkey {:hwheel -32}} [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :act-f]]
+    [:##semicolon     {:pkey :button1} [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :act-f]]
+    [:##quote         {:pkey :button2} [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :act-f]]
+
+    ;; ── AsdF ─────────────────────────
+    ;; Fast Mouse Cursor
+    [:##h             {:mkey {:x -3200}} [:layer-ast :!layer-bra :!layer-cket :act-a :!act-s :!act-d :act-f]]
+    [:##j             {:mkey {:y 3200}} [:layer-ast :!layer-bra :!layer-cket :act-a :!act-s :!act-d :act-f]]
+    [:##k             {:mkey {:y -3200}} [:layer-ast :!layer-bra :!layer-cket :act-a :!act-s :!act-d :act-f]]
+    [:##l             {:mkey {:x 3200}} [:layer-ast :!layer-bra :!layer-cket :act-a :!act-s :!act-d :act-f]]
+    [:##u             {:mkey {:hwheel 64}} [:layer-ast :!layer-bra :!layer-cket :act-a :!act-s :!act-d :act-f]]
+    [:##i             {:mkey {:vwheel 64}} [:layer-ast :!layer-bra :!layer-cket :act-a :!act-s :!act-d :act-f]]
+    [:##o             {:mkey {:vwheel -64}} [:layer-ast :!layer-bra :!layer-cket :act-a :!act-s :!act-d :act-f]]
+    [:##p             {:mkey {:hwheel -64}} [:layer-ast :!layer-bra :!layer-cket :act-a :!act-s :!act-d :act-f]]
+    [:##semicolon     {:pkey :button1} [:layer-ast :!layer-bra :!layer-cket :act-a :!act-s :!act-d :act-f]]
+    [:##quote         {:pkey :button2} [:layer-ast :!layer-bra :!layer-cket :act-a :!act-s :!act-d :act-f]]
+
+    ;; ── aSdF ─────────────────────────
+    ;; Drag & Drop
+    [:##h             [{:pkey :button1} {:mkey {:x -1600}}] [:layer-ast :!layer-bra :!layer-cket :!act-a :act-s :!act-d :act-f]]
+    [:##j             [{:pkey :button1} {:mkey {:y 1600}}] [:layer-ast :!layer-bra :!layer-cket :!act-a :act-s :!act-d :act-f]]
+    [:##k             [{:pkey :button1} {:mkey {:y -1600}}] [:layer-ast :!layer-bra :!layer-cket :!act-a :act-s :!act-d :act-f]]
+    [:##l             [{:pkey :button1} {:mkey {:x 1600}}] [:layer-ast :!layer-bra :!layer-cket :!act-a :act-s :!act-d :act-f]]
+    [:##u             [{:pkey :button1} {:mkey {:x -800}}] [:layer-ast :!layer-bra :!layer-cket :!act-a :act-s :!act-d :act-f]]
+    [:##i             [{:pkey :button1} {:mkey {:y 800}}] [:layer-ast :!layer-bra :!layer-cket :!act-a :act-s :!act-d :act-f]]
+    [:##o             [{:pkey :button1} {:mkey {:y -800}}] [:layer-ast :!layer-bra :!layer-cket :!act-a :act-s :!act-d :act-f]]
+    [:##p             [{:pkey :button1} {:mkey {:x 800}}] [:layer-ast :!layer-bra :!layer-cket :!act-a :act-s :!act-d :act-f]]
+    [:##semicolon     {:pkey :button1} [:layer-ast :!layer-bra :!layer-cket :!act-a :act-s :!act-d :act-f]]
+    [:##quote         {:pkey :button2} [:layer-ast :!layer-bra :!layer-cket :!act-a :act-s :!act-d :act-f]]
+
+    ;; ── ASdF ─────────────────────────
+    ;; Fast Drag & Drop
+    [:##h             [{:pkey :button1} {:mkey {:x -3200}}] [:layer-ast :!layer-bra :!layer-cket :act-a :act-s :!act-d :act-f]]
+    [:##j             [{:pkey :button1} {:mkey {:y 3200}}] [:layer-ast :!layer-bra :!layer-cket :act-a :act-s :!act-d :act-f]]
+    [:##k             [{:pkey :button1} {:mkey {:y -3200}}] [:layer-ast :!layer-bra :!layer-cket :act-a :act-s :!act-d :act-f]]
+    [:##l             [{:pkey :button1} {:mkey {:x 3200}}] [:layer-ast :!layer-bra :!layer-cket :act-a :act-s :!act-d :act-f]]
+    [:##u             [{:pkey :button1} {:mkey {:x -1600}}] [:layer-ast :!layer-bra :!layer-cket :act-a :act-s :!act-d :act-f]]
+    [:##i             [{:pkey :button1} {:mkey {:y 1600}}] [:layer-ast :!layer-bra :!layer-cket :act-a :act-s :!act-d :act-f]]
+    [:##o             [{:pkey :button1} {:mkey {:y -1600}}] [:layer-ast :!layer-bra :!layer-cket :act-a :act-s :!act-d :act-f]]
+    [:##p             [{:pkey :button1} {:mkey {:x 1600}}] [:layer-ast :!layer-bra :!layer-cket :act-a :act-s :!act-d :act-f]]
+    [:##semicolon     {:pkey :button1} [:layer-ast :!layer-bra :!layer-cket :act-a :act-s :!act-d :act-f]]
+    [:##quote         {:pkey :button2} [:layer-ast :!layer-bra :!layer-cket :act-a :act-s :!act-d :act-f]]
+
+    ;; ── asDF ─────────────────────────
+    ;; Tab Management
+    [:##h             :!STtab [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :act-d :act-f]]
+    [:##j             :!Ttab [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :act-d :act-f]]
+    [:##k             :!STtab [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :act-d :act-f]]
+    [:##l             :!Ttab [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :act-d :act-f]]
+    [:##u             :!SOTf1 [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :act-d :act-f]]
+    [:##i             :!Cw [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :act-d :act-f]]
+    [:##o             :!SCt [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :act-d :act-f]]
+    [:##p             :!OTf1 [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :act-d :act-f]]
+
+    ;; ── AsDF ─────────────────────────
+    ;; App Management
+    [:##h             :!SCtab [:layer-ast :!layer-bra :!layer-cket :act-a :!act-s :act-d :act-f]]
+    [:##j             :!Cq [:layer-ast :!layer-bra :!layer-cket :act-a :!act-s :act-d :act-f]]
+    [:##k             :!Tup_arrow [:layer-ast :!layer-bra :!layer-cket :act-a :!act-s :act-d :act-f]]
+    [:##l             :!Ctab [:layer-ast :!layer-bra :!layer-cket :act-a :!act-s :act-d :act-f]]
+    [:##u             :!Tleft_arrow [:layer-ast :!layer-bra :!layer-cket :act-a :!act-s :act-d :act-f]]
+    [:##i             :!Ch [:layer-ast :!layer-bra :!layer-cket :act-a :!act-s :act-d :act-f]]
+    [:##o             :!Tdown_arrow [:layer-ast :!layer-bra :!layer-cket :act-a :!act-s :act-d :act-f]]
+    [:##p             :!Tright_arrow [:layer-ast :!layer-bra :!layer-cket :act-a :!act-s :act-d :act-f]]
+
+    ;; ── aSDF ─────────────────────────
+    ;; Window Management
+    [:##h             [:wm "left-half"] [:layer-ast :!layer-bra :!layer-cket :!act-a :act-s :act-d :act-f]]
+    [:##j             [:wm "bottom-half"] [:layer-ast :!layer-bra :!layer-cket :!act-a :act-s :act-d :act-f]]
+    [:##k             [:wm "top-half"] [:layer-ast :!layer-bra :!layer-cket :!act-a :act-s :act-d :act-f]]
+    [:##l             [:wm "right-half"] [:layer-ast :!layer-bra :!layer-cket :!act-a :act-s :act-d :act-f]]
+    [:##u             [:wm "maximize"] [:layer-ast :!layer-bra :!layer-cket :!act-a :act-s :act-d :act-f]]
+    [:##i             [:wm "make-smaller"] [:layer-ast :!layer-bra :!layer-cket :!act-a :act-s :act-d :act-f]]
+    [:##o             [:wm "make-larger"] [:layer-ast :!layer-bra :!layer-cket :!act-a :act-s :act-d :act-f]]
+    [:##p             [:wm "almost-maximize"] [:layer-ast :!layer-bra :!layer-cket :!act-a :act-s :act-d :act-f]]
+    [:##open_bracket  [:wm "top-left-sixth"] [:layer-ast :!layer-bra :!layer-cket :!act-a :act-s :act-d :act-f]]
+    [:##close_bracket [:wm "top-right-sixth"] [:layer-ast :!layer-bra :!layer-cket :!act-a :act-s :act-d :act-f]]
+    [:##semicolon     [:wm "bottom-left-sixth"] [:layer-ast :!layer-bra :!layer-cket :!act-a :act-s :act-d :act-f]]
+    [:##quote         [:wm "bottom-right-sixth"] [:layer-ast :!layer-bra :!layer-cket :!act-a :act-s :act-d :act-f]]
+
+    ;; ── ASDF ─────────────────────────
+    ;; Amplified Window Management
+    [:##h             [:wm "previous-display"] [:layer-ast :!layer-bra :!layer-cket :act-a :act-s :act-d :act-f]]
+    [:##j             [:wm "previous-desktop"] [:layer-ast :!layer-bra :!layer-cket :act-a :act-s :act-d :act-f]]
+    [:##k             [:wm "next-desktop"] [:layer-ast :!layer-bra :!layer-cket :act-a :act-s :act-d :act-f]]
+    [:##l             [:wm "next-display"] [:layer-ast :!layer-bra :!layer-cket :act-a :act-s :act-d :act-f]]
+    [:##u             [:wm "toggle-fullscreen"] [:layer-ast :!layer-bra :!layer-cket :act-a :act-s :act-d :act-f]]
+    [:##i             [:wm "make-smaller"] [:layer-ast :!layer-bra :!layer-cket :act-a :act-s :act-d :act-f]]
+    [:##o             [:wm "make-larger"] [:layer-ast :!layer-bra :!layer-cket :act-a :act-s :act-d :act-f]]
+    [:##p             :!Ch [:layer-ast :!layer-bra :!layer-cket :act-a :act-s :act-d :act-f]]
+    [:##open_bracket  [:wm "top-left-sixth"] [:layer-ast :!layer-bra :!layer-cket :act-a :act-s :act-d :act-f]]
+    [:##close_bracket [:wm "top-right-sixth"] [:layer-ast :!layer-bra :!layer-cket :act-a :act-s :act-d :act-f]]
+    [:##semicolon     [:wm "bottom-left-sixth"] [:layer-ast :!layer-bra :!layer-cket :act-a :act-s :act-d :act-f]]
+    [:##quote         [:wm "bottom-right-sixth"] [:layer-ast :!layer-bra :!layer-cket :act-a :act-s :act-d :act-f]]
+   ]}
+
+  {:des "Asterisk Bottom: Symbol Keys"
+   :rules [
+    ;; ── asdf ─────────────────────────
+    ;; Symbols Primary
+    [:##left_shift    :!Sslash [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f]]
+    [:##z             :!S1 [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f]]
+    [:##x             :!S2 [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f]]
+    [:##c             :!S3 [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f]]
+    [:##v             :!S4 [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f]]
+    [:##b             :!S5 [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f]]
+    [:##n             :hyphen [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f]]
+    [:##m             :equal_sign [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f]]
+    [:##comma         :open_bracket [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f]]
+    [:##period        :close_bracket [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f]]
+    [:##slash         :!Ssemicolon [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f]]
+    [:##right_shift   :!Squote [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f]]
+
+    ;; ── Asdf ─────────────────────────
+    ;; Symbols Alternate
+    [:##left_shift    [:ray "raycast/emoji-symbols/search-emoji-symbols"] [:layer-ast :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
+    [:##z             :!S6 [:layer-ast :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
+    [:##x             :!S7 [:layer-ast :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
+    [:##c             :!S8 [:layer-ast :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
+    [:##v             :!S9 [:layer-ast :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
+    [:##b             :!S0 [:layer-ast :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
+    [:##n             :!Shyphen [:layer-ast :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
+    [:##m             :!Sequal_sign [:layer-ast :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
+    [:##comma         :!Sopen_bracket [:layer-ast :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
+    [:##period        :!Sclose_bracket [:layer-ast :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
+    [:##slash         :!Obackslash [:layer-ast :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
+    [:##right_shift   :!SObackslash [:layer-ast :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
+   ]}
+
+  {:des "Asterisk Bottom: Clip Slots"
+   :rules [
+    ;; ── aSdf ─────────────────────────
+    ;; Save Clip
+    [:##left_shift   [:!Cc [:clip-save "0"]] [:layer-ast :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f]]
+    [:##z             [:!Cc [:clip-save "1"]] [:layer-ast :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f]]
+    [:##x             [:!Cc [:clip-save "2"]] [:layer-ast :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f]]
+    [:##c             [:!Cc [:clip-save "3"]] [:layer-ast :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f]]
+    [:##v             [:!Cc [:clip-save "4"]] [:layer-ast :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f]]
+    [:##b             [:!Cc [:clip-save "5"]] [:layer-ast :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f]]
+    [:##n             [:!Cc [:clip-save "6"]] [:layer-ast :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f]]
+    [:##m             [:!Cc [:clip-save "7"]] [:layer-ast :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f]]
+    [:##comma         [:!Cc [:clip-save "8"]] [:layer-ast :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f]]
+    [:##period        [:!Cc [:clip-save "9"]] [:layer-ast :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f]]
+    [:##slash         [:!Cc [:clip-save "10"]] [:layer-ast :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f]]
+    [:##right_shift    [:!Cc [:clip-save "11"]] [:layer-ast :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f]]
+
+    ;; ── asDf ─────────────────────────
+    ;; Load Clip
+    [:##left_shift   [[:clip-load "0"]  :!Cv] [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :act-d :!act-f]]
+    [:##z             [[:clip-load "1"]  :!Cv] [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :act-d :!act-f]]
+    [:##x             [[:clip-load "2"]  :!Cv] [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :act-d :!act-f]]
+    [:##c             [[:clip-load "3"]  :!Cv] [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :act-d :!act-f]]
+    [:##v             [[:clip-load "4"]  :!Cv] [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :act-d :!act-f]]
+    [:##b             [[:clip-load "5"]  :!Cv] [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :act-d :!act-f]]
+    [:##n             [[:clip-load "6"]  :!Cv] [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :act-d :!act-f]]
+    [:##m             [[:clip-load "7"]  :!Cv] [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :act-d :!act-f]]
+    [:##comma         [[:clip-load "8"]  :!Cv] [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :act-d :!act-f]]
+    [:##period        [[:clip-load "9"]  :!Cv] [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :act-d :!act-f]]
+    [:##slash         [[:clip-load "10"] :!Cv] [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :act-d :!act-f]]
+    [:##right_shift    [[:clip-load "11"] :!Cv] [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :act-d :!act-f]]
+   ]}
+
+  {:des "Asterisk Bottom: Function Keys"
+   :rules [
+    ;; ── asdF ─────────────────────────
+    ;; Function Keys
+    [:##left_shift    :f1 [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :act-f]]
+    [:##z             :f2 [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :act-f]]
+    [:##x             :f3 [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :act-f]]
+    [:##c             :f4 [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :act-f]]
+    [:##v             :f5 [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :act-f]]
+    [:##b             :f6 [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :act-f]]
+    [:##n             :f7 [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :act-f]]
+    [:##m             :f8 [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :act-f]]
+    [:##comma         :f9 [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :act-f]]
+    [:##period        :f10 [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :act-f]]
+    [:##slash         :f11 [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :act-f]]
+    [:##right_shift   :f12 [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :act-f]]
+   ]}
+
+  {:des "Bra: Virtual Numpad"
+   :rules [
+    [:z :0 [:layer-bra :!layer-ast]]
+    [:x :1 [:layer-bra :!layer-ast]]
+    [:c :2 [:layer-bra :!layer-ast]]
+    [:v :3 [:layer-bra :!layer-ast]]
+    [:s :4 [:layer-bra :!layer-ast]]
+    [:d :5 [:layer-bra :!layer-ast]]
+    [:f :6 [:layer-bra :!layer-ast]]
+    [:w :7 [:layer-bra :!layer-ast]]
+    [:e :8 [:layer-bra :!layer-ast]]
+    [:r :9 [:layer-bra :!layer-ast]]
+    [:a :delete_or_backspace [:layer-bra :!layer-ast]]
+    [:q [:end :!Shome :delete_or_backspace] [:layer-bra :!layer-ast]]
+   ]}
+
+  {:des "Bra: Depiction"
+   :rules [
+    [:!C1 :!Chyphen [:layer-bra :!layer-ast]]
+    [:!C2 :!Cequal_sign [:layer-bra :!layer-ast]]
+    [:!C3 :l [:layer-bra :!layer-ast]]
+    [:!C4 :!Sl [:layer-bra :!layer-ast]]
+    [:!Cq :!Scomma [:layer-bra :!layer-ast]]
+    [:!Cw :!Speriod [:layer-bra :!layer-ast]]
+    [:!Ce :e [:layer-bra :!layer-ast]]
+    [:!Cr :b [:layer-bra :!layer-ast]]
+    [:!Ca :comma [:layer-bra :!layer-ast]]
+    [:!Cs :period [:layer-bra :!layer-ast]]
+    [:!Cd :!Cz [:layer-bra :!layer-ast]]
+    [:!Cf :!CSz [:layer-bra :!layer-ast]]
+    [:!Cz :!Ocomma [:layer-bra :!layer-ast]]
+    [:!Cx :!Operiod [:layer-bra :!layer-ast]]
+    [:!Cc :a [:layer-bra :!layer-ast]]
+    [:!Cv :t [:layer-bra :!layer-ast]]
+   ]}
+
+  {:des "Cket: Media Controls"
+   :rules [
+    [:open_bracket    :volume_decrement [:layer-cket :!layer-ast]]
+    [:close_bracket   :volume_increment [:layer-cket :!layer-ast]]
+    [:backslash       :mute [:layer-cket :!layer-ast]]
+    [:semicolon       :display_brightness_decrement [:layer-cket :!layer-ast]]
+    [:quote           :display_brightness_increment [:layer-cket :!layer-ast]]
+    [:period          :illumination_decrement [:layer-cket :!layer-ast]]
+    [:slash           :illumination_increment [:layer-cket :!layer-ast]]
+    [:!Ropen_bracket  :fast_forward [:layer-cket :!layer-ast]]
+    [:!Rclose_bracket :rewind [:layer-cket :!layer-ast]]
+    [:!Rbackslash     :play_or_pause [:layer-cket :!layer-ast]]
+   ]}
+ ]
+}

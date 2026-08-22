@@ -1,0 +1,441 @@
+;; ==========================================================================================
+;;  SCOT & SEMI Keyboard Architecture
+;;  A hybrid spatial layer mapping system for macOS.
+
+;;  [ Core Pillars ]
+;;  1. Hyper : Left-hand Apps & Right-pinky Symbols.
+;;  2. SCOT  : Right-hand Priority Matrix (S > C > O > T).
+;;  3. SEMI  : Semicolon Embedded Matrix Interface (Numpad/Symbols).
+
+;;  [ SCOT Matrix : Semantic Models & Upper Triangular Layout ]
+;;   `-` : Invalid / Diagonal,    `~` : Overridden by Row Priority
+
+;;  Row(Base) \ Col(+) | + None       | + S (Shift) | + C (Cmd)   | + O (Opt)   | + T (Ctrl)
+;;  -------------------+--------------+-------------+-------------+-------------+------------
+;;  S: Shift (Backside)|   Sym Layer  |      -      | Load Clip   |  Save Clip  | Fn Keys
+;;  C: Cmd   (Plane)   | Select & Del |      ~      |      -      |  Smart Sel  | Window Mgmt
+;;  O: Opt   (Alt)     | Mouse Normal |      ~      |      ~      |      -      | Mouse Fast
+;;  T: Ctrl  (System)  | Mouse Scroll |      ~      |      ~      |      ~      |      ~
+
+;;  [ Goku Legend ]
+;;  ! : Mandatory  | # : Optional  | ## : Optional Any  | P : CapsLock
+;;  C : L_Command  | T : L_Control | O  : L_Option      | S : L_Shift
+;;  Q : R_Command  | W : R_Control | E  : R_Option      | R : R_Shift
+;;  (QWER = Hyper Layer Activation)
+;; ==========================================================================================
+
+{
+ :templates {
+  :app          "open -a '%s'"
+  :ray          "open -g 'raycast://extensions/%s'"
+  :wm           "open -g 'raycast://extensions/raycast/window-management/%s'"
+  :sys-evt      "osascript -e 'tell app \"System Events\" to %s'"
+  :pwr          "pmset %s"
+  :clip-save    "mkdir -p ~/.cache/abcact/clips && sleep 0.1 && pbpaste > ~/.cache/abcact/clips/%s"
+  :clip-load    "cat ~/.cache/abcact/clips/%s | pbcopy && sleep 0.1"
+  :clip-airdrop "osascript -e 'set tmp to POSIX path of (path to temporary items) & \"clip.png\"' -e 'try' -e 'set img to the clipboard as «class PNGf»' -e 'set f to open for access POSIX file tmp with write permission' -e 'set eof f to 0' -e 'write img to f' -e 'close access f' -e 'on error' -e 'display dialog \"No image available\" buttons {\"OK\"}' -e 'return' -e 'end try' -e 'tell application \"Finder\"' -e 'activate' -e 'reveal (POSIX file tmp as alias)' -e 'end tell' -e 'tell application \"System Events\" to tell process \"Finder\"' -e 'delay 0.1' -e 'click (first button of toolbar 1 of window 1 whose description is \"共有\" or description is \"Share\")' -e 'delay 0.1' -e 'key code 36' -e 'end tell'"
+}
+
+ :simlayers {
+  :semicolon-layer {:key :semicolon}
+ }
+
+ :input-sources {
+  :greek {:input_source_id "com.apple.keylayout.Greek"}
+ }
+
+ :main [
+  ;; =================================================================================
+  ;;  1. CORE: MODIFIERS & FALLBACKS
+  ;; =================================================================================
+  {:des "Core: Modifiers & Standalone Fallbacks"
+   :rules [
+    [:##caps_lock      :!QWEright_shift nil {:alone :escape}]
+    [:!QWER#Pescape    :caps_lock]
+    [:#QWESCOTspacebar :left_shift      nil {:alone :spacebar}]
+    [:!QWERspacebar    :spacebar]
+    [:!QWERCspacebar   :spacebar]
+    [:!QWEROspacebar   :spacebar]
+    [:!QWERTspacebar   :spacebar]
+    [:!QWERCOspacebar  :spacebar]
+    [:!QWERCTspacebar  :spacebar]
+    [:!QWEROTspacebar  :spacebar]
+    [:##fn             :left_control]
+    [:##right_shift    :right_shift     nil {:alone :!Sreturn_or_enter}]
+   ]}
+
+  {:des "Core: Input Source Toggles"
+   :rules [
+    [:##left_command     :left_command    nil {:alone :japanese_eisuu}]
+    [:##right_command    :right_command   nil {:alone :japanese_kana}]
+    [:left_option        :left_option     nil {:alone :greek}]
+   ]}
+
+  ;; =================================================================================
+  ;;  2. APPLICATIONS: LAUNCH & FOCUS
+  ;; =================================================================================
+  {:des "Apps: Development & Productivity Suite"
+   :rules [
+    ;; Upper Row (e / r / t / y)
+    [:!QWERe          [:app "Dia"]]
+    [:!QWERCe         [:app "Comet"]]
+    [:!QWEROe         [:app "Google Chrome"]]
+    [:!QWERCOe        [:app "Safari"]]
+    [:!QWERSe         [:app "Cursor"]]
+    [:!QWERSCe        [:app "Visual Studio Code"]]
+    [:!QWERSOe        [:app "Xcode"]]
+    [:!QWERr          [:app "Finder"]]
+    [:!QWEROr         [:app "Spacedrive"]]
+    [:!QWERCr         [:app "Preview"]]
+    [:!QWERSr         [:app "iTerm"]]
+    [:!QWERSCr        [:app "Terminal"]]
+    [:!QWERt          [:app "TradingView"]]
+    [:!QWERSt         [:app "MacWhisper"]]
+    [:!QWERCt         [:ray "mooxl/deepcast/englishUS?arguments=%7B%22text%22%3A%22%22%7D"]]
+    [:!QWEROt         [:ray "mooxl/deepcast/japanese?arguments=%7B%22text%22%3A%22%22%7D"]]
+    [:!QWERCOt        [:ray "mooxl/deepcast/index"]]
+    [:!QWERy          [:app "Music"]]
+
+    ;; Home Row (d / f / g)
+    [:!QWERd          [:ray "raycast/raycast-notes/raycast-notes"]]
+    [:!QWERCd         [:app "Logseq"]]
+    [:!QWERSd         [:app "Obsidian"]]
+    [:!QWEROd         [:app "Bear"]]
+    [:!QWERSCd        [:app "Notion"]]
+    [:!QWERCOd        [:app "Notes"]]
+    [:!QWERf          [:ray "marcjulian/obsidian/openVaultCommand"]]
+    [:!QWERSf         [:app "Slack"]]
+    [:!QWERCf         [:app "Spark Desktop"]]
+    [:!QWEROf         [:app "Calendar"]]
+    [:!QWERg          [:app "Claude"]]
+    [:!QWERCg         [:app "ChatGPT"]]
+    [:!QWEROg         [:app "Gemini"]]
+    [:!QWERSg         [:app "Ollama"]]
+    [:!QWERSCg        [:app "LM Studio"]]
+   ]}
+
+  ;; =================================================================================
+  ;;  3. SYSTEM: STATE & HARDWARE CONTROL
+  ;; =================================================================================
+  {:des "System: Left-Hand Utility Cluster"
+   :rules [
+    ;; System Execution & Power Management (q / w)
+    [:!QWERq          :!Cq]
+    [:!QWERCq         :!Cq]
+    [:!QWEROq         :!Ch]
+    [:!QWERSq         [:sys-evt "restart"]]
+    [:!QWERSCq        [:sys-evt "shut down"]]
+    [:!QWERSOq        :!SCq]
+    [:!QWERTq         "open 'raycast://script-commands/open-abcact-manual'"]
+    [:!QWERw          :!Cw]
+    [:!QWERCw         :!SCt]
+    [:!QWERSw         :!CTq]
+    [:!QWERSCw        [:pwr "sleepnow"]]
+    [:!QWERSOw        [:pwr "displaysleepnow"]]
+
+    ;; Tab & Indent Navigation (a / s)
+    [:!QWERa          :!STtab]
+    [:!QWERSa         :!Copen_bracket]
+    [:!QWERCa         :!SCtab]
+    [:!QWEROa         :!SOTf1] ;; Switch to the previous window of the same app
+    [:!QWERTa         :!Tright_arrow]
+    [:!QWERs          :!Ttab]
+    [:!QWERSs         :!Cclose_bracket]
+    [:!QWERCs         :!Ctab]
+    [:!QWEROs         :!OTf1] ;; Switch to the next window of the same app
+    [:!QWERTs         :!Tleft_arrow]
+   ]}
+
+  ;; =================================================================================
+  ;;  4. NAVIGATION: CURSOR & POINTER
+  ;; =================================================================================
+  {:des "Nav: Vim-Style Cursor & Boundary Selection"
+   :rules [
+    ;; Line & Page Boundaries (u / i / o / p)
+    [:!QWERu          :page_up]
+    [:!QWERCu         :!Spage_up]
+    [:!QWERCOu        :!SOup_arrow]
+    [:!QWERi          :home]
+    [:!QWERCi         :!Shome]
+    [:!QWERCOi        :!Oup_arrow]
+    [:!QWERo          :end]
+    [:!QWERCo         :!Send]
+    [:!QWERCOo        :!Odown_arrow]
+    [:!QWERp          :page_down]
+    [:!QWERCp         :!Spage_down]
+    [:!QWERCOp        :!SOdown_arrow]
+
+    ;; Core Vim Directions (h / j / k / l)
+    [:!QWERh          :left_arrow]
+    [:!QWERCh         :!Sleft_arrow]
+    [:!QWERCOh        :!SOleft_arrow]
+    [:!QWERj          :down_arrow]
+    [:!QWERCj         :!Sdown_arrow]
+    [:!QWERCOj        [:!Sdown_arrow :!Sdown_arrow :!Sdown_arrow]]
+    [:!QWERk          :up_arrow]
+    [:!QWERCk         :!Sup_arrow]
+    [:!QWERCOk        [:!Sup_arrow :!Sup_arrow :!Sup_arrow]]
+    [:!QWERl          :right_arrow]
+    [:!QWERCl         :!Sright_arrow]
+    [:!QWERCOl        :!SOright_arrow]
+   ]}
+
+  {:des "Nav: Mouse Emulation & Scrolling"
+   :rules [
+    ;; Pointer Clicks & Axial Scroll (u / i / o / p)
+    [:!QWEROu         {:pkey :button1}]
+    [:!QWERTu         {:pkey :button1}]
+    [:!QWEROTu        {:pkey :button1}]
+    [:!QWEROi         {:pkey :button2}]
+    [:!QWERTi         {:pkey :button2}]
+    [:!QWEROTi        {:pkey :button2}]
+    [:!QWEROo         {:pkey :button4}]
+    [:!QWERTo         {:pkey :button4}]
+    [:!QWEROTo        {:pkey :button4}]
+    [:!QWEROp         {:pkey :button5}]
+    [:!QWERTp         {:pkey :button5}]
+    [:!QWEROTp        {:pkey :button5}]
+
+    ;; Pointer Movement & Continuous Scroll (h / j / k / l)
+    [:!QWEROh         {:mkey {:x -1600}}]
+    [:!QWERTh         {:mkey {:hwheel 128}}]
+    [:!QWEROTh        {:mkey {:x -3200}}]
+    [:!QWEROj         {:mkey {:y 1600}}]
+    [:!QWERTj         {:mkey {:vwheel 128}}]
+    [:!QWEROTj        {:mkey {:y 3200}}]
+    [:!QWEROk         {:mkey {:y -1600}}]
+    [:!QWERTk         {:mkey {:vwheel -128}}]
+    [:!QWEROTk        {:mkey {:y -3200}}]
+    [:!QWEROl         {:mkey {:x 1600}}]
+    [:!QWERTl         {:mkey {:hwheel -128}}]
+    [:!QWEROTl        {:mkey {:x 3200}}]
+   ]}
+
+  ;; =================================================================================
+  ;;  5. WINDOW MANAGEMENT (RAYCAST)
+  ;; =================================================================================
+  {:des "WM: Spatial Window Placement"
+   :rules [
+    ;; Grid Placement (q / w / a / s)
+    [:!QWERCTq        [:wm "top-left-sixth"]]
+    [:!QWERCTw        [:wm "top-right-sixth"]]
+    [:!QWERCTa        [:wm "bottom-left-sixth"]]
+    [:!QWERCTs        [:wm "bottom-right-sixth"]]
+
+    ;; Sizing & States (u / i / o / p)
+    [:!QWERCTu        [:wm "toggle-fullscreen"]]
+    [:!QWERCTi        [:wm "maximize"]]
+    [:!QWERCTo        [:wm "almost-maximize"]]
+    [:!QWERCTp        [:ray "raycast/system/hide-all-apps-except-frontmost"]]
+
+    ;; Halves & Incremental Sizing (h / j / k / l)
+    [:!QWERCTh        [:wm "left-half"]]
+    [:!QWERCTj        [:wm "make-smaller"]]
+    [:!QWERCTk        [:wm "make-larger"]]
+    [:!QWERCTl        [:wm "right-half"]]
+
+    ;; Multi-Display & Space Routing (b / n / m / ,)
+    [:!QWERCTb        [:wm "next-display"]]
+    [:!QWERCTn        [:wm "next-desktop"]]
+    [:!QWERCTm        [:wm "previous-desktop"]]
+    [:!QWERCTcomma    [:wm "previous-display"]]
+   ]}
+
+  ;; =================================================================================
+  ;;  6. TEXT MANIPULATION & SYMBOLS
+  ;; =================================================================================
+  {:des "Text: Contextual Deletion & Word Hopping"
+   :rules [
+    ;; (b / n / m / ,)
+    [:!QWERb          :!Odelete_or_backspace]
+    [:!QWERCb         :!Cdelete_or_backspace]
+    [:!QWERCOb        [:end :!Shome :!Shome :delete_or_backspace]] ;; Double `Shome` for wrapped lines
+    [:!QWERn          :delete_or_backspace]
+    [:!QWERCn         [:!SCleft_arrow :delete_or_backspace]]
+    [:!QWERCOn        [:end :!Shome :delete_or_backspace]]
+    [:!QWERm          :delete_forward]
+    [:!QWERCm         [:!SCright_arrow :delete_or_backspace]]
+    [:!QWERCOm        [:home :!Send :delete_or_backspace]]
+    [:!QWERcomma      :!Odelete_forward]
+    [:!QWERCcomma     :!Cdelete_forward]
+    [:!QWERCOcomma    [:home :!Send :!Send :delete_or_backspace]] ;; Double `Shome` for wrapped lines
+   ]}
+
+  {:des "Text: Symbols & Return"
+   :rules [
+    ;; Upper Row (brackets & backslash)
+    [:!QWERopen_bracket   :!S9]
+    [:!QWERSopen_bracket  :!Sopen_bracket]
+    [:!QWERCopen_bracket  :!Scomma]
+    [:!QWERclose_bracket  :!S0]
+    [:!QWERSclose_bracket :!Sclose_bracket]
+    [:!QWERCclose_bracket :!Speriod]
+    [:!QWERSbackslash     :!Sbackslash]
+
+    ;; Home Row (semicolon & quote & Return)
+    [:!QWERsemicolon         :return_or_enter]
+    [:!QWERSsemicolon        :!Ssemicolon]
+    [:!QWERCsemicolon        :!Creturn_or_enter]
+    [:!QWEROsemicolon        :!Oreturn_or_enter]
+    [:!QWERTsemicolon        :!Treturn_or_enter]
+    [:!QWERSCsemicolon       :!SCreturn_or_enter]
+    [:!QWERSOsemicolon       :!SOreturn_or_enter]
+    [:!QWERSTsemicolon       :!STreturn_or_enter]
+    [:!QWERCOsemicolon       :!COreturn_or_enter]
+    [:!QWERCTsemicolon       :!CTreturn_or_enter]
+    [:!QWEROTsemicolon       :!OTreturn_or_enter]
+    [:!QWERquote             :return_or_enter]
+    [:!QWERSquote            :!Squote]
+    [:!QWERCquote            :!Creturn_or_enter]
+    [:!QWEROquote            :!Oreturn_or_enter]
+    [:!QWERTquote            :!Treturn_or_enter]
+    [:!QWERSCquote           :!SCreturn_or_enter]
+    [:!QWERSOquote           :!SOreturn_or_enter]
+    [:!QWERSTquote           :!STreturn_or_enter]
+    [:!QWERCOquote           :!COreturn_or_enter]
+    [:!QWERCTquote           :!CTreturn_or_enter]
+    [:!QWEROTquote           :!OTreturn_or_enter]
+    [:!QWERreturn_or_enter   :return_or_enter]
+    [:!QWERSreturn_or_enter  :!Sreturn_or_enter]
+    [:!QWERCreturn_or_enter  :!Creturn_or_enter]
+    [:!QWEROreturn_or_enter  :!Oreturn_or_enter]
+    [:!QWERTreturn_or_enter  :!Treturn_or_enter]
+    [:!QWERSCreturn_or_enter :!SCreturn_or_enter]
+    [:!QWERSOreturn_or_enter :!SOreturn_or_enter]
+    [:!QWERSTreturn_or_enter :!STreturn_or_enter]
+    [:!QWERCOreturn_or_enter :!COreturn_or_enter]
+    [:!QWERCTreturn_or_enter :!CTreturn_or_enter]
+    [:!QWEROTreturn_or_enter :!OTreturn_or_enter]
+
+    ;; Bottom Row (`.` `/`)
+    [:!QWERperiod  :grave_accent_and_tilde]
+    [:!QWERSperiod [:grave_accent_and_tilde :grave_accent_and_tilde :grave_accent_and_tilde]]
+    [:!QWERCperiod :!Sgrave_accent_and_tilde]
+    [:!QWEROperiod :equal_sign]
+    [:!QWERslash   :hyphen]
+    [:!QWERSslash  :!Sslash]
+    [:!QWERCslash  :!Cslash]
+    [:!QWEROslash  [:spacebar :slash :spacebar]]
+    [:!QWERTslash  [:japanese_kana :japanese_kana]]
+   ]}
+
+  {:des "Text: Virtual Numpads (Shift & Semicolon Layers)"
+   :rules [
+    ;; Hyper-Shift Numpad Map
+    [:!QWERSb         :!S1]
+    [:!QWERSn         :!S2]
+    [:!QWERSm         :!S3]
+    [:!QWERScomma     :!S4]
+    [:!QWERSh         :!S5]
+    [:!QWERSj         :!S6]
+    [:!QWERSk         :!S7]
+    [:!QWERSl         :!S8]
+    [:!QWERSu         :!S9]
+    [:!QWERSi         :!S0]
+    [:!QWERSo         :!Shyphen]
+    [:!QWERSp         :!Sequal_sign]
+
+    ;; Semicolon Base Numpad
+    [:n               :0                   :semicolon-layer]
+    [:m               :1                   :semicolon-layer]
+    [:comma           :2                   :semicolon-layer]
+    [:period          :3                   :semicolon-layer]
+    [:j               :4                   :semicolon-layer]
+    [:k               :5                   :semicolon-layer]
+    [:l               :6                   :semicolon-layer]
+    [:u               :7                   :semicolon-layer]
+    [:i               :8                   :semicolon-layer]
+    [:o               :9                   :semicolon-layer]
+    [:h               :delete_or_backspace :semicolon-layer]
+   ]}
+
+  ;; =================================================================================
+  ;;  7. GLOBAL: MEDIA, HARDWARE & CLIPBOARD
+  ;; =================================================================================
+  {:des "Global: Copy/Paste & Clipboard History"
+   :rules [
+    ;; Standard Editing Fallbacks (z / x / c / v)
+    [:!QWERz          :!Cz]
+    [:!QWERCz         :!SCz]
+    [:!QWERx          :!Cx]
+    [:!QWERCx         [:!Ca :!Cx]]
+    [:!QWERc          :!Cc]
+    [:!QWERCc         [:!Ca :!Cc]]
+    [:!QWERv          :!Cv]
+    [:!QWERCv         :!SCOv]
+
+    ;; Buffer Write (Indexes 0-11)
+    [:!QWERSOb        [:!Cc [:clip-save "0"]]]
+    [:!QWERSOn        [:!Cc [:clip-save "1"]]]
+    [:!QWERSOm        [:!Cc [:clip-save "2"]]]
+    [:!QWERSOcomma    [:!Cc [:clip-save "3"]]]
+    [:!QWERSOh        [:!Cc [:clip-save "4"]]]
+    [:!QWERSOj        [:!Cc [:clip-save "5"]]]
+    [:!QWERSOk        [:!Cc [:clip-save "6"]]]
+    [:!QWERSOl        [:!Cc [:clip-save "7"]]]
+    [:!QWERSOu        [:!Cc [:clip-save "8"]]]
+    [:!QWERSOi        [:!Cc [:clip-save "9"]]]
+    [:!QWERSOo        [:!Cc [:clip-save "10"]]]
+    [:!QWERSOp        [:!Cc [:clip-save "11"]]]
+
+    ;; Buffer Execution (Indexes 0-11)
+    [:!QWERSCb        [[:clip-load "0"]  :!Cv]]
+    [:!QWERSCn        [[:clip-load "1"]  :!Cv]]
+    [:!QWERSCm        [[:clip-load "2"]  :!Cv]]
+    [:!QWERSCcomma    [[:clip-load "3"]  :!Cv]]
+    [:!QWERSCh        [[:clip-load "4"]  :!Cv]]
+    [:!QWERSCj        [[:clip-load "5"]  :!Cv]]
+    [:!QWERSCk        [[:clip-load "6"]  :!Cv]]
+    [:!QWERSCl        [[:clip-load "7"]  :!Cv]]
+    [:!QWERSCu        [[:clip-load "8"]  :!Cv]]
+    [:!QWERSCi        [[:clip-load "9"]  :!Cv]]
+    [:!QWERSCo        [[:clip-load "10"] :!Cv]]
+    [:!QWERSCp        [[:clip-load "11"] :!Cv]]
+   ]}
+
+  {:des "Global: Core Hardware & Media Overrides"
+   :rules [
+    ;; Auxiliary Hardware
+    [:!QWERtab         :f6]
+    [:!QWERCtab        :!Sf6]
+    [:!QWEROtab        :!Tf2]
+    [:!QWERStab        :launchpad]
+    [:!QWERhyphen      :!Chyphen]
+    [:!QWERChyphen     :!COhyphen]
+    [:!QWERequal_sign  :!Cequal_sign]
+    [:!QWERCequal_sign :!COequal_sign]
+   ]}
+
+  {:des "Global: Capture & Media Controls"
+   :rules [
+    [:!QWERgrave_accent_and_tilde  :f13] ;; Amical (Voice Input Tool)
+    [:!QWER1                       :display_brightness_decrement]
+    [:!QWER2                       :display_brightness_increment]
+    [:!QWERSgrave_accent_and_tilde [:clip-airdrop]]
+    [:!QWERS1                      :!SC5]
+    [:!QWERS2                      :!SCT4]
+    [:!QWERCgrave_accent_and_tilde :mute]
+    [:!QWERC1                      :volume_decrement]
+    [:!QWERC2                      :volume_increment]
+    [:!QWEROgrave_accent_and_tilde :play_or_pause]
+    [:!QWERO1                      :rewind]
+    [:!QWERO2                      :fast_forward]
+   ]}
+
+  {:des "Global: Function Key Emulation"
+   :rules [
+    [:!QWERSTb        :f1]
+    [:!QWERSTn        :f2]
+    [:!QWERSTm        :f3]
+    [:!QWERSTcomma    :f4]
+    [:!QWERSTh        :f5]
+    [:!QWERSTj        :f6]
+    [:!QWERSTk        :f7]
+    [:!QWERSTl        :f8]
+    [:!QWERSTu        :f9]
+    [:!QWERSTi        :f10]
+    [:!QWERSTo        :f11]
+    [:!QWERSTp        :f12]
+   ]}
+ ]
+}

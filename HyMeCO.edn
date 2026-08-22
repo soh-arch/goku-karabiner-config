@@ -1,0 +1,361 @@
+;; HyMeCO
+
+;; H: Hyper
+;; M: Meh
+
+;; L: Left
+;; R: Right
+
+;; N: None
+;; C: L-Command
+;; O: L-Option
+
+{
+ :templates {
+  :app          "open -a '%s'"
+  :ray          "open -g 'raycast://extensions/%s'"
+  :wm           "open -g 'raycast://extensions/raycast/window-management/%s'"
+  :sys-evt      "osascript -e 'tell app \"System Events\" to %s'"
+  :pwr          "pmset %s"
+  :clip-save    "mkdir -p ~/.cache/abcact/clips && sleep 0.1 && pbpaste > ~/.cache/abcact/clips/%s"
+  :clip-load    "cat ~/.cache/abcact/clips/%s | pbcopy && sleep 0.1"
+  :clip-airdrop "osascript -e 'set tmp to POSIX path of (path to temporary items) & \"clip.png\"' -e 'try' -e 'set img to the clipboard as «class PNGf»' -e 'set f to open for access POSIX file tmp with write permission' -e 'set eof f to 0' -e 'write img to f' -e 'close access f' -e 'on error' -e 'display dialog \"No image available\" buttons {\"OK\"}' -e 'return' -e 'end try' -e 'tell application \"Finder\"' -e 'activate' -e 'reveal (POSIX file tmp as alias)' -e 'end tell' -e 'tell application \"System Events\" to tell process \"Finder\"' -e 'delay 0.1' -e 'click (first button of toolbar 1 of window 1 whose description is \"共有\" or description is \"Share\")' -e 'delay 0.1' -e 'key code 36' -e 'end tell'"
+ }
+
+ :simlayers {
+  :semicolon-layer {:key :semicolon}
+  :quote-layer     {:key :quote}
+  :slash-layer     {:key :slash}
+ }
+
+ :main [
+  {:des "Core"
+   :rules [
+    [:##caps_lock       :!QWEright_shift nil {:alone :escape}]
+    [:##return_or_enter :!QWEright_shift nil {:alone :return_or_enter}]
+    [:##left_shift      :!WEright_shift nil {:alone :japanese_eisuu}]
+    [:##right_shift     :!WEright_shift nil {:alone :japanese_kana}]
+    [:!WER#Pescape      :caps_lock]
+    [:spacebar          :left_shift]
+    [:##fn              :left_control]
+    [:right_command     :left_command nil {:alone :!SCT4}]
+    [:right_option      :left_option nil {:alone [:clip-airdrop]}]
+
+    [:close_bracket     :spacebar]
+    [:open_bracket      :spacebar]
+    [:backslash         :spacebar]
+    [:!WERclose_bracket :spacebar]
+    [:!WERopen_bracket  :spacebar]
+    [:!WERbackslash     :spacebar]
+    [:!WERCclose_bracket :spacebar]
+    [:!WERCopen_bracket  :spacebar]
+    [:!WERCbackslash     :spacebar]
+    [:!WEROclose_bracket :spacebar]
+    [:!WEROopen_bracket  :spacebar]
+    [:!WERObackslash     :spacebar]
+
+    [:!QWERspacebar      {:pkey :button1}]
+    [:!QWERright_command {:pkey :button2}]
+    [:!QWERright_option  {:pkey :button3}]
+    [:!WERspacebar       :return_or_enter]
+    [:!WERright_command  :!Sreturn_or_enter]
+    [:!WERright_option   :!Sreturn_or_enter]
+
+    [[:d :f] :japanese_eisuu]
+    [[:j :k] :japanese_kana]
+   ]}
+
+  {:des "HL: Apps"
+   :rules [
+    [:!QWERw  [:app "Dia"]]
+    [:!QWERCw [:app "Comet"]]
+    [:!QWERq  [:app "Google Chrome"]]
+    [:!QWERCq [:app "Safari"]]
+    [:!QWERe  [:app "Cursor"]]
+    [:!QWERCe [:app "Visual Studio Code"]]
+    [:!QWEROe [:app "Xcode"]]
+    [:!QWERf  [:app "Finder"]]
+    [:!QWERCf [:app "Preview"]]
+    [:!QWEROf [:app "Spacedrive"]]
+    [:!QWERr  [:app "iTerm"]]
+    [:!QWERCr [:app "Terminal"]]
+    [:!QWERg  [:app "Raycast"]]
+    [:!QWERt  [:app "TradingView"]]
+    [:!QWERCx [:ray "mooxl/deepcast/englishUS?arguments=%7B%22text%22%3A%22%22%7D"]]
+    [:!QWEROx [:ray "mooxl/deepcast/japanese?arguments=%7B%22text%22%3A%22%22%7D"]]
+    [:!QWERx  [:ray "mooxl/deepcast/index"]]
+    [:!QWERy  [:app "Music"]]
+    [:!QWERd  [:ray "raycast/raycast-notes/raycast-notes"]]
+    [:!QWERCd [:app "Obsidian"]]
+    [:!QWERs [:app "Bear"]]
+    [:!QWERCs [:app "Logseq"]]
+    [:!QWERa [:app "Notion"]]
+   ]}
+
+  {:des "ML-MLC: Syboles & Ctrl"
+   :rules [
+    [:!WERq :!Sgrave_accent_and_tilde]
+    [:!WERw :!Shyphen]
+    [:!WERe :!Sequal_sign]
+    [:!WERr :!Sbackslash]
+    [:!WERa :grave_accent_and_tilde]
+    [:!WERs :hyphen]
+    [:!WERd :equal_sign]
+    [:!WERf :backslash]
+    [:!WERz :!Cz]
+    [:!WERx :!Cx]
+    [:!WERc :!Cc]
+    [:!WERv :!Cv]
+
+    [:!WERCq :!S1]
+    [:!WERCw :!S2]
+    [:!WERCe :!S3]
+    [:!WERCr :!S4]
+    [:!WERCa :!S5]
+    [:!WERCs :!S6]
+    [:!WERCd :!S7]
+    [:!WERCf :!S8]
+    [:!WERCz :!SCz]
+    [:!WERCx [:!Ca :!Cx]]
+    [:!WERCc [:!Ca :!Cc]]
+    [:!WERCv :!SCOv]
+   ]}
+
+  {:des "HRN: Mouse Cursor"
+   :rules [
+    [:!QWERu     {:mkey {:hwheel -128}}]
+    [:!QWERi     {:mkey {:vwheel 128}}]
+    [:!QWERo     {:mkey {:vwheel -128}}]
+    [:!QWERp     {:mkey {:hwheel 128}}]
+    [:!QWERh     {:mkey {:x -3200}}]
+    [:!QWERj     {:mkey {:y 3200}}]
+    [:!QWERk     {:mkey {:y -3200}}]
+    [:!QWERl     {:mkey {:x 3200}}]
+    [:!QWERb     {:mkey {:x -3200}}]
+    [:!QWERn     {:mkey {:y 3200}}]
+    [:!QWERm     {:mkey {:y -3200}}]
+    [:!QWERcomma {:mkey {:x 3200}}]
+   ]}
+
+  {:des "HRC: Screen Transition"
+   :rules [
+    [:!QWERCu   :!SCtab]
+    [:!QWERCi   :!Cq]
+    [:!QWERCo   :launchpad]
+    [:!QWERCp   :!Ctab]
+
+    [:!QWERCh   :!STtab]
+    [:!QWERCj   :!Cw]
+    [:!QWERCk   :!SCt]
+    [:!QWERCl   :!Ttab]
+
+    [:!QWERCb       :!Tright_arrow]
+    [:!QWERCn       :!Tdown_arrow]
+    [:!QWEROm       :!Tup_arrow]
+    [:!QWERCcomma   :!Tleft_arrow]
+
+    [:!QWERCsemicolon :!Copen_bracket]
+    [:!QWERCquote     :!Cclose_bracket]
+    [:!QWEROperiod    :!SOTf1]
+    [:!QWEROslash     :!OTf1]
+   ]}
+
+  {:des "HRO: Window Management"
+   :rules [
+    [:!QWERCTsemicolon [:wm "top-left-sixth"]]
+    [:!QWERCTquote     [:wm "top-right-sixth"]]
+    [:!QWERCTperiod    [:wm "bottom-left-sixth"]]
+    [:!QWERCTslash     [:wm "bottom-right-sixth"]]
+
+    [:!QWERCTu [:wm "toggle-fullscreen"]]
+    [:!QWERCTi [:wm "maximize"]]
+    [:!QWERCTo [:wm "almost-maximize"]]
+    [:!QWERCTp [:ray "raycast/system/hide-all-apps-except-frontmost"]]
+
+    [:!QWERCTh [:wm "left-half"]]
+    [:!QWERCTj [:wm "make-smaller"]]
+    [:!QWERCTk [:wm "make-larger"]]
+    [:!QWERCTl [:wm "right-half"]]
+
+    [:!QWERCTb     [:wm "next-display"]]
+    [:!QWERCTn     [:wm "next-desktop"]]
+    [:!QWERCTm     [:wm "previous-desktop"]]
+    [:!QWERCTcomma [:wm "previous-display"]]
+   ]}
+
+  {:des "MR: Navigation"
+   :rules [
+    ;; Line & Page Boundaries (u / i / o / p)
+    [:!WERu   :page_up]
+    [:!WERCu  :!Spage_up]
+    [:!WEROu  :!SOup_arrow]
+    [:!WERi   :home]
+    [:!WERCi  :!Shome]
+    [:!WEROi  :!Oup_arrow]
+    [:!WERo   :end]
+    [:!WERCo  :!Send]
+    [:!WEROo  :!Odown_arrow]
+    [:!WERp   :page_down]
+    [:!WERCp  :!Spage_down]
+    [:!WEROp  :!SOdown_arrow]
+
+    ;; Core Vim Directions (h / j / k / l)
+    [:!WERh  :left_arrow]
+    [:!WERCh :!Sleft_arrow]
+    [:!WEROh :!SOleft_arrow]
+    [:!WERj  :down_arrow]
+    [:!WERCj :!Sdown_arrow]
+    [:!WEROj [:!Sdown_arrow :!Sdown_arrow :!Sdown_arrow]]
+    [:!WERk  :up_arrow]
+    [:!WERCk :!Sup_arrow]
+    [:!WEROk [:!Sup_arrow :!Sup_arrow :!Sup_arrow]]
+    [:!WERl  :right_arrow]
+    [:!WERCl :!Sright_arrow]
+    [:!WEROl :!SOright_arrow]
+
+    ;; (b / n / m / ,)
+    [:!WERb       :!Odelete_or_backspace]
+    [:!WERCb      :!Cdelete_or_backspace]
+    [:!WEROb      [:end :!Shome :!Shome :delete_or_backspace]] ;; Double `Shome` for wrapped lines
+    [:!WERn       :delete_or_backspace]
+    [:!WERCn      [:!SCleft_arrow :delete_or_backspace]]
+    [:!WEROn      [:end :!Shome :delete_or_backspace]]
+    [:!WERm       :delete_forward]
+    [:!WERCm      [:!SCright_arrow :delete_or_backspace]]
+    [:!WEROm      [:home :!Send :delete_or_backspace]]
+    [:!WERcomma   :!Odelete_forward]
+    [:!WERCcomma  :!Cdelete_forward]
+    [:!WEROcomma  [:home :!Send :!Send :delete_or_backspace]] ;; Double `Shome` for wrapped lines
+   ]}
+
+  {:des ""
+   :rules [
+    [:!WERsemicolon  :!Sopen_bracket]
+    [:!WERquote      :!Sclose_bracket]
+    [:!WERslash      :close_bracket]
+    [:!WERCsemicolon :!S9]
+    [:!WERCquote     :!S0]
+    [:!WERperiod     :!Scomma]
+    [:!WERCslash     :!Speriod]
+   ]}
+
+  {:des "SEMI"
+   :rules [
+    ;; Semicolon
+    [:n        :delete_or_backspace   :semicolon-layer]
+    [:b        :!Odelete_or_backspace :semicolon-layer]
+    [:m        :1                     :semicolon-layer]
+    [:comma    :2                     :semicolon-layer]
+    [:period   :3                     :semicolon-layer]
+    [:j        :4                     :semicolon-layer]
+    [:k        :5                     :semicolon-layer]
+    [:l        :6                     :semicolon-layer]
+    [:u        :7                     :semicolon-layer]
+    [:i        :8                     :semicolon-layer]
+    [:o        :9                     :semicolon-layer]
+    [:h        :tab                   :semicolon-layer]
+    [:spacebar :0                     :semicolon-layer]
+
+    ;; Quote
+    [:n        :delete_or_backspace   :quote-layer]
+    [:b        :!Odelete_or_backspace :quote-layer]
+    [:m        :1                     :quote-layer]
+    [:comma    :2                     :quote-layer]
+    [:period   :3                     :quote-layer]
+    [:j        :4                     :quote-layer]
+    [:k        :5                     :quote-layer]
+    [:l        :6                     :quote-layer]
+    [:u        :7                     :quote-layer]
+    [:i        :8                     :quote-layer]
+    [:o        :9                     :quote-layer]
+    [:h        :tab                   :quote-layer]
+    [:spacebar :0                     :quote-layer]
+
+    ;; Slash
+    [:n        :delete_or_backspace   :slash-layer]
+    [:b        :!Odelete_or_backspace :slash-layer]
+    [:m        :1                     :slash-layer]
+    [:comma    :2                     :slash-layer]
+    [:period   :3                     :slash-layer]
+    [:j        :4                     :slash-layer]
+    [:k        :5                     :slash-layer]
+    [:l        :6                     :slash-layer]
+    [:u        :7                     :slash-layer]
+    [:i        :8                     :slash-layer]
+    [:o        :9                     :slash-layer]
+    [:h        :tab                   :slash-layer]
+    [:spacebar :0                     :slash-layer]
+   ]}
+
+  {:des "Hgrave-Hnumber: Function"
+   :rules [
+    [:!QWERgrave_accent_and_tilde :f13] ;; Amical (Voice Input Tool)
+    [:!QWER1      :f1]
+    [:!QWER2      :f2]
+    [:!QWER3      :f3]
+    [:!QWER4      :f4]
+    [:!QWER5      :f5]
+    [:!QWER6      :f6]
+    [:!QWER7      :f7]
+    [:!QWER8      :f8]
+    [:!QWER9      :f9]
+    [:!QWER0      :f10]
+    [:!QWERhyphen     :f11]
+    [:!QWERequal_sign :f12]
+   ]}
+
+  {:des "Mgrave-Mnumber: Maccy"
+   :rules [
+    [:!WERgrave_accent_and_tilde [:app "Maccy"]]
+    [:!WER1                      :!C1]
+    [:!WER2                      :!C2]
+    [:!WER3                      :!C3]
+    [:!WER4                      :!C4]
+    [:!WER5                      :!C5]
+    [:!WER6                      :!C6]
+    [:!WER7                      :!C7]
+    [:!WER8                      :!C8]
+    [:!WER9                      :!C9]
+   ]}
+
+  {:des "MCnumber-MOnumber: Clip"
+   :rules [
+    [:!WERO1 [:!Cc [:clip-save "0"]]]
+    [:!WERO2 [:!Cc [:clip-save "1"]]]
+    [:!WERO3 [:!Cc [:clip-save "2"]]]
+    [:!WERO4 [:!Cc [:clip-save "3"]]]
+    [:!WERO5 [:!Cc [:clip-save "4"]]]
+    [:!WERO6 [:!Cc [:clip-save "5"]]]
+    [:!WERO7 [:!Cc [:clip-save "6"]]]
+    [:!WERO8 [:!Cc [:clip-save "7"]]]
+    [:!WERO9 [:!Cc [:clip-save "8"]]]
+    [:!WERO0 [:!Cc [:clip-save "9"]]]
+
+    [:!WERC1 [[:clip-load "0"] :!Cv]]
+    [:!WERC2 [[:clip-load "1"] :!Cv]]
+    [:!WERC3 [[:clip-load "2"] :!Cv]]
+    [:!WERC4 [[:clip-load "3"] :!Cv]]
+    [:!WERC5 [[:clip-load "4"] :!Cv]]
+    [:!WERC6 [[:clip-load "5"] :!Cv]]
+    [:!WERC7 [[:clip-load "6"] :!Cv]]
+    [:!WERC8 [[:clip-load "7"] :!Cv]]
+    [:!WERC9 [[:clip-load "8"] :!Cv]]
+    [:!WERC0 [[:clip-load "9"] :!Cv]]
+   ]}
+
+  {:des "Capture & Media Controls"
+   :rules [
+    [:!QWERopen_bracket  :volume_decrement]
+    [:!QWERclose_bracket :volume_increment]
+    [:!QWERbackslash     :mute]
+    [:!QWERsemicolon     :display_brightness_decrement]
+    [:!QWERquote         :display_brightness_increment]
+    [:!QWERperiod        :illumination_decrement]
+    [:!QWERslash         :illumination_increment]
+
+    [:!QWERescape  [:pwr "sleepnow"]]
+    [:!QWERCescape [:sys-evt "restart"]]
+    [:!QWEROescape [:sys-evt "shut down"]]
+   ]}
+ ]
+}
