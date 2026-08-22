@@ -698,7 +698,7 @@ code{
           <tr><td><span class="key">L-⌘</span></td><td><strong>Asterisk layer</strong></td><td class="dim">Switch to English input (US Extended)</td></tr>
           <tr><td><span class="key">L-⇧</span></td><td><strong>Bra layer</strong></td><td class="dim"><code>`</code> — with R-⇧ held: <code>~</code></td></tr>
           <tr><td><span class="key">R-⇧</span></td><td><strong>Cket layer</strong></td><td class="dim"><code>\</code> — with L-⇧ held: <code>|</code></td></tr>
-          <tr><td><span class="key">Caps Lock</span></td><td>R-⇧ &nbsp;<span class="dim">(and Act target inside Asterisk)</span></td><td class="dim">Esc</td></tr>
+          <tr><td><span class="key">Caps Lock</span></td><td>R-⇧ &nbsp;<span class="dim">(outside the layers — inside Asterisk it is a system-action key, §07)</span></td><td class="dim">Esc</td></tr>
           <tr><td><span class="key">Space</span></td><td>Real ⌘ &nbsp;<span class="dim">(no layer — used for Bra chords)</span></td><td class="dim">Space</td></tr>
           <tr><td><span class="key">R-⌘</span></td><td>⇧</td><td class="dim">Switch to Japanese input (Romaji)</td></tr>
           <tr><td><span class="key">L-⌥</span></td><td>⌥</td><td class="dim">Switch to Greek input</td></tr>
@@ -911,7 +911,7 @@ code{
             <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot on-d"></span><span class="dot"></span></span></span></td>
             <td class="row-label">Delete<span class="formula">Cmd+D →</span></td>
             <td>Backspace</td><td>Delete line below</td><td>Delete line above</td><td>Forward delete</td>
-            <td>Delete 2 lines up</td><td>Delete line (up)</td><td>Delete line (down)</td><td>Delete 2 lines down</td>
+            <td>Clear line + one above</td><td>Clear line, backwards</td><td>Clear line, forwards</td><td>Clear line + one below</td>
           </tr>
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot on-a"></span><span class="dot"></span><span class="dot on-d"></span><span class="dot"></span></span></span></td>
@@ -922,7 +922,7 @@ code{
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot on-s"></span><span class="dot on-d"></span><span class="dot"></span></span></span></td>
             <td class="row-label">Reconvert &amp; Clipboard<span class="formula">Cmd+S+D →</span></td>
-            <td>Reconvert<span class="hint">⌃⇧R</span></td><td>IME convert<span class="hint">⌃J</span></td><td>IME convert<span class="hint">⌃K</span></td><td>IME convert<span class="hint">⌃;</span></td>
+            <td>Reconvert<span class="hint">⌃⇧R</span></td><td>To hiragana<span class="hint">⌃J</span></td><td>To katakana<span class="hint">⌃K</span></td><td>IME convert<span class="hint">⌃;</span></td>
             <td>Paste &amp; match style</td><td>Paste</td><td>Copy</td><td>Cut</td>
           </tr>
           <tr>
@@ -967,7 +967,7 @@ code{
             <td><span class="act-badge"><span class="dots"><span class="dot on-a"></span><span class="dot on-s"></span><span class="dot"></span><span class="dot on-f"></span></span></span></td>
             <td class="row-label">Fast Drag &amp; Drop<span class="formula">Cmd+A+S+F →</span></td>
             <td>Drag left ×2</td><td>Drag down ×2</td><td>Drag up ×2</td><td>Drag right ×2</td>
-            <td>Drag left ×1</td><td>Drag down ×1</td><td>Drag up ×1</td><td>Drag right ×1</td>
+            <td>Drag left ½</td><td>Drag down ½</td><td>Drag up ½</td><td>Drag right ½</td>
           </tr>
         </tbody>
       </table>
@@ -1045,22 +1045,22 @@ code{
         <tbody>
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span></span></td>
-            <td class="row-label">No d, no f<span class="formula">any / no a s</span></td>
+            <td class="row-label">Neither held<span class="formula">Cmd → &nbsp;(±a ±s)</span></td>
             <td>Return</td><td>Return</td><td>Return</td><td>Return</td>
           </tr>
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot on-d"></span><span class="dot"></span></span></span></td>
-            <td class="row-label">d held<span class="formula">Cmd+D →</span></td>
+            <td class="row-label">d held<span class="formula">Cmd+D → &nbsp;(±a ±s)</span></td>
             <td>Select all</td><td>Select all</td><td>Select all</td><td>Select all</td>
           </tr>
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot on-f"></span></span></span></td>
-            <td class="row-label">f held<span class="formula">Cmd+F →</span></td>
+            <td class="row-label">f held<span class="formula">Cmd+F → &nbsp;(±a ±s)</span></td>
             <td>Left click</td><td>Right click</td><td>Left click</td><td>Right click</td>
           </tr>
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot on-d"></span><span class="dot on-f"></span></span></span></td>
-            <td class="row-label">d + f held<span class="formula">Cmd+D+F →</span></td>
+            <td class="row-label">d + f held<span class="formula">Cmd+D+F → &nbsp;(±a ±s)</span></td>
             <td>Top-left sixth</td><td>Top-right sixth</td><td>Bottom-left sixth</td><td>Bottom-right sixth</td>
           </tr>
         </tbody>
@@ -1330,7 +1330,7 @@ code{
       </div>
       <div class="glossary-item">
         <div class="glossary-term">Alone / tap</div>
-        <p class="glossary-def">Pressing and releasing a hold-key without touching anything else. Every trigger key has a useful tap action so no key is spent on holding alone.</p>
+        <p class="glossary-def">Pressing and releasing a hold-key without touching anything else. Most trigger keys carry a tap action too, so few keys are spent on holding alone.</p>
       </div>
     </div>
   </section>
