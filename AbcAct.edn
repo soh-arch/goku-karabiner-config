@@ -347,10 +347,10 @@
 
     ;; ── aSDF ─────────────────────────
     ;; Window Management
-    [:##h             [:wm "left-half"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :act-d :act-f]]
-    [:##j             [:wm "bottom-half"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :act-d :act-f]]
-    [:##k             [:wm "top-half"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :act-d :act-f]]
-    [:##l             [:wm "right-half"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :act-d :act-f]]
+    [:##h             [:wm "move-left"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :act-d :act-f]]
+    [:##j             [:wm "move-down"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :act-d :act-f]]
+    [:##k             [:wm "move-up"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :act-d :act-f]]
+    [:##l             [:wm "move-right"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :act-d :act-f]]
     [:##u             [:wm "maximize"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :act-d :act-f]]
     [:##i             [:wm "make-smaller"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :act-d :act-f]]
     [:##o             [:wm "make-larger"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :act-d :act-f]]
@@ -358,11 +358,13 @@
 
     ;; ── ASDF ─────────────────────────
     ;; Amplified Window Management
-    [:##h             [:wm "previous-display"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :act-f]]
-    [:##l             [:wm "next-display"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :act-f]]
+    [:##h             [:wm "left-half"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :act-f]]
+    [:##j             [:wm "bottom-half"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :act-f]]
+    [:##k             [:wm "top-half"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :act-f]]
+    [:##l             [:wm "right-half"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :act-f]]
     [:##u             [:wm "toggle-fullscreen"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :act-f]]
-    [:##i             [:wm "make-smaller"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :act-f]]
-    [:##o             [:wm "make-larger"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :act-f]]
+    [:##i             [:wm "previous-display"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :act-f]]
+    [:##o             [:wm "next-display"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :act-f]]
     [:##p             :!Ch [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :act-f]]
    ]}
 
