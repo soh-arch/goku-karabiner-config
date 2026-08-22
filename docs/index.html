@@ -1,0 +1,1576 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="AbcAct — reference manual for a layered Goku / Karabiner-Elements keymap for macOS. Three layers, four Act keys, sixteen semantic tiers.">
+<title>AbcAct Keymap Reference</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='8' cy='8' r='5' fill='%23D64545'/%3E%3Ccircle cx='24' cy='8' r='5' fill='%23DE8A3E'/%3E%3Ccircle cx='8' cy='24' r='5' fill='%230E7D8C'/%3E%3Ccircle cx='24' cy='24' r='5' fill='%234F8F5F'/%3E%3C/svg%3E">
+<style>
+/* ============================================================
+   AbcAct — Keymap Reference
+   Single-file reference manual for AbcAct.edn
+   ============================================================ */
+
+:root{
+  --bg:            #F6F3EC;
+  --surface:       #FFFFFF;
+  --surface-2:     #FBF9F3;
+  --ink:           #211D16;
+  --sub:           #6E6759;
+  --faint:         #9C9484;
+  --border:        #E5DFD1;
+  --border-strong: #D2CAB8;
+  --keycap:        #FCFAF5;
+  --keycap-edge:   #D8D1C0;
+
+  --a: #D64545;  --a-soft: rgba(214, 69, 69, .12);
+  --s: #DE8A3E;  --s-soft: rgba(222,138, 62, .14);
+  --d: #0E7D8C;  --d-soft: rgba( 14,125,140, .12);
+  --f: #4F8F5F;  --f-soft: rgba( 79,143, 95, .13);
+
+  --radius-s: 8px;
+  --radius-m: 14px;
+  --radius-l: 20px;
+  --shadow-1: 0 1px 2px rgba(33,29,22,.05), 0 4px 14px rgba(33,29,22,.05);
+  --shadow-2: 0 2px 6px rgba(33,29,22,.07), 0 14px 34px rgba(33,29,22,.09);
+
+  --font-display: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+
+  --header-h: 62px;
+  --nav-h: 52px;
+}
+
+[data-theme="dark"]{
+  --bg:            #14120F;
+  --surface:       #1D1B16;
+  --surface-2:     #242119;
+  --ink:           #EDE8DC;
+  --sub:           #A79E8B;
+  --faint:         #6E6759;
+  --border:        #2E2A21;
+  --border-strong: #403A2D;
+  --keycap:        #26231C;
+  --keycap-edge:   #3A352A;
+
+  --a: #E4706C;  --a-soft: rgba(228,112,108,.16);
+  --s: #E8A266;  --s-soft: rgba(232,162,102,.16);
+  --d: #46AAB8;  --d-soft: rgba( 70,170,184,.16);
+  --f: #7FBA8D;  --f-soft: rgba(127,186,141,.16);
+
+  --shadow-1: 0 1px 2px rgba(0,0,0,.28), 0 4px 14px rgba(0,0,0,.24);
+  --shadow-2: 0 2px 6px rgba(0,0,0,.34), 0 14px 34px rgba(0,0,0,.36);
+}
+
+*,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
+
+html{ scroll-behavior:smooth; }
+
+body{
+  font-family:var(--font-sans);
+  background:var(--bg);
+  color:var(--ink);
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  transition:background-color .3s ease, color .3s ease;
+}
+
+::selection{ background:var(--a); color:#fff; }
+
+a{ color:inherit; text-decoration:none; }
+button{ font:inherit; color:inherit; background:none; border:none; cursor:pointer; }
+
+:focus-visible{ outline:2px solid var(--d); outline-offset:2px; border-radius:4px; }
+
+/* ---------- Scroll progress ---------- */
+.progress{
+  position:fixed; top:0; left:0; z-index:300;
+  width:100%; height:3px;
+  background:linear-gradient(90deg, var(--a) 0%, var(--s) 33%, var(--d) 66%, var(--f) 100%);
+  transform-origin:0 50%; transform:scaleX(0);
+}
+
+/* ---------- Header ---------- */
+.site-header{
+  position:sticky; top:0; z-index:200; height:var(--header-h);
+  background:color-mix(in srgb, var(--bg) 86%, transparent);
+  backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+}
+.header-inner{
+  max-width:1180px; height:100%; margin:0 auto; padding:0 24px;
+  display:flex; align-items:center; gap:16px;
+}
+.brand{ display:flex; align-items:center; gap:11px; flex-shrink:0; }
+.brand-mark{ display:grid; grid-template-columns:1fr 1fr; gap:2.5px; width:19px; height:19px; }
+.brand-mark i{ border-radius:50%; display:block; }
+.brand-mark i:nth-child(1){ background:var(--a); }
+.brand-mark i:nth-child(2){ background:var(--s); }
+.brand-mark i:nth-child(3){ background:var(--d); }
+.brand-mark i:nth-child(4){ background:var(--f); }
+.brand-name{ font-weight:800; letter-spacing:.14em; font-size:.95rem; }
+.brand-tag{
+  font-size:.6rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--sub); border:1px solid var(--border-strong); border-radius:99px; padding:2.5px 8px;
+  white-space:nowrap;
+}
+.header-nav{ display:flex; gap:4px; margin-left:auto; }
+.header-nav a{
+  font-size:.8rem; font-weight:600; color:var(--sub);
+  padding:6px 11px; border-radius:7px; transition:color .15s ease, background .15s ease;
+}
+.header-nav a:hover{ color:var(--ink); background:var(--surface-2); }
+.header-search{ position:relative; width:230px; flex-shrink:0; }
+.header-search input{
+  width:100%; padding:7px 34px 7px 13px; font-size:.82rem; font-family:inherit;
+  color:var(--ink); background:var(--surface);
+  border:1.5px solid var(--border-strong); border-radius:8px; outline:none;
+  transition:border-color .2s ease, box-shadow .2s ease;
+}
+.header-search input::placeholder{ color:var(--faint); }
+.header-search input:focus{ border-color:var(--ink); box-shadow:0 0 0 3px color-mix(in srgb, var(--ink) 10%, transparent); }
+.search-kbd{
+  position:absolute; right:9px; top:50%; transform:translateY(-50%);
+  font-family:var(--font-mono); font-size:.68rem; color:var(--faint);
+  border:1px solid var(--border); border-radius:4px; padding:1px 6px; pointer-events:none;
+  background:var(--surface-2);
+}
+.theme-toggle{
+  flex-shrink:0; width:34px; height:34px; border-radius:9px;
+  border:1px solid var(--border-strong); background:var(--surface);
+  display:grid; place-items:center; transition:border-color .2s ease, transform .2s ease;
+}
+.theme-toggle:hover{ border-color:var(--ink); transform:translateY(-1px); }
+.theme-toggle svg{ width:16px; height:16px; stroke:var(--ink); fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+.theme-toggle .icon-sun{ display:none; }
+[data-theme="dark"] .theme-toggle .icon-sun{ display:block; }
+[data-theme="dark"] .theme-toggle .icon-moon{ display:none; }
+
+/* ---------- Layout ---------- */
+.container{ max-width:1180px; margin:0 auto; padding:0 24px; }
+
+/* ---------- Hero ---------- */
+.hero{ padding:72px 0 40px; }
+.hero-eyebrow{
+  display:inline-flex; align-items:center; gap:9px;
+  font-size:.7rem; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--sub);
+  margin-bottom:22px;
+}
+.hero-eyebrow::before{ content:""; width:26px; height:1.5px; background:var(--a); }
+.hero h1{
+  font-family:var(--font-display); font-weight:700;
+  font-size:clamp(2.9rem, 7.2vw, 5.2rem);
+  line-height:1.02; letter-spacing:-.025em; margin-bottom:18px;
+}
+.hero h1 .thin{ color:var(--faint); font-style:italic; font-weight:400; }
+.hero-tagline{
+  font-size:clamp(1.02rem, 2vw, 1.25rem); font-weight:600; color:var(--ink);
+  margin-bottom:14px; max-width:640px;
+}
+.hero-tagline em{ font-style:normal; box-shadow:inset 0 -.5em 0 var(--s-soft); }
+.hero-copy{ font-size:.92rem; color:var(--sub); line-height:1.75; max-width:660px; margin-bottom:26px; }
+.hero-copy strong{ color:var(--ink); font-weight:700; }
+.hero-meta{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:34px; }
+.meta-chip{
+  font-size:.72rem; font-weight:600; color:var(--sub);
+  border:1px solid var(--border); background:var(--surface);
+  padding:6px 12px; border-radius:99px; display:inline-flex; gap:7px; align-items:center;
+}
+.meta-chip b{ color:var(--ink); font-weight:700; }
+.hero-cta{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:56px; }
+.btn{
+  display:inline-flex; align-items:center; gap:8px;
+  font-size:.84rem; font-weight:700; padding:11px 20px; border-radius:10px;
+  transition:transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease;
+}
+.btn-primary{ background:var(--ink); color:var(--bg); box-shadow:var(--shadow-1); }
+.btn-primary:hover{ transform:translateY(-2px); box-shadow:var(--shadow-2); }
+.btn-ghost{ border:1.5px solid var(--border-strong); color:var(--ink); background:var(--surface); }
+.btn-ghost:hover{ border-color:var(--ink); transform:translateY(-2px); }
+.btn .arr{ font-family:var(--font-mono); }
+
+/* ---------- Hero keyboard ---------- */
+.kb-stage{
+  background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-l);
+  padding:clamp(18px, 4vw, 34px); box-shadow:var(--shadow-1); overflow:hidden;
+}
+.kb{ display:flex; flex-direction:column; gap:7px; user-select:none; }
+.kb-row{ display:flex; gap:7px; }
+.keycap{
+  --u:1;
+  flex:var(--u) 1 0; min-width:0;
+  height:clamp(34px, 5.4vw, 50px);
+  background:linear-gradient(180deg, var(--keycap), color-mix(in srgb, var(--keycap) 88%, var(--border)));
+  border:1px solid var(--keycap-edge); border-bottom-width:2.5px; border-radius:8px;
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-mono); font-size:clamp(.52rem, 1.15vw, .74rem); font-weight:600;
+  color:var(--sub); letter-spacing:.02em;
+  transition:transform .15s ease;
+  white-space:nowrap; overflow:hidden;
+}
+.keycap:hover{ transform:translateY(1.5px); }
+.keycap.mod{ color:var(--faint); font-size:clamp(.46rem, 1vw, .64rem); }
+.keycap.k-a{ color:var(--a); border-color:color-mix(in srgb, var(--a) 45%, var(--keycap-edge)); background:linear-gradient(180deg, var(--a-soft), transparent 160%); }
+.keycap.k-s{ color:var(--s); border-color:color-mix(in srgb, var(--s) 45%, var(--keycap-edge)); background:linear-gradient(180deg, var(--s-soft), transparent 160%); }
+.keycap.k-d{ color:var(--d); border-color:color-mix(in srgb, var(--d) 45%, var(--keycap-edge)); background:linear-gradient(180deg, var(--d-soft), transparent 160%); }
+.keycap.k-f{ color:var(--f); border-color:color-mix(in srgb, var(--f) 45%, var(--keycap-edge)); background:linear-gradient(180deg, var(--f-soft), transparent 160%); }
+.keycap.k-cmd{ color:var(--bg); background:var(--ink); border-color:var(--ink); }
+.keycap.k-sys{ color:var(--ink); border-color:var(--border-strong); box-shadow:inset 0 0 0 1.5px var(--border-strong); }
+.keycap.k-nav{ color:var(--ink); border-color:var(--border-strong); }
+
+.kb-legend{
+  display:flex; flex-wrap:wrap; gap:8px 20px; margin-top:18px;
+  font-size:.72rem; color:var(--sub); font-weight:600;
+}
+.kb-legend span{ display:inline-flex; align-items:center; gap:7px; }
+.kb-legend i{ width:9px; height:9px; border-radius:50%; display:block; }
+
+/* ---------- Chapter nav ---------- */
+.chapter-nav{
+  position:sticky; top:var(--header-h); z-index:150;
+  background:color-mix(in srgb, var(--bg) 90%, transparent);
+  backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  margin-top:44px;
+}
+.chapter-nav-inner{
+  max-width:1180px; margin:0 auto; padding:11px 24px;
+  display:flex; gap:7px; overflow-x:auto; scrollbar-width:none;
+}
+.chapter-nav-inner::-webkit-scrollbar{ display:none; }
+.nav-pill{
+  flex-shrink:0; font-size:.76rem; font-weight:600; color:var(--sub);
+  padding:6px 13px; border-radius:99px; border:1px solid var(--border);
+  background:var(--surface); transition:all .16s ease; white-space:nowrap;
+}
+.nav-pill:hover{ color:var(--ink); border-color:var(--border-strong); }
+.nav-pill.active{ color:var(--bg); background:var(--ink); border-color:var(--ink); }
+.nav-pill .num{ font-family:var(--font-mono); font-size:.66rem; opacity:.65; margin-right:5px; }
+
+/* ---------- Sections ---------- */
+.section{
+  background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-l);
+  padding:clamp(22px, 4vw, 38px); margin:26px 0; box-shadow:var(--shadow-1);
+  scroll-margin-top:calc(var(--header-h) + var(--nav-h) + 18px);
+}
+.sec-head{ display:flex; gap:18px; align-items:flex-start; margin-bottom:20px; }
+.sec-num{
+  font-family:var(--font-display); font-style:italic; font-weight:400;
+  font-size:clamp(1.9rem, 4vw, 2.7rem); line-height:1; color:var(--faint);
+  border-bottom:2px solid var(--a); padding-bottom:6px; flex-shrink:0;
+}
+.sec-head h2{ font-size:clamp(1.15rem, 2.4vw, 1.45rem); font-weight:800; letter-spacing:-.015em; margin-bottom:5px; }
+.sec-desc{ font-size:.86rem; color:var(--sub); line-height:1.7; max-width:760px; }
+.sec-desc strong{ color:var(--ink); }
+.sub-head{
+  font-size:.72rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--sub); margin:26px 0 12px; display:flex; align-items:center; gap:10px;
+}
+.sub-head::after{ content:""; flex:1; height:1px; background:var(--border); }
+.note{
+  font-size:.78rem; color:var(--sub); line-height:1.65;
+  border-left:2px solid var(--border-strong); padding:2px 0 2px 12px; margin-top:12px;
+}
+.note strong{ color:var(--ink); }
+
+/* ---------- Act dots indicator ---------- */
+.act-badge{
+  display:inline-flex; align-items:center; gap:8px;
+  background:var(--surface-2); border:1px solid var(--border);
+  padding:5px 10px; border-radius:99px; flex-shrink:0;
+}
+.act-badge.bare{ background:none; border:none; padding:2px 0; }
+.dots{ display:inline-flex; gap:5px; }
+.dot{ width:10px; height:10px; border-radius:50%; background:var(--border-strong); transition:all .2s ease; }
+.dot.on-a{ background:var(--a); box-shadow:0 0 7px color-mix(in srgb, var(--a) 60%, transparent); }
+.dot.on-s{ background:var(--s); box-shadow:0 0 7px color-mix(in srgb, var(--s) 60%, transparent); }
+.dot.on-d{ background:var(--d); box-shadow:0 0 7px color-mix(in srgb, var(--d) 60%, transparent); }
+.dot.on-f{ background:var(--f); box-shadow:0 0 7px color-mix(in srgb, var(--f) 60%, transparent); }
+
+/* ---------- Act modifier cards ---------- */
+.act-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:12px; }
+.act-card{
+  background:var(--surface-2); border:1px solid var(--border); border-radius:var(--radius-m);
+  padding:16px 17px; display:flex; flex-direction:column; gap:7px;
+  transition:transform .18s ease, box-shadow .18s ease;
+}
+.act-card:hover{ transform:translateY(-3px); box-shadow:var(--shadow-2); }
+.act-card-top{ display:flex; align-items:center; justify-content:space-between; }
+.act-card .concept{ font-size:.64rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--faint); }
+.act-card .name{ font-size:.95rem; font-weight:800; }
+.act-card .desc{ font-size:.78rem; color:var(--sub); line-height:1.55; }
+.act-card.c-a{ border-top:3px solid var(--a); }
+.act-card.c-s{ border-top:3px solid var(--s); }
+.act-card.c-d{ border-top:3px solid var(--d); }
+.act-card.c-f{ border-top:3px solid var(--f); }
+
+/* ---------- Interactive Act explorer ---------- */
+.explorer{
+  margin:22px 0 8px; border:1px solid var(--border); border-radius:var(--radius-m);
+  background:var(--surface-2); padding:clamp(16px, 3vw, 26px);
+  display:grid; grid-template-columns:auto 1fr; gap:clamp(18px, 4vw, 34px); align-items:center;
+}
+.explorer-keys{ display:flex; gap:10px; }
+.exp-key{
+  width:clamp(58px, 8vw, 78px); height:clamp(64px, 9vw, 84px); border-radius:14px;
+  background:linear-gradient(180deg, var(--keycap), color-mix(in srgb, var(--keycap) 86%, var(--border)));
+  border:1px solid var(--keycap-edge); border-bottom-width:3.5px;
+  font-family:var(--font-mono); font-size:1.25rem; font-weight:700; color:var(--faint);
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px;
+  transition:all .16s ease;
+}
+.exp-key small{ font-size:.52rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; font-family:var(--font-sans); }
+.exp-key:hover{ transform:translateY(2px); }
+.exp-key:active{ transform:translateY(4px); border-bottom-width:1.5px; }
+.exp-key[data-act="A"].on{ color:var(--a); border-color:var(--a); background:var(--a-soft); }
+.exp-key[data-act="S"].on{ color:var(--s); border-color:var(--s); background:var(--s-soft); }
+.exp-key[data-act="D"].on{ color:var(--d); border-color:var(--d); background:var(--d-soft); }
+.exp-key[data-act="F"].on{ color:var(--f); border-color:var(--f); background:var(--f-soft); }
+.exp-result{ min-width:0; }
+.exp-formula{ font-family:var(--font-mono); font-size:.74rem; color:var(--faint); margin-bottom:6px; letter-spacing:.04em; }
+.exp-name{ font-family:var(--font-display); font-size:clamp(1.4rem, 3.2vw, 2rem); font-weight:700; letter-spacing:-.02em; line-height:1.1; margin-bottom:8px; display:flex; align-items:center; gap:13px; flex-wrap:wrap; }
+.exp-concept{
+  display:inline-block; font-size:.66rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--d); background:var(--d-soft); border-radius:99px; padding:4px 11px; margin-bottom:10px;
+}
+.exp-desc{ font-size:.85rem; color:var(--sub); line-height:1.65; max-width:520px; }
+.exp-hint{ grid-column:1 / -1; font-size:.7rem; color:var(--faint); text-align:center; letter-spacing:.04em; }
+
+/* ---------- Combo cards ---------- */
+.combo-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(230px, 1fr)); gap:12px; }
+.combo-card{
+  background:var(--surface-2); border:1px solid var(--border); border-radius:var(--radius-m);
+  padding:15px 16px; display:flex; align-items:center; gap:13px;
+  transition:transform .16s ease, border-color .16s ease, box-shadow .16s ease;
+}
+.combo-card:hover{ transform:translateY(-2px); border-color:var(--border-strong); box-shadow:var(--shadow-1); }
+.combo-body{ display:flex; flex-direction:column; gap:2px; min-width:0; }
+.combo-title{ font-size:.85rem; font-weight:800; }
+.combo-formula{ font-family:var(--font-mono); font-size:.66rem; color:var(--faint); }
+.combo-card.hero-card{ border:1.5px solid var(--a); background:linear-gradient(160deg, var(--a-soft), var(--surface-2) 55%); }
+.combo-card.hero-card .combo-title{ color:var(--a); }
+
+/* ---------- Steps ---------- */
+.steps{ display:grid; grid-template-columns:repeat(auto-fit, minmax(230px, 1fr)); gap:12px; }
+.step{
+  background:var(--surface-2); border:1px solid var(--border); border-radius:var(--radius-m);
+  padding:16px 17px; display:flex; flex-direction:column; gap:8px;
+}
+.step-num{
+  font-family:var(--font-display); font-style:italic; font-size:1.5rem; line-height:1;
+  color:var(--faint);
+}
+.step-body{ font-size:.82rem; color:var(--sub); line-height:1.6; }
+.step-body strong{ color:var(--ink); font-weight:700; }
+
+/* ---------- Tables ---------- */
+.table-wrap{
+  border:1px solid var(--border); border-radius:var(--radius-m); overflow:auto;
+  background:var(--surface);
+}
+table{ width:100%; border-collapse:collapse; font-size:.8rem; }
+thead th{
+  font-size:.68rem; font-weight:800; letter-spacing:.09em; text-transform:uppercase;
+  color:var(--sub); text-align:left; white-space:nowrap;
+  padding:11px 12px; background:var(--surface-2); border-bottom:1px solid var(--border);
+  position:sticky; top:0; z-index:1;
+}
+thead th.kcol{ font-family:var(--font-mono); font-size:.78rem; text-transform:none; letter-spacing:0; color:var(--ink); }
+tbody td{ padding:9px 12px; border-bottom:1px solid var(--border); vertical-align:middle; color:var(--ink); }
+tbody tr:last-child td{ border-bottom:none; }
+tbody tr{ transition:background .12s ease; }
+tbody tr:hover{ background:var(--surface-2); }
+td.dim{ color:var(--sub); }
+.row-label{ font-weight:700; font-size:.79rem; white-space:nowrap; }
+.row-label .formula{ display:block; font-family:var(--font-mono); font-size:.64rem; font-weight:500; color:var(--faint); letter-spacing:.02em; margin-top:2px; }
+.hint{ display:block; font-family:var(--font-mono); font-size:.65rem; color:var(--faint); margin-top:1px; }
+
+.key{
+  display:inline-block; min-width:24px; text-align:center;
+  font-family:var(--font-mono); font-size:.74rem; font-weight:600; color:var(--ink);
+  background:var(--keycap); border:1px solid var(--keycap-edge); border-bottom-width:2.5px;
+  border-radius:6px; padding:3px 7px; margin:1px 2px; white-space:nowrap;
+}
+code{
+  font-family:var(--font-mono); font-size:.78em;
+  background:var(--surface-2); border:1px solid var(--border);
+  border-radius:5px; padding:1.5px 6px;
+}
+
+/* ---------- Grid cards (numpad etc.) ---------- */
+.virt-key-grid{ display:grid; grid-template-columns:repeat(4, 1fr); gap:9px; max-width:620px; }
+.virt-key-card{
+  background:var(--surface-2); border:1px solid var(--border); border-radius:10px;
+  padding:10px 12px; display:flex; align-items:center; gap:9px;
+  font-size:.78rem; font-weight:600; color:var(--sub);
+  transition:border-color .15s ease, transform .15s ease;
+}
+.virt-key-card:hover{ border-color:var(--border-strong); transform:translateY(-2px); }
+
+/* ---------- Glossary ---------- */
+.glossary-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:12px; }
+.glossary-item{
+  background:var(--surface-2); border:1px solid var(--border); border-radius:var(--radius-m);
+  padding:16px 17px; transition:transform .16s ease, box-shadow .16s ease;
+}
+.glossary-item:hover{ transform:translateY(-2px); box-shadow:var(--shadow-1); }
+.glossary-term{ font-size:.88rem; font-weight:800; margin-bottom:5px; }
+.glossary-def{ font-size:.78rem; color:var(--sub); line-height:1.6; }
+
+/* ---------- Related links ---------- */
+.related{ margin-top:26px; padding-top:17px; border-top:1px dashed var(--border-strong); }
+.related-title{ font-size:.66rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--faint); margin-bottom:10px; }
+.related-cards{ display:flex; flex-wrap:wrap; gap:9px; }
+.related-card{
+  font-size:.78rem; font-weight:600; color:var(--ink);
+  background:var(--surface-2); border:1px solid var(--border); border-radius:99px;
+  padding:7px 14px; transition:all .15s ease;
+}
+.related-card:hover{ border-color:var(--ink); transform:translateY(-1px); }
+.related-card .tag{ font-family:var(--font-mono); font-size:.68rem; color:var(--a); margin-right:6px; }
+
+/* ---------- No results ---------- */
+.no-results{
+  display:none; text-align:center; padding:52px 20px;
+  color:var(--sub); font-size:.88rem;
+  background:var(--surface); border:1px dashed var(--border-strong); border-radius:var(--radius-l);
+  margin:26px 0;
+}
+
+/* ---------- Footer ---------- */
+.site-footer{ margin-top:70px; border-top:1px solid var(--border); }
+.footer-inner{
+  max-width:1180px; margin:0 auto; padding:44px 24px 54px;
+  display:grid; grid-template-columns:1.3fr 1fr auto; gap:34px; align-items:start;
+}
+.footer-brand{ display:flex; flex-direction:column; gap:12px; }
+.footer-brand p{ font-size:.78rem; color:var(--sub); line-height:1.7; max-width:400px; }
+.footer-note{ font-size:.72rem; color:var(--faint); line-height:1.7; max-width:330px; }
+.footer-links{ display:flex; flex-direction:column; gap:8px; font-size:.8rem; font-weight:600; color:var(--sub); }
+.footer-links a:hover{ color:var(--ink); }
+.to-top{
+  font-size:.76rem; font-weight:700; color:var(--ink);
+  border:1.5px solid var(--border-strong); border-radius:99px; padding:8px 16px;
+  transition:all .16s ease; white-space:nowrap;
+}
+.to-top:hover{ border-color:var(--ink); transform:translateY(-2px); }
+
+/* ---------- Reveal animation ---------- */
+.reveal{ opacity:0; transform:translateY(16px); transition:opacity .55s ease, transform .55s ease; }
+.reveal.in{ opacity:1; transform:none; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1080px){
+  .header-nav{ display:none; }
+  .header-search{ margin-left:auto; }
+}
+@media (max-width: 960px){
+  .footer-inner{ grid-template-columns:1fr; gap:24px; }
+}
+@media (max-width: 720px){
+  .header-search{ display:none; }
+  .header-inner{ padding:0 16px; }
+  .container{ padding:0 16px; }
+  .hero{ padding:52px 0 28px; }
+  .explorer{ grid-template-columns:1fr; }
+  .explorer-keys{ display:grid; grid-template-columns:repeat(4, 1fr); }
+  .exp-key{ width:100%; height:64px; }
+  .sec-head{ gap:13px; }
+  .virt-key-grid{ grid-template-columns:repeat(2, 1fr); }
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior:auto; }
+  *,*::before,*::after{ animation:none !important; transition:none !important; }
+  .reveal{ opacity:1; transform:none; }
+}
+
+/* ---------- Print ---------- */
+@media print{
+  .site-header, .chapter-nav, .progress, .hero-cta, .exp-hint, .to-top, .no-results{ display:none !important; }
+  body{ background:#fff; }
+  .section, .kb-stage{ box-shadow:none; break-inside:avoid; }
+  .reveal{ opacity:1; transform:none; }
+}
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+
+<!-- ================= Header ================= -->
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="#top" aria-label="AbcAct home">
+      <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+      <span class="brand-name">ABCACT</span>
+      <span class="brand-tag">Keymap Reference</span>
+    </a>
+    <nav class="header-nav" aria-label="Primary">
+      <a href="#overview">Overview</a>
+      <a href="#act">Act System</a>
+      <a href="#nav">Navigation</a>
+      <a href="#glossary">Glossary</a>
+    </nav>
+    <div class="header-search">
+      <input type="text" id="searchInput" placeholder="Search key, action, layer…" autocomplete="off" aria-label="Search this document">
+      <span class="search-kbd">/</span>
+    </div>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+      <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+    </button>
+  </div>
+</header>
+
+<main class="container" id="top">
+
+  <!-- ================= Hero ================= -->
+  <section class="hero" id="overview">
+    <div class="hero-eyebrow">macOS · Goku / Karabiner-Elements</div>
+    <h1>AbcAct<br><span class="thin">Keymap</span></h1>
+    <p class="hero-tagline">Hold one key. <em>The whole right hand changes meaning.</em></p>
+    <p class="hero-copy">
+      AbcAct is a layered keymap for macOS. Three hold-keys open three layers; inside the main
+      layer, four <strong>Act</strong> keys under the left hand — <strong>a</strong>, <strong>s</strong>,
+      <strong>d</strong>, <strong>f</strong> — combine freely into <strong>16 tiers</strong> that
+      redefine the right hand. The fingers never leave the home row.
+    </p>
+    <div class="hero-meta">
+      <span class="meta-chip">Layers <b>3</b></span>
+      <span class="meta-chip">Act Tiers <b>16</b></span>
+      <span class="meta-chip">Trigger <b>Hold L-⌘</b></span>
+      <span class="meta-chip">Source <b>AbcAct.edn</b></span>
+    </div>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="#act">Explore the Act System <span class="arr">↓</span></a>
+      <a class="btn btn-ghost" href="#nav">Jump to the keymap</a>
+    </div>
+
+    <!-- Keyboard diagram -->
+    <div class="kb-stage reveal" aria-label="Keyboard layout diagram">
+      <div class="kb">
+        <div class="kb-row">
+          <span class="keycap mod">esc</span><span class="keycap">1</span><span class="keycap">2</span><span class="keycap">3</span><span class="keycap">4</span><span class="keycap">5</span><span class="keycap">6</span><span class="keycap">7</span><span class="keycap">8</span><span class="keycap">9</span><span class="keycap">0</span><span class="keycap">-</span><span class="keycap">=</span>
+        </div>
+        <div class="kb-row">
+          <span class="keycap mod k-sys" style="--u:1.5">tab</span><span class="keycap">q</span><span class="keycap">w</span><span class="keycap">e</span><span class="keycap">r</span><span class="keycap">t</span><span class="keycap">y</span><span class="keycap k-nav">u</span><span class="keycap k-nav">i</span><span class="keycap k-nav">o</span><span class="keycap k-nav">p</span><span class="keycap">[</span><span class="keycap">]</span>
+        </div>
+        <div class="kb-row">
+          <span class="keycap mod k-sys" style="--u:1.8">caps</span><span class="keycap k-a">a</span><span class="keycap k-s">s</span><span class="keycap k-d">d</span><span class="keycap k-f">f</span><span class="keycap">g</span><span class="keycap k-nav">h</span><span class="keycap k-nav">j</span><span class="keycap k-nav">k</span><span class="keycap k-nav">l</span><span class="keycap">;</span><span class="keycap">'</span>
+        </div>
+        <div class="kb-row">
+          <span class="keycap mod" style="--u:2.1">shift</span><span class="keycap">z</span><span class="keycap">x</span><span class="keycap">c</span><span class="keycap">v</span><span class="keycap">b</span><span class="keycap">n</span><span class="keycap">m</span><span class="keycap">,</span><span class="keycap">.</span><span class="keycap">/</span><span class="keycap mod" style="--u:1.4">shift</span>
+        </div>
+        <div class="kb-row">
+          <span class="keycap mod" style="--u:1.3">ctrl</span><span class="keycap mod" style="--u:1.3">opt</span><span class="keycap mod k-cmd" style="--u:1.3">⌘</span><span class="keycap mod" style="--u:6">space</span><span class="keycap mod" style="--u:1.3">⌘</span><span class="keycap mod" style="--u:1.3">opt</span>
+        </div>
+      </div>
+      <div class="kb-legend">
+        <span><i style="background:var(--a)"></i>Act a — Amplify</span>
+        <span><i style="background:var(--s)"></i>Act s — Select</span>
+        <span><i style="background:var(--d)"></i>Act d — Delete</span>
+        <span><i style="background:var(--f)"></i>Act f — Focus</span>
+        <span><i style="background:var(--ink)"></i>Asterisk trigger — L-⌘</span>
+        <span><i style="background:var(--faint)"></i>Caps · Tab — dedicated triggers</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= Chapter nav ================= -->
+  <nav class="chapter-nav" aria-label="Chapters">
+    <div class="chapter-nav-inner" id="chapterNav">
+      <button class="nav-pill" data-target="overview"><span class="num">01</span>Overview</button>
+      <button class="nav-pill" data-target="act"><span class="num">02</span>Act System</button>
+      <button class="nav-pill" data-target="launcher"><span class="num">03</span>Launcher</button>
+      <button class="nav-pill" data-target="nav"><span class="num">04</span>Navigation</button>
+      <button class="nav-pill" data-target="aux"><span class="num">05</span>Auxiliary</button>
+      <button class="nav-pill" data-target="bottom"><span class="num">06</span>Bottom Row</button>
+      <button class="nav-pill" data-target="system"><span class="num">07</span>Caps Lock</button>
+      <button class="nav-pill" data-target="bra"><span class="num">08</span>Bra Layer</button>
+      <button class="nav-pill" data-target="cket"><span class="num">09</span>Cket Layer</button>
+      <button class="nav-pill" data-target="glossary"><span class="num">10</span>Glossary</button>
+    </div>
+  </nav>
+
+  <div class="no-results" id="noResults">No matching key, action, or layer found.</div>
+
+  <!-- ================= 01 Overview ================= -->
+  <section class="section reveal" id="ch-overview" data-category="overview">
+    <div class="sec-head">
+      <span class="sec-num">01</span>
+      <div>
+        <h2>Layers, Act Keys &amp; Notation</h2>
+        <p class="sec-desc">
+          Hold <span class="key">L-⌘</span> and the <strong>Asterisk</strong> layer is live for as long as
+          you hold it. Add Act keys under the left hand to pick which of the 16 tiers the right hand is in.
+          Tap a hold-key on its own and it types something instead.
+        </p>
+      </div>
+    </div>
+
+    <div class="sub-head">The three layers</div>
+    <div class="act-grid">
+      <div class="act-card c-a">
+        <div class="act-card-top">
+          <span class="key">Hold L-⌘</span>
+          <span class="concept">Main</span>
+        </div>
+        <span class="name">Asterisk</span>
+        <span class="desc">Apps, cursor, editing, mouse, tabs, windows, symbols, function keys.</span>
+      </div>
+      <div class="act-card c-s">
+        <div class="act-card-top">
+          <span class="key">Hold L-⇧</span>
+          <span class="concept">Aside</span>
+        </div>
+        <span class="name">Bra</span>
+        <span class="desc">One-handed numpad. With Spacebar also held: drawing-app palette.</span>
+      </div>
+      <div class="act-card c-d">
+        <div class="act-card-top">
+          <span class="key">Hold R-⇧</span>
+          <span class="concept">Aside</span>
+        </div>
+        <span class="name">Cket</span>
+        <span class="desc">Volume, brightness, keyboard backlight, playback transport.</span>
+      </div>
+    </div>
+
+    <div class="sub-head">The four Act keys — left hand home row</div>
+    <div class="act-grid">
+      <div class="act-card c-a">
+        <div class="act-card-top">
+          <span class="act-badge"><span class="dots"><span class="dot on-a"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span></span>
+          <span class="concept">Scale</span>
+        </div>
+        <span class="name">a — Amplify</span>
+        <span class="desc">Same action, bigger unit: word, paragraph, document, half-screen.</span>
+      </div>
+      <div class="act-card c-s">
+        <div class="act-card-top">
+          <span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot on-s"></span><span class="dot"></span><span class="dot"></span></span></span>
+          <span class="concept">Target</span>
+        </div>
+        <span class="name">s — Select</span>
+        <span class="desc">Turns a movement into a selection, or a pointer move into a drag.</span>
+      </div>
+      <div class="act-card c-d">
+        <div class="act-card-top">
+          <span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot on-d"></span><span class="dot"></span></span></span>
+          <span class="concept">Remove</span>
+        </div>
+        <span class="name">d — Delete</span>
+        <span class="desc">Removes, reverts, or cuts away what the movement covered.</span>
+      </div>
+      <div class="act-card c-f">
+        <div class="act-card-top">
+          <span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot on-f"></span></span></span>
+          <span class="concept">Shift focus</span>
+        </div>
+        <span class="name">f — Focus</span>
+        <span class="desc">Moves attention instead of text: pointer, tab, app, window.</span>
+      </div>
+    </div>
+
+    <div class="sub-head">Notation used in this manual</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Written as</th><th>Means</th></tr></thead>
+        <tbody>
+          <tr><td><code>Cmd → h</code></td><td class="dim">Hold L-⌘, press <span class="key">h</span>. No Act keys held.</td></tr>
+          <tr><td><code>Cmd+A → h</code></td><td class="dim">Hold L-⌘ <em>and</em> <span class="key">a</span>, press <span class="key">h</span>.</td></tr>
+          <tr><td><code>Cmd+S+F → h</code></td><td class="dim">Hold L-⌘ <em>and</em> <span class="key">s</span> <em>and</em> <span class="key">f</span>, press <span class="key">h</span>.</td></tr>
+          <tr><td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot on-s"></span><span class="dot"></span><span class="dot on-f"></span></span></span></td><td class="dim">The same thing, as an indicator: dots are <b>a s d f</b>, lit = held.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-head">1.1 — Hold vs. tap on the trigger keys</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Key</th><th>Hold</th><th>Tap alone</th></tr></thead>
+        <tbody>
+          <tr><td><span class="key">L-⌘</span></td><td><strong>Asterisk layer</strong></td><td class="dim">Switch to English input (US Extended)</td></tr>
+          <tr><td><span class="key">L-⇧</span></td><td><strong>Bra layer</strong></td><td class="dim"><code>`</code> — with R-⇧ held: <code>~</code></td></tr>
+          <tr><td><span class="key">R-⇧</span></td><td><strong>Cket layer</strong></td><td class="dim"><code>\</code> — with L-⇧ held: <code>|</code></td></tr>
+          <tr><td><span class="key">Caps Lock</span></td><td>R-⇧ &nbsp;<span class="dim">(and Act target inside Asterisk)</span></td><td class="dim">Esc</td></tr>
+          <tr><td><span class="key">Space</span></td><td>Real ⌘ &nbsp;<span class="dim">(no layer — used for Bra chords)</span></td><td class="dim">Space</td></tr>
+          <tr><td><span class="key">R-⌘</span></td><td>⇧</td><td class="dim">Switch to Japanese input (Romaji)</td></tr>
+          <tr><td><span class="key">L-⌥</span></td><td>⌥</td><td class="dim">Switch to Greek input</td></tr>
+          <tr><td><span class="key">R-⌥</span></td><td>⇧</td><td class="dim">—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-head">1.2 — Accent dead keys <span style="text-transform:none;letter-spacing:0;font-weight:600">(outside Asterisk and Cket)</span></div>
+    <p class="sec-desc" style="margin-bottom:12px">Press, then type a letter. Standard macOS dead-key behaviour.</p>
+    <div class="virt-key-grid" style="max-width:none;grid-template-columns:repeat(auto-fill,minmax(190px,1fr))">
+      <div class="virt-key-card"><span class="key">[</span><span>Acute → é</span></div>
+      <div class="virt-key-card"><span class="key">]</span><span>Grave → è</span></div>
+      <div class="virt-key-card"><span class="key">\</span><span>Umlaut → ü</span></div>
+      <div class="virt-key-card"><span class="key">⇧ [</span><span>Circumflex → â</span></div>
+      <div class="virt-key-card"><span class="key">⇧ ]</span><span>Umlaut (alt.) → ü</span></div>
+      <div class="virt-key-card"><span class="key">⇧ \</span><span>Cedilla → ç</span></div>
+    </div>
+
+    <div class="related">
+      <div class="related-title">Related</div>
+      <div class="related-cards">
+        <button class="related-card" data-jump="act"><span class="tag">02</span>Act combinations</button>
+        <button class="related-card" data-jump="system"><span class="tag">07</span>Caps Lock actions</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 02 Act System ================= -->
+  <section class="section reveal" id="act" data-category="act">
+    <div class="sec-head">
+      <span class="sec-num">02</span>
+      <div>
+        <h2>Act System — the 16 tiers</h2>
+        <p class="sec-desc">
+          <span class="key">a</span><span class="key">s</span><span class="key">d</span><span class="key">f</span>
+          are held, not tapped, and stack freely. Every combination gives the right hand a different,
+          consistent meaning — nothing here is an arbitrary shortcut to memorize.
+        </p>
+      </div>
+    </div>
+
+    <!-- Interactive explorer -->
+    <div class="explorer" id="explorer">
+      <div class="explorer-keys" role="group" aria-label="Act key toggles">
+        <button class="exp-key" data-act="A" aria-pressed="false">a<small>Amp</small></button>
+        <button class="exp-key" data-act="S" aria-pressed="false">s<small>Sel</small></button>
+        <button class="exp-key" data-act="D" aria-pressed="false">d<small>Del</small></button>
+        <button class="exp-key" data-act="F" aria-pressed="false">f<small>Foc</small></button>
+      </div>
+      <div class="exp-result" aria-live="polite">
+        <div class="exp-formula" id="expFormula">Cmd →</div>
+        <div class="exp-name">
+          <span id="expName">Text Cursor</span>
+          <span class="act-badge"><span class="dots" id="expDots"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span></span>
+        </div>
+        <span class="exp-concept" id="expConcept">Direct navigation</span>
+        <p class="exp-desc" id="expDesc">Plain arrows and page boundaries — the ground state.</p>
+      </div>
+      <p class="exp-hint">Toggle the Act keys to walk all 16 tiers.</p>
+    </div>
+
+    <div class="sub-head">2.1 — Combination map</div>
+    <div class="combo-grid" id="comboGrid"><!-- populated by script --></div>
+
+    <div class="sub-head">2.2 — Tier reference</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Act</th><th>Notation</th><th>Tier</th><th>Focus</th><th>Right-hand behaviour</th></tr></thead>
+        <tbody id="actMatrix"><!-- populated by script --></tbody>
+      </table>
+    </div>
+
+    <div class="related">
+      <div class="related-title">Related</div>
+      <div class="related-cards">
+        <button class="related-card" data-jump="nav"><span class="tag">04</span>Navigation tables</button>
+        <button class="related-card" data-jump="launcher"><span class="tag">03</span>App launcher</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 03 Launcher ================= -->
+  <section class="section reveal" id="launcher" data-category="launcher">
+    <div class="sec-head">
+      <span class="sec-num">03</span>
+      <div>
+        <h2>Application Launcher &amp; Clipboard History</h2>
+        <p class="sec-desc">
+          Left hand, inside Asterisk. Every key has a primary app; holding <span class="key">a</span>
+          swaps in an alternate. <span class="key">s</span> <span class="key">d</span> <span class="key">f</span>
+          double as Act keys — <strong>tap</strong> them to launch, <strong>hold</strong> them to change tier.
+        </p>
+      </div>
+    </div>
+
+    <div class="sub-head">3.1 — Launch targets</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr>
+          <th>Act</th><th class="kcol">a</th><th class="kcol">s</th><th class="kcol">d</th><th class="kcol">f</th>
+          <th class="kcol">q</th><th class="kcol">w</th><th class="kcol">e</th><th class="kcol">r</th><th class="kcol">t</th><th class="kcol">y</th><th class="kcol">g</th>
+        </tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span></span></td>
+            <td class="row-label">Launchpad</td>
+            <td>Comet</td><td>Raycast</td><td>Finder</td>
+            <td>Raycast Notes</td><td>Obsidian</td><td>Cursor</td><td>Claude</td><td>Translate → JA</td><td>DeepL</td><td>Slack</td>
+          </tr>
+          <tr>
+            <td><span class="act-badge"><span class="dots"><span class="dot on-a"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span></span></td>
+            <td class="row-label dim">—</td>
+            <td>Google Chrome</td><td>Maccy</td><td>iTerm</td>
+            <td>This manual</td><td>Bear</td><td>Logseq</td><td>ChatGPT Classic</td><td>Translate → EN</td><td>Dictionary</td><td>Spark Desktop</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">
+      <strong>Translate</strong> works on the current text selection (Raycast DeepCast).
+      <strong>Claude / ChatGPT sit on <span class="key">r</span></strong>, not <span class="key">d</span> —
+      <span class="key">d</span> is an Act key, and brushing it used to launch an app by accident.
+    </p>
+
+    <div class="sub-head">3.2 — Clipboard history, thumb and pinky only</div>
+    <div class="steps">
+      <div class="step">
+        <span class="step-num">01</span>
+        <span class="step-body">Hold <span class="key">L-⌘</span>, press <span class="key">Tab</span>.<br><strong>Maccy's history pops up.</strong></span>
+      </div>
+      <div class="step">
+        <span class="step-num">02</span>
+        <span class="step-body">Keep both held. Press any <span class="key">1</span>–<span class="key">0</span> or <span class="key">a</span>–<span class="key">z</span>.<br><strong>That slot is pasted.</strong></span>
+      </div>
+      <div class="step">
+        <span class="step-num">03</span>
+        <span class="step-body">Release.<br><span class="dim">Nothing to dismiss — the layer ends with the keys.</span></span>
+      </div>
+    </div>
+    <p class="note">36 slots reachable without the hand moving off home position.</p>
+
+    <div class="related">
+      <div class="related-title">Related</div>
+      <div class="related-cards">
+        <button class="related-card" data-jump="bottom"><span class="tag">06</span>Clip slots (0–11)</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 04 Navigation ================= -->
+  <section class="section reveal" id="nav" data-category="nav">
+    <div class="sec-head">
+      <span class="sec-num">04</span>
+      <div>
+        <h2>Right Hand — <code>h j k l</code> &amp; <code>u i o p</code></h2>
+        <p class="sec-desc">
+          <span class="key">h</span><span class="key">j</span><span class="key">k</span><span class="key">l</span> are
+          <strong>directions</strong> (left / down / up / right).
+          <span class="key">u</span><span class="key">i</span><span class="key">o</span><span class="key">p</span> are
+          <strong>boundaries</strong> (page up / line start / line end / page down). All 16 tiers keep that split.
+        </p>
+      </div>
+    </div>
+
+    <div class="sub-head">4.1 — Moving &amp; selecting text</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Act</th><th>Tier</th><th class="kcol">h</th><th class="kcol">j</th><th class="kcol">k</th><th class="kcol">l</th><th class="kcol">u</th><th class="kcol">i</th><th class="kcol">o</th><th class="kcol">p</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span></span></td>
+            <td class="row-label">Text Cursor<span class="formula">Cmd →</span></td>
+            <td>← Left</td><td>↓ Down</td><td>↑ Up</td><td>→ Right</td>
+            <td>Page Up</td><td>Line start</td><td>Line end</td><td>Page Down</td>
+          </tr>
+          <tr>
+            <td><span class="act-badge"><span class="dots"><span class="dot on-a"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span></span></td>
+            <td class="row-label">Amplified Cursor<span class="formula">Cmd+A →</span></td>
+            <td>Word left<span class="hint">⌥←</span></td><td>Paragraph down<span class="hint">⌥↓</span></td><td>Paragraph up<span class="hint">⌥↑</span></td><td>Word right<span class="hint">⌥→</span></td>
+            <td>Document top<span class="hint">⌘↑</span></td><td>Line start<span class="hint">⌘←</span></td><td>Line end<span class="hint">⌘→</span></td><td>Document end<span class="hint">⌘↓</span></td>
+          </tr>
+          <tr>
+            <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot on-s"></span><span class="dot"></span><span class="dot"></span></span></span></td>
+            <td class="row-label">Select<span class="formula">Cmd+S →</span></td>
+            <td>Select char left</td><td>Select line down</td><td>Select line up</td><td>Select char right</td>
+            <td>Select page up</td><td>Select to line start<span class="hint">⇧Home</span></td><td>Select to line end<span class="hint">⇧End</span></td><td>Select page down</td>
+          </tr>
+          <tr>
+            <td><span class="act-badge"><span class="dots"><span class="dot on-a"></span><span class="dot on-s"></span><span class="dot"></span><span class="dot"></span></span></span></td>
+            <td class="row-label">Amplified Select<span class="formula">Cmd+A+S →</span></td>
+            <td>Select word left</td><td>Select paragraph down</td><td>Select paragraph up</td><td>Select word right</td>
+            <td>Select to doc top</td><td>Select to line start<span class="hint">⇧⌘←</span></td><td>Select to line end<span class="hint">⇧⌘→</span></td><td>Select to doc end</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">
+      One rule, four rows: <strong>⌥ = bigger unit</strong>, <strong>⇧ = select instead of move</strong>, both = both.
+      On <code>u i o p</code> the amplified form is <strong>⌘+arrow</strong>, because that — not ⌥ — is the macOS
+      convention for line and document boundaries.
+    </p>
+
+    <div class="sub-head">4.2 — Deleting, undoing, clipboard</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Act</th><th>Tier</th><th class="kcol">h</th><th class="kcol">j</th><th class="kcol">k</th><th class="kcol">l</th><th class="kcol">u</th><th class="kcol">i</th><th class="kcol">o</th><th class="kcol">p</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot on-d"></span><span class="dot"></span></span></span></td>
+            <td class="row-label">Delete<span class="formula">Cmd+D →</span></td>
+            <td>Backspace</td><td>Delete line below</td><td>Delete line above</td><td>Forward delete</td>
+            <td>Delete 2 lines up</td><td>Delete line (up)</td><td>Delete line (down)</td><td>Delete 2 lines down</td>
+          </tr>
+          <tr>
+            <td><span class="act-badge"><span class="dots"><span class="dot on-a"></span><span class="dot"></span><span class="dot on-d"></span><span class="dot"></span></span></span></td>
+            <td class="row-label">Amplified Delete<span class="formula">Cmd+A+D →</span></td>
+            <td>Delete word left<span class="hint">⌘⌫</span></td><td>Delete paragraph down</td><td>Delete paragraph up</td><td>Delete word right</td>
+            <td>Delete to doc top</td><td>Delete to line start</td><td>Delete to line end</td><td>Delete to doc end</td>
+          </tr>
+          <tr>
+            <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot on-s"></span><span class="dot on-d"></span><span class="dot"></span></span></span></td>
+            <td class="row-label">Reconvert &amp; Clipboard<span class="formula">Cmd+S+D →</span></td>
+            <td>Reconvert<span class="hint">⌃⇧R</span></td><td>IME convert<span class="hint">⌃J</span></td><td>IME convert<span class="hint">⌃K</span></td><td>IME convert<span class="hint">⌃;</span></td>
+            <td>Paste &amp; match style</td><td>Paste</td><td>Copy</td><td>Cut</td>
+          </tr>
+          <tr>
+            <td><span class="act-badge"><span class="dots"><span class="dot on-a"></span><span class="dot on-s"></span><span class="dot on-d"></span><span class="dot"></span></span></span></td>
+            <td class="row-label">Undo &amp; Line Ops<span class="formula">Cmd+A+S+D →</span></td>
+            <td>Back<span class="hint">⌘[</span></td><td>Undo<span class="hint">⌘Z</span></td><td>Redo<span class="hint">⇧⌘Z</span></td><td>Forward<span class="hint">⌘]</span></td>
+            <td>Duplicate line up</td><td>Move line up</td><td>Move line down</td><td>Duplicate line down</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">
+      Amplified Delete is built from the selection tiers above: <em>select that unit, then delete</em> — so the
+      reach of <span class="key">j</span><span class="key">k</span><span class="key">u</span><span class="key">i</span><span class="key">o</span><span class="key">p</span>
+      is exactly what the same keys select in 4.1.
+    </p>
+
+    <div class="sub-head">4.3 — Mouse pointer</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Act</th><th>Tier</th><th class="kcol">h</th><th class="kcol">j</th><th class="kcol">k</th><th class="kcol">l</th><th class="kcol">u</th><th class="kcol">i</th><th class="kcol">o</th><th class="kcol">p</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot on-f"></span></span></span></td>
+            <td class="row-label">Mouse Cursor<span class="formula">Cmd+F →</span></td>
+            <td>Pointer left</td><td>Pointer down</td><td>Pointer up</td><td>Pointer right</td>
+            <td>Scroll ←</td><td>Scroll ↑</td><td>Scroll ↓</td><td>Scroll →</td>
+          </tr>
+          <tr>
+            <td><span class="act-badge"><span class="dots"><span class="dot on-a"></span><span class="dot"></span><span class="dot"></span><span class="dot on-f"></span></span></span></td>
+            <td class="row-label">Fast Mouse Cursor<span class="formula">Cmd+A+F →</span></td>
+            <td>Pointer left ×2</td><td>Pointer down ×2</td><td>Pointer up ×2</td><td>Pointer right ×2</td>
+            <td>Scroll ← ×2</td><td>Scroll ↑ ×2</td><td>Scroll ↓ ×2</td><td>Scroll → ×2</td>
+          </tr>
+          <tr>
+            <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot on-s"></span><span class="dot"></span><span class="dot on-f"></span></span></span></td>
+            <td class="row-label">Drag &amp; Drop<span class="formula">Cmd+S+F →</span></td>
+            <td>Drag left</td><td>Drag down</td><td>Drag up</td><td>Drag right</td>
+            <td>Drag left ½</td><td>Drag down ½</td><td>Drag up ½</td><td>Drag right ½</td>
+          </tr>
+          <tr>
+            <td><span class="act-badge"><span class="dots"><span class="dot on-a"></span><span class="dot on-s"></span><span class="dot"></span><span class="dot on-f"></span></span></span></td>
+            <td class="row-label">Fast Drag &amp; Drop<span class="formula">Cmd+A+S+F →</span></td>
+            <td>Drag left ×2</td><td>Drag down ×2</td><td>Drag up ×2</td><td>Drag right ×2</td>
+            <td>Drag left ×1</td><td>Drag down ×1</td><td>Drag up ×1</td><td>Drag right ×1</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">
+      Drag tiers hold the left mouse button down while moving. On <code>u i o p</code> the step is half of
+      <code>h j k l</code>'s — the fine-adjust end of the same gesture. Click keys live in
+      <strong>section 05</strong>.
+    </p>
+
+    <div class="sub-head">4.4 — Tabs, apps &amp; windows</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Act</th><th>Tier</th><th class="kcol">h</th><th class="kcol">j</th><th class="kcol">k</th><th class="kcol">l</th><th class="kcol">u</th><th class="kcol">i</th><th class="kcol">o</th><th class="kcol">p</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot on-d"></span><span class="dot on-f"></span></span></span></td>
+            <td class="row-label">Tab Management<span class="formula">Cmd+D+F →</span></td>
+            <td>Previous tab</td><td>Close tab</td><td>Reopen closed tab</td><td>Next tab</td>
+            <td>Next window, same app</td><td>Pin tab<span class="hint">⇧⌥P</span></td><td>Duplicate tab<span class="hint">⇧⌥D</span></td><td>Previous window, same app</td>
+          </tr>
+          <tr>
+            <td><span class="act-badge"><span class="dots"><span class="dot on-a"></span><span class="dot"></span><span class="dot on-d"></span><span class="dot on-f"></span></span></span></td>
+            <td class="row-label">App Management<span class="formula">Cmd+A+D+F →</span></td>
+            <td>Previous app<span class="hint">⇧⌘Tab</span></td><td>Quit app</td><td>Mission Control</td><td>Next app<span class="hint">⌘Tab</span></td>
+            <td>Previous Space</td><td>Hide app</td><td>App Exposé</td><td>Next Space</td>
+          </tr>
+          <tr>
+            <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot on-s"></span><span class="dot on-d"></span><span class="dot on-f"></span></span></span></td>
+            <td class="row-label">Window Management<span class="formula">Cmd+S+D+F →</span></td>
+            <td>Nudge left</td><td>Nudge down</td><td>Nudge up</td><td>Nudge right</td>
+            <td>Maximize</td><td>Shrink</td><td>Grow</td><td>Almost maximize<span class="hint">≈70%</span></td>
+          </tr>
+          <tr>
+            <td><span class="act-badge"><span class="dots"><span class="dot on-a"></span><span class="dot on-s"></span><span class="dot on-d"></span><span class="dot on-f"></span></span></span></td>
+            <td class="row-label">Amplified Window<span class="formula">Cmd+A+S+D+F →</span></td>
+            <td>Left half<span class="hint">↻ ½ ⅔ ⅓</span></td><td>Bottom half<span class="hint">↻ ½ ⅔ ⅓</span></td><td>Top half<span class="hint">↻ ½ ⅔ ⅓</span></td><td>Right half<span class="hint">↻ ½ ⅔ ⅓</span></td>
+            <td>Toggle fullscreen</td><td>Previous display</td><td>Next display</td><td>Hide app</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">
+      Window tiers split by <strong>scale</strong>: the plain tier nudges a window a short distance, the amplified
+      tier resizes it to a fraction of the screen. Half-placements <strong>cycle</strong> ½ → ⅔ → ⅓ on repeated
+      presses (Raycast setting). <span class="key">u</span> and <span class="key">p</span> are opposite poles in
+      both tiers — maximize vs. almost-maximize, fullscreen vs. hide.
+    </p>
+
+    <div class="related">
+      <div class="related-title">Related</div>
+      <div class="related-cards">
+        <button class="related-card" data-jump="aux"><span class="tag">05</span>Auxiliary keys</button>
+        <button class="related-card" data-jump="act"><span class="tag">02</span>Tier reference</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 05 Auxiliary ================= -->
+  <section class="section reveal" id="aux" data-category="aux">
+    <div class="sec-head">
+      <span class="sec-num">05</span>
+      <div>
+        <h2>Auxiliary Keys — <code>[ ] ; '</code></h2>
+        <p class="sec-desc">
+          A support group, not a fifth navigation cluster. Only <span class="key">d</span> and
+          <span class="key">f</span> change them — <strong>4 states, not 16</strong>.
+          <span class="key">a</span> and <span class="key">s</span> make no difference here.
+        </p>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Act</th><th>Group</th><th class="kcol">[</th><th class="kcol">]</th><th class="kcol">;</th><th class="kcol">'</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span></span></td>
+            <td class="row-label">No d, no f<span class="formula">any / no a s</span></td>
+            <td>Return</td><td>Return</td><td>Return</td><td>Return</td>
+          </tr>
+          <tr>
+            <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot on-d"></span><span class="dot"></span></span></span></td>
+            <td class="row-label">d held<span class="formula">Cmd+D →</span></td>
+            <td>Select all</td><td>Select all</td><td>Select all</td><td>Select all</td>
+          </tr>
+          <tr>
+            <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot on-f"></span></span></span></td>
+            <td class="row-label">f held<span class="formula">Cmd+F →</span></td>
+            <td>Left click</td><td>Right click</td><td>Left click</td><td>Right click</td>
+          </tr>
+          <tr>
+            <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot on-d"></span><span class="dot on-f"></span></span></span></td>
+            <td class="row-label">d + f held<span class="formula">Cmd+D+F →</span></td>
+            <td>Top-left sixth</td><td>Top-right sixth</td><td>Bottom-left sixth</td><td>Bottom-right sixth</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">
+      <span class="key">;</span> is where the right pinky already rests — one of the easiest keys on the board —
+      which is why <strong>Select All</strong> sits on this group at all rather than on a key of its own.
+      The click pair mirrors the drag tiers in 4.3: move the pointer with the right hand, click without moving it.
+    </p>
+  </section>
+
+  <!-- ================= 06 Bottom Row ================= -->
+  <section class="section reveal" id="bottom" data-category="bottom">
+    <div class="sec-head">
+      <span class="sec-num">06</span>
+      <div>
+        <h2>Bottom Row — Symbols, Clips, Function Keys</h2>
+        <p class="sec-desc">
+          Twelve keys — <code>L-⇧ z x c v b n m , . / R-⇧</code> — carry three whole sets at once,
+          picked by which Act key is held.
+        </p>
+      </div>
+    </div>
+
+    <div class="sub-head">6.1 — Symbols</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Act</th><th class="kcol">L-⇧</th><th class="kcol">z</th><th class="kcol">x</th><th class="kcol">c</th><th class="kcol">v</th><th class="kcol">b</th><th class="kcol">n</th><th class="kcol">m</th><th class="kcol">,</th><th class="kcol">.</th><th class="kcol">/</th><th class="kcol">R-⇧</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span></span></td>
+            <td><code>?</code></td><td><code>!</code></td><td><code>@</code></td><td><code>#</code></td><td><code>$</code></td><td><code>%</code></td><td><code>-</code></td><td><code>=</code></td><td><code>[</code></td><td><code>]</code></td><td><code>:</code></td><td><code>"</code></td>
+          </tr>
+          <tr>
+            <td><span class="act-badge"><span class="dots"><span class="dot on-a"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span></span></td>
+            <td>Emoji search</td><td><code>^</code></td><td><code>&amp;</code></td><td><code>*</code></td><td><code>(</code></td><td><code>)</code></td><td><code>_</code></td><td><code>+</code></td><td><code>{</code></td><td><code>}</code></td><td><code>«</code></td><td><code>»</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-head">6.2 — Clip slots 0–11</div>
+    <p class="sec-desc" style="margin-bottom:12px">
+      Twelve named clipboard buffers, separate from Maccy's history. Hold <span class="key">s</span> to
+      <strong>store</strong>, hold <span class="key">d</span> to <strong>paste</strong>.
+    </p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Act</th><th class="kcol">L-⇧</th><th class="kcol">z</th><th class="kcol">x</th><th class="kcol">c</th><th class="kcol">v</th><th class="kcol">b</th><th class="kcol">n</th><th class="kcol">m</th><th class="kcol">,</th><th class="kcol">.</th><th class="kcol">/</th><th class="kcol">R-⇧</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot on-s"></span><span class="dot"></span><span class="dot"></span></span></span></td>
+            <td class="dim">Save 0</td><td class="dim">Save 1</td><td class="dim">Save 2</td><td class="dim">Save 3</td><td class="dim">Save 4</td><td class="dim">Save 5</td><td class="dim">Save 6</td><td class="dim">Save 7</td><td class="dim">Save 8</td><td class="dim">Save 9</td><td class="dim">Save 10</td><td class="dim">Save 11</td>
+          </tr>
+          <tr>
+            <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot on-d"></span><span class="dot"></span></span></span></td>
+            <td class="dim">Paste 0</td><td class="dim">Paste 1</td><td class="dim">Paste 2</td><td class="dim">Paste 3</td><td class="dim">Paste 4</td><td class="dim">Paste 5</td><td class="dim">Paste 6</td><td class="dim">Paste 7</td><td class="dim">Paste 8</td><td class="dim">Paste 9</td><td class="dim">Paste 10</td><td class="dim">Paste 11</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note"><strong>Save</strong> copies the current selection into the slot; <strong>Paste</strong> puts that slot back on the clipboard and pastes it.</p>
+
+    <div class="sub-head">6.3 — Function keys</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Act</th><th class="kcol">L-⇧</th><th class="kcol">z</th><th class="kcol">x</th><th class="kcol">c</th><th class="kcol">v</th><th class="kcol">b</th><th class="kcol">n</th><th class="kcol">m</th><th class="kcol">,</th><th class="kcol">.</th><th class="kcol">/</th><th class="kcol">R-⇧</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot on-f"></span></span></span></td>
+            <td><strong>F1</strong></td><td><strong>F2</strong></td><td><strong>F3</strong></td><td><strong>F4</strong></td><td><strong>F5</strong></td><td><strong>F6</strong></td><td><strong>F7</strong></td><td><strong>F8</strong></td><td><strong>F9</strong></td><td><strong>F10</strong></td><td><strong>F11</strong></td><td><strong>F12</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ================= 07 Caps Lock ================= -->
+  <section class="section reveal" id="system" data-category="system">
+    <div class="sec-head">
+      <span class="sec-num">07</span>
+      <div>
+        <h2>Caps Lock — System Actions</h2>
+        <p class="sec-desc">
+          Inside Asterisk, Caps Lock is a system-action key. Outside it, Caps Lock is just
+          <strong>R-⇧ on hold, Esc on tap</strong>.
+        </p>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Act</th><th>Trigger</th><th>Action</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span></span></td>
+            <td><code>Cmd → Caps</code></td>
+            <td class="row-label">Delete</td>
+            <td class="dim">Deletes the selection, or one character back</td>
+          </tr>
+          <tr>
+            <td><span class="act-badge"><span class="dots"><span class="dot on-a"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span></span></td>
+            <td><code>Cmd+A → Caps</code></td>
+            <td class="row-label">Dictation</td>
+            <td class="dim">Starts voice input</td>
+          </tr>
+          <tr>
+            <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot on-s"></span><span class="dot"></span><span class="dot"></span></span></span></td>
+            <td><code>Cmd+S → Caps</code></td>
+            <td class="row-label">Screenshot region</td>
+            <td class="dim">Drag a region, straight to the clipboard</td>
+          </tr>
+          <tr>
+            <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot on-d"></span><span class="dot"></span></span></span></td>
+            <td><code>Cmd+D → Caps</code></td>
+            <td class="row-label">Capture panel</td>
+            <td class="dim">Opens the screenshot / screen-recording panel</td>
+          </tr>
+          <tr>
+            <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot on-f"></span></span></span></td>
+            <td><code>Cmd+F → Caps</code></td>
+            <td class="row-label">AirDrop image</td>
+            <td class="dim">Sends the clipboard image via AirDrop</td>
+          </tr>
+          <tr>
+            <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot on-s"></span><span class="dot"></span><span class="dot on-f"></span></span></span></td>
+            <td><code>Cmd+S+F → Caps</code></td>
+            <td class="row-label">Shut down</td>
+            <td class="dim">System shutdown</td>
+          </tr>
+          <tr>
+            <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot on-d"></span><span class="dot on-f"></span></span></span></td>
+            <td><code>Cmd+D+F → Caps</code></td>
+            <td class="row-label">Restart</td>
+            <td class="dim">System restart</td>
+          </tr>
+          <tr>
+            <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot on-s"></span><span class="dot on-d"></span><span class="dot on-f"></span></span></span></td>
+            <td><code>Cmd+S+D+F → Caps</code></td>
+            <td class="row-label">Sleep</td>
+            <td class="dim">Sleep immediately</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">The three power actions all need <span class="key">f</span> plus at least one more Act key — they can't be hit by a single slip.</p>
+  </section>
+
+  <!-- ================= 08 Bra ================= -->
+  <section class="section reveal" id="bra" data-category="bra">
+    <div class="sec-head">
+      <span class="sec-num">08</span>
+      <div>
+        <h2>Bra Layer — Numpad &amp; Drawing Palette</h2>
+        <p class="sec-desc">Hold <span class="key">L-⇧</span>. Two suites share the layer, separated by whether Spacebar is also held.</p>
+      </div>
+    </div>
+
+    <div class="sub-head">8.1 — One-handed numpad <span style="text-transform:none;letter-spacing:0;font-weight:600">(L-⇧ alone)</span></div>
+    <div class="virt-key-grid">
+      <div class="virt-key-card"><span class="key">q</span><span>Delete line</span></div>
+      <div class="virt-key-card"><span class="key">w</span><span>7</span></div>
+      <div class="virt-key-card"><span class="key">e</span><span>8</span></div>
+      <div class="virt-key-card"><span class="key">r</span><span>9</span></div>
+      <div class="virt-key-card"><span class="key">a</span><span>Backspace</span></div>
+      <div class="virt-key-card"><span class="key">s</span><span>4</span></div>
+      <div class="virt-key-card"><span class="key">d</span><span>5</span></div>
+      <div class="virt-key-card"><span class="key">f</span><span>6</span></div>
+      <div class="virt-key-card"><span class="key">z</span><span>0</span></div>
+      <div class="virt-key-card"><span class="key">x</span><span>1</span></div>
+      <div class="virt-key-card"><span class="key">c</span><span>2</span></div>
+      <div class="virt-key-card"><span class="key">v</span><span>3</span></div>
+    </div>
+
+    <div class="sub-head">8.2 — Drawing palette <span style="text-transform:none;letter-spacing:0;font-weight:600">(L-⇧ + Space held together)</span></div>
+    <p class="sec-desc" style="margin-bottom:12px">
+      Spacebar must be held too — L-⇧ alone is the numpad above. Mirrors the tool shortcuts of
+      <strong>Concepts</strong> (iPad drawing app), so the same fingers work on both devices.
+    </p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Key</th><th>Tool</th><th>Key</th><th>Tool</th></tr></thead>
+        <tbody>
+          <tr><td><span class="key">1</span></td><td class="dim">Zoom out</td><td><span class="key">2</span></td><td class="dim">Zoom in</td></tr>
+          <tr><td><span class="key">3</span></td><td class="dim">Tool <code>l</code></td><td><span class="key">4</span></td><td class="dim">Tool <code>⇧l</code></td></tr>
+          <tr><td><span class="key">q</span></td><td class="dim">Tool <code>⇧,</code></td><td><span class="key">w</span></td><td class="dim">Tool <code>⇧.</code></td></tr>
+          <tr><td><span class="key">e</span></td><td class="dim">Tool <code>e</code></td><td><span class="key">r</span></td><td class="dim">Tool <code>b</code></td></tr>
+          <tr><td><span class="key">a</span></td><td class="dim">Tool <code>,</code></td><td><span class="key">s</span></td><td class="dim">Tool <code>.</code></td></tr>
+          <tr><td><span class="key">d</span></td><td class="dim">Undo</td><td><span class="key">f</span></td><td class="dim">Redo</td></tr>
+          <tr><td><span class="key">z</span></td><td class="dim">Tool <code>⌥,</code></td><td><span class="key">x</span></td><td class="dim">Tool <code>⌥.</code></td></tr>
+          <tr><td><span class="key">c</span></td><td class="dim">Tool <code>a</code></td><td><span class="key">v</span></td><td class="dim">Tool <code>t</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ================= 09 Cket ================= -->
+  <section class="section reveal" id="cket" data-category="cket">
+    <div class="sec-head">
+      <span class="sec-num">09</span>
+      <div>
+        <h2>Cket Layer — Media &amp; Hardware</h2>
+        <p class="sec-desc">Hold <span class="key">R-⇧</span>. Right-hand keys only; nothing else lives on this layer.</p>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Key</th><th>Action</th><th>With ⇧ also held</th></tr></thead>
+        <tbody>
+          <tr><td><span class="key">[</span></td><td>Volume down</td><td class="dim">Fast forward</td></tr>
+          <tr><td><span class="key">]</span></td><td>Volume up</td><td class="dim">Rewind</td></tr>
+          <tr><td><span class="key">\</span></td><td>Mute</td><td class="dim">Play / Pause</td></tr>
+          <tr><td><span class="key">;</span></td><td>Screen brightness down</td><td class="dim">—</td></tr>
+          <tr><td><span class="key">'</span></td><td>Screen brightness up</td><td class="dim">—</td></tr>
+          <tr><td><span class="key">.</span></td><td>Keyboard backlight down</td><td class="dim">—</td></tr>
+          <tr><td><span class="key">/</span></td><td>Keyboard backlight up</td><td class="dim">—</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ================= 10 Glossary ================= -->
+  <section class="section reveal" id="glossary" data-category="glossary">
+    <div class="sec-head">
+      <span class="sec-num">10</span>
+      <div>
+        <h2>Glossary</h2>
+        <p class="sec-desc">The handful of words this manual uses in a specific sense.</p>
+      </div>
+    </div>
+    <div class="glossary-grid">
+      <div class="glossary-item">
+        <div class="glossary-term">Layer</div>
+        <p class="glossary-def">A whole alternate keyboard that is live only while its trigger key is held. Release the trigger and it's gone — nothing is ever "left on".</p>
+      </div>
+      <div class="glossary-item">
+        <div class="glossary-term">Asterisk / Bra / Cket</div>
+        <p class="glossary-def">The three layers, triggered by holding L-⌘, L-⇧ and R-⇧ respectively. Asterisk is the main one; the other two are small and self-contained.</p>
+      </div>
+      <div class="glossary-item">
+        <div class="glossary-term">Act key</div>
+        <p class="glossary-def">One of <b>a s d f</b>, held inside Asterisk. They stack freely, so four keys give 16 tiers.</p>
+      </div>
+      <div class="glossary-item">
+        <div class="glossary-term">Tier</div>
+        <p class="glossary-def">One of the 16 meanings the right hand can have, chosen by which Act keys are held.</p>
+      </div>
+      <div class="glossary-item">
+        <div class="glossary-term">Amplify (a)</div>
+        <p class="glossary-def">Same action, larger unit — character to word, line to paragraph, line end to document end, nudge to half-screen.</p>
+      </div>
+      <div class="glossary-item">
+        <div class="glossary-term">Select (s)</div>
+        <p class="glossary-def">Turns a movement into a selection; with <b>f</b>, turns a pointer move into a drag.</p>
+      </div>
+      <div class="glossary-item">
+        <div class="glossary-term">Delete (d)</div>
+        <p class="glossary-def">Removes what the movement covered; with <b>s</b>, becomes clipboard and undo territory.</p>
+      </div>
+      <div class="glossary-item">
+        <div class="glossary-term">Focus (f)</div>
+        <p class="glossary-def">Moves attention rather than text — mouse pointer, tab, application, window.</p>
+      </div>
+      <div class="glossary-item">
+        <div class="glossary-term">Clip slot</div>
+        <p class="glossary-def">One of 12 named clipboard buffers on the bottom row, stored on disk. Independent of Maccy's rolling history.</p>
+      </div>
+      <div class="glossary-item">
+        <div class="glossary-term">Alone / tap</div>
+        <p class="glossary-def">Pressing and releasing a hold-key without touching anything else. Every trigger key has a useful tap action so no key is spent on holding alone.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ================= Footer ================= -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a class="brand" href="#top">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span class="brand-name">ABCACT</span>
+      </a>
+      <p>A layered Goku / Karabiner-Elements keymap for macOS. This page documents <code>AbcAct.edn</code> exactly as configured.</p>
+    </div>
+    <div class="footer-links">
+      <a href="https://github.com/yqrashawn/GokuRakuJoudo">Goku ↗</a>
+      <a href="https://karabiner-elements.pqrs.org/">Karabiner-Elements ↗</a>
+      <a href="../NOTES.md">Implementation notes</a>
+    </div>
+    <button class="to-top" id="toTop">Back to top ↑</button>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  var root = document.documentElement;
+
+  /* ---------- Act tier data ---------- */
+  var ACT_ORDER = ["A","S","D","F"];
+  var ACT_CLASS = { A:"on-a", S:"on-s", D:"on-d", F:"on-f" };
+
+  var LAYERS = {
+    ""    : { name:"Text Cursor",          concept:"Direct navigation",   desc:"Plain arrows and page boundaries — the ground state." },
+    "A"   : { name:"Amplified Cursor",     concept:"Bigger units",        desc:"Word and paragraph jumps; line and document boundaries." },
+    "S"   : { name:"Select",               concept:"Range selection",     desc:"The same motions, extended as a selection." },
+    "D"   : { name:"Delete",               concept:"Removal",             desc:"Backspace, forward delete, single and double line removal." },
+    "F"   : { name:"Mouse Cursor",         concept:"Pointer & scroll",    desc:"Move the pointer and scroll without leaving the home row." },
+    "AS"  : { name:"Amplified Select",     concept:"Wide selection",      desc:"Select by word, paragraph, line or document boundary." },
+    "AD"  : { name:"Amplified Delete",     concept:"Wide removal",        desc:"Select that same unit, then delete it." },
+    "AF"  : { name:"Fast Mouse Cursor",    concept:"Accelerated pointer", desc:"Identical pointer moves at double the step." },
+    "SD"  : { name:"Reconvert & Clipboard",concept:"IME + clipboard",     desc:"Japanese reconversion on h j k l; copy, cut, paste on u i o p." },
+    "SF"  : { name:"Drag & Drop",          concept:"Pointer dragging",    desc:"Holds the mouse button down while moving." },
+    "DF"  : { name:"Tab Management",       concept:"Tabs & app windows",  desc:"Cycle, close, reopen, pin and duplicate tabs." },
+    "ASD" : { name:"Undo & Line Ops",      concept:"History + lines",     desc:"Undo, redo, back, forward; duplicate and move lines." },
+    "ASF" : { name:"Fast Drag & Drop",     concept:"Accelerated drag",    desc:"Dragging at double the step." },
+    "ADF" : { name:"App Management",       concept:"Application switching",desc:"Switch, quit, hide apps; Mission Control, Exposé, Spaces." },
+    "SDF" : { name:"Window Management",    concept:"Small window moves",  desc:"Nudge, shrink, grow, maximize the front window." },
+    "ASDF": { name:"Amplified Window",     concept:"Screen-scale placement", desc:"Half-screen toggles, display switching, fullscreen." }
+  };
+
+  var COMBO_ORDER = ["A","S","D","F","AS","AD","AF","SD","SF","DF","ASD","ASF","ADF","SDF","ASDF"];
+
+  function dotsHTML(combo){
+    return ACT_ORDER.map(function(k){
+      return '<span class="dot' + (combo.indexOf(k) !== -1 ? ' ' + ACT_CLASS[k] : '') + '"></span>';
+    }).join('');
+  }
+  function notation(combo){
+    return combo ? 'Cmd+' + combo.split('').join('+') + ' →' : 'Cmd →';
+  }
+
+  /* ---------- 2.1 combination map ---------- */
+  var comboGrid = document.getElementById('comboGrid');
+  comboGrid.innerHTML = COMBO_ORDER.map(function(combo){
+    var L = LAYERS[combo];
+    var hero = combo === 'ASDF' ? ' hero-card' : '';
+    return '<div class="combo-card' + hero + '">' +
+      '<span class="act-badge bare"><span class="dots">' + dotsHTML(combo) + '</span></span>' +
+      '<div class="combo-body">' +
+        '<span class="combo-title">' + L.name + '</span>' +
+        '<span class="combo-formula">' + notation(combo) + '</span>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+
+  /* ---------- 2.2 tier reference ---------- */
+  var matrixBody = document.getElementById('actMatrix');
+  matrixBody.innerHTML = Object.keys(LAYERS).map(function(combo){
+    var L = LAYERS[combo];
+    return '<tr>' +
+      '<td><span class="act-badge"><span class="dots">' + dotsHTML(combo) + '</span></span></td>' +
+      '<td><code>' + notation(combo) + '</code></td>' +
+      '<td class="row-label">' + L.name + '</td>' +
+      '<td>' + L.concept + '</td>' +
+      '<td class="dim">' + L.desc + '</td>' +
+    '</tr>';
+  }).join('');
+
+  /* ---------- Interactive explorer ---------- */
+  var expState = [];
+  var expKeys = Array.prototype.slice.call(document.querySelectorAll('.exp-key'));
+  var expName = document.getElementById('expName');
+  var expFormula = document.getElementById('expFormula');
+  var expConcept = document.getElementById('expConcept');
+  var expDesc = document.getElementById('expDesc');
+  var expDots = document.getElementById('expDots');
+
+  function renderExplorer(){
+    var combo = ACT_ORDER.filter(function(k){ return expState.indexOf(k) !== -1; }).join('');
+    var L = LAYERS[combo];
+    expName.textContent = L.name;
+    expFormula.textContent = notation(combo);
+    expConcept.textContent = L.concept;
+    expDesc.textContent = L.desc;
+    expDots.innerHTML = dotsHTML(combo);
+    expKeys.forEach(function(btn){
+      var on = expState.indexOf(btn.dataset.act) !== -1;
+      btn.classList.toggle('on', on);
+      btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+  }
+  expKeys.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var k = btn.dataset.act;
+      var i = expState.indexOf(k);
+      if (i === -1) expState.push(k); else expState.splice(i, 1);
+      renderExplorer();
+    });
+  });
+  renderExplorer();
+
+  /* ---------- Smooth scroll helpers ---------- */
+  var headerEl = document.querySelector('.site-header');
+  var chapterNav = document.querySelector('.chapter-nav');
+  function stickyOffset(){
+    return headerEl.offsetHeight + (chapterNav ? chapterNav.offsetHeight : 0) + 14;
+  }
+  function scrollToId(id){
+    var target = document.getElementById(id);
+    if (!target) return;
+    var top = target.getBoundingClientRect().top + window.scrollY - stickyOffset();
+    window.scrollTo({ top: Math.max(top, 0), behavior:'smooth' });
+  }
+
+  var navPills = Array.prototype.slice.call(document.querySelectorAll('.nav-pill'));
+  navPills.forEach(function(pill){
+    pill.addEventListener('click', function(){ scrollToId(pill.dataset.target); });
+  });
+  document.querySelectorAll('.related-card').forEach(function(card){
+    card.addEventListener('click', function(){ scrollToId(card.dataset.jump); });
+  });
+  document.getElementById('toTop').addEventListener('click', function(){
+    window.scrollTo({ top:0, behavior:'smooth' });
+  });
+
+  /* ---------- Scrollspy ---------- */
+  var spyMap = {};
+  navPills.forEach(function(p){ spyMap[p.dataset.target] = p; });
+  var spyTargets = ['overview','act','launcher','nav','aux','bottom','system','bra','cket','glossary']
+    .map(function(id){ return document.getElementById(id); })
+    .filter(Boolean);
+  var spy = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (entry.isIntersecting){
+        navPills.forEach(function(p){ p.classList.remove('active'); });
+        var pill = spyMap[entry.target.id];
+        if (pill) pill.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-30% 0px -60% 0px', threshold: 0 });
+  spyTargets.forEach(function(t){ spy.observe(t); });
+
+  /* ---------- Scroll progress ---------- */
+  var progress = document.getElementById('progress');
+  function updateProgress(){
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    progress.style.transform = 'scaleX(' + (max > 0 ? (h.scrollTop / max) : 0) + ')';
+  }
+  window.addEventListener('scroll', updateProgress, { passive:true });
+  updateProgress();
+
+  /* ---------- Reveal on scroll ---------- */
+  var revealIO = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (entry.isIntersecting){
+        entry.target.classList.add('in');
+        revealIO.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.06 });
+  document.querySelectorAll('.reveal').forEach(function(el){ revealIO.observe(el); });
+
+  /* ---------- Search filter ---------- */
+  var searchInput = document.getElementById('searchInput');
+  var sections = Array.prototype.slice.call(document.querySelectorAll('.section'));
+  var noResults = document.getElementById('noResults');
+  function applyFilter(){
+    var q = searchInput.value.toLowerCase().trim();
+    var visible = 0;
+    sections.forEach(function(sec){
+      var rows = sec.querySelectorAll('tbody tr, .combo-card, .glossary-item, .virt-key-card, .act-card, .step');
+      var count = 0;
+      if (rows.length){
+        rows.forEach(function(row){
+          var hit = !q || row.textContent.toLowerCase().indexOf(q) !== -1;
+          row.style.display = hit ? '' : 'none';
+          if (hit) count++;
+        });
+      } else {
+        if (!q || sec.textContent.toLowerCase().indexOf(q) !== -1) count = 1;
+      }
+      sec.style.display = count ? '' : 'none';
+      if (count) visible++;
+    });
+    noResults.style.display = visible === 0 ? 'block' : 'none';
+  }
+  if (searchInput){
+    searchInput.addEventListener('input', applyFilter);
+    document.addEventListener('keydown', function(e){
+      if (e.key === '/' && document.activeElement !== searchInput){
+        e.preventDefault();
+        searchInput.focus();
+      } else if (e.key === 'Escape' && document.activeElement === searchInput){
+        searchInput.value = '';
+        applyFilter();
+        searchInput.blur();
+      }
+    });
+  }
+
+  /* ---------- Theme toggle ---------- */
+  var storedTheme = null;
+  try { storedTheme = localStorage.getItem('abcact-theme'); } catch(e){}
+  if (storedTheme === 'dark' || storedTheme === 'light'){
+    root.setAttribute('data-theme', storedTheme);
+  } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){
+    root.setAttribute('data-theme', 'dark');
+  }
+  document.getElementById('themeToggle').addEventListener('click', function(){
+    var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('abcact-theme', next); } catch(e){}
+  });
+
+})();
+</script>
+</body>
+</html>

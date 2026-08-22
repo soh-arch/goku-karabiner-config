@@ -7,7 +7,7 @@ backup of the configuration in active use and an archive of past drafts.
 
 | File | Status | Notes |
 | --- | --- | --- |
-| [`AbcAct.edn`](./AbcAct.edn) | **Active** | Currently symlinked to `~/.config/karabiner.edn` and in daily use. Asterisk / Bra / Cket layer system with an Act-key axis. See [`MANUAL.md`](./MANUAL.md) for the full keymap reference. |
+| [`AbcAct.edn`](./AbcAct.edn) | **Active** | Currently symlinked to `~/.config/karabiner.edn` and in daily use. Asterisk / Bra / Cket layer system with an Act-key axis. See [`docs/index.html`](./docs/index.html) for the illustrated reference manual, or [`MANUAL.md`](./MANUAL.md) for the same content in plain Markdown. |
 | [`HySCOT.edn`](./HySCOT.edn) | Archived draft | SCOT Matrix layout (Shift/Cmd/Opt/Ctrl priority rows on the right hand). |
 | [`HyMeCO.edn`](./HyMeCO.edn) | Archived draft | Hyper/Meh two-tier layer system with semicolon/quote/slash sub-layers. |
 
@@ -21,6 +21,14 @@ backup of the configuration in active use and an archive of past drafts.
 ln -s /path/to/AbcAct.edn ~/.config/karabiner.edn
 goku
 ```
+
+## Manual
+
+[`docs/index.html`](./docs/index.html) is a self-contained, single-file reference
+manual for `AbcAct.edn` — open it in a browser, or serve `docs/` via GitHub Pages.
+It covers every layer and all 16 Act tiers, with an interactive tier explorer,
+searchable tables, and light/dark themes. [`MANUAL.md`](./MANUAL.md) carries the
+same reference in Markdown (Japanese).
 
 ## Notes
 
