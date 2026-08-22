@@ -258,13 +258,13 @@
     ;; ── AsDf ─────────────────────────
     ;; Amplified Delete
     [:##h             :!Cdelete_or_backspace [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :act-d :!act-f]]
-    [:##j             [:!Sdown_arrow :!Sdown_arrow :!Sdown_arrow :delete_or_backspace] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :act-d :!act-f]]
-    [:##k             [:!Sup_arrow :!Sup_arrow :!Sup_arrow :delete_or_backspace] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :act-d :!act-f]]
+    [:##j             [:!SOdown_arrow :delete_or_backspace] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :act-d :!act-f]]
+    [:##k             [:!SOup_arrow :delete_or_backspace] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :act-d :!act-f]]
     [:##l             :!Cdelete_forward [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :act-d :!act-f]]
-    [:##u             [:!Spage_up :delete_or_backspace] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :act-d :!act-f]]
-    [:##i             [:!Shome :delete_or_backspace] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :act-d :!act-f]]
-    [:##o             [:!Send :delete_or_backspace] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :act-d :!act-f]]
-    [:##p             [:!Spage_down :delete_or_backspace] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :act-d :!act-f]]
+    [:##u             [:!SCup_arrow :delete_or_backspace] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :act-d :!act-f]]
+    [:##i             [:!SCleft_arrow :delete_or_backspace] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :act-d :!act-f]]
+    [:##o             [:!SCright_arrow :delete_or_backspace] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :act-d :!act-f]]
+    [:##p             [:!SCdown_arrow :delete_or_backspace] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :act-d :!act-f]]
 
     ;; ── aSDf ─────────────────────────
     ;; Undo, Navigate & Convert
