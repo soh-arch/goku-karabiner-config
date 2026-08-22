@@ -81,3 +81,12 @@ current one. In order:
    before; steps 2-5 kept changing both the open mechanism and the select
    mechanism at once, so the true cause of step 1's failure (focus
    stealing, not the chords themselves) took a while to isolate.
+
+## ASDF's j/k (previous-desktop/next-desktop) removed
+
+`ASDF` (Amplified Window Management) originally bound `j`/`k` to Raycast's
+`previous-desktop`/`next-desktop` window-management commands, alongside
+`h`/`l` for `previous-display`/`next-display`. Removed because virtual
+desktops (Spaces) aren't part of the actual workflow — the owner doesn't
+use them — so the binding had no real use. `h`/`l` (display switching) are
+kept. `j`/`k` are undefined in this tier for now.

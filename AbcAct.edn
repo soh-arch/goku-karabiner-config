@@ -359,8 +359,6 @@
     ;; ── ASDF ─────────────────────────
     ;; Amplified Window Management
     [:##h             [:wm "previous-display"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :act-f]]
-    [:##j             [:wm "previous-desktop"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :act-f]]
-    [:##k             [:wm "next-desktop"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :act-f]]
     [:##l             [:wm "next-display"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :act-f]]
     [:##u             [:wm "toggle-fullscreen"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :act-f]]
     [:##i             [:wm "make-smaller"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :act-f]]
