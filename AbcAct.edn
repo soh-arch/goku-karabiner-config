@@ -161,7 +161,7 @@
 
   {:des "Asterisk Left: Maccy Paste Layer"
    :rules [
-    [:##tab           [:!Cgrave_accent_and_tilde ["layer-maccy" 1]] [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f] {:afterup ["layer-maccy" 0]}]
+    [:##tab           [:!Cgrave_accent_and_tilde ["layer-maccy" 1]] [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f] {:afterup ["layer-maccy" 0]}] ;; Cmd+` is Maccy's own popup hotkey (see NOTES.md)
 
     [:##1             :!C1 :layer-maccy]
     [:##2             :!C2 :layer-maccy]

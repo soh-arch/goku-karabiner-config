@@ -14,12 +14,19 @@ backup of the configuration in active use and an archive of past drafts.
 ## Usage
 
 1. Install [Karabiner-Elements](https://karabiner-elements.pqrs.org/) and [Goku](https://github.com/yqrashawn/GokuRakuJoudo).
-2. Copy the active file (`AbcAct.edn`) to `~/.config/karabiner.edn`.
+2. Symlink the active file (`AbcAct.edn`) to `~/.config/karabiner.edn`.
 3. Run `goku` to compile it into a Karabiner-Elements complex modification.
 
 ```bash
+ln -s /path/to/AbcAct.edn ~/.config/karabiner.edn
 goku
 ```
+
+## Notes
+
+Implementation gotchas and past debugging history live in
+[`NOTES.md`](./NOTES.md) — worth a look before reworking anything involving
+held modifiers, multi-action `to` chains, or global app hotkeys.
 
 ## Roadmap
 
