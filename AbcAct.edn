@@ -161,7 +161,7 @@
 
   {:des "Asterisk Left: Maccy Paste Layer"
    :rules [
-    [:##tab           [[:app "Maccy"] ["layer-maccy" 1]] [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f] {:afterup ["layer-maccy" 0]}]
+    [:##tab           ["open -a 'Maccy' && sleep 0.3" ["layer-maccy" 1]] [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f] {:afterup ["layer-maccy" 0]}]
 
     [:##1             :!C1 :layer-maccy]
     [:##2             :!C2 :layer-maccy]
