@@ -100,8 +100,8 @@
 
   {:des "Core: Space & Return"
    :rules [
-    [:##open_bracket  :spacebar [:layer-ast :!act-a :!act-s :!act-d :!act-f]]
-    [:##close_bracket :spacebar [:layer-ast :!act-a :!act-s :!act-d :!act-f]]
+    [:##open_bracket  :return_or_enter [:layer-ast :!act-a :!act-s :!act-d :!act-f]]
+    [:##close_bracket :return_or_enter [:layer-ast :!act-a :!act-s :!act-d :!act-f]]
     [:##backslash     :spacebar [:layer-ast :!act-a :!act-s :!act-d :!act-f]]
     [:##semicolon     :return_or_enter [:layer-ast :!act-a :!act-s :!act-d :!act-f]]
     [:##quote         :return_or_enter [:layer-ast :!act-a :!act-s :!act-d :!act-f]]
@@ -232,6 +232,10 @@
     [:##i             :!Shome [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f]]
     [:##o             :!Send [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f]]
     [:##p             :!Spage_down [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f]]
+    [:##open_bracket  :!Ca [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f]] ;; Select All
+    [:##close_bracket :!Ca [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f]] ;; Select All
+    [:##semicolon     :!Ca [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f]] ;; Select All
+    [:##quote         :!Ca [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f]] ;; Select All
 
     ;; ── ASdf ─────────────────────────
     ;; Amplified Select
