@@ -98,15 +98,6 @@
     [:##right_option  :left_shift]
    ]}
 
-  {:des "Core: Space & Return"
-   :rules [
-    [:##open_bracket  :return_or_enter [:layer-ast :!act-a :!act-s :!act-d :!act-f]]
-    [:##close_bracket :return_or_enter [:layer-ast :!act-a :!act-s :!act-d :!act-f]]
-    [:##backslash     :spacebar [:layer-ast :!act-a :!act-s :!act-d :!act-f]]
-    [:##semicolon     :return_or_enter [:layer-ast :!act-a :!act-s :!act-d :!act-f]]
-    [:##quote         :return_or_enter [:layer-ast :!act-a :!act-s :!act-d :!act-f]]
-   ]}
-
   {:des "Core: Accents"
    :rules [
     [:open_bracket    :!Oe [:!layer-ast :!layer-cket]]
@@ -232,10 +223,6 @@
     [:##i             :!Shome [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f]]
     [:##o             :!Send [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f]]
     [:##p             :!Spage_down [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f]]
-    [:##open_bracket  :!Ca [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f]] ;; Select All
-    [:##close_bracket :!Ca [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f]] ;; Select All
-    [:##semicolon     :!Ca [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f]] ;; Select All
-    [:##quote         :!Ca [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f]] ;; Select All
 
     ;; ── ASdf ─────────────────────────
     ;; Amplified Select
@@ -302,8 +289,6 @@
     [:##i             {:mkey {:vwheel 32}} [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :act-f]]
     [:##o             {:mkey {:vwheel -32}} [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :act-f]]
     [:##p             {:mkey {:hwheel -32}} [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :act-f]]
-    [:##semicolon     {:pkey :button1} [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :act-f]]
-    [:##quote         {:pkey :button2} [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :act-f]]
 
     ;; ── AsdF ─────────────────────────
     ;; Fast Mouse Cursor
@@ -315,8 +300,6 @@
     [:##i             {:mkey {:vwheel 64}} [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :!act-d :act-f]]
     [:##o             {:mkey {:vwheel -64}} [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :!act-d :act-f]]
     [:##p             {:mkey {:hwheel -64}} [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :!act-d :act-f]]
-    [:##semicolon     {:pkey :button1} [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :!act-d :act-f]]
-    [:##quote         {:pkey :button2} [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :!act-d :act-f]]
 
     ;; ── aSdF ─────────────────────────
     ;; Drag & Drop
@@ -328,8 +311,6 @@
     [:##i             [{:pkey :button1} {:mkey {:y 800}}] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :!act-d :act-f]]
     [:##o             [{:pkey :button1} {:mkey {:y -800}}] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :!act-d :act-f]]
     [:##p             [{:pkey :button1} {:mkey {:x 800}}] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :!act-d :act-f]]
-    [:##semicolon     {:pkey :button1} [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :!act-d :act-f]]
-    [:##quote         {:pkey :button2} [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :!act-d :act-f]]
 
     ;; ── ASdF ─────────────────────────
     ;; Fast Drag & Drop
@@ -341,8 +322,6 @@
     [:##i             [{:pkey :button1} {:mkey {:y 1600}}] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :!act-d :act-f]]
     [:##o             [{:pkey :button1} {:mkey {:y -1600}}] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :!act-d :act-f]]
     [:##p             [{:pkey :button1} {:mkey {:x 1600}}] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :!act-d :act-f]]
-    [:##semicolon     {:pkey :button1} [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :!act-d :act-f]]
-    [:##quote         {:pkey :button2} [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :!act-d :act-f]]
 
     ;; ── asDF ─────────────────────────
     ;; Tab Management
@@ -376,10 +355,6 @@
     [:##i             [:wm "make-smaller"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :act-d :act-f]]
     [:##o             [:wm "make-larger"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :act-d :act-f]]
     [:##p             [:wm "almost-maximize"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :act-d :act-f]]
-    [:##open_bracket  [:wm "top-left-sixth"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :act-d :act-f]]
-    [:##close_bracket [:wm "top-right-sixth"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :act-d :act-f]]
-    [:##semicolon     [:wm "bottom-left-sixth"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :act-d :act-f]]
-    [:##quote         [:wm "bottom-right-sixth"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :act-d :act-f]]
 
     ;; ── ASDF ─────────────────────────
     ;; Amplified Window Management
@@ -391,10 +366,36 @@
     [:##i             [:wm "make-smaller"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :act-f]]
     [:##o             [:wm "make-larger"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :act-f]]
     [:##p             :!Ch [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :act-f]]
-    [:##open_bracket  [:wm "top-left-sixth"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :act-f]]
-    [:##close_bracket [:wm "top-right-sixth"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :act-f]]
-    [:##semicolon     [:wm "bottom-left-sixth"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :act-f]]
-    [:##quote         [:wm "bottom-right-sixth"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :act-f]]
+   ]}
+
+  {:des "Asterisk Right: Auxiliary Keys"
+   ;; open_bracket/close_bracket/semicolon/quote support h/j/k/l and u/i/o/p rather than
+   ;; carrying independent meaning per tier. Only act-d/act-f matter here; act-a/act-s don't
+   ;; change these four, so the same action covers all four act-a/act-s combinations at once.
+   :rules [
+    ;; asdf / Asdf / aSdf / ASdf → Return
+    [:##open_bracket  :return_or_enter [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-d :!act-f]]
+    [:##close_bracket :return_or_enter [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-d :!act-f]]
+    [:##semicolon     :return_or_enter [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-d :!act-f]]
+    [:##quote         :return_or_enter [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-d :!act-f]]
+
+    ;; asDf / AsDf / aSDf / ASDf → Select All
+    [:##open_bracket  :!Ca [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-d :!act-f]]
+    [:##close_bracket :!Ca [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-d :!act-f]]
+    [:##semicolon     :!Ca [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-d :!act-f]]
+    [:##quote         :!Ca [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-d :!act-f]]
+
+    ;; asdF / AsdF / aSdF / ASdF → L/R Mouse Click
+    [:##open_bracket  {:pkey :button1} [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-d :act-f]]
+    [:##close_bracket {:pkey :button2} [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-d :act-f]]
+    [:##semicolon     {:pkey :button1} [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-d :act-f]]
+    [:##quote         {:pkey :button2} [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-d :act-f]]
+
+    ;; asDF / AsDF / aSDF / ASDF → Window sixths
+    [:##open_bracket  [:wm "top-left-sixth"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-d :act-f]]
+    [:##close_bracket [:wm "top-right-sixth"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-d :act-f]]
+    [:##semicolon     [:wm "bottom-left-sixth"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-d :act-f]]
+    [:##quote         [:wm "bottom-right-sixth"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-d :act-f]]
    ]}
 
   {:des "Asterisk Bottom: Symbol Keys"
