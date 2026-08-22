@@ -326,12 +326,12 @@
     ;; ── asDF ─────────────────────────
     ;; Tab Management
     [:##h             :!STtab [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :act-f]]
-    [:##j             :!Ttab [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :act-f]]
-    [:##k             :!STtab [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :act-f]]
+    [:##j             :!Cw [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :act-f]] ;; close tab
+    [:##k             :!SCt [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :act-f]] ;; reopen closed tab
     [:##l             :!Ttab [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :act-f]]
     [:##u             :!SOTf1 [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :act-f]]
-    [:##i             :!Cw [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :act-f]]
-    [:##o             :!SCt [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :act-f]]
+    [:##i             :!SOp [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :act-f]] ;; pin tab
+    [:##o             :!SOd [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :act-f]] ;; duplicate tab
     [:##p             :!OTf1 [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :act-f]]
 
     ;; ── AsDF ─────────────────────────
