@@ -7,9 +7,6 @@
 ;; > C: L-Cmd
 ;; > O: L-Opt
 ;; > T: L-Ctrl
-;; > Q: R-Cmd
-;; > W: R-Ctrl
-;; > E: R-Opt
 ;; > R: R-Shift
 ;; > ### Layers
 ;; > *: Asterisk (= layer-ast / L-Cmd held)
@@ -94,7 +91,6 @@
     [:##left_shift    ["layer-bra" 1] [:!layer-ast :layer-cket] {:afterup ["layer-bra" 0] :alone :!Sgrave_accent_and_tilde}] ;; Shift+L-Shift → ~
     [:##right_shift   ["layer-cket" 1] [:!layer-ast :!layer-bra] {:afterup ["layer-cket" 0] :alone :backslash}] ;; ( Cket / alone \
     [:##right_shift   ["layer-cket" 1] [:!layer-ast :layer-bra] {:afterup ["layer-cket" 0] :alone :!Sbackslash}] ;; Shift+R-Shift → |
-    [:##left_control  :left_control]
     [:##left_option   :left_option nil {:alone :greek}]
     [:##left_command  ["layer-ast" 1] nil {:afterup ["layer-ast" 0] :alone :english}]  ;; * Asterisk
     [:##spacebar      :left_command nil {:alone :spacebar}]
@@ -136,13 +132,13 @@
 
   {:des "Asterisk Left: Application Launcher"
    :rules [
-    [:##a             ["act-a" 1] [:layer-ast :!layer-maccy] {:afterup ["act-a" 0] :alone :launchpad}]
-    [:##s             ["act-s" 1] [:layer-ast :!layer-maccy :!act-a] {:afterup ["act-s" 0] :alone [:app "Comet"]}]
-    [:##s             ["act-s" 1] [:layer-ast :!layer-maccy :act-a] {:afterup ["act-s" 0] :alone [:app "Google Chrome"]}]
-    [:##d             ["act-d" 1] [:layer-ast :!layer-maccy :!act-a] {:afterup ["act-d" 0] :alone [:app "Raycast"]}]
-    [:##d             ["act-d" 1] [:layer-ast :!layer-maccy :act-a] {:afterup ["act-d" 0] :alone [:app "Maccy"]}]
-    [:##f             ["act-f" 1] [:layer-ast :!layer-maccy :!act-a] {:afterup ["act-f" 0] :alone [:app "Finder"]}]
-    [:##f             ["act-f" 1] [:layer-ast :!layer-maccy :act-a] {:afterup ["act-f" 0] :alone [:app "iTerm"]}]
+    [:##a             ["act-a" 1] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket] {:afterup ["act-a" 0] :alone :launchpad}]
+    [:##s             ["act-s" 1] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a] {:afterup ["act-s" 0] :alone [:app "Comet"]}]
+    [:##s             ["act-s" 1] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a] {:afterup ["act-s" 0] :alone [:app "Google Chrome"]}]
+    [:##d             ["act-d" 1] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a] {:afterup ["act-d" 0] :alone [:app "Raycast"]}]
+    [:##d             ["act-d" 1] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a] {:afterup ["act-d" 0] :alone [:app "Maccy"]}]
+    [:##f             ["act-f" 1] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a] {:afterup ["act-f" 0] :alone [:app "Finder"]}]
+    [:##f             ["act-f" 1] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a] {:afterup ["act-f" 0] :alone [:app "iTerm"]}]
     [:##q             [:ray "raycast/raycast-notes/raycast-notes"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f]]
     [:##q             "open 'raycast://script-commands/open-abcact-manual'" [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
     [:##w             [:app "Obsidian"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f]]
@@ -498,6 +494,9 @@
    ]}
 
   {:des "Bra: Depiction"
+   ;; Bra (L-Shift) + Spacebar held together, not Bra alone (would collide with the Virtual Numpad).
+   ;; Spacebar forwards a real Command modifier without touching layer-ast, which is what lets these
+   ;; Cmd+<key> chords fire while :!layer-ast holds. Mirrors the shortcuts in Concepts (iPad) drawing app.
    :rules [
     [:!C1 :!Chyphen [:layer-bra :!layer-ast]]
     [:!C2 :!Cequal_sign [:layer-bra :!layer-ast]]
