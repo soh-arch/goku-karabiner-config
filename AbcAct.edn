@@ -83,7 +83,6 @@
 
  :input-sources {
   :english  {:input_source_id "com.apple.keylayout.USExtended"}
-  :french   {:input_source_id "com.apple.keylayout.Canadian-CSA"}
   :greek    {:input_source_id "com.apple.keylayout.Greek"}
   :japanese {:input_source_id "com.apple.inputmethod.Kotoeri.RomajiTyping.Japanese"}
  }
@@ -95,8 +94,8 @@
     [:##left_shift    ["layer-bra" 1] [:!layer-ast :layer-cket] {:afterup ["layer-bra" 0] :alone :!Sgrave_accent_and_tilde}] ;; Shift+L-Shift → ~
     [:##right_shift   ["layer-cket" 1] [:!layer-ast :!layer-bra] {:afterup ["layer-cket" 0] :alone :backslash}] ;; ( Cket / alone \
     [:##right_shift   ["layer-cket" 1] [:!layer-ast :layer-bra] {:afterup ["layer-cket" 0] :alone :!Sbackslash}] ;; Shift+R-Shift → |
-    [:##left_control  :left_control nil {:alone :greek}]
-    [:##left_option   :left_option nil {:alone :french}]
+    [:##left_control  :left_control]
+    [:##left_option   :left_option nil {:alone :greek}]
     [:##left_command  ["layer-ast" 1] nil {:afterup ["layer-ast" 0] :alone :english}]  ;; * Asterisk
     [:##spacebar      :left_command nil {:alone :spacebar}]
     [:##right_command :left_shift nil {:alone :japanese}]
