@@ -214,13 +214,13 @@
     ;; ── Asdf ─────────────────────────
     ;; Amplified Text Cursor
     [:##h             :!Oleft_arrow [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
-    [:##j             [:down_arrow :down_arrow :down_arrow] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
-    [:##k             [:up_arrow :up_arrow :up_arrow] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
+    [:##j             :!Odown_arrow [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
+    [:##k             :!Oup_arrow [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
     [:##l             :!Oright_arrow [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
-    [:##u             :!SOup_arrow [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
-    [:##i             :!Oup_arrow [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
-    [:##o             :!Odown_arrow [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
-    [:##p             :!SOdown_arrow [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
+    [:##u             :!Cup_arrow [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
+    [:##i             :!Cleft_arrow [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
+    [:##o             :!Cright_arrow [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
+    [:##p             :!Cdown_arrow [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
 
     ;; ── aSdf ─────────────────────────
     ;; Select
@@ -236,13 +236,13 @@
     ;; ── ASdf ─────────────────────────
     ;; Amplified Select
     [:##h             :!SOleft_arrow [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :!act-d :!act-f]]
-    [:##j             [:!Sdown_arrow :!Sdown_arrow :!Sdown_arrow] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :!act-d :!act-f]]
-    [:##k             [:!Sup_arrow :!Sup_arrow :!Sup_arrow] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :!act-d :!act-f]]
+    [:##j             :!SOdown_arrow [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :!act-d :!act-f]]
+    [:##k             :!SOup_arrow [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :!act-d :!act-f]]
     [:##l             :!SOright_arrow [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :!act-d :!act-f]]
-    [:##u             :!SOup_arrow [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :!act-d :!act-f]]
-    [:##i             :!Oup_arrow [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :!act-d :!act-f]]
-    [:##o             :!Odown_arrow [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :!act-d :!act-f]]
-    [:##p             :!SOdown_arrow [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :!act-d :!act-f]]
+    [:##u             :!SCup_arrow [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :!act-d :!act-f]]
+    [:##i             :!SCleft_arrow [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :!act-d :!act-f]]
+    [:##o             :!SCright_arrow [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :!act-d :!act-f]]
+    [:##p             :!SCdown_arrow [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :!act-d :!act-f]]
 
     ;; ── asDf ─────────────────────────
     ;; Delete
@@ -283,10 +283,10 @@
     [:##j             :!Cv [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :!act-f]]
     [:##k             :!Cc [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :!act-f]]
     [:##l             :!Cx [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :!act-f]]
-    [:##u             [:!Ca :!SCOv] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :!act-f]]
-    [:##i             [:!Ca :!Cv] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :!act-f]]
-    [:##o             [:!Ca :!Cc] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :!act-f]]
-    [:##p             [:!Ca :!Cx] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :!act-f]]
+    [:##u             :!SOup_arrow [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :!act-f]] ;; duplicate line up
+    [:##i             :!Oup_arrow [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :!act-f]] ;; move line up
+    [:##o             :!Odown_arrow [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :!act-f]] ;; move line down
+    [:##p             :!SOdown_arrow [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :!act-f]] ;; duplicate line down
 
     ;; ── asdF ─────────────────────────
     ;; Mouse Cursor
