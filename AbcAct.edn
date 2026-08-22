@@ -82,9 +82,10 @@
  }
 
  :input-sources {
-  :english {:input_source_id "com.apple.keylayout.USExtended"}
-  :french {:input_source_id "com.apple.keylayout.Canadian-CSA"}
-  :greek  {:input_source_id "com.apple.keylayout.Greek"}
+  :english  {:input_source_id "com.apple.keylayout.USExtended"}
+  :french   {:input_source_id "com.apple.keylayout.Canadian-CSA"}
+  :greek    {:input_source_id "com.apple.keylayout.Greek"}
+  :japanese {:input_source_id "com.apple.inputmethod.Kotoeri.RomajiTyping.Japanese"}
  }
 
  :main [
@@ -98,7 +99,7 @@
     [:##left_option   :left_option nil {:alone :french}]
     [:##left_command  ["layer-ast" 1] nil {:afterup ["layer-ast" 0] :alone :english}]  ;; * Asterisk
     [:##spacebar      :left_command nil {:alone :spacebar}]
-    [:##right_command :left_shift nil {:alone :japanese_kana}]
+    [:##right_command :left_shift nil {:alone :japanese}]
     [:##right_option  :left_shift]
    ]}
 
