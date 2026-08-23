@@ -365,6 +365,25 @@ button{ font:inherit; color:inherit; background:none; border:none; cursor:pointe
   color:var(--faint); margin-bottom:9px;
 }
 
+/* ---------- 2.2 disclosure: collapsed by default ---------- */
+.tier-details{ margin-top:4px; }
+.tier-details summary{
+  cursor:pointer; list-style:none; width:max-content;
+  display:inline-flex; align-items:center; gap:9px;
+  font-size:.78rem; font-weight:700; color:var(--ink);
+  border:1.5px solid var(--border-strong); border-radius:99px;
+  padding:8px 16px; background:var(--surface);
+  transition:border-color .16s ease, transform .16s ease;
+}
+.tier-details summary::-webkit-details-marker{ display:none; }
+.tier-details summary:hover{ border-color:var(--ink); transform:translateY(-1px); }
+.tier-details summary .chev{
+  font-family:var(--font-mono); font-size:.8rem; color:var(--faint);
+  transition:transform .18s ease;
+}
+.tier-details[open] summary{ margin-bottom:14px; }
+.tier-details[open] summary .chev{ transform:rotate(180deg); }
+
 /* ---------- Steps ---------- */
 .steps{ display:grid; grid-template-columns:repeat(auto-fit, minmax(230px, 1fr)); gap:12px; }
 .step{
@@ -847,12 +866,15 @@ body.searching .chapter-nav{ margin-top:0; }
     <div id="comboGrid"><!-- populated by script --></div>
 
     <div class="sub-head">2.2 — Tier reference</div>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>Act</th><th>Notation</th><th>Tier</th><th>Focus</th><th>Right-hand behaviour</th></tr></thead>
-        <tbody id="actMatrix"><!-- populated by script --></tbody>
-      </table>
-    </div>
+    <details class="tier-details" id="tierDetails">
+      <summary><span class="tier-summary-label">Show all 16 tiers</span><span class="chev">⌄</span></summary>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Act</th><th>Notation</th><th>Tier</th><th>Focus</th><th>Right-hand behaviour</th></tr></thead>
+          <tbody id="actMatrix"><!-- populated by script --></tbody>
+        </table>
+      </div>
+    </details>
 
     <div class="related">
       <div class="related-title">Related</div>
@@ -1475,6 +1497,10 @@ body.searching .chapter-nav{ margin-top:0; }
     { label:"All four", combos:["ASDF"] }
   ];
 
+  /* Binary count over A(bit0) S(bit1) D(bit2) F(bit3) — the same order §04's
+     four navigation tables run in, one table per top bit (D, then F). */
+  var NAV_ORDER = ["","A","S","AS","D","AD","SD","ASD","F","AF","SF","ASF","DF","ADF","SDF","ASDF"];
+
   function dotsHTML(combo){
     return ACT_ORDER.map(function(k){
       return '<span class="dot' + (combo.indexOf(k) !== -1 ? ' ' + ACT_CLASS[k] : '') + '"></span>';
@@ -1505,7 +1531,7 @@ body.searching .chapter-nav{ margin-top:0; }
 
   /* ---------- 2.2 tier reference ---------- */
   var matrixBody = document.getElementById('actMatrix');
-  matrixBody.innerHTML = Object.keys(LAYERS).map(function(combo){
+  matrixBody.innerHTML = NAV_ORDER.map(function(combo){
     var L = LAYERS[combo];
     return '<tr>' +
       '<td><span class="act-badge"><span class="dots">' + dotsHTML(combo) + '</span></span></td>' +
@@ -1634,6 +1660,14 @@ body.searching .chapter-nav{ margin-top:0; }
   var hitCount = document.getElementById('hitCount');
   var ROWS = 'tbody tr, .combo-card, .glossary-item, .virt-key-card, .act-card, .step';
 
+  /* Tier reference (2.2) is collapsed by default; open it automatically
+     when a search turns up a match hidden inside it. */
+  var tierDetails = document.getElementById('tierDetails');
+  var tierSummaryLabel = tierDetails.querySelector('.tier-summary-label');
+  tierDetails.addEventListener('toggle', function(){
+    tierSummaryLabel.textContent = tierDetails.open ? 'Hide all 16 tiers' : 'Show all 16 tiers';
+  });
+
   function clearMarks(root){
     var marks = root.querySelectorAll('mark.hit');
     for (var i = 0; i < marks.length; i++){
@@ -1691,6 +1725,13 @@ body.searching .chapter-nav{ margin-top:0; }
         g.style.display = any ? '' : 'none';
       });
     });
+
+    if (q){
+      var tierHit = Array.prototype.some.call(matrixBody.querySelectorAll('tr'), function(row){
+        return row.style.display !== 'none';
+      });
+      if (tierHit) tierDetails.open = true;
+    }
 
     noResults.style.display = visibleSections === 0 ? 'block' : 'none';
     searchStatus.style.display = q ? 'flex' : 'none';
