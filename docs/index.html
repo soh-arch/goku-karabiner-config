@@ -195,7 +195,7 @@ button{ font:inherit; color:inherit; background:none; border:none; cursor:pointe
 /* ---------- Hero keyboard ----------
    Three tiers, encoded without inventing new hues: colour is reserved for the
    Act keys so it keeps meaning the same thing it means in §02.
-     .k-trigger  hold to open something   — solid dark frame
+     .k-trigger  hold to open something   — ink border, soft ink-tinted fill
      .k-act      a s d f                  — the four Act colours
      .k-mapped   remapped inside a layer  — quiet fill
      (unmarked)  untouched
@@ -227,9 +227,15 @@ button{ font:inherit; color:inherit; background:none; border:none; cursor:pointe
 }
 .keycap.mod{ font-size:clamp(.5rem, .72vw, .64rem); }
 
-/* tier 1 — hold this to start something */
+/* tier 1 — hold this to start something. A strong ink border carries the
+   emphasis; the fill stays light so six keys (tab, caps, both shifts, cmd,
+   the whole spacebar) don't read as a slab of solid black across the board. */
 .keycap.k-trigger{
-  color:var(--bg); background:var(--ink); border-color:var(--ink);
+  color:var(--ink); font-weight:800;
+  background:linear-gradient(180deg,
+    color-mix(in srgb, var(--ink) 16%, var(--keycap)),
+    color-mix(in srgb, var(--ink) 26%, var(--keycap)));
+  border-color:var(--ink);
 }
 /* tier 2 — the Act axis, the one place hue carries meaning */
 .keycap.k-act{ color:var(--ink); font-weight:800; }
@@ -277,7 +283,12 @@ button{ font:inherit; color:inherit; background:none; border:none; cursor:pointe
   border:1px solid var(--keycap-edge); border-bottom-width:2px;
   background:linear-gradient(180deg, var(--keycap), color-mix(in srgb, var(--keycap) 88%, var(--border)));
 }
-.kb-legend i.sw-trigger{ background:var(--ink); border-color:var(--ink); }
+.kb-legend i.sw-trigger{
+  background:linear-gradient(180deg,
+    color-mix(in srgb, var(--ink) 16%, var(--keycap)),
+    color-mix(in srgb, var(--ink) 26%, var(--keycap)));
+  border-color:var(--ink);
+}
 .kb-legend i.sw-mapped{
   background:linear-gradient(180deg,
     color-mix(in srgb, var(--border) 34%, var(--keycap)),
