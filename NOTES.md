@@ -50,6 +50,44 @@ of them being interpreted as the app's own global hotkeys. If an app has a
 configured global hotkey for the action you want, send that hotkey via a
 Karabiner chord instead of shelling out to `open -a`.
 
+## `select_input_source` alone doesn't set Kotoeri's kana/eisu submode
+
+Symptom: switch to Japanese, the macOS menu bar shows the Japanese (あ)
+input source selected, Karabiner-Elements EventViewer confirms the
+`select_input_source` event fired — and typing still produces literal
+half-width roman characters, no romaji-to-kana conversion.
+
+Cause: `select_input_source` (what `:input-sources` / a bare `:japanese`
+keyword expands to) only chooses *which* input source macOS treats as
+active. Apple's Kotoeri Japanese input method has its own internal
+submode — かな (kana conversion) vs. 英数 (direct/eisu) — that is
+orthogonal to source selection and isn't touched by it. If Kotoeri was
+last left in 英数 submode (e.g. from previously toggling it directly, or
+from how macOS restored state), selecting the Japanese source again does
+not reset that submode, so keystrokes still pass through unconverted
+even though the "correct" source is now active and visibly selected.
+
+Fix: force the submode explicitly with the `:japanese_kana` key code
+(the same key code as the physical かな key — it sets kana mode outright,
+it is not a toggle) as a second step right after `select_input_source`:
+`{:alone [:japanese :japanese_kana]}`. Both fire as a single `to`-array
+macro (see the first section of this file), so the source switch and the
+kana-mode nudge always happen together on one right-Command tap.
+
+This reintroduces `:japanese_kana`, which an earlier fix (see "Design
+rationale" below) had removed because it caused spurious text
+reconversion when it fired unpredictably off rapid, unrelated Command
+taps. The difference here is scope: `:japanese_kana` now fires only as
+the deliberate second step of *this* specific alone-action, not as a
+side effect of some other rapid-tap pattern — so that failure mode
+doesn't reappear. The one residual edge case: if text happens to be
+selected at the exact moment this fires, macOS's IME reconversion could
+still trigger instead of a plain mode switch, since `:japanese_kana`
+against a live selection is what "start reconversion" means to macOS.
+This is an accepted, low-probability tradeoff — deliberately switching
+to Japanese while also having a selection active is uncommon, and there
+is no `select_input_source` variant that can force the submode instead.
+
 ## Maccy paste-by-index layer (`AbcAct.edn`)
 
 The "hold L-Command + Tab, then tap a digit/letter to paste that clipboard
@@ -105,14 +143,18 @@ ChatGPT) were on `d` originally and kept firing by accident; moved to `r`
 (a plain launcher key, no activator role) and swapped with what `r` used
 to hold.
 
-**Input sources are pure `:input-sources` switches, not IME mode toggles.**
+**Input sources switch via `:input-sources`, not a bare IME mode toggle.**
 `left_command`/`right_command`/`left_option` alone-taps switch to English/
-Japanese/Greek input sources directly. The Japanese one specifically used
-to fire `:japanese_kana` (an IME mode-toggle key code, not a source
-switch), which triggered spurious text reconversion when combined with
-rapid Command taps. Switching to a real input source event fixed it.
-`left_control` no longer has an alone-action (Greek moved to `left_option`
-instead) and is a plain modifier.
+Japanese/Greek input sources directly. The Japanese one originally fired
+only `:japanese_kana` (an IME mode-toggle key code, not a source switch),
+which triggered spurious text reconversion when combined with rapid
+Command taps; switching to a real `select_input_source` event fixed that.
+It later turned out `select_input_source` alone doesn't force Kotoeri's
+kana submode either, so `:japanese_kana` is back — now chained right
+after the source switch, scoped to just this one alone-action. See
+"`select_input_source` alone doesn't set Kotoeri's kana/eisu submode"
+above for the full story. `left_control` no longer has an alone-action
+(Greek moved to `left_option` instead) and is a plain modifier.
 
 **Maccy paste-by-index layer exists to keep thumb+pinky on Cmd+Tab.** The
 goal was pasting a specific clipboard history slot without ever letting go
