@@ -243,6 +243,22 @@ button{ font:inherit; color:inherit; background:none; border:none; cursor:pointe
   border-color:var(--border-strong);
 }
 
+/* Touch ID: decorative, not a key — round it off instead of labeling it */
+.keycap.touchid{
+  border-radius:999px;
+  background:radial-gradient(circle at 38% 32%, var(--surface-2), color-mix(in srgb, var(--border) 55%, var(--surface-2)));
+}
+
+/* the inverted-T arrow cluster: ◄/► are full-height, ▲/▼ share one column */
+.kb-arrows{ flex:1 1 0; min-width:0; display:flex; flex-direction:column; gap:5px; }
+.keycap-half{
+  flex:1 1 0; min-height:0;
+  background:linear-gradient(180deg, var(--keycap), color-mix(in srgb, var(--keycap) 88%, var(--border)));
+  border:1px solid var(--keycap-edge); border-bottom-width:1.5px; border-radius:6px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:clamp(.42rem, .6vw, .56rem); color:var(--faint); line-height:1;
+}
+
 .kb-legend{
   display:flex; flex-wrap:wrap; gap:10px 22px; margin-top:20px;
   font-size:.72rem; color:var(--sub); font-weight:600;
@@ -677,12 +693,15 @@ body.searching .chapter-nav{ margin-top:0; }
       <a class="btn btn-ghost" href="#nav">Jump to the keymap</a>
     </div>
 
-    <!-- Keyboard diagram. Rows are 15u wide, so a 1u key is the same width on every row. -->
+    <!-- Keyboard diagram, modeled on a real MacBook (Touch ID, no Touch Bar) layout. -->
     <div class="kb-stage reveal">
       <div class="kb-scroll">
-        <div class="kb" role="img" aria-label="Keyboard diagram. Held triggers: left Command, both Shifts, Caps Lock, Tab and Spacebar. Act keys a, s, d and f sit on the left home row. The keys they remap are h j k l, u i o p, the bracket, semicolon and quote group, q w e r t y g, and the whole bottom letter row.">
+        <div class="kb" role="img" aria-label="Keyboard diagram. Held triggers: left Command, both Shifts, Caps Lock, Tab and Spacebar. Act keys a, s, d and f sit on the left home row. The keys they remap are h j k l, u i o p, the bracket, semicolon and quote group, q w e r t y g, the whole bottom letter row, the number row, backslash, left Option and right Command/Option.">
           <div class="kb-row" aria-hidden="true">
-            <span class="keycap">`</span><span class="keycap k-mapped">1</span><span class="keycap k-mapped">2</span><span class="keycap k-mapped">3</span><span class="keycap k-mapped">4</span><span class="keycap k-mapped">5</span><span class="keycap k-mapped">6</span><span class="keycap k-mapped">7</span><span class="keycap k-mapped">8</span><span class="keycap k-mapped">9</span><span class="keycap k-mapped">0</span><span class="keycap">-</span><span class="keycap">=</span><span class="keycap mod" style="--u:2">delete</span>
+            <span class="keycap mod" style="--u:1.15">esc</span><span class="keycap mod">F1</span><span class="keycap mod">F2</span><span class="keycap mod">F3</span><span class="keycap mod">F4</span><span class="keycap mod">F5</span><span class="keycap mod">F6</span><span class="keycap mod">F7</span><span class="keycap mod">F8</span><span class="keycap mod">F9</span><span class="keycap mod">F10</span><span class="keycap mod">F11</span><span class="keycap mod">F12</span><span class="keycap touchid" style="--u:1.15"></span>
+          </div>
+          <div class="kb-row" aria-hidden="true">
+            <span class="keycap">`</span><span class="keycap k-mapped">1</span><span class="keycap k-mapped">2</span><span class="keycap k-mapped">3</span><span class="keycap k-mapped">4</span><span class="keycap k-mapped">5</span><span class="keycap k-mapped">6</span><span class="keycap k-mapped">7</span><span class="keycap k-mapped">8</span><span class="keycap k-mapped">9</span><span class="keycap k-mapped">0</span><span class="keycap">-</span><span class="keycap">=</span><span class="keycap mod" style="--u:1.9">delete</span>
           </div>
           <div class="kb-row" aria-hidden="true">
             <span class="keycap mod k-trigger" style="--u:1.5">tab</span><span class="keycap k-mapped">q</span><span class="keycap k-mapped">w</span><span class="keycap k-mapped">e</span><span class="keycap k-mapped">r</span><span class="keycap k-mapped">t</span><span class="keycap k-mapped">y</span><span class="keycap k-mapped">u</span><span class="keycap k-mapped">i</span><span class="keycap k-mapped">o</span><span class="keycap k-mapped">p</span><span class="keycap k-mapped">[</span><span class="keycap k-mapped">]</span><span class="keycap k-mapped" style="--u:1.5">\</span>
@@ -694,7 +713,7 @@ body.searching .chapter-nav{ margin-top:0; }
             <span class="keycap mod k-trigger" style="--u:2.3">shift</span><span class="keycap k-mapped">z</span><span class="keycap k-mapped">x</span><span class="keycap k-mapped">c</span><span class="keycap k-mapped">v</span><span class="keycap k-mapped">b</span><span class="keycap k-mapped">n</span><span class="keycap k-mapped">m</span><span class="keycap k-mapped">,</span><span class="keycap k-mapped">.</span><span class="keycap k-mapped">/</span><span class="keycap mod k-trigger" style="--u:2.7">shift</span>
           </div>
           <div class="kb-row" aria-hidden="true">
-            <span class="keycap mod" style="--u:1.3">fn</span><span class="keycap mod" style="--u:1.3">ctrl</span><span class="keycap mod k-mapped" style="--u:1.3">opt</span><span class="keycap mod k-trigger" style="--u:1.3">⌘</span><span class="keycap mod k-trigger" style="--u:5.9">space</span><span class="keycap mod k-mapped" style="--u:1.3">⌘</span><span class="keycap mod k-mapped" style="--u:1.3">opt</span><span class="keycap mod" style="--u:1.3">ctrl</span>
+            <span class="keycap mod" style="--u:1.1">fn</span><span class="keycap mod" style="--u:1.1">ctrl</span><span class="keycap mod k-mapped" style="--u:1.1">opt</span><span class="keycap mod k-trigger" style="--u:1.1">⌘</span><span class="keycap mod k-trigger" style="--u:5.4">space</span><span class="keycap mod k-mapped" style="--u:1.1">⌘</span><span class="keycap mod k-mapped" style="--u:1.1">opt</span><span class="keycap mod">◄</span><span class="kb-arrows"><span class="keycap-half">▲</span><span class="keycap-half">▼</span></span><span class="keycap mod">►</span>
           </div>
         </div>
       </div>
