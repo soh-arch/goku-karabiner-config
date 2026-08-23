@@ -79,9 +79,8 @@
  }
 
  :input-sources {
-  :english  {:input_source_id "com.apple.keylayout.USExtended"}
-  :greek    {:input_source_id "com.apple.keylayout.Greek"}
-  :japanese {:input_source_id "com.apple.inputmethod.Kotoeri.RomajiTyping.Japanese"}
+  :english {:input_source_id "com.apple.keylayout.USExtended"}
+  :greek   {:input_source_id "com.apple.keylayout.Greek"}
  }
 
  :main [
@@ -94,7 +93,7 @@
     [:##left_option   :left_option nil {:alone :greek}]
     [:##left_command  ["layer-ast" 1] nil {:afterup ["layer-ast" 0] :alone :english}]  ;; * Asterisk
     [:##spacebar      :left_command nil {:alone :spacebar}]
-    [:##right_command :left_shift nil {:alone [{:select_input_source {:input_source_id "com.apple.inputmethod.Kotoeri.RomajiTyping.Japanese"}} "sleep 0.2" :japanese_kana]}] ;; select_input_source is async; the sleep gives it time to settle before japanese_kana lands (see NOTES.md)
+    [:##right_command :left_shift nil {:alone :japanese_kana}] ;; back to the plain toggle after select_input_source proved unreliable (see NOTES.md)
     [:##right_option  :left_shift]
    ]}
 

@@ -50,78 +50,54 @@ of them being interpreted as the app's own global hotkeys. If an app has a
 configured global hotkey for the action you want, send that hotkey via a
 Karabiner chord instead of shelling out to `open -a`.
 
-## `select_input_source` alone doesn't set Kotoeri's kana/eisu submode
+## Japanese input: `select_input_source` was tried and abandoned
 
-Symptom: switch to Japanese, the macOS menu bar shows the Japanese (あ)
-input source selected, Karabiner-Elements EventViewer confirms the
-`select_input_source` event fired — and typing still produces literal
-half-width roman characters, no romaji-to-kana conversion.
+Current state: `right_command`'s alone-action is the plain, original
+`:japanese_kana` key code toggle — nothing more. This section exists so
+the `select_input_source` route isn't tried again from scratch.
 
-Cause: `select_input_source` (what `:input-sources` / a bare `:japanese`
-keyword expands to) only chooses *which* input source macOS treats as
-active. Apple's Kotoeri Japanese input method has its own internal
-submode — かな (kana conversion) vs. 英数 (direct/eisu) — that is
-orthogonal to source selection and isn't touched by it. If Kotoeri was
-last left in 英数 submode (e.g. from previously toggling it directly, or
-from how macOS restored state), selecting the Japanese source again does
-not reset that submode, so keystrokes still pass through unconverted
-even though the "correct" source is now active and visibly selected.
+**The problem `select_input_source` was meant to fix.** `:japanese_kana`
+(the same key code as the physical かな key) toggles Kotoeri's かな/英数
+submode. Used alone, it doesn't select which input source is active —
+so if English or Greek was active, tapping `right_command` could leave
+the wrong source selected while also occasionally misfiring a text
+reconversion when it landed on an active selection (whatever the prior
+input source happened to be doing with that key code at the time).
 
-Fix, part 1 — force the submode explicitly with the `:japanese_kana` key
-code (the same key code as the physical かな key — it sets kana mode
-outright, it is not a toggle) as a second step right after
-`select_input_source`:
+**What was tried instead.** Switch to macOS's `select_input_source`
+action targeting Kotoeri's Japanese-Romaji source directly, since that's
+a real source switch rather than a bare mode-toggle key code. This
+requires spelling out the raw `{:select_input_source {:input_source_id
+"com.apple.inputmethod.Kotoeri.RomajiTyping.Japanese"}}` map rather than
+using the `:input-sources` shorthand keyword inside a multi-step array —
+the shorthand only expands correctly as a manipulator's sole `to` value,
+and Goku rejects the file with "invalid to definition" if it's nested
+inside an array. (The raw-map-in-array shape itself is fine and already
+used elsewhere in this file, e.g. `[{:pkey :button1} {:mkey {:x
+-1600}}]` in the Drag & Drop tiers.)
 
-```clojure
-{:alone [{:select_input_source {:input_source_id "com.apple.inputmethod.Kotoeri.RomajiTyping.Japanese"}}
-         "sleep 0.2"
-         :japanese_kana]}
-```
+**Why it didn't work.** `select_input_source` chooses which input source
+macOS treats as active, but doesn't touch Kotoeri's internal かな/英数
+submode — that's orthogonal to source selection. So switching sources
+while Kotoeri's submode was already stuck on 英数 (from however it was
+last left) reproduced the same broken symptom from the other direction:
+menu bar and Karabiner-Elements EventViewer both showed Japanese
+selected, but typing still produced literal, unconverted roman
+characters. Chaining `:japanese_kana` right after the source switch (to
+force the submode) reintroduced garbage/invalid characters instead,
+consistent with `select_input_source` being asynchronous and the
+following key code landing before the switch had actually settled.
+Inserting a `sleep` between the two steps didn't resolve it either. At
+that point the fix required either confirming and tuning an inter-step
+delay against real hardware, or finding some other synchronization
+primitive Karabiner doesn't obviously expose for this — more machinery
+than the payoff justified.
 
-Note this spells out the `select_input_source` map directly rather than
-using the bare `:japanese` shorthand from `:input-sources` — that
-shorthand only expands correctly as a manipulator's sole `to` value.
-Nested inside a multi-step array it doesn't resolve, and Goku rejects
-the whole file with "invalid to definition". The raw-map form is the
-same pattern already used elsewhere in this file for other array-nested
-actions (e.g. `[{:pkey :button1} {:mkey {:x -1600}}]` in the Drag & Drop
-tiers), so it's a proven shape for Goku's parser.
-
-Fix, part 2 — the `sleep 0.2`. `select_input_source` is asynchronous: it
-asks macOS to switch input sources but doesn't guarantee the switch has
-actually completed before Karabiner moves on to the next step. Sending
-`:japanese_kana` immediately after landed it in a half-switched state,
-producing garbage/invalid characters rather than a clean mode switch —
-and lined up with the observed pattern that pausing briefly, or
-switching via the GUI (which goes through a slower, more "complete"
-code path), was noticeably more reliable than the instant key-driven
-switch. The `sleep` step asks Karabiner to run a shell command that
-blocks for 200ms before continuing the array, giving the source switch
-time to settle first.
-
-**Unverified**: this fix was written and pushed without being run
-through actual `goku`/Karabiner-Elements — this repo's dev environment
-has neither installed. Two things specifically need confirming on real
-hardware: whether a `to`-array's shell_command step actually blocks the
-next step (vs. firing the shell command in the background and moving on
-immediately, which would make the sleep a no-op), and whether 200ms is
-long enough. If garbage characters persist, the sleep likely isn't
-actually blocking — that would call for a different mechanism entirely,
-not a longer sleep.
-
-This reintroduces `:japanese_kana`, which an earlier fix (see "Design
-rationale" below) had removed because it caused spurious text
-reconversion when it fired unpredictably off rapid, unrelated Command
-taps. The difference here is scope: `:japanese_kana` now fires only as
-the deliberate last step of *this* specific alone-action, not as a side
-effect of some other rapid-tap pattern — so that failure mode doesn't
-reappear. The one residual edge case: if text happens to be selected at
-the exact moment this fires, macOS's IME reconversion could still
-trigger instead of a plain mode switch, since `:japanese_kana` against a
-live selection is what "start reconversion" means to macOS. This is an
-accepted, low-probability tradeoff — deliberately switching to Japanese
-while also having a selection active is uncommon, and there is no
-`select_input_source` variant that can force the submode instead.
+**Where it landed.** Back to the original `:japanese_kana` toggle,
+accepting the reconversion-misfire risk as the practical tradeoff. The
+`:input-sources` map's `:japanese` entry was removed since nothing
+references it any more (`:english` and `:greek` still do, for
+`left_command` and `left_option`).
 
 ## Maccy paste-by-index layer (`AbcAct.edn`)
 
@@ -178,18 +154,15 @@ ChatGPT) were on `d` originally and kept firing by accident; moved to `r`
 (a plain launcher key, no activator role) and swapped with what `r` used
 to hold.
 
-**Input sources switch via `:input-sources`, not a bare IME mode toggle.**
-`left_command`/`right_command`/`left_option` alone-taps switch to English/
-Japanese/Greek input sources directly. The Japanese one originally fired
-only `:japanese_kana` (an IME mode-toggle key code, not a source switch),
-which triggered spurious text reconversion when combined with rapid
-Command taps; switching to a real `select_input_source` event fixed that.
-It later turned out `select_input_source` alone doesn't force Kotoeri's
-kana submode either, so `:japanese_kana` is back — now chained right
-after the source switch, scoped to just this one alone-action. See
-"`select_input_source` alone doesn't set Kotoeri's kana/eisu submode"
-above for the full story. `left_control` no longer has an alone-action
-(Greek moved to `left_option` instead) and is a plain modifier.
+**Input sources: `:input-sources` for English/Greek, a plain toggle for
+Japanese.** `left_command`/`left_option` alone-taps switch to English/
+Greek via `:input-sources` directly. `right_command`'s alone-action is
+`:japanese_kana`, a plain IME mode-toggle key code rather than a real
+source switch — a `select_input_source`-based replacement was tried and
+abandoned after it turned out to be unreliable in practice. See "Japanese
+input: `select_input_source` was tried and abandoned" above for the full
+story. `left_control` no longer has an alone-action (Greek moved to
+`left_option` instead) and is a plain modifier.
 
 **Maccy paste-by-index layer exists to keep thumb+pinky on Cmd+Tab.** The
 goal was pasting a specific clipboard history slot without ever letting go
