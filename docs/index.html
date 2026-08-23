@@ -310,6 +310,8 @@ button{ font:inherit; color:inherit; background:none; border:none; cursor:pointe
 .act-card.c-s{ border-top:3px solid var(--s); }
 .act-card.c-d{ border-top:3px solid var(--d); }
 .act-card.c-f{ border-top:3px solid var(--f); }
+.act-card.layer-main{ border-top:3px solid var(--ink); }
+.act-card.layer-aside{ border-top:3px solid var(--border-strong); }
 
 /* ---------- Interactive Act explorer ---------- */
 .explorer{
@@ -704,7 +706,7 @@ body.searching .chapter-nav{ margin-top:0; }
 
     <div class="sub-head">The three layers</div>
     <div class="act-grid">
-      <div class="act-card c-a">
+      <div class="act-card layer-main">
         <div class="act-card-top">
           <span class="key">Hold L-⌘</span>
           <span class="concept">Main</span>
@@ -712,7 +714,7 @@ body.searching .chapter-nav{ margin-top:0; }
         <span class="name">Asterisk</span>
         <span class="desc">Apps, cursor, editing, mouse, tabs, windows, symbols, function keys.</span>
       </div>
-      <div class="act-card c-s">
+      <div class="act-card layer-aside">
         <div class="act-card-top">
           <span class="key">Hold L-⇧</span>
           <span class="concept">Aside</span>
@@ -720,7 +722,7 @@ body.searching .chapter-nav{ margin-top:0; }
         <span class="name">Bra</span>
         <span class="desc">One-handed numpad. With Spacebar also held: drawing-app palette.</span>
       </div>
-      <div class="act-card c-d">
+      <div class="act-card layer-aside">
         <div class="act-card-top">
           <span class="key">Hold R-⇧</span>
           <span class="concept">Aside</span>
