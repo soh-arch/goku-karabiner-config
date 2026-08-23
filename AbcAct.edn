@@ -94,7 +94,7 @@
     [:##left_option   :left_option nil {:alone :greek}]
     [:##left_command  ["layer-ast" 1] nil {:afterup ["layer-ast" 0] :alone :english}]  ;; * Asterisk
     [:##spacebar      :left_command nil {:alone :spacebar}]
-    [:##right_command :left_shift nil {:alone [:japanese :japanese_kana]}] ;; select_input_source alone leaves Kotoeri's eisu/kana submode untouched (see NOTES.md)
+    [:##right_command :left_shift nil {:alone [{:select_input_source {:input_source_id "com.apple.inputmethod.Kotoeri.RomajiTyping.Japanese"}} :japanese_kana]}] ;; select_input_source alone leaves Kotoeri's eisu/kana submode untouched (see NOTES.md)
     [:##right_option  :left_shift]
    ]}
 

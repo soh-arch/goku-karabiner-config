@@ -70,9 +70,23 @@ even though the "correct" source is now active and visibly selected.
 Fix: force the submode explicitly with the `:japanese_kana` key code
 (the same key code as the physical かな key — it sets kana mode outright,
 it is not a toggle) as a second step right after `select_input_source`:
-`{:alone [:japanese :japanese_kana]}`. Both fire as a single `to`-array
-macro (see the first section of this file), so the source switch and the
-kana-mode nudge always happen together on one right-Command tap.
+
+```clojure
+{:alone [{:select_input_source {:input_source_id "com.apple.inputmethod.Kotoeri.RomajiTyping.Japanese"}}
+         :japanese_kana]}
+```
+
+Note this spells out the `select_input_source` map directly rather than
+using the bare `:japanese` shorthand from `:input-sources` — that
+shorthand only expands correctly as a manipulator's sole `to` value.
+Nested inside a multi-step array it doesn't resolve, and Goku rejects
+the whole file with "invalid to definition". The raw-map form is the
+same pattern already used elsewhere in this file for other array-nested
+actions (e.g. `[{:pkey :button1} {:mkey {:x -1600}}]` in the Drag & Drop
+tiers), so it's a proven shape for Goku's parser. Both steps still fire
+as a single `to`-array macro (see the first section of this file), so
+the source switch and the kana-mode nudge always happen together on one
+right-Command tap.
 
 This reintroduces `:japanese_kana`, which an earlier fix (see "Design
 rationale" below) had removed because it caused spurious text
