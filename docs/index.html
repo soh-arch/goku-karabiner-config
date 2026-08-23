@@ -495,18 +495,6 @@ code{
 .glossary-term{ font-size:.88rem; font-weight:800; margin-bottom:5px; }
 .glossary-def{ font-size:.78rem; color:var(--sub); line-height:1.6; }
 
-/* ---------- Related links ---------- */
-.related{ margin-top:26px; padding-top:17px; border-top:1px dashed var(--border-strong); }
-.related-title{ font-size:.66rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--faint); margin-bottom:10px; }
-.related-cards{ display:flex; flex-wrap:wrap; gap:9px; }
-.related-card{
-  font-size:.78rem; font-weight:600; color:var(--ink);
-  background:var(--surface-2); border:1px solid var(--border); border-radius:99px;
-  padding:7px 14px; transition:all .15s ease;
-}
-.related-card:hover{ border-color:var(--ink); transform:translateY(-1px); }
-.related-card .tag{ font-family:var(--font-mono); font-size:.68rem; color:var(--a); margin-right:6px; }
-
 /* ---------- No results ---------- */
 body.searching .hero{ display:none; }
 body.searching .chapter-nav{ margin-top:0; }
@@ -819,13 +807,6 @@ body.searching .chapter-nav{ margin-top:0; }
       <div class="virt-key-card"><span class="key">⇧ \</span><span>Cedilla → ç</span></div>
     </div>
 
-    <div class="related">
-      <div class="related-title">Related</div>
-      <div class="related-cards">
-        <button class="related-card" data-jump="act"><span class="tag">02</span>Act combinations</button>
-        <button class="related-card" data-jump="system"><span class="tag">07</span>Caps Lock actions</button>
-      </div>
-    </div>
   </section>
 
   <!-- ================= 02 Act System ================= -->
@@ -876,13 +857,6 @@ body.searching .chapter-nav{ margin-top:0; }
       </div>
     </details>
 
-    <div class="related">
-      <div class="related-title">Related</div>
-      <div class="related-cards">
-        <button class="related-card" data-jump="nav"><span class="tag">04</span>Navigation tables</button>
-        <button class="related-card" data-jump="launcher"><span class="tag">03</span>App launcher</button>
-      </div>
-    </div>
   </section>
 
   <!-- ================= 03 Launcher ================= -->
@@ -945,12 +919,6 @@ body.searching .chapter-nav{ margin-top:0; }
     </div>
     <p class="note">36 slots reachable without the hand moving off home position.</p>
 
-    <div class="related">
-      <div class="related-title">Related</div>
-      <div class="related-cards">
-        <button class="related-card" data-jump="bottom"><span class="tag">06</span>Clip slots (0–11)</button>
-      </div>
-    </div>
   </section>
 
   <!-- ================= 04 Navigation ================= -->
@@ -1121,13 +1089,6 @@ body.searching .chapter-nav{ margin-top:0; }
       both tiers — maximize vs. almost-maximize, fullscreen vs. hide.
     </p>
 
-    <div class="related">
-      <div class="related-title">Related</div>
-      <div class="related-cards">
-        <button class="related-card" data-jump="aux"><span class="tag">05</span>Auxiliary keys</button>
-        <button class="related-card" data-jump="act"><span class="tag">02</span>Tier reference</button>
-      </div>
-    </div>
   </section>
 
   <!-- ================= 05 Auxiliary ================= -->
@@ -1606,9 +1567,6 @@ body.searching .chapter-nav{ margin-top:0; }
   var navPills = Array.prototype.slice.call(document.querySelectorAll('.nav-pill'));
   navPills.forEach(function(pill){
     pill.addEventListener('click', function(){ scrollToId(pill.dataset.target); });
-  });
-  document.querySelectorAll('.related-card').forEach(function(card){
-    card.addEventListener('click', function(){ scrollToId(card.dataset.jump); });
   });
   document.getElementById('toTop').addEventListener('click', function(){
     window.scrollTo({ top:0, behavior:'smooth' });
