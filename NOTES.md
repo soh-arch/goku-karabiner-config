@@ -67,12 +67,14 @@ from how macOS restored state), selecting the Japanese source again does
 not reset that submode, so keystrokes still pass through unconverted
 even though the "correct" source is now active and visibly selected.
 
-Fix: force the submode explicitly with the `:japanese_kana` key code
-(the same key code as the physical かな key — it sets kana mode outright,
-it is not a toggle) as a second step right after `select_input_source`:
+Fix, part 1 — force the submode explicitly with the `:japanese_kana` key
+code (the same key code as the physical かな key — it sets kana mode
+outright, it is not a toggle) as a second step right after
+`select_input_source`:
 
 ```clojure
 {:alone [{:select_input_source {:input_source_id "com.apple.inputmethod.Kotoeri.RomajiTyping.Japanese"}}
+         "sleep 0.2"
          :japanese_kana]}
 ```
 
@@ -83,24 +85,43 @@ Nested inside a multi-step array it doesn't resolve, and Goku rejects
 the whole file with "invalid to definition". The raw-map form is the
 same pattern already used elsewhere in this file for other array-nested
 actions (e.g. `[{:pkey :button1} {:mkey {:x -1600}}]` in the Drag & Drop
-tiers), so it's a proven shape for Goku's parser. Both steps still fire
-as a single `to`-array macro (see the first section of this file), so
-the source switch and the kana-mode nudge always happen together on one
-right-Command tap.
+tiers), so it's a proven shape for Goku's parser.
+
+Fix, part 2 — the `sleep 0.2`. `select_input_source` is asynchronous: it
+asks macOS to switch input sources but doesn't guarantee the switch has
+actually completed before Karabiner moves on to the next step. Sending
+`:japanese_kana` immediately after landed it in a half-switched state,
+producing garbage/invalid characters rather than a clean mode switch —
+and lined up with the observed pattern that pausing briefly, or
+switching via the GUI (which goes through a slower, more "complete"
+code path), was noticeably more reliable than the instant key-driven
+switch. The `sleep` step asks Karabiner to run a shell command that
+blocks for 200ms before continuing the array, giving the source switch
+time to settle first.
+
+**Unverified**: this fix was written and pushed without being run
+through actual `goku`/Karabiner-Elements — this repo's dev environment
+has neither installed. Two things specifically need confirming on real
+hardware: whether a `to`-array's shell_command step actually blocks the
+next step (vs. firing the shell command in the background and moving on
+immediately, which would make the sleep a no-op), and whether 200ms is
+long enough. If garbage characters persist, the sleep likely isn't
+actually blocking — that would call for a different mechanism entirely,
+not a longer sleep.
 
 This reintroduces `:japanese_kana`, which an earlier fix (see "Design
 rationale" below) had removed because it caused spurious text
 reconversion when it fired unpredictably off rapid, unrelated Command
 taps. The difference here is scope: `:japanese_kana` now fires only as
-the deliberate second step of *this* specific alone-action, not as a
-side effect of some other rapid-tap pattern — so that failure mode
-doesn't reappear. The one residual edge case: if text happens to be
-selected at the exact moment this fires, macOS's IME reconversion could
-still trigger instead of a plain mode switch, since `:japanese_kana`
-against a live selection is what "start reconversion" means to macOS.
-This is an accepted, low-probability tradeoff — deliberately switching
-to Japanese while also having a selection active is uncommon, and there
-is no `select_input_source` variant that can force the submode instead.
+the deliberate last step of *this* specific alone-action, not as a side
+effect of some other rapid-tap pattern — so that failure mode doesn't
+reappear. The one residual edge case: if text happens to be selected at
+the exact moment this fires, macOS's IME reconversion could still
+trigger instead of a plain mode switch, since `:japanese_kana` against a
+live selection is what "start reconversion" means to macOS. This is an
+accepted, low-probability tradeoff — deliberately switching to Japanese
+while also having a selection active is uncommon, and there is no
+`select_input_source` variant that can force the submode instead.
 
 ## Maccy paste-by-index layer (`AbcAct.edn`)
 
