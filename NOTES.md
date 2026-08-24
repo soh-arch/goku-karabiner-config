@@ -281,6 +281,29 @@ family. `ASDf` h/j/k/l became Undo/Redo plus back/forward (`Cmd+Z`/
 `Shift+Cmd+Z`/`Cmd+[`/`Cmd+]`); `ASDf` u/i/o/p (line duplicate/move) was
 already coherent and untouched.
 
+**`aSDf` u/i/o/p ordered Cut / Copy / Paste / Paste&Match, mirroring x c
+v.** The clipboard family was first laid out paste-first (Paste&Match /
+Paste / Copy / Cut), which grouped the two paste variants on the left and
+copy/cut on the right. Reordered so `u` `i` `o` read as Cut, Copy, Paste —
+the same order as the physical `x` `c` `v` keys everyone already knows.
+
+This also makes the pair read as in/out from the clipboard's point of
+view: `i` puts something **in** (copy), `o` takes it back **out** (paste).
+Note the earlier version of this file had the in/out reading backwards,
+describing paste as "in" from the document's point of view; the
+clipboard-centric reading is the one the layout now follows, because it is
+the one that has to be recalled at typing speed. The outer keys stay the
+amplified form of the inner key next to them, consistent with the rest of
+the u/i/o/p axis: `u` is Cut (copy that also removes the source), `p` is
+Paste & Match Style (paste that also conforms formatting).
+
+The in/out reading is deliberately **not** applied everywhere — it is a
+fallback mnemonic for tiers where the usual "outer = bigger boundary"
+axis has nothing to grip. It fits `aSDf` (clipboard), `aSDF` (shrink /
+grow) and `AsDF` (hide / expose). It does not fit `asDF`'s pin/duplicate
+or `ASDF`'s previous/next display, and those are left alone rather than
+forced.
+
 **`Bra: Depiction` requires Bra+Spacebar together, not Bra alone.** Bra
 alone would collide with the Virtual Numpad (`z`/`x`/`c`/`v`/etc already
 mean digits there). Holding Spacebar too forwards a real, continuously-held

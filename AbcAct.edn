@@ -261,10 +261,11 @@
     [:##j             :!Tj [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :act-d :!act-f]]
     [:##k             :!Tk [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :act-d :!act-f]]
     [:##l             :!Tsemicolon [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :act-d :!act-f]]
-    [:##u             :!SCOv [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :act-d :!act-f]]
-    [:##i             :!Cv [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :act-d :!act-f]]
-    [:##o             :!Cc [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :act-d :!act-f]]
-    [:##p             :!Cx [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :act-d :!act-f]]
+    ;; u i o = Cut Copy Paste, mirroring x c v; i takes into the clipboard (in), o puts back out.
+    [:##u             :!Cx [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :act-d :!act-f]]
+    [:##i             :!Cc [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :act-d :!act-f]]
+    [:##o             :!Cv [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :act-d :!act-f]]
+    [:##p             :!SCOv [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :act-d :!act-f]]
 
     ;; ── ASDf ─────────────────────────
     ;; Undo/Redo & Duplicate/Move Line
