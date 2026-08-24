@@ -319,11 +319,13 @@ Spacebar forwards a real, continuously-held Command without touching
 `layer-ast`, which is what let its `Cmd+<key>` chords fire while
 `:!layer-ast` held.
 
-Note that removing Depiction does **not** free the Spacebar. Spacebar's
-hold action is the everyday Command key — every ordinary Cmd shortcut
-goes through it — and those outputs never appear in this config, so
-counting `:!C` from-keys here says nothing about how much Spacebar is
-used. Depiction was one consumer, not the reason Spacebar exists.
+Note that removing Depiction did **not** free the Spacebar. At the time,
+Spacebar's hold action was the everyday Command key — every ordinary Cmd
+shortcut went through it — and those outputs never appear in this config,
+so counting `:!C` from-keys here says nothing about how much Spacebar is
+used. Depiction was one consumer, not the reason Spacebar existed.
+(Spacebar has since become Shift; see "Spacebar carries Shift, Caps Lock
+carries Command" below.)
 
 Bra keeping only the numpad is a narrowing, not a loss: the layer had
 been two unrelated suites sharing one trigger, and is now one coherent
@@ -338,3 +340,18 @@ If Bra is ever rebuilt, the shape worth reaching for is a **left-pinky
 trigger with right-hand content**. Bra and Cket are both same-hand
 (trigger and keys under one hand, which is cramped); Asterisk is the only
 cross-hand layer, and it is the comfortable one.
+
+**Spacebar carries Shift, Caps Lock carries Command.** Both physical
+Shift keys are layer triggers (L-Shift → Bra, R-Shift → Cket) and
+L-Command triggers Asterisk, so neither role can sit on its own key.
+Spacebar is the only modifier position either thumb can reach, which
+makes it the right home for Shift — a modifier that constantly needs to
+be pressed by the hand *not* typing the letter. Command is less
+hand-sensitive, so it goes to Caps Lock and R-Command.
+
+The one exception is inside Asterisk, where Caps Lock is the Maccy
+trigger (`:!layer-ast` guards the Cmd rule). That guard is enough
+because Karabiner does not re-feed a manipulator's `to` output through
+its own manipulators — the same reason the older `caps_lock →
+right_shift` mapping never activated Cket. So Caps Lock emitting
+`left_command` cannot re-enter the L-Command/Asterisk rule.

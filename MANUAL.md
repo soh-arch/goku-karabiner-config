@@ -29,19 +29,23 @@
 
 | キー操作 | 動作 |
 |---|---|
-| Caps Lockを押しっぱなし | 右Shiftとして機能する |
+| Caps Lockを押しっぱなし | **Commandキーとして機能する**(Asteriskレイヤー内を除く) |
 | Caps Lockを単体でタップ(離すまで他のキーを押さない) | Escキー |
 | 左Commandを単体でタップ | 英語入力ソースに切り替え(US Extended配列) |
 | 右Commandを単体でタップ | 日本語入力ソース(ローマ字入力)に切り替え |
-| 右Commandを押しっぱなし | Shiftとして機能する |
+| 右Commandを押しっぱなし | 通常のCommandキー |
 | 左Optionを単体でタップ | ギリシャ語入力ソースに切り替え |
 | 右Optionを押しっぱなし | Shiftとして機能する |
 | Spacebarを単体でタップ | 通常のスペース |
-| Spacebarを押しっぱなし | 本物のCommandキーとして機能する(日常のCommand操作はこのキーを使う) |
+| Spacebarを押しっぱなし | **Shiftとして機能する**(左右どちらの親指からも届く唯一の修飾キー) |
 | 左Shiftを単体でタップ | `` ` ``(バッククォート) |
 | 右Shiftを押しながら左Shiftを単体でタップ | `~`(チルダ) |
 | 右Shiftを単体でタップ | `\`(バックスラッシュ) |
 | 左Shiftを押しながら右Shiftを単体でタップ | `\|`(パイプ) |
+
+補足: 左右のShiftキーはBra/Cketレイヤーの起動に使われているため、Shift本来の役割は
+Spacebarと右Optionが担っています。同様にCommandは、左CommandがAsteriskの起動に
+使われているため、Caps Lockと右Commandが担っています。
 
 ### アクセント記号(Asterisk・Cketどちらのレイヤーにも入っていない時)
 

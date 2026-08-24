@@ -91,8 +91,8 @@
     [:##right_shift   ["layer-cket" 1] [:!layer-ast :layer-bra] {:afterup ["layer-cket" 0] :alone :!Sbackslash}] ;; Shift+R-Shift → |
     [:##left_option   :left_option nil {:alone :greek}]
     [:##left_command  ["layer-ast" 1] nil {:afterup ["layer-ast" 0] :alone :english}]  ;; * Asterisk
-    [:##spacebar      :left_command nil {:alone :spacebar}]
-    [:##right_command :left_shift nil {:alone :japanese_kana}] ;; back to the plain toggle after select_input_source proved unreliable (see NOTES.md)
+    [:##spacebar      :left_shift nil {:alone :spacebar}]  ;; SandS — the only modifier either hand can reach
+    [:##right_command :right_command nil {:alone :japanese_kana}] ;; kana on tap; see NOTES.md for why it is a plain toggle
     [:##right_option  :left_shift]
    ]}
 
@@ -115,7 +115,7 @@
     [:##caps_lock     [:sys-evt "shut down"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :!act-d :act-f]]
     [:##caps_lock     [:sys-evt "restart"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :act-f]]
     [:##caps_lock     [:pwr "sleepnow"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :act-d :act-f]]
-    [:##caps_lock     :right_shift [:!layer-ast :!layer-bra :!layer-cket] {:alone :escape}]
+    [:##caps_lock     :left_command [:!layer-ast] {:alone :escape}] ;; Cmd everywhere but Asterisk, where caps is the Maccy trigger
    ]}
 
   {:des "Asterisk Left: Application Launcher"
