@@ -430,6 +430,13 @@
     [:##right_shift   :!SObackslash [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
    ]}
 
+  {:des "Asterisk: Literal Space"
+   :rules [
+    ;; Spacebar itself is Shift, so a plain Space that can be held and modified
+    ;; needs a home. Tier-independent: \ carries nothing in any Act tier.
+    [:##backslash     :spacebar [:layer-ast :!layer-maccy :!layer-bra :!layer-cket]]
+   ]}
+
   {:des "Asterisk Bottom: Clip Slots"
    :rules [
     ;; ── aSdf ─────────────────────────
