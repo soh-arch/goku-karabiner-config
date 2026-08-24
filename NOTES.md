@@ -304,9 +304,37 @@ grow) and `AsDF` (hide / expose). It does not fit `asDF`'s pin/duplicate
 or `ASDF`'s previous/next display, and those are left alone rather than
 forced.
 
-**`Bra: Depiction` requires Bra+Spacebar together, not Bra alone.** Bra
-alone would collide with the Virtual Numpad (`z`/`x`/`c`/`v`/etc already
-mean digits there). Holding Spacebar too forwards a real, continuously-held
-Command modifier without touching `layer-ast`, which is what lets these
-Cmd+<key> chords fire while `:!layer-ast` holds as a condition. The actual
-key choices mirror the shortcuts in Concepts, an iPad drawing app.
+**`Bra: Depiction` was removed; Bra is a single-purpose numpad layer.**
+Depiction reproduced Concepts' (an iPad drawing app) own internal
+shortcuts inside this config — `Cmd+3` sent `l`, and so on. That is the
+wrong layer to define them at: Goku's job is to send a keystroke, and the
+target app's own hotkey settings should decide what that keystroke means.
+Concepts does allow rebinding across a wide range of its functions, so
+nothing is lost by deleting the suite and binding the keys in Concepts
+directly. It also saw only occasional use.
+
+It had needed Bra **plus Spacebar** held together, because Bra alone
+collides with the numpad (`z`/`x`/`c`/`v` already mean digits there);
+Spacebar forwards a real, continuously-held Command without touching
+`layer-ast`, which is what let its `Cmd+<key>` chords fire while
+`:!layer-ast` held.
+
+Note that removing Depiction does **not** free the Spacebar. Spacebar's
+hold action is the everyday Command key — every ordinary Cmd shortcut
+goes through it — and those outputs never appear in this config, so
+counting `:!C` from-keys here says nothing about how much Spacebar is
+used. Depiction was one consumer, not the reason Spacebar exists.
+
+Bra keeping only the numpad is a narrowing, not a loss: the layer had
+been two unrelated suites sharing one trigger, and is now one coherent
+one. The "a whole modifier spent on a numpad" objection also doesn't
+hold up — every layer trigger in AbcAct does double duty through its tap
+action, and L-Shift's tap is `` ` ``, which is used constantly. Numpad
+was left in Bra rather than moved elsewhere because there was no
+candidate suite worth putting in Bra instead; inventing one to justify
+keeping the layer would repeat exactly the mistake Depiction was.
+
+If Bra is ever rebuilt, the shape worth reaching for is a **left-pinky
+trigger with right-hand content**. Bra and Cket are both same-hand
+(trigger and keys under one hand, which is cramped); Asterisk is the only
+cross-hand layer, and it is the comfortable one.

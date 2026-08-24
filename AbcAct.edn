@@ -59,9 +59,8 @@
 ;; asDf: Load Clip
 ;; asdF: Function Keys
 
-;; ### Bra Suites
-;; Numpad:    virtual number pad
-;; Depiction: drawing palette
+;; ### Bra Suite
+;; Numpad: virtual number pad
 
 ;; ### Cket Suites
 ;; Media: volume / brightness / illumination / playback
@@ -498,28 +497,6 @@
     [:q [:end :!Shome :delete_or_backspace] [:layer-bra :!layer-ast]]
    ]}
 
-  {:des "Bra: Depiction"
-   ;; Bra (L-Shift) + Spacebar held together, not Bra alone (would collide with the Virtual Numpad).
-   ;; Spacebar forwards a real Command modifier without touching layer-ast, which is what lets these
-   ;; Cmd+<key> chords fire while :!layer-ast holds. Mirrors the shortcuts in Concepts (iPad) drawing app.
-   :rules [
-    [:!C1 :!Chyphen [:layer-bra :!layer-ast]]
-    [:!C2 :!Cequal_sign [:layer-bra :!layer-ast]]
-    [:!C3 :l [:layer-bra :!layer-ast]]
-    [:!C4 :!Sl [:layer-bra :!layer-ast]]
-    [:!Cq :!Scomma [:layer-bra :!layer-ast]]
-    [:!Cw :!Speriod [:layer-bra :!layer-ast]]
-    [:!Ce :e [:layer-bra :!layer-ast]]
-    [:!Cr :b [:layer-bra :!layer-ast]]
-    [:!Ca :comma [:layer-bra :!layer-ast]]
-    [:!Cs :period [:layer-bra :!layer-ast]]
-    [:!Cd :!Cz [:layer-bra :!layer-ast]]
-    [:!Cf :!CSz [:layer-bra :!layer-ast]]
-    [:!Cz :!Ocomma [:layer-bra :!layer-ast]]
-    [:!Cx :!Operiod [:layer-bra :!layer-ast]]
-    [:!Cc :a [:layer-bra :!layer-ast]]
-    [:!Cv :t [:layer-bra :!layer-ast]]
-   ]}
 
   {:des "Cket: Media Controls"
    :rules [
