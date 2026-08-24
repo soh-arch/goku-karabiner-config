@@ -109,7 +109,6 @@
 
   {:des "Core: Capslock Actions"
    :rules [
-    [:##caps_lock     :delete_or_backspace [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f]] ;; テキスト選択後に削除するため
     [:##caps_lock     :f13 [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]] ;; 音声入力
     [:##caps_lock     :!SCT4 [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f]]
     [:##caps_lock     :!SC5 [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :!act-f]]
@@ -147,7 +146,7 @@
 
   {:des "Asterisk Left: Maccy Paste Layer"
    :rules [
-    [:##tab           [:!Cgrave_accent_and_tilde ["layer-maccy" 1]] [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f] {:afterup ["layer-maccy" 0]}] ;; Cmd+` is Maccy's own popup hotkey (see NOTES.md)
+    [:##caps_lock     [:f16 ["layer-maccy" 1]] [:layer-ast :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f] {:afterup ["layer-maccy" 0]}] ;; f16 is Maccy's own popup hotkey (see NOTES.md)
 
     [:##1             :!C1 :layer-maccy]
     [:##2             :!C2 :layer-maccy]

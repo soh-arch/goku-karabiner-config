@@ -173,13 +173,6 @@ button{ font:inherit; color:inherit; background:none; border:none; cursor:pointe
 .hero-tagline em{ font-style:normal; box-shadow:inset 0 -.5em 0 var(--s-soft); }
 .hero-copy{ font-size:.92rem; color:var(--sub); line-height:1.75; max-width:660px; margin-bottom:26px; }
 .hero-copy strong{ color:var(--ink); font-weight:700; }
-.hero-meta{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:34px; }
-.meta-chip{
-  font-size:.72rem; font-weight:600; color:var(--sub);
-  border:1px solid var(--border); background:var(--surface);
-  padding:6px 12px; border-radius:99px; display:inline-flex; gap:7px; align-items:center;
-}
-.meta-chip b{ color:var(--ink); font-weight:700; }
 .hero-cta{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:56px; }
 .btn{
   display:inline-flex; align-items:center; gap:8px;
@@ -290,6 +283,12 @@ button{ font:inherit; color:inherit; background:none; border:none; cursor:pointe
     color-mix(in srgb, var(--border) 52%, var(--keycap)));
   border-color:var(--border-strong);
 }
+.kb-caption{
+  margin-top:14px; padding-top:13px; border-top:1px dashed var(--border);
+  font-size:.72rem; color:var(--faint);
+}
+.kb-caption b{ color:var(--sub); font-weight:700; }
+.kb-caption code{ font-size:.72em; }
 .kb-legend i.sw-act{ position:relative; border-color:var(--border-strong); overflow:hidden; }
 .kb-legend i.sw-act::after{
   content:""; position:absolute; inset:0;
@@ -331,10 +330,6 @@ button{ font:inherit; color:inherit; background:none; border:none; cursor:pointe
   font-size:clamp(1.9rem, 4vw, 2.7rem); line-height:1; color:var(--faint);
   border-bottom:2px solid var(--a); padding-bottom:6px; flex-shrink:0;
 }
-.section:nth-of-type(4n+2) .sec-num{ border-bottom-color:var(--a); }
-.section:nth-of-type(4n+3) .sec-num{ border-bottom-color:var(--s); }
-.section:nth-of-type(4n+0) .sec-num{ border-bottom-color:var(--d); }
-.section:nth-of-type(4n+1) .sec-num{ border-bottom-color:var(--f); }
 .sec-head h2{ font-size:clamp(1.15rem, 2.4vw, 1.45rem); font-weight:800; letter-spacing:-.015em; margin-bottom:5px; }
 .sec-desc{ font-size:.86rem; color:var(--sub); line-height:1.7; max-width:760px; }
 .sec-desc strong{ color:var(--ink); }
@@ -518,9 +513,11 @@ td.dim{ color:var(--sub); }
 .wide-table:not(.tier-table) td:first-child,
 .wide-table:not(.tier-table) th:first-child{ box-shadow:1px 0 0 var(--border); }
 
-/* group dividers: h j k l | u i o p , and home-row apps | upper-row apps */
-.tier-table th:nth-child(7), .tier-table td:nth-child(7),
 .launch-table{ min-width:900px; }
+
+/* group dividers: h j k l | u i o p | [ ] ; ' , and home-row apps | upper-row apps */
+.tier-table th:nth-child(7),   .tier-table td:nth-child(7),
+.tier-table th:nth-child(11),  .tier-table td:nth-child(11),
 .launch-table th:nth-child(6), .launch-table td:nth-child(6){
   border-left:1px solid var(--border-strong);
 }
@@ -695,15 +692,9 @@ body.searching .chapter-nav{ margin-top:0; }
       <strong>d</strong>, <strong>f</strong> — combine freely into <strong>16 tiers</strong> that
       redefine the right hand. The fingers never leave the home row.
     </p>
-    <div class="hero-meta">
-      <span class="meta-chip">Layers <b>3</b></span>
-      <span class="meta-chip">Act Tiers <b>16</b></span>
-      <span class="meta-chip">Trigger <b>Hold L-⌘</b></span>
-      <span class="meta-chip">Source <b>AbcAct.edn</b></span>
-    </div>
     <div class="hero-cta">
       <a class="btn btn-primary" href="#act">Explore the Act System <span class="arr">↓</span></a>
-      <a class="btn btn-ghost" href="#nav">Jump to the keymap</a>
+      <a class="btn btn-ghost" href="#nav">Right-hand navigation keymap</a>
     </div>
 
     <!-- Keyboard diagram, modeled on a real MacBook (Touch ID, no Touch Bar) layout. -->
@@ -736,6 +727,9 @@ body.searching .chapter-nav{ margin-top:0; }
         <span><i class="sw-mapped"></i>Redefined by AbcAct</span>
         <span><i></i>Unchanged</span>
       </div>
+      <p class="kb-caption">
+        <b>3</b> layers · <b>16</b> Act tiers · trigger <b>hold L-⌘</b> · compiled from <code>AbcAct.edn</code>
+      </p>
     </div>
   </section>
 
@@ -746,12 +740,11 @@ body.searching .chapter-nav{ margin-top:0; }
       <button class="nav-pill" data-target="act"><span class="num">02</span>Act System</button>
       <button class="nav-pill" data-target="launcher"><span class="num">03</span>Launcher</button>
       <button class="nav-pill" data-target="nav"><span class="num">04</span>Navigation</button>
-      <button class="nav-pill" data-target="aux"><span class="num">05</span>Auxiliary</button>
-      <button class="nav-pill" data-target="bottom"><span class="num">06</span>Bottom Row</button>
-      <button class="nav-pill" data-target="system"><span class="num">07</span>Caps Lock</button>
-      <button class="nav-pill" data-target="bra"><span class="num">08</span>Bra Layer</button>
-      <button class="nav-pill" data-target="cket"><span class="num">09</span>Cket Layer</button>
-      <button class="nav-pill" data-target="glossary"><span class="num">10</span>Glossary</button>
+      <button class="nav-pill" data-target="bottom"><span class="num">05</span>Bottom Row</button>
+      <button class="nav-pill" data-target="system"><span class="num">06</span>Caps Lock</button>
+      <button class="nav-pill" data-target="bra"><span class="num">07</span>Bra Layer</button>
+      <button class="nav-pill" data-target="cket"><span class="num">08</span>Cket Layer</button>
+      <button class="nav-pill" data-target="glossary"><span class="num">09</span>Glossary</button>
     </div>
   </nav>
 
@@ -976,7 +969,7 @@ body.searching .chapter-nav{ margin-top:0; }
     <div class="steps">
       <div class="step">
         <span class="step-num">01</span>
-        <span class="step-body">Hold <span class="key">L-⌘</span>, press <span class="key">Tab</span>.<br><strong>Maccy's history pops up.</strong></span>
+        <span class="step-body">Hold <span class="key">L-⌘</span>, press <span class="key">Caps Lock</span>.<br><strong>Maccy's history pops up.</strong></span>
       </div>
       <div class="step">
         <span class="step-num">02</span>
@@ -995,12 +988,16 @@ body.searching .chapter-nav{ margin-top:0; }
     <div class="sec-head">
       <span class="sec-num">04</span>
       <div>
-        <h2>Right Hand — <code>h j k l</code> &amp; <code>u i o p</code></h2>
+        <h2>Right Hand — <code>h j k l</code>, <code>u i o p</code> &amp; <code>[ ] ; '</code></h2>
         <p class="sec-desc">
           <span class="key">h</span><span class="key">j</span><span class="key">k</span><span class="key">l</span> are
           <strong>directions</strong> (left / down / up / right).
           <span class="key">u</span><span class="key">i</span><span class="key">o</span><span class="key">p</span> are
           <strong>boundaries</strong> (page up / line start / line end / page down). All 16 tiers keep that split.
+          <span class="key">[</span><span class="key">]</span><span class="key">;</span><span class="key">'</span> are a
+          <strong>support group</strong> in the last four columns — they only respond to
+          <span class="key">d</span> and <span class="key">f</span>, so their value is the same on every row of a
+          given table.
         </p>
       </div>
     </div>
@@ -1008,31 +1005,35 @@ body.searching .chapter-nav{ margin-top:0; }
     <div class="sub-head">4.1 — Moving &amp; selecting text</div>
     <div class="table-wrap">
       <table class="wide-table tier-table">
-        <thead><tr><th>Act</th><th>Tier</th><th class="kcol">h</th><th class="kcol">j</th><th class="kcol">k</th><th class="kcol">l</th><th class="kcol">u</th><th class="kcol">i</th><th class="kcol">o</th><th class="kcol">p</th></tr></thead>
+        <thead><tr><th>Act</th><th>Tier</th><th class="kcol">h</th><th class="kcol">j</th><th class="kcol">k</th><th class="kcol">l</th><th class="kcol">u</th><th class="kcol">i</th><th class="kcol">o</th><th class="kcol">p</th><th class="kcol">[</th><th class="kcol">]</th><th class="kcol">;</th><th class="kcol">'</th></tr></thead>
         <tbody>
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span></span></td>
             <td class="row-label">Text Cursor<span class="formula">Cmd →</span></td>
             <td>←</td><td>↓</td><td>↑</td><td>→</td>
             <td>Page up</td><td>Line start</td><td>Line end</td><td>Page down</td>
+            <td class="dim">Return</td><td class="dim">Return</td><td class="dim">Return</td><td class="dim">Return</td>
           </tr>
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot on-a"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span></span></td>
             <td class="row-label">Amplified Cursor<span class="formula">Cmd+A →</span></td>
             <td>Word ←<span class="hint">⌥←</span></td><td>Paragraph ↓<span class="hint">⌥↓</span></td><td>Paragraph ↑<span class="hint">⌥↑</span></td><td>Word →<span class="hint">⌥→</span></td>
             <td>Doc top<span class="hint">⌘↑</span></td><td>Line start<span class="hint">⌘←</span></td><td>Line end<span class="hint">⌘→</span></td><td>Doc end<span class="hint">⌘↓</span></td>
+            <td class="dim">Return</td><td class="dim">Return</td><td class="dim">Return</td><td class="dim">Return</td>
           </tr>
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot on-s"></span><span class="dot"></span><span class="dot"></span></span></span></td>
             <td class="row-label">Select<span class="formula">Cmd+S →</span></td>
             <td>Char ←<span class="hint">⇧←</span></td><td>Line ↓<span class="hint">⇧↓</span></td><td>Line ↑<span class="hint">⇧↑</span></td><td>Char →<span class="hint">⇧→</span></td>
             <td>Page up<span class="hint">⇧PgUp</span></td><td>Line start<span class="hint">⇧Home</span></td><td>Line end<span class="hint">⇧End</span></td><td>Page down<span class="hint">⇧PgDn</span></td>
+            <td class="dim">Return</td><td class="dim">Return</td><td class="dim">Return</td><td class="dim">Return</td>
           </tr>
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot on-a"></span><span class="dot on-s"></span><span class="dot"></span><span class="dot"></span></span></span></td>
             <td class="row-label">Amplified Select<span class="formula">Cmd+A+S →</span></td>
             <td>Word ←<span class="hint">⇧⌥←</span></td><td>Paragraph ↓<span class="hint">⇧⌥↓</span></td><td>Paragraph ↑<span class="hint">⇧⌥↑</span></td><td>Word →<span class="hint">⇧⌥→</span></td>
             <td>Doc top<span class="hint">⇧⌘↑</span></td><td>Line start<span class="hint">⇧⌘←</span></td><td>Line end<span class="hint">⇧⌘→</span></td><td>Doc end<span class="hint">⇧⌘↓</span></td>
+            <td class="dim">Return</td><td class="dim">Return</td><td class="dim">Return</td><td class="dim">Return</td>
           </tr>
         </tbody>
       </table>
@@ -1041,31 +1042,35 @@ body.searching .chapter-nav{ margin-top:0; }
     <div class="sub-head">4.2 — Deleting, undoing, clipboard</div>
     <div class="table-wrap">
       <table class="wide-table tier-table">
-        <thead><tr><th>Act</th><th>Tier</th><th class="kcol">h</th><th class="kcol">j</th><th class="kcol">k</th><th class="kcol">l</th><th class="kcol">u</th><th class="kcol">i</th><th class="kcol">o</th><th class="kcol">p</th></tr></thead>
+        <thead><tr><th>Act</th><th>Tier</th><th class="kcol">h</th><th class="kcol">j</th><th class="kcol">k</th><th class="kcol">l</th><th class="kcol">u</th><th class="kcol">i</th><th class="kcol">o</th><th class="kcol">p</th><th class="kcol">[</th><th class="kcol">]</th><th class="kcol">;</th><th class="kcol">'</th></tr></thead>
         <tbody>
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot on-d"></span><span class="dot"></span></span></span></td>
             <td class="row-label">Delete<span class="formula">Cmd+D →</span></td>
             <td>Char back</td><td>Line below</td><td>Line above</td><td>Char forward</td>
             <td>Line + one above</td><td>Line, backwards</td><td>Line, forwards</td><td>Line + one below</td>
+            <td class="dim">Select all</td><td class="dim">Select all</td><td class="dim">Select all</td><td class="dim">Select all</td>
           </tr>
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot on-a"></span><span class="dot"></span><span class="dot on-d"></span><span class="dot"></span></span></span></td>
             <td class="row-label">Amplified Delete<span class="formula">Cmd+A+D →</span></td>
             <td>Word ←<span class="hint">⌘Del</span></td><td>Paragraph ↓</td><td>Paragraph ↑</td><td>Word →<span class="hint">⌘FwdDel</span></td>
             <td>Doc top</td><td>Line start</td><td>Line end</td><td>Doc end</td>
+            <td class="dim">Select all</td><td class="dim">Select all</td><td class="dim">Select all</td><td class="dim">Select all</td>
           </tr>
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot on-s"></span><span class="dot on-d"></span><span class="dot"></span></span></span></td>
             <td class="row-label">Reconvert &amp; Clipboard<span class="formula">Cmd+S+D →</span></td>
             <td>Reconvert<span class="hint">⌃⇧R</span></td><td>To hiragana<span class="hint">⌃J</span></td><td>To katakana<span class="hint">⌃K</span></td><td>IME convert<span class="hint">⌃;</span></td>
             <td>Paste &amp; match style</td><td>Paste</td><td>Copy</td><td>Cut</td>
+            <td class="dim">Select all</td><td class="dim">Select all</td><td class="dim">Select all</td><td class="dim">Select all</td>
           </tr>
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot on-a"></span><span class="dot on-s"></span><span class="dot on-d"></span><span class="dot"></span></span></span></td>
             <td class="row-label">Undo &amp; Line Ops<span class="formula">Cmd+A+S+D →</span></td>
             <td>Back<span class="hint">⌘[</span></td><td>Undo<span class="hint">⌘Z</span></td><td>Redo<span class="hint">⇧⌘Z</span></td><td>Forward<span class="hint">⌘]</span></td>
             <td>Duplicate line up</td><td>Move line up</td><td>Move line down</td><td>Duplicate line down</td>
+            <td class="dim">Select all</td><td class="dim">Select all</td><td class="dim">Select all</td><td class="dim">Select all</td>
           </tr>
         </tbody>
       </table>
@@ -1074,65 +1079,73 @@ body.searching .chapter-nav{ margin-top:0; }
     <div class="sub-head">4.3 — Mouse pointer</div>
     <div class="table-wrap">
       <table class="wide-table tier-table">
-        <thead><tr><th>Act</th><th>Tier</th><th class="kcol">h</th><th class="kcol">j</th><th class="kcol">k</th><th class="kcol">l</th><th class="kcol">u</th><th class="kcol">i</th><th class="kcol">o</th><th class="kcol">p</th></tr></thead>
+        <thead><tr><th>Act</th><th>Tier</th><th class="kcol">h</th><th class="kcol">j</th><th class="kcol">k</th><th class="kcol">l</th><th class="kcol">u</th><th class="kcol">i</th><th class="kcol">o</th><th class="kcol">p</th><th class="kcol">[</th><th class="kcol">]</th><th class="kcol">;</th><th class="kcol">'</th></tr></thead>
         <tbody>
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot on-f"></span></span></span></td>
             <td class="row-label">Mouse Cursor<span class="formula">Cmd+F →</span></td>
             <td>←</td><td>↓</td><td>↑</td><td>→</td>
             <td>Scroll ←</td><td>Scroll ↑</td><td>Scroll ↓</td><td>Scroll →</td>
+            <td class="dim">Left click</td><td class="dim">Right click</td><td class="dim">Left click</td><td class="dim">Right click</td>
           </tr>
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot on-a"></span><span class="dot"></span><span class="dot"></span><span class="dot on-f"></span></span></span></td>
             <td class="row-label">Fast Mouse Cursor<span class="formula">Cmd+A+F →</span></td>
             <td>← ×2</td><td>↓ ×2</td><td>↑ ×2</td><td>→ ×2</td>
             <td>Scroll ← ×2</td><td>Scroll ↑ ×2</td><td>Scroll ↓ ×2</td><td>Scroll → ×2</td>
+            <td class="dim">Left click</td><td class="dim">Right click</td><td class="dim">Left click</td><td class="dim">Right click</td>
           </tr>
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot on-s"></span><span class="dot"></span><span class="dot on-f"></span></span></span></td>
             <td class="row-label">Drag &amp; Drop<span class="formula">Cmd+S+F →</span></td>
             <td>←</td><td>↓</td><td>↑</td><td>→</td>
             <td>← ½</td><td>↓ ½</td><td>↑ ½</td><td>→ ½</td>
+            <td class="dim">Left click</td><td class="dim">Right click</td><td class="dim">Left click</td><td class="dim">Right click</td>
           </tr>
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot on-a"></span><span class="dot on-s"></span><span class="dot"></span><span class="dot on-f"></span></span></span></td>
             <td class="row-label">Fast Drag &amp; Drop<span class="formula">Cmd+A+S+F →</span></td>
             <td>← ×2</td><td>↓ ×2</td><td>↑ ×2</td><td>→ ×2</td>
             <td>← ½</td><td>↓ ½</td><td>↑ ½</td><td>→ ½</td>
+            <td class="dim">Left click</td><td class="dim">Right click</td><td class="dim">Left click</td><td class="dim">Right click</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <p class="note">Drag tiers hold the left mouse button down while moving. Click keys live in <strong>section 05</strong>.</p>
+    <p class="note">Drag tiers hold the left mouse button down while moving; the click keys are in the same rows, under <code>[ ] ; '</code>.</p>
 
     <div class="sub-head">4.4 — Tabs, apps &amp; windows</div>
     <div class="table-wrap">
       <table class="wide-table tier-table">
-        <thead><tr><th>Act</th><th>Tier</th><th class="kcol">h</th><th class="kcol">j</th><th class="kcol">k</th><th class="kcol">l</th><th class="kcol">u</th><th class="kcol">i</th><th class="kcol">o</th><th class="kcol">p</th></tr></thead>
+        <thead><tr><th>Act</th><th>Tier</th><th class="kcol">h</th><th class="kcol">j</th><th class="kcol">k</th><th class="kcol">l</th><th class="kcol">u</th><th class="kcol">i</th><th class="kcol">o</th><th class="kcol">p</th><th class="kcol">[</th><th class="kcol">]</th><th class="kcol">;</th><th class="kcol">'</th></tr></thead>
         <tbody>
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot on-d"></span><span class="dot on-f"></span></span></span></td>
             <td class="row-label">Tab Management<span class="formula">Cmd+D+F →</span></td>
             <td>Previous tab</td><td>Close tab</td><td>Reopen closed tab</td><td>Next tab</td>
             <td>Next window, same app</td><td>Pin tab<span class="hint">⇧⌥P</span></td><td>Duplicate tab<span class="hint">⇧⌥D</span></td><td>Previous window, same app</td>
+            <td class="dim">Top-left sixth</td><td class="dim">Top-right sixth</td><td class="dim">Bottom-left sixth</td><td class="dim">Bottom-right sixth</td>
           </tr>
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot on-a"></span><span class="dot"></span><span class="dot on-d"></span><span class="dot on-f"></span></span></span></td>
             <td class="row-label">App Management<span class="formula">Cmd+A+D+F →</span></td>
             <td>Previous app<span class="hint">⇧⌘Tab</span></td><td>Quit app</td><td>Mission Control</td><td>Next app<span class="hint">⌘Tab</span></td>
             <td>Previous Space</td><td>Hide app</td><td>App Exposé</td><td>Next Space</td>
+            <td class="dim">Top-left sixth</td><td class="dim">Top-right sixth</td><td class="dim">Bottom-left sixth</td><td class="dim">Bottom-right sixth</td>
           </tr>
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot on-s"></span><span class="dot on-d"></span><span class="dot on-f"></span></span></span></td>
             <td class="row-label">Window Management<span class="formula">Cmd+S+D+F →</span></td>
             <td>Nudge left</td><td>Nudge down</td><td>Nudge up</td><td>Nudge right</td>
             <td>Maximize</td><td>Shrink</td><td>Grow</td><td>Almost maximize<span class="hint">≈70%</span></td>
+            <td class="dim">Top-left sixth</td><td class="dim">Top-right sixth</td><td class="dim">Bottom-left sixth</td><td class="dim">Bottom-right sixth</td>
           </tr>
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot on-a"></span><span class="dot on-s"></span><span class="dot on-d"></span><span class="dot on-f"></span></span></span></td>
             <td class="row-label">Amplified Window<span class="formula">Cmd+A+S+D+F →</span></td>
             <td>Left half<span class="hint">½ → ⅔ → ⅓</span></td><td>Bottom half<span class="hint">½ → ⅔ → ⅓</span></td><td>Top half<span class="hint">½ → ⅔ → ⅓</span></td><td>Right half<span class="hint">½ → ⅔ → ⅓</span></td>
             <td>Toggle fullscreen</td><td>Previous display</td><td>Next display</td><td>Hide app</td>
+            <td class="dim">Top-left sixth</td><td class="dim">Top-right sixth</td><td class="dim">Bottom-left sixth</td><td class="dim">Bottom-right sixth</td>
           </tr>
         </tbody>
       </table>
@@ -1141,52 +1154,11 @@ body.searching .chapter-nav{ margin-top:0; }
 
   </section>
 
-  <!-- ================= 05 Auxiliary ================= -->
-  <section class="section reveal" id="aux" data-category="aux">
-    <div class="sec-head">
-      <span class="sec-num">05</span>
-      <div>
-        <h2>Auxiliary Keys — <code>[ ] ; '</code></h2>
-        <p class="sec-desc">
-          A support group, not a fifth navigation cluster. Only <span class="key">d</span> and
-          <span class="key">f</span> change them — <strong>4 states, not 16</strong>.
-          <span class="key">a</span> and <span class="key">s</span> make no difference here.
-        </p>
-      </div>
-    </div>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>Act</th><th>Group</th><th class="kcol">[</th><th class="kcol">]</th><th class="kcol">;</th><th class="kcol">'</th></tr></thead>
-        <tbody>
-          <tr>
-            <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span></span></td>
-            <td class="row-label">Neither held<span class="formula">Cmd → &nbsp;(±a ±s)</span></td>
-            <td>Return</td><td>Return</td><td>Return</td><td>Return</td>
-          </tr>
-          <tr>
-            <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot on-d"></span><span class="dot"></span></span></span></td>
-            <td class="row-label">d held<span class="formula">Cmd+D → &nbsp;(±a ±s)</span></td>
-            <td>Select all</td><td>Select all</td><td>Select all</td><td>Select all</td>
-          </tr>
-          <tr>
-            <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot on-f"></span></span></span></td>
-            <td class="row-label">f held<span class="formula">Cmd+F → &nbsp;(±a ±s)</span></td>
-            <td>Left click</td><td>Right click</td><td>Left click</td><td>Right click</td>
-          </tr>
-          <tr>
-            <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot on-d"></span><span class="dot on-f"></span></span></span></td>
-            <td class="row-label">d + f held<span class="formula">Cmd+D+F → &nbsp;(±a ±s)</span></td>
-            <td>Top-left sixth</td><td>Top-right sixth</td><td>Bottom-left sixth</td><td>Bottom-right sixth</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
 
-  <!-- ================= 06 Bottom Row ================= -->
+  <!-- ================= 05 Bottom Row ================= -->
   <section class="section reveal" id="bottom" data-category="bottom">
     <div class="sec-head">
-      <span class="sec-num">06</span>
+      <span class="sec-num">05</span>
       <div>
         <h2>Bottom Row — Symbols, Clips, Function Keys</h2>
         <p class="sec-desc">
@@ -1249,10 +1221,10 @@ body.searching .chapter-nav{ margin-top:0; }
     </div>
   </section>
 
-  <!-- ================= 07 Caps Lock ================= -->
+  <!-- ================= 06 Caps Lock ================= -->
   <section class="section reveal" id="system" data-category="system">
     <div class="sec-head">
-      <span class="sec-num">07</span>
+      <span class="sec-num">06</span>
       <div>
         <h2>Caps Lock — System Actions</h2>
         <p class="sec-desc">
@@ -1268,8 +1240,8 @@ body.searching .chapter-nav{ margin-top:0; }
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span></span></td>
             <td><code>Cmd → Caps</code></td>
-            <td class="row-label">Delete</td>
-            <td class="dim">Deletes the selection, or one character back</td>
+            <td class="row-label">Clipboard history</td>
+            <td class="dim">Opens Maccy — see <strong>3.2</strong> for pasting a slot</td>
           </tr>
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot on-a"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span></span></td>
@@ -1318,10 +1290,10 @@ body.searching .chapter-nav{ margin-top:0; }
     </div>
   </section>
 
-  <!-- ================= 08 Bra ================= -->
+  <!-- ================= 07 Bra ================= -->
   <section class="section reveal" id="bra" data-category="bra">
     <div class="sec-head">
-      <span class="sec-num">08</span>
+      <span class="sec-num">07</span>
       <div>
         <h2>Bra Layer — Numpad &amp; Drawing Palette</h2>
         <p class="sec-desc">Hold <span class="key">L-⇧</span>. Two suites share the layer, separated by whether Spacebar is also held.</p>
@@ -1365,10 +1337,10 @@ body.searching .chapter-nav{ margin-top:0; }
     </div>
   </section>
 
-  <!-- ================= 09 Cket ================= -->
+  <!-- ================= 08 Cket ================= -->
   <section class="section reveal" id="cket" data-category="cket">
     <div class="sec-head">
-      <span class="sec-num">09</span>
+      <span class="sec-num">08</span>
       <div>
         <h2>Cket Layer — Media &amp; Hardware</h2>
         <p class="sec-desc">Hold <span class="key">R-⇧</span>. Right-hand keys only; nothing else lives on this layer.</p>
@@ -1390,10 +1362,10 @@ body.searching .chapter-nav{ margin-top:0; }
     </div>
   </section>
 
-  <!-- ================= 10 Glossary ================= -->
+  <!-- ================= 09 Glossary ================= -->
   <section class="section reveal" id="glossary" data-category="glossary">
     <div class="sec-head">
-      <span class="sec-num">10</span>
+      <span class="sec-num">09</span>
       <div>
         <h2>Glossary</h2>
         <p class="sec-desc">The handful of words this manual uses in a specific sense.</p>
@@ -1618,7 +1590,7 @@ body.searching .chapter-nav{ margin-top:0; }
   /* ---------- Scrollspy ---------- */
   var spyMap = {};
   navPills.forEach(function(p){ spyMap[p.dataset.target] = p; });
-  var spyTargets = ['overview','act','launcher','nav','aux','bottom','system','bra','cket','glossary']
+  var spyTargets = ['overview','act','launcher','nav','bottom','system','bra','cket','glossary']
     .map(function(id){ return document.getElementById(id); })
     .filter(Boolean);
   var spy = new IntersectionObserver(function(entries){

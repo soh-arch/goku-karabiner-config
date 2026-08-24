@@ -101,9 +101,11 @@ references it any more (`:english` and `:greek` still do, for
 
 ## Maccy paste-by-index layer (`AbcAct.edn`)
 
-The "hold L-Command + Tab, then tap a digit/letter to paste that clipboard
-slot" layer went through several broken designs before landing on the
-current one. In order:
+The "hold L-Command + Caps Lock, then tap a digit/letter to paste that
+clipboard slot" layer went through several broken designs before landing on
+the current one. (The trigger key was Tab throughout the debugging below;
+it moved to Caps Lock later — see the note at the end of this section.)
+In order:
 
 1. `open -a 'Maccy'` to open + `:!C1`-style chords per key to paste.
    Broken: `open -a` focus-steals (see above), so the chords landed as text
@@ -130,6 +132,21 @@ current one. In order:
    before; steps 2-5 kept changing both the open mechanism and the select
    mechanism at once, so the true cause of step 1's failure (focus
    stealing, not the chords themselves) took a while to isolate.
+
+**Later: trigger moved to Caps Lock, opened with `f16`.** The layer now
+fires on `:##caps_lock` rather than `:##tab`, freeing Tab for a window/GUI
+navigation set. The open step is a bare `:f16` instead of the
+`Cmd+`` ` ``` chord: `f16` is a key macOS has no default binding for, so it
+can be given to Maccy as a dedicated global hotkey without colliding with
+anything. The hotkey is registered by opening Maccy's settings and pressing
+L-Command + Caps Lock there — with this config live, that keystroke emits
+`f16`, so Maccy records exactly what AbcAct will send.
+
+Because Karabiner fires only the first matching manipulator, the old
+`Core: Capslock Actions` rule that mapped bare `Cmd + Caps` to
+`delete_or_backspace` had to be deleted, not just superseded — it sat
+earlier in the file with the identical condition set and would otherwise
+have swallowed the event before the Maccy trigger was reached.
 
 ## ASDF's j/k (previous-desktop/next-desktop) removed
 
