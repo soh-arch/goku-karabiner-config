@@ -371,11 +371,12 @@
    ;; carrying independent meaning per tier. Only act-d/act-f matter here; act-a/act-s don't
    ;; change these four, so the same action covers all four act-a/act-s combinations at once.
    :rules [
-    ;; asdf / Asdf / aSdf / ASdf → Return
+    ;; asdf / Asdf / aSdf / ASdf → left column Return, right column Shift+Return
+    ;; Physical placement carries the weight difference, matching the L/R click split below.
     [:##open_bracket  :return_or_enter [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-d :!act-f]]
-    [:##close_bracket :return_or_enter [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-d :!act-f]]
     [:##semicolon     :return_or_enter [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-d :!act-f]]
-    [:##quote         :return_or_enter [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-d :!act-f]]
+    [:##close_bracket :!Sreturn_or_enter [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-d :!act-f]]
+    [:##quote         :!Sreturn_or_enter [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-d :!act-f]]
 
     ;; asDf / AsDf / aSDf / ASDf → Select All
     [:##open_bracket  :!Ca [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-d :!act-f]]
