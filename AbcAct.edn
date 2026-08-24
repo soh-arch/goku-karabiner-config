@@ -93,7 +93,7 @@
     [:##left_command  ["layer-ast" 1] nil {:afterup ["layer-ast" 0] :alone :english}]  ;; * Asterisk
     [:##spacebar      :left_shift nil {:alone :spacebar}]  ;; SandS — the only modifier either hand can reach
     [:##right_command :right_command nil {:alone :japanese_kana}] ;; kana on tap; see NOTES.md for why it is a plain toggle
-    [:##right_option  :left_shift]
+    [:##right_option  :right_option]
    ]}
 
   {:des "Core: Accents"

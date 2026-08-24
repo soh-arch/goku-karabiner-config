@@ -35,7 +35,7 @@
 | 右Commandを単体でタップ | 日本語入力ソース(ローマ字入力)に切り替え |
 | 右Commandを押しっぱなし | 通常のCommandキー |
 | 左Optionを単体でタップ | ギリシャ語入力ソースに切り替え |
-| 右Optionを押しっぱなし | Shiftとして機能する |
+| 右Optionを押しっぱなし | 通常のOptionキー |
 | Spacebarを単体でタップ | 通常のスペース |
 | Spacebarを押しっぱなし | **Shiftとして機能する**(左右どちらの親指からも届く唯一の修飾キー) |
 | 左Shiftを単体でタップ | `` ` ``(バッククォート) |
@@ -44,8 +44,9 @@
 | 左Shiftを押しながら右Shiftを単体でタップ | `\|`(パイプ) |
 
 補足: 左右のShiftキーはBra/Cketレイヤーの起動に使われているため、Shift本来の役割は
-Spacebarと右Optionが担っています。同様にCommandは、左CommandがAsteriskの起動に
-使われているため、Caps Lockと右Commandが担っています。
+Spacebarが担っています。同様にCommandは、左CommandがAsteriskの起動に使われて
+いるため、Caps Lockと右Commandが担っています。Optionは左右とも通常どおりです
+(左Optionは単体タップにギリシャ文字入力の切替が乗っています)。
 
 ### アクセント記号(Asterisk・Cketどちらのレイヤーにも入っていない時)
 

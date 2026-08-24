@@ -349,6 +349,13 @@ makes it the right home for Shift — a modifier that constantly needs to
 be pressed by the hand *not* typing the letter. Command is less
 hand-sensitive, so it goes to Caps Lock and R-Command.
 
+R-Option used to be a second Shift, and was returned to a plain Option in
+the same pass. With Spacebar reachable by either thumb, a second Shift
+one key over from it added nothing, while Option was left with only one
+plain-pressable key — L-Option carries the Greek input switch on its
+alone-tap. Restoring R-Option makes Option symmetric again and lets
+Option+click and Option+arrow be done entirely with the right hand.
+
 The one exception is inside Asterisk, where Caps Lock is the Maccy
 trigger (`:!layer-ast` guards the Cmd rule). That guard is enough
 because Karabiner does not re-feed a manipulator's `to` output through
