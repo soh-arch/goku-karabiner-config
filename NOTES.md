@@ -13,8 +13,8 @@ starts. This is true even for adjacent entries — `[:left_command
 released `left_command` followed by a bare, unmodified `` ` ``.
 
 The "held for as long as the physical key is down" behavior (e.g.
-`[:##spacebar :left_command nil {:alone :spacebar}]`, which really does keep
-Command held for the duration of the Spacebar press) only happens for a
+`[:##spacebar :left_shift nil {:alone :spacebar}]`, which really does keep
+Shift held for the duration of the Spacebar press) only happens for a
 manipulator whose `to` is a **single** plain key_code — not part of a larger
 array, and not combined with a shell command or a `set_variable` action in
 the same list.
