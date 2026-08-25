@@ -36,15 +36,6 @@ Implementation gotchas and past debugging history live in
 [`NOTES.md`](./NOTES.md) — worth a look before reworking anything involving
 held modifiers, multi-action `to` chains, or global app hotkeys.
 
-For layer/condition guards specifically (the `:layer-ast`, `:layer-bra`,
-`:layer-cket`, `:act-*` stacks), consistency is prioritized over avoiding
-repetition: every rule scoped to a layer spells out the full guard it needs,
-even when a shorter, "usually correct" version would work in practice. This
-is deliberate — Karabiner only fires the first manipulator whose `from` and
-`conditions` match, so an incomplete guard doesn't fail loudly, it silently
-lets the wrong rule win under some input ordering. Uniform, explicit guards
-keep that class of bug out.
-
 ## Contributing
 
 Forking and referencing this configuration is welcome. That said, this is a
