@@ -45,6 +45,12 @@ is deliberate — Karabiner only fires the first manipulator whose `from` and
 lets the wrong rule win under some input ordering. Uniform, explicit guards
 keep that class of bug out.
 
+## Contributing
+
+Forking and referencing this configuration is welcome. That said, this is a
+personal, individually-tuned setup rather than a general-purpose project, so
+Issues and Pull Requests may not receive a response.
+
 ## Roadmap
 
 - Separate concerns between the active configuration and the archive once the
