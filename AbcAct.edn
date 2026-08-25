@@ -75,6 +75,9 @@
 ;; asdf: Next window
 ;; asdF: App-defined pane focus (Ctrl+`)
 
+;; ### Numpad-a Suite (Simlayer, experimental — Asterisk-independent)
+;; Numpad: virtual number pad, trigger key `a`
+
 {
  :templates {
   :app          "open -a '%s'"
@@ -90,6 +93,10 @@
  :input-sources {
   :english {:input_source_id "com.apple.keylayout.USExtended"}
   :greek   {:input_source_id "com.apple.keylayout.Greek"}
+ }
+
+ :simlayers {
+  :numpad-a {:key :a :condi [:!layer-ast :!layer-bra :!layer-cket :!layer-maccy]}
  }
 
  :main [
@@ -526,6 +533,21 @@
     [:r :9 [:layer-bra :!layer-ast]]
     [:a :delete_or_backspace [:layer-bra :!layer-ast]]
     [:q [:end :!Shome :delete_or_backspace] [:layer-bra :!layer-ast]]
+   ]}
+
+  {:des "Numpad-a: Virtual Numpad (Simlayer, experimental)"
+   :rules [:numpad-a
+    [:z :0]
+    [:x :1]
+    [:c :2]
+    [:v :3]
+    [:s :4]
+    [:d :5]
+    [:f :6]
+    [:w :7]
+    [:e :8]
+    [:r :9]
+    [:q :delete_or_backspace]
    ]}
 
 

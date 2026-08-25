@@ -398,3 +398,46 @@ problem. Whatever is broken lives in macOS itself (known to be flaky in
 recent macOS versions) and is outside what this config can fix. F3
 (Dock) was never wanted. Only Ctrl+F4 (move focus to active/next window)
 turned out to work reliably, which is what `asdf` on Tab uses.
+
+**Numpad-a is built on Goku's `:simlayers`, not the hand-rolled
+`["layer" 1]`/`:afterup` pattern used everywhere else.** Every other
+layer trigger in this file (Asterisk, Bra, Cket) sets its layer variable
+immediately on key-down via `to`, with `:alone` only providing the
+fallback tap output — meaning the layer is "live" for the full duration
+the key is physically held, even a few milliseconds. That's fine for
+Bra/Cket/Asterisk because their trigger keys are dedicated modifiers
+(Shift, Cmd) that never appear in normal prose. `a` is a vowel used in
+every other word, so that same instant-arm behavior would turn ordinary
+fast typing (e.g. rolling through "a" into the next letter while typing
+romaji) into constant misfires.
+
+`:simlayers` compiles to a Karabiner `simultaneous` manipulator instead:
+it only fires if a *second* key is pressed while `a` is down, in strict
+order (`a` first, second key after) and released in strict reverse order
+(second key released before `a`). Ordinary typing — press `a`, release
+`a`, press the next letter — never satisfies that shape, so it doesn't
+need a hold-time threshold to stay out of the way of prose; it's the
+combination of press/release order, not timing, doing the protection.
+The default threshold (`simlayer-threshold`, 250ms) is left unset in the
+config, so this only overrides `a`'s own fallback behavior — normal taps
+of `a` are simply never matched by this manipulator and fall through to
+ordinary typing.
+
+The simlayer definition carries `:condi [:!layer-ast :!layer-bra
+:!layer-cket :!layer-maccy]` so it can never compete with the existing
+Asterisk `a` → act-a rule; the two are mutually exclusive by
+construction, not by manipulator ordering.
+
+Digit layout mirrors Bra's numpad (`z x c v` = 0-3, `s d f` = 4-6, `w e
+r` = 7-9) so the two numpads share muscle memory. `a` itself can't
+double as backspace here the way it does in Bra (it's the trigger), so
+backspace moved to `q` and the more elaborate "select-to-line-start +
+delete" combo Bra puts on `q` was dropped for this first pass — keep it
+simple until the trigger itself proves comfortable to use.
+
+This is explicitly a trial, not a settled design: intended to run for a
+period of real use to see whether the Simultaneous-order protection
+actually holds up against real typing (particularly fast Japanese
+romaji input, the original worry that ruled out the Spacebar-hold
+Numpad approach), before deciding whether it replaces, supplements, or
+gets abandoned relative to Bra's existing Numpad.
