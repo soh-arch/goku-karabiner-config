@@ -376,3 +376,25 @@ entirely: a month of daily use never once reached for it.
 Lock screen sits on plain Escape (no Act) rather than another combo,
 since it's the one action in this family worth reaching for on reflex —
 walking away from the desk shouldn't need a chord.
+
+**Tab's focus-jump family only uses act-f, never act-a.** Both Tab and
+the Act keys live on the left hand, and Tab sits directly above `a` —
+same finger (left pinky) reaches both. Holding Tab down already occupies
+that pinky, so act-a is physically unreachable without letting go of
+Tab. act-f (left index) has no such conflict and stays on home position
+throughout, which matters here specifically because both bound actions
+(next window, app pane focus) are meant to be fired and immediately
+followed by more typing — landing back on home row is the whole point.
+`f` was also already the iTerm slot in the Asterisk Left launcher, so
+`asdF` reads as "Tab into a CLI-ish focus jump" rather than an arbitrary
+pick.
+
+**Ctrl+F2/F3/F5/F6/F8 ("move focus to menu bar/Dock/toolbar/floating
+window/status menu") were dropped from consideration entirely.** These
+are documented macOS focus-navigation shortcuts, but on this machine
+none of F2/F5/F6/F8 do anything — confirmed with the physical keyboard
+directly, bypassing Karabiner, so it isn't a Goku/Karabiner output
+problem. Whatever is broken lives in macOS itself (known to be flaky in
+recent macOS versions) and is outside what this config can fix. F3
+(Dock) was never wanted. Only Ctrl+F4 (move focus to active/next window)
+turned out to work reliably, which is what `asdf` on Tab uses.

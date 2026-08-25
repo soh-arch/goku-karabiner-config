@@ -71,6 +71,10 @@
 ;; aSdf: Restart
 ;; asDf: Log out
 
+;; ### Tab Suite (Asterisk, focus jump)
+;; asdf: Next window
+;; asdF: App-defined pane focus (Ctrl+`)
+
 {
  :templates {
   :app          "open -a '%s'"
@@ -127,6 +131,15 @@
     [:##escape        [:pwr "sleepnow"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
     [:##escape        [:sys-evt "restart"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f]]
     [:##escape        [:sys-evt "log out"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :!act-f]]
+   ]}
+
+  {:des "Core: Tab Focus Jump"
+   :rules [
+    ;; act-a is unreachable while Tab is held (both pinky), so this family
+    ;; only ever uses act-f — reachable by the index finger without leaving
+    ;; home position. See NOTES.md.
+    [:##tab           :!Tf4 [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f]] ;; next window
+    [:##tab           :!Tgrave_accent_and_tilde [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :act-f]] ;; app pane focus
    ]}
 
   {:des "Asterisk Left: Application Launcher"
