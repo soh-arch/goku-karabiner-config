@@ -148,6 +148,41 @@ Because Karabiner fires only the first matching manipulator, the old
 earlier in the file with the identical condition set and would otherwise
 have swallowed the event before the Maccy trigger was reached.
 
+## `asDf`/`AsDf` delete on hold: forward keys degraded to backward
+
+Reported symptom: holding `j` or `l` in `asDf` (Delete) — and, by the same
+mechanism, `AsDf` (Amplified Delete) — deleted the character(s) *before*
+the cursor instead of *after* it, once OS key-repeat kicked in. `h`/`k`
+(the backward-direction keys) were never affected.
+
+The trailing entry of a multi-entry `to` array is what actually stays
+"live" across OS auto-repeat once the physical key is held — this is the
+same mechanism documented in "`to` arrays don't hold modifiers" above,
+just showing up on the *last* array entry instead of the first. `j`'s old
+array was `[:!Sdown_arrow :delete_or_backspace]`: the initial press
+correctly selected downward and deleted the selection, but every repeat
+after that only re-sent the trailing `delete_or_backspace` — a key whose
+own native direction is backward — so a key meant to delete forward
+degraded into plain repeated Backspace. `k`'s array
+(`[:!Sup_arrow :delete_or_backspace]`) never showed the bug because its
+trailing key's native direction (backward) already matches `k`'s intended
+direction (up/backward), so the degraded case is directionally correct by
+coincidence.
+
+`l`'s old binding was a single native `:delete_forward` key_code with no
+array at all — held for the physical duration of the keypress and left to
+the OS's own auto-repeat. `delete_forward`'s repeat is the less-traveled
+path on macOS (Backspace is used far more often) and isn't reliable held
+this way, unlike `delete_or_backspace`, which repeats cleanly.
+
+**Fix**: for every forward-direction delete binding (`j`, `l` in both
+`asDf` and `AsDf`), make `delete_forward` the trailing/held key instead of
+`delete_or_backspace`, and route `l` through the same "select then delete"
+array shape `j`/`k` already use rather than relying on a lone
+`delete_forward` key_code's native repeat. `h`/`k` are untouched — their
+trailing key's native direction already matches their intent, so they
+were never affected.
+
 ## ASDF's j/k (previous-desktop/next-desktop) removed
 
 `ASDF` (Amplified Window Management) originally bound `j`/`k` to Raycast's
