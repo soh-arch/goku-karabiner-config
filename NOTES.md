@@ -362,3 +362,17 @@ because Karabiner does not re-feed a manipulator's `to` output through
 its own manipulators — the same reason the older `caps_lock →
 right_shift` mapping never activated Cket. So Caps Lock emitting
 `left_command` cannot re-enter the L-Command/Asterisk rule.
+
+**Escape carries destructive system actions; Caps Lock keeps the routine ones.**
+Both live inside Asterisk. Caps Lock's Act-gated family (voice input,
+screenshot variants, AirDrop) are things worth reaching for often, so
+they stayed on the key that's already the everyday Command. Sleep,
+restart, and log out are rare and irreversible, so they moved to a key
+that had zero prior identity (physical Escape is otherwise unused —
+Caps Lock's own alone-tap already produces `:escape`, but that's a
+different manipulator on a different `from` key). Shut down was dropped
+entirely: a month of daily use never once reached for it.
+
+Lock screen sits on plain Escape (no Act) rather than another combo,
+since it's the one action in this family worth reaching for on reflex —
+walking away from the desk shouldn't need a chord.

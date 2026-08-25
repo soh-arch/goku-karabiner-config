@@ -854,7 +854,7 @@ body.searching .chapter-nav{ margin-top:0; }
           <tr><td><span class="key">L-⌘</span></td><td><strong>Asterisk layer</strong></td><td class="dim">Switch to English input (US Extended)</td></tr>
           <tr><td><span class="key">L-⇧</span></td><td><strong>Bra layer</strong></td><td class="dim"><code>`</code> — with R-⇧ held: <code>~</code></td></tr>
           <tr><td><span class="key">R-⇧</span></td><td><strong>Cket layer</strong></td><td class="dim"><code>\</code> — with L-⇧ held: <code>|</code></td></tr>
-          <tr><td><span class="key">Caps Lock</span></td><td>⌘ &nbsp;<span class="dim">(inside Asterisk it is a system-action key, §06)</span></td><td class="dim">Esc</td></tr>
+          <tr><td><span class="key">Caps Lock</span></td><td>⌘ &nbsp;<span class="dim">(inside Asterisk it is a system-action key, §06)</span></td><td class="dim">Esc &nbsp;<span class="dim">(inside Asterisk, physical Escape is a separate system-action key, §07)</span></td></tr>
           <tr><td><span class="key">Space</span></td><td>⇧ &nbsp;<span class="dim">(the only modifier either thumb can reach)</span></td><td class="dim">Space</td></tr>
           <tr><td><span class="key">R-⌘</span></td><td>⌘</td><td class="dim">Switch to Japanese input (Romaji)</td></tr>
           <tr><td><span class="key">L-⌥</span></td><td>⌥</td><td class="dim">Switch to Greek input</td></tr>
@@ -1278,33 +1278,60 @@ body.searching .chapter-nav{ margin-top:0; }
             <td class="row-label">AirDrop image</td>
             <td class="dim">Sends the clipboard image via AirDrop</td>
           </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ================= 07 Escape ================= -->
+  <section class="section reveal" id="escape" data-category="escape">
+    <div class="sec-head">
+      <span class="sec-num">07</span>
+      <div>
+        <h2>Escape — System Actions</h2>
+        <p class="sec-desc">
+          Inside Asterisk, Escape is the destructive-action key — session-ending, irreversible.
+          Outside it, Escape is unassigned (plain Escape key).
+        </p>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Act</th><th>Trigger</th><th>Action</th><th>What it does</th></tr></thead>
+        <tbody>
           <tr>
-            <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot on-s"></span><span class="dot"></span><span class="dot on-f"></span></span></span></td>
-            <td><code>Cmd+S+F → Caps</code></td>
-            <td class="row-label">Shut down</td>
-            <td class="dim">System shutdown</td>
+            <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span></span></td>
+            <td><code>Cmd → Esc</code></td>
+            <td class="row-label">Lock screen</td>
+            <td class="dim">⌃⌘Q</td>
           </tr>
           <tr>
-            <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot on-d"></span><span class="dot on-f"></span></span></span></td>
-            <td><code>Cmd+D+F → Caps</code></td>
+            <td><span class="act-badge"><span class="dots"><span class="dot on-a"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span></span></td>
+            <td><code>Cmd+A → Esc</code></td>
+            <td class="row-label">Sleep</td>
+            <td class="dim">Sleep immediately</td>
+          </tr>
+          <tr>
+            <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot on-s"></span><span class="dot"></span><span class="dot"></span></span></span></td>
+            <td><code>Cmd+S → Esc</code></td>
             <td class="row-label">Restart</td>
             <td class="dim">System restart</td>
           </tr>
           <tr>
-            <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot on-s"></span><span class="dot on-d"></span><span class="dot on-f"></span></span></span></td>
-            <td><code>Cmd+S+D+F → Caps</code></td>
-            <td class="row-label">Sleep</td>
-            <td class="dim">Sleep immediately</td>
+            <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot on-d"></span><span class="dot"></span></span></span></td>
+            <td><code>Cmd+D → Esc</code></td>
+            <td class="row-label">Log out</td>
+            <td class="dim">Ends the current user session</td>
           </tr>
         </tbody>
       </table>
     </div>
   </section>
 
-  <!-- ================= 07 Bra ================= -->
+  <!-- ================= 08 Bra ================= -->
   <section class="section reveal" id="bra" data-category="bra">
     <div class="sec-head">
-      <span class="sec-num">07</span>
+      <span class="sec-num">08</span>
       <div>
         <h2>Bra Layer — One-Handed Numpad</h2>
         <p class="sec-desc">Hold <span class="key">L-⇧</span>. A single-purpose layer: the left hand becomes a numpad while the right hand stays free.</p>
@@ -1329,10 +1356,10 @@ body.searching .chapter-nav{ margin-top:0; }
 
   </section>
 
-  <!-- ================= 08 Cket ================= -->
+  <!-- ================= 09 Cket ================= -->
   <section class="section reveal" id="cket" data-category="cket">
     <div class="sec-head">
-      <span class="sec-num">08</span>
+      <span class="sec-num">09</span>
       <div>
         <h2>Cket Layer — Media &amp; Hardware</h2>
         <p class="sec-desc">Hold <span class="key">R-⇧</span>. Right-hand keys only; nothing else lives on this layer.</p>
@@ -1354,10 +1381,10 @@ body.searching .chapter-nav{ margin-top:0; }
     </div>
   </section>
 
-  <!-- ================= 09 Glossary ================= -->
+  <!-- ================= 10 Glossary ================= -->
   <section class="section reveal" id="glossary" data-category="glossary">
     <div class="sec-head">
-      <span class="sec-num">09</span>
+      <span class="sec-num">10</span>
       <div>
         <h2>Glossary</h2>
         <p class="sec-desc">The handful of words this manual uses in a specific sense.</p>

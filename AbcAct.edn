@@ -65,6 +65,12 @@
 ;; ### Cket Suites
 ;; Media: volume / brightness / illumination / playback
 
+;; ### Escape Suite (Asterisk, destructive system actions)
+;; asdf: Lock screen (no Act)
+;; Asdf: Sleep
+;; aSdf: Restart
+;; asDf: Log out
+
 {
  :templates {
   :app          "open -a '%s'"
@@ -112,10 +118,15 @@
     [:##caps_lock     :!SCT4 [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f]]
     [:##caps_lock     :!SC5 [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :!act-f]]
     [:##caps_lock     [:clip-airdrop] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :act-f]]
-    [:##caps_lock     [:sys-evt "shut down"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :!act-d :act-f]]
-    [:##caps_lock     [:sys-evt "restart"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :act-f]]
-    [:##caps_lock     [:pwr "sleepnow"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :act-d :act-f]]
     [:##caps_lock     :left_command [:!layer-ast] {:alone :escape}] ;; Cmd everywhere but Asterisk, where caps is the Maccy trigger
+   ]}
+
+  {:des "Core: Escape System Actions"
+   :rules [
+    [:##escape        :!TCq [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f]] ;; lock screen, no Act
+    [:##escape        [:pwr "sleepnow"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
+    [:##escape        [:sys-evt "restart"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f]]
+    [:##escape        [:sys-evt "log out"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :!act-f]]
    ]}
 
   {:des "Asterisk Left: Application Launcher"
