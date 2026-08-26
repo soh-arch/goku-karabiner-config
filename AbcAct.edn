@@ -155,7 +155,7 @@
     [:##s             ["act-s" 1] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a] {:afterup ["act-s" 0] :alone [:app "Comet"]}]
     [:##s             ["act-s" 1] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a] {:afterup ["act-s" 0] :alone [:app "Google Chrome"]}]
     [:##d             ["act-d" 1] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a] {:afterup ["act-d" 0] :alone [:app "Raycast"]}]
-    [:##d             ["act-d" 1] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a] {:afterup ["act-d" 0] :alone [:app "Maccy"]}]
+    [:##d             ["act-d" 1] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a] {:afterup ["act-d" 0] :alone [:app "PomodoroMac"]}]
     [:##f             ["act-f" 1] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a] {:afterup ["act-f" 0] :alone [:app "Finder"]}]
     [:##f             ["act-f" 1] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a] {:afterup ["act-f" 0] :alone [:app "iTerm"]}]
     [:##q             [:ray "raycast/raycast-notes/raycast-notes"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f]]

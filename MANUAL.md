@@ -74,7 +74,7 @@ Spacebarが担っています。同様にCommandは、左CommandがAsteriskの�
 |---|---|---|
 | `a`単体タップ | Launchpad起動 | ― |
 | `s`単体タップ | Cometを起動 | Google Chromeを起動 |
-| `d`単体タップ | Raycastを起動 | Maccyを起動 |
+| `d`単体タップ | Raycastを起動 | PomodoroMacを起動 |
 | `f`単体タップ | Finderを起動 | iTermを起動 |
 | `q` | Raycastのメモ機能を起動 | このマニュアルを開く(Raycast経由) |
 | `w` | Obsidianを起動 | Bearを起動 |
