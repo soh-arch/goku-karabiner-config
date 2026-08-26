@@ -465,10 +465,30 @@ construction, not by manipulator ordering.
 
 Digit layout mirrors Bra's numpad (`z x c v` = 0-3, `s d f` = 4-6, `w e
 r` = 7-9) so the two numpads share muscle memory. `a` itself can't
-double as backspace here the way it does in Bra (it's the trigger), so
-backspace moved to `q` and the more elaborate "select-to-line-start +
-delete" combo Bra puts on `q` was dropped for this first pass — keep it
-simple until the trigger itself proves comfortable to use.
+double as backspace here the way it does in Bra (it's the trigger).
+
+**Operators live on the physical number row, not the letter keys.**
+Once `z x c v s d f w e r` were fully spoken for by digits 0-9, there was
+no letter key left to add `+ - * / ^` to without displacing a digit. The
+physical `2`-`6` keys sit directly above the `s d f`/`c v` digit cluster
+and are still left-hand reachable, so they carry the operators instead:
+`2`=`+`, `3`=`-`, `4`=`*`, `5`=`/`, `6`=`^` (a straight positional
+pairing with the request, not a calculator-layout convention). `+ - * /`
+use Karabiner's dedicated `keypad_*` key codes (`keypad_plus`,
+`keypad_hyphen`, `keypad_asterisk`, `keypad_slash`) so they emit real
+`+`/`-`/`*`/`/` without needing Shift; `^` has no keypad equivalent, so
+`6` sends a plain `Shift+6` chord instead.
+
+**Backspace moved off `q` onto `g`; `b` adds a decimal point.** The
+original design put backspace on `q`, but `q` sits to the *left* of `a`
+(the trigger), which works against the point of a left-hand-only
+numpad: everything should stay within comfortable reach without
+crossing back over the trigger finger. `g` (home row, immediately right
+of `f`=6) and `b` (bottom row, immediately right of `v`=3) are both
+left-hand keys "to the right of `a`" that were still free, so backspace
+moved to `g` and a decimal point (`.`) was added on `b`. A comma was
+considered for the same slot family but skipped for this pass — no key
+was assigned to it.
 
 This is explicitly a trial, not a settled design: intended to run for a
 period of real use to see whether the Simultaneous-order protection

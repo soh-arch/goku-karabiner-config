@@ -547,7 +547,13 @@
     [:w :7]
     [:e :8]
     [:r :9]
-    [:q :delete_or_backspace]
+    [:2 :keypad_plus]
+    [:3 :keypad_hyphen]
+    [:4 :keypad_asterisk]
+    [:5 :keypad_slash]
+    [:6 :!S6]
+    [:g :delete_or_backspace]
+    [:b :period]
    ]}
 
 
