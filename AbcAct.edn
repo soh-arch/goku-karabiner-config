@@ -360,7 +360,7 @@
     [:##k             :!Ct [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :act-f]] ;; new tab
     [:##l             :!Ttab [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :act-f]]
     [:##u             :!SOTf1 [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :act-f]]
-    [:##i             :!SOp [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :act-f]] ;; pin tab
+    [:##i             :!SOp [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :act-f]] ;; pin tab; ⇧⌥P is bound to the Shortkeys Chrome extension's "Pin/unpin tab" action (see NOTES.md)
     [:##o             :!SCt [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :act-f]] ;; reopen closed tab
     [:##p             :!OTf1 [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :act-f]]
 

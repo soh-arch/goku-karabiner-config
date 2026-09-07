@@ -629,6 +629,17 @@ Caps Lock while inside the Maccy paste layer sends `f16`, which only
 does anything because Maccy's own settings are configured to use
 `f16` as its popup hotkey.
 
+**Shortkeys Chrome extension (`i` inside Tab Management, ⇧⌥P → pin
+tab).** Chrome has no built-in keyboard shortcut for pinning a tab
+(unlike ⇧⌘T for reopening a closed tab, which is native and needs no
+extension). ⇧⌥P is a custom shortcut the user defined *inside* the
+"Shortkeys (Custom Keyboard Shortcuts)" extension's own settings,
+bound to its "Pin/unpin tab" action — same passive-listener
+relationship as Amical/Maccy above, except the listener here is a
+browser extension rather than a standalone app, and the shortcut
+itself (not just the app) is a user choice with no fixed default to
+document.
+
 **Shortcuts.app — the "AirDrop Clip" shortcut (`:clip-airdrop`,
 active call via `shortcuts run`).** Unlike Amical/Maccy above (which
 passively listen for a key code AbcAct sends), this one is AbcAct
