@@ -423,20 +423,54 @@ Lock screen sits on plain Escape (no Act) rather than another combo,
 since it's the one action in this family worth reaching for on reflex —
 walking away from the desk shouldn't need a chord.
 
-**`:clip-airdrop`'s original `key code 36` (Return) after opening the
-share popover was a blind key press with no target.** Clicking the
-share toolbar button via System Events opens the popover but does not
-give any item keyboard focus, so Return had nothing to select — the
-popover was just left sitting open. It only looked like it worked when
-a mouse happened to be hovering AirDrop (giving it visual highlight,
-not keyboard focus). Fixed by dropping the Return entirely and instead
-clicking the element named "AirDrop" directly, found via `entire
-contents of window 1` rather than a fixed accessibility path — the
-same "match by description, not position" approach already used to
-find the share button itself (`description is "共有" or description is
-"Share"`). This also sidesteps the share menu's recency-based
-reordering, since it never assumed AirDrop was in any particular
-position to begin with.
+**`:clip-airdrop` went through three failed approaches before landing on
+Shortcuts.** The original `key code 36` (Return) after opening the
+share popover was a blind key press with no target: clicking the
+share toolbar button via System Events opens the popover but gives no
+item keyboard focus, so Return had nothing to select and the popover
+was just left sitting open. It only looked like it worked when a mouse
+happened to be hovering AirDrop (visual highlight, not keyboard
+focus).
+
+The next attempt clicked the "AirDrop" element directly (`entire
+contents of window 1`, filtered by role/name) instead of relying on
+Return. This found the element in manual testing but was unreliable
+end to end: the share popover's accessibility tree is timing-dependent
+and undocumented by Apple — `entire contents of window 1` sometimes
+returned 148 elements with none matching "AirDrop" even after a 1s
+delay, other times it worked. Apple does not publish or stabilize this
+UI's accessibility layout as a public contract, which is presumably
+why it never converged on reliable.
+
+Third attempt: called Apple's own `NSSharingService` /
+`sendViaAirDrop` API directly via JXA (`osascript -l JavaScript`),
+bypassing UI scripting entirely — the officially-modeled way to invoke
+AirDrop as a specific destination rather than showing the generic
+picker. This resolved the service fine (via the global constant
+`$.NSSharingServiceNameSendViaAirDrop` — the raw string
+`"com.apple.share.System.AirDrop"` came back nil, oddly) but
+`canPerformWithItems` always returned `false`, even with Wi-Fi,
+Bluetooth, and AirDrop visibility all confirmed working (a manual
+AirDrop send from Finder succeeded in the same session). Root cause:
+`osascript` is a bare CLI process with no app bundle identity
+(`Info.plist`/`CFBundleIdentifier`), and `NSSharingService` appears to
+refuse to operate for a caller that isn't a proper signed app — this
+was flagged as an open question during research and confirmed by this
+failure.
+
+**Fix: moved the AirDrop step into a Shortcuts.app shortcut
+("AirDrop Clip"), invoked via `shortcuts run "AirDrop Clip" -i
+<file>`.** Shortcuts.app runs as a real signed app, which sidesteps
+both the undocumented-UI fragility of the second attempt and the
+bundle-identity rejection of the third. The shortcut takes a file via
+Shortcut Input, feeds it straight into a built-in "AirDrop" action
+(no share-sheet detour, no picker), and ends with "Stop and output"
+set to "Do Nothing" if there's nowhere to output — matters because the
+CLI invocation passes no `-o`, so the shortcut must not block or error
+on having nowhere to send output. `AbcAct.edn`'s `:clip-airdrop` now
+only does the clipboard-to-file save (same AppleScript as before) and
+then calls `shortcuts run`; it no longer touches Finder or System
+Events at all.
 
 **Tab's focus-jump family only uses act-f, never act-a.** Both Tab and
 the Act keys live on the left hand, and Tab sits directly above `a` —
