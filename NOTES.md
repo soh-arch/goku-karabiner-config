@@ -569,3 +569,50 @@ actually holds up against real typing (particularly fast Japanese
 romaji input, the original worry that ruled out the Spacebar-hold
 Numpad approach), before deciding whether it replaces, supplements, or
 gets abandoned relative to Bra's existing Numpad.
+
+## External dependencies (this repo is public — beyond plain `open -a` app launches)
+
+This repo alone does not fully reproduce a working setup. Besides the
+`:app` template (`open -a '<name>'`), which only requires the named
+app to be installed, several rules depend on state that lives outside
+this repo entirely — either another app's own hotkey configuration, or
+a specific third-party extension/shortcut that isn't version
+controlled here at all. Listed so a fresh clone doesn't leave someone
+wondering why a key silently does nothing.
+
+**Raycast + specific extensions (`:ray`/`:wm` templates, `open -g
+'raycast://...'`).** Raycast itself must be installed, and beyond that
+several rules call specific *extensions* that must be separately
+installed from the Raycast Store:
+
+- `raycast/window-management` — all the `h/j/k/l/u/i/o/p` window
+  moves/resizes, and the `[`/`]`/`;`/`'` sixth-of-screen placements
+- `raycast/raycast-notes` — `q` in the Asterisk suite
+- `raycast/emoji-symbols` — left_shift inside the Bra layer
+- `mooxl/deepcast` — `t` (Japanese/English translation). This one is a
+  third-party extension by an individual developer (not a
+  Raycast-maintained core extension), so it carries more risk of
+  disappearing or changing behavior out from under this config than
+  the others.
+
+**Amical (`f13`, passive hotkey listener).** AbcAct just sends the
+`f13` key code on Caps Lock + act-a; Amical (a voice-input app) is
+configured, in its own settings, to treat `f13` as its trigger hotkey.
+Same relationship as Maccy below — this repo has no way to enforce or
+even detect that Amical is installed and configured to match.
+
+**Maccy (`f16`, passive hotkey listener).** Same shape as Amical:
+Caps Lock while inside the Maccy paste layer sends `f16`, which only
+does anything because Maccy's own settings are configured to use
+`f16` as its popup hotkey.
+
+**Shortcuts.app — the "AirDrop Clip" shortcut (`:clip-airdrop`,
+active call via `shortcuts run`).** Unlike Amical/Maccy above (which
+passively listen for a key code AbcAct sends), this one is AbcAct
+actively invoking a named shortcut that must already exist in
+Shortcuts.app: Receive Files (Shortcut Input) → AirDrop action → Stop
+and output (Do Nothing if nowhere to output). Nothing about this
+shortcut's construction lives in this repo — see the `:clip-airdrop`
+history earlier in this file for why UI-scripting and direct
+`NSSharingService` calls were tried and abandoned before landing on
+this.
