@@ -468,9 +468,22 @@ Shortcut Input, feeds it straight into a built-in "AirDrop" action
 set to "Do Nothing" if there's nowhere to output — matters because the
 CLI invocation passes no `-o`, so the shortcut must not block or error
 on having nowhere to send output. `AbcAct.edn`'s `:clip-airdrop` now
-only does the clipboard-to-file save (same AppleScript as before) and
-then calls `shortcuts run`; it no longer touches Finder or System
-Events at all.
+only does the clipboard-to-file save and then calls `shortcuts run`;
+it no longer touches Finder or System Events at all.
+
+The clipboard-to-file save itself needed a fourth fix. It originally
+kept the classic AppleScript coercion `the clipboard as «class
+PNGf»`, which threw "No image available" even for a genuine
+screenshot (`Cmd+Ctrl+Shift+4`) sitting on the clipboard as PNG data —
+a known unreliability of that coercion, independent of the AirDrop
+delivery mechanism. Switched to JXA (`osascript -l JavaScript`)
+reading the pasteboard directly — `NSPasteboard.generalPasteboard
+.dataForType("public.png")` — which is the exact call already proven
+to work during the NSSharingService investigation above, and
+`writeToFileAtomically` to save it. `TMP` is exported so the JXA
+subprocess can read it back via
+`NSProcessInfo.processInfo.environment`, since JXA has no direct
+equivalent of AppleScript's `path to temporary items` shorthand here.
 
 **Tab's focus-jump family only uses act-f, never act-a.** Both Tab and
 the Act keys live on the left hand, and Tab sits directly above `a` —

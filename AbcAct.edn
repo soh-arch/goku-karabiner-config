@@ -88,7 +88,7 @@
   :pwr          "pmset %s"
   :clip-save    "mkdir -p ~/.cache/abcact/clips && sleep 0.1 && pbpaste > ~/.cache/abcact/clips/%s"
   :clip-load    "cat ~/.cache/abcact/clips/%s | pbcopy && sleep 0.1"
-  :clip-airdrop "TMP=\"$TMPDIR/clip.png\"; osascript -e 'try' -e 'set img to the clipboard as «class PNGf»' -e 'set f to open for access POSIX file (system attribute \"TMP\") with write permission' -e 'set eof f to 0' -e 'write img to f' -e 'close access f' -e 'on error' -e 'display dialog \"No image available\" buttons {\"OK\"}' -e 'end try' && shortcuts run \"AirDrop Clip\" -i \"$TMP\""
+  :clip-airdrop "export TMP=\"$TMPDIR/clip.png\"; osascript -l JavaScript -e 'ObjC.import(\"AppKit\"); var pb = $.NSPasteboard.generalPasteboard; var data = pb.dataForType(\"public.png\"); if (data.isNil()) { Application(\"System Events\").displayDialog(\"No image available\", {buttons: [\"OK\"]}) } else { data.writeToFileAtomically($.NSProcessInfo.processInfo.environment.objectForKey(\"TMP\").js, true) }' && shortcuts run \"AirDrop Clip\" -i \"$TMP\""
  }
 
  :input-sources {
