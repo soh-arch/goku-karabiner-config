@@ -423,6 +423,21 @@ Lock screen sits on plain Escape (no Act) rather than another combo,
 since it's the one action in this family worth reaching for on reflex —
 walking away from the desk shouldn't need a chord.
 
+**`:clip-airdrop`'s original `key code 36` (Return) after opening the
+share popover was a blind key press with no target.** Clicking the
+share toolbar button via System Events opens the popover but does not
+give any item keyboard focus, so Return had nothing to select — the
+popover was just left sitting open. It only looked like it worked when
+a mouse happened to be hovering AirDrop (giving it visual highlight,
+not keyboard focus). Fixed by dropping the Return entirely and instead
+clicking the element named "AirDrop" directly, found via `entire
+contents of window 1` rather than a fixed accessibility path — the
+same "match by description, not position" approach already used to
+find the share button itself (`description is "共有" or description is
+"Share"`). This also sidesteps the share menu's recency-based
+reordering, since it never assumed AirDrop was in any particular
+position to begin with.
+
 **Tab's focus-jump family only uses act-f, never act-a.** Both Tab and
 the Act keys live on the left hand, and Tab sits directly above `a` —
 same finger (left pinky) reaches both. Holding Tab down already occupies

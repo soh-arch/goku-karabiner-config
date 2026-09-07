@@ -88,7 +88,7 @@
   :pwr          "pmset %s"
   :clip-save    "mkdir -p ~/.cache/abcact/clips && sleep 0.1 && pbpaste > ~/.cache/abcact/clips/%s"
   :clip-load    "cat ~/.cache/abcact/clips/%s | pbcopy && sleep 0.1"
-  :clip-airdrop "osascript -e 'set tmp to POSIX path of (path to temporary items) & \"clip.png\"' -e 'try' -e 'set img to the clipboard as «class PNGf»' -e 'set f to open for access POSIX file tmp with write permission' -e 'set eof f to 0' -e 'write img to f' -e 'close access f' -e 'on error' -e 'display dialog \"No image available\" buttons {\"OK\"}' -e 'return' -e 'end try' -e 'tell application \"Finder\"' -e 'activate' -e 'reveal (POSIX file tmp as alias)' -e 'end tell' -e 'tell application \"System Events\" to tell process \"Finder\"' -e 'delay 0.1' -e 'click (first button of toolbar 1 of window 1 whose description is \"共有\" or description is \"Share\")' -e 'delay 0.1' -e 'key code 36' -e 'end tell'"
+  :clip-airdrop "osascript -e 'set tmp to POSIX path of (path to temporary items) & \"clip.png\"' -e 'try' -e 'set img to the clipboard as «class PNGf»' -e 'set f to open for access POSIX file tmp with write permission' -e 'set eof f to 0' -e 'write img to f' -e 'close access f' -e 'on error' -e 'display dialog \"No image available\" buttons {\"OK\"}' -e 'return' -e 'end try' -e 'tell application \"Finder\"' -e 'activate' -e 'reveal (POSIX file tmp as alias)' -e 'end tell' -e 'tell application \"System Events\" to tell process \"Finder\"' -e 'delay 0.1' -e 'click (first button of toolbar 1 of window 1 whose description is \"共有\" or description is \"Share\")' -e 'delay 0.2' -e 'click (first UI element of (entire contents of window 1) whose (name is \"AirDrop\" or description is \"AirDrop\"))' -e 'end tell'"
  }
 
  :input-sources {
