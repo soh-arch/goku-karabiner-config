@@ -536,42 +536,55 @@ The simlayer definition carries `:condi [:!layer-ast :!layer-bra
 Asterisk `a` → act-a rule; the two are mutually exclusive by
 construction, not by manipulator ordering.
 
-Digit layout mirrors Bra's numpad (originally `z x c v` = 0-3, `s d f`
-= 4-6, `w e r` = 7-9) so the two numpads share muscle memory. `a`
-itself can't double as backspace here the way it does in Bra (it's the
-trigger).
+Digit layout originally mirrored Bra's numpad (`z x c v` = 0-3, `s d
+f` = 4-6, `w e r` = 7-9) so the two numpads would share muscle memory.
+`a` itself can't double as backspace here the way it does in Bra (it's
+the trigger).
 
-**`0` moved from `z` to Spacebar.** `z` is an awkward stretch (bottom
-row, pinky) compared to the rest of the digit cluster, and the thumb
-sits idle throughout Numpad-a use since `a` (the trigger) is already
-held by a different finger. Spacebar is unused elsewhere in this
-simlayer's rule set, so `0` moved there and `1-9` (`x c v`/`s d f`/`w e
-r`) stayed put — this breaks the previously-exact mirror with Bra's
-numpad (which still has `0` on `z`) for the sake of comfort on the key
-used most often (leading/trailing zeros).
+**`0` briefly moved from `z` to Spacebar, then had to move again —
+Spacebar turned out to be structurally unsafe for this.** The initial
+reasoning was sound on its own (`z` is an awkward pinky stretch, and
+the thumb sits idle during Numpad-a since `a` is held by a different
+finger), but Spacebar already carries an unconditioned, load-bearing
+rule elsewhere in this file: SandS (`[:##spacebar :left_shift nil
+{:alone :spacebar}]`, held = Left Shift, tap-alone = Spacebar), with no
+`:layer-*`/`:act-*` guard at all. Karabiner matches manipulators in
+list order, and SandS sits far earlier in the file than Numpad-a, so
+it kept winning the race for the physical Spacebar keydown — in
+practice this meant `0` only worked intermittently, with a bare space
+getting typed most of the time. Same underlying shape of bug as the
+Cket `[`/`]`/`\` incident (an earlier, unguarded, more general
+manipulator shadowing a later, more specific one) — except this time
+the earlier rule can't just be reordered or reguarded, because SandS
+needs to work unconditionally in every layer.
 
-**Operators live on the physical number row, not the letter keys.**
-Once `z x c v s d f w e r` were fully spoken for by digits 0-9, there was
-no letter key left to add `+ - * / ^` to without displacing a digit. The
-physical `2`-`6` keys sit directly above the `s d f`/`c v` digit cluster
-and are still left-hand reachable, so they carry the operators instead:
-`2`=`+`, `3`=`-`, `4`=`*`, `5`=`/`, `6`=`^` (a straight positional
-pairing with the request, not a calculator-layout convention). `+ - * /`
-use Karabiner's dedicated `keypad_*` key codes (`keypad_plus`,
-`keypad_hyphen`, `keypad_asterisk`, `keypad_slash`) so they emit real
-`+`/`-`/`*`/`/` without needing Shift; `^` has no keypad equivalent, so
-`6` sends a plain `Shift+6` chord instead.
+**Redesigned around the actual complaint: it was never really about
+`0`, it was that the trigger finger (pinky, on `a`) also owns `z` in
+touch typing.** `x c v` (ring/middle/index) were never the problem.
+The fix pushes `1-9` up onto `s d f` / `w e r` / `2 3 4` — home row,
+top letter row, and the physical number row, none of which conflict
+with the pinky's `a`-holding duty — and reassigns the vacated bottom
+row (`z x c v`) plus `b g t` to backspace/delete/operators:
 
-**Backspace moved off `q` onto `g`; `b` adds a decimal point.** The
-original design put backspace on `q`, but `q` sits to the *left* of `a`
-(the trigger), which works against the point of a left-hand-only
-numpad: everything should stay within comfortable reach without
-crossing back over the trigger finger. `g` (home row, immediately right
-of `f`=6) and `b` (bottom row, immediately right of `v`=3) are both
-left-hand keys "to the right of `a`" that were still free, so backspace
-moved to `g` and a decimal point (`.`) was added on `b`. A comma was
-considered for the same slot family but skipped for this pass — no key
-was assigned to it.
+- `0` → `c`
+- `1-9` → `s d f`, `w e r`, `2 3 4`
+- `=` `+` `-` `*` → `v b g t` (a straight positional run, not a
+  calculator-layout convention)
+- `/` `^` → `5 6` (physical number row, `keypad_slash` and a plain
+  `Shift+6` chord — no keypad equivalent for `^`)
+- one-character delete → `x` (`delete_or_backspace`)
+- one-line delete → `z`, reusing Bra Numpad's own `q` implementation
+  verbatim (`[:end :!Shome :delete_or_backspace]`: jump to end of
+  line, shift-select to line start, delete the selection) rather than
+  inventing a second implementation of the same idea
+
+`=`/`+`/`-`/`*`/`/` use Karabiner's dedicated `keypad_*` key codes
+(`keypad_equal_sign`, `keypad_plus`, `keypad_hyphen`, `keypad_asterisk`,
+`keypad_slash`) so they emit the real character without needing Shift.
+This drops the previous decimal-point mapping (`period` on `b`) — `b`
+is now `+` — and no longer mirrors Bra's numpad layout at all; the two
+numpads are now deliberately different, tuned for their own trigger
+key's finger-occupancy constraints instead of sharing one layout.
 
 This is explicitly a trial, not a settled design: intended to run for a
 period of real use to see whether the Simultaneous-order protection
