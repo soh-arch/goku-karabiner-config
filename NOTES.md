@@ -391,6 +391,17 @@ plain-pressable key — L-Option carries the Greek input switch on its
 alone-tap. Restoring R-Option makes Option symmetric again and lets
 Option+click and Option+arrow be done entirely with the right hand.
 
+The Cket media-transport combos (`[`/`]`/`\` → fast forward/rewind/
+play-pause) were meant to use this restored R-Option, but were left
+written with the `!R` (R-Shift) prefix from before the restoration —
+Goku's abbreviated notation is `!R` = right_shift, `!E` = right_option
+(mnemonic: left hand is `C T O S`, right hand mirrors it `Q W E R`).
+Because `!R`'s `from` still has `optional: [any]`, and the plain
+volume/mute rules were listed first, the modified combos never fired —
+Karabiner matched the plain rule before ever reaching the R-Shift one.
+Fixed by switching to `!E` and moving the modifier-qualified rules
+ahead of the plain ones in the rule list.
+
 The one exception is inside Asterisk, where Caps Lock is the Maccy
 trigger (`:!layer-ast` guards the Cmd rule). That guard is enough
 because Karabiner does not re-feed a manipulator's `to` output through

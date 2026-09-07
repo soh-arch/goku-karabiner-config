@@ -8,6 +8,7 @@
 ;; > O: L-Opt
 ;; > T: L-Ctrl
 ;; > R: R-Shift
+;; > E: R-Opt
 ;; > ### Layers
 ;; > *: Asterisk (= layer-ast / L-Cmd held)
 ;; > <: Bra       (= layer-bra / L-Shift held)
@@ -559,6 +560,9 @@
 
   {:des "Cket: Media Controls"
    :rules [
+    [:!Eopen_bracket  :fast_forward [:layer-cket :!layer-ast]]
+    [:!Eclose_bracket :rewind [:layer-cket :!layer-ast]]
+    [:!Ebackslash     :play_or_pause [:layer-cket :!layer-ast]]
     [:open_bracket    :volume_decrement [:layer-cket :!layer-ast]]
     [:close_bracket   :volume_increment [:layer-cket :!layer-ast]]
     [:backslash       :mute [:layer-cket :!layer-ast]]
@@ -566,9 +570,6 @@
     [:quote           :display_brightness_increment [:layer-cket :!layer-ast]]
     [:period          :illumination_decrement [:layer-cket :!layer-ast]]
     [:slash           :illumination_increment [:layer-cket :!layer-ast]]
-    [:!Ropen_bracket  :fast_forward [:layer-cket :!layer-ast]]
-    [:!Rclose_bracket :rewind [:layer-cket :!layer-ast]]
-    [:!Rbackslash     :play_or_pause [:layer-cket :!layer-ast]]
    ]}
  ]
 }
