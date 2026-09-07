@@ -536,9 +536,19 @@ The simlayer definition carries `:condi [:!layer-ast :!layer-bra
 Asterisk `a` → act-a rule; the two are mutually exclusive by
 construction, not by manipulator ordering.
 
-Digit layout mirrors Bra's numpad (`z x c v` = 0-3, `s d f` = 4-6, `w e
-r` = 7-9) so the two numpads share muscle memory. `a` itself can't
-double as backspace here the way it does in Bra (it's the trigger).
+Digit layout mirrors Bra's numpad (originally `z x c v` = 0-3, `s d f`
+= 4-6, `w e r` = 7-9) so the two numpads share muscle memory. `a`
+itself can't double as backspace here the way it does in Bra (it's the
+trigger).
+
+**`0` moved from `z` to Spacebar.** `z` is an awkward stretch (bottom
+row, pinky) compared to the rest of the digit cluster, and the thumb
+sits idle throughout Numpad-a use since `a` (the trigger) is already
+held by a different finger. Spacebar is unused elsewhere in this
+simlayer's rule set, so `0` moved there and `1-9` (`x c v`/`s d f`/`w e
+r`) stayed put — this breaks the previously-exact mirror with Bra's
+numpad (which still has `0` on `z`) for the sake of comfort on the key
+used most often (leading/trailing zeros).
 
 **Operators live on the physical number row, not the letter keys.**
 Once `z x c v s d f w e r` were fully spoken for by digits 0-9, there was

@@ -538,7 +538,7 @@
 
   {:des "Numpad-a: Virtual Numpad (Simlayer, experimental)"
    :rules [:numpad-a
-    [:z :0]
+    [:spacebar :0]
     [:x :1]
     [:c :2]
     [:v :3]
