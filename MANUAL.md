@@ -79,7 +79,7 @@ Spacebarが担っています。同様にCommandは、左CommandがAsteriskの�
 | `q` | Raycastのメモ機能を起動 | このマニュアルを開く(Raycast経由) |
 | `w` | Obsidianを起動 | Bearを起動 |
 | `e` | Cursorを起動 | Logseqを起動 |
-| `r` | Claudeを起動 | ChatGPT(Classic)を起動 |
+| `r` | Claudeを起動 | ChatGPTを起動 |
 | `t` | 選択中のテキストを日本語に翻訳(Raycast) | 選択中のテキストを英語に翻訳(Raycast) |
 | `y` | DeepLを起動 | 辞書(Dictionary)を起動 |
 | `g` | Slackを起動 | Spark Desktop(メール)を起動 |
