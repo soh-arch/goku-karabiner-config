@@ -74,7 +74,8 @@
 
 ;; ### Tab Suite (Asterisk, focus jump)
 ;; asdf: Next window
-;; asdF: App-defined pane focus (Ctrl+`)
+;; asDf: Ctrl+F2
+;; asdF: Ctrl+F8
 
 ;; ### Numpad-a Suite (Simlayer, experimental — Asterisk-independent)
 ;; Numpad: virtual number pad, trigger key `a`
@@ -144,10 +145,10 @@
   {:des "Core: Tab Focus Jump"
    :rules [
     ;; act-a is unreachable while Tab is held (both pinky), so this family
-    ;; only ever uses act-f — reachable by the index finger without leaving
-    ;; home position. See NOTES.md.
+    ;; never uses it. See NOTES.md.
     [:##tab           :!Tf4 [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f]] ;; next window
-    [:##tab           :!Tgrave_accent_and_tilde [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :act-f]] ;; app pane focus
+    [:##tab           :!Tf2 [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :!act-f]]
+    [:##tab           :!Tf8 [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :act-f]]
    ]}
 
   {:des "Asterisk Left: Application Launcher"

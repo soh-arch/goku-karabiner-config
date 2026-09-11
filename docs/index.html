@@ -1337,8 +1337,9 @@ body.searching .chapter-nav{ margin-top:0; }
         <h2>Tab — Focus Jump</h2>
         <p class="sec-desc">
           Inside Asterisk, Tab shares its finger (L-pinky) with <span class="key">a</span>, so
-          this family only ever uses <span class="key">f</span>. Both actions are meant to be
-          fired and immediately followed by more typing — home position is preserved throughout.
+          this family never uses act-a — only <span class="key">d</span>/<span class="key">f</span>.
+          These actions are meant to be fired and immediately followed by more typing — home
+          position is preserved throughout.
         </p>
       </div>
     </div>
@@ -1353,10 +1354,16 @@ body.searching .chapter-nav{ margin-top:0; }
             <td class="dim">⌃F4 — move focus to active/next window</td>
           </tr>
           <tr>
+            <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot on-d"></span><span class="dot"></span></span></span></td>
+            <td><code>Cmd+D → Tab</code></td>
+            <td class="row-label">⌃F2</td>
+            <td class="dim">move focus to menu bar</td>
+          </tr>
+          <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot on-f"></span></span></span></td>
             <td><code>Cmd+F → Tab</code></td>
-            <td class="row-label">App pane focus</td>
-            <td class="dim">⌃` — app-defined (editor ⇄ terminal pane, etc.)</td>
+            <td class="row-label">⌃F8</td>
+            <td class="dim">move focus to status menus</td>
           </tr>
         </tbody>
       </table>

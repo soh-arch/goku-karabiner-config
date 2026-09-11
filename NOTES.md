@@ -485,27 +485,28 @@ subprocess can read it back via
 `NSProcessInfo.processInfo.environment`, since JXA has no direct
 equivalent of AppleScript's `path to temporary items` shorthand here.
 
-**Tab's focus-jump family only uses act-f, never act-a.** Both Tab and
-the Act keys live on the left hand, and Tab sits directly above `a` —
-same finger (left pinky) reaches both. Holding Tab down already occupies
-that pinky, so act-a is physically unreachable without letting go of
-Tab. act-f (left index) has no such conflict and stays on home position
-throughout, which matters here specifically because both bound actions
-(next window, app pane focus) are meant to be fired and immediately
-followed by more typing — landing back on home row is the whole point.
-`f` was also already the iTerm slot in the Asterisk Left launcher, so
-`asdF` reads as "Tab into a CLI-ish focus jump" rather than an arbitrary
-pick.
+**Tab's focus-jump family never uses act-a.** Both Tab and the Act keys
+live on the left hand, and Tab sits directly above `a` — same finger
+(left pinky) reaches both. Holding Tab down already occupies that
+pinky, so act-a is physically unreachable without letting go of Tab.
+act-d and act-f (left middle/index fingers) have no such conflict and
+stay on home position throughout, which matters here specifically
+because these actions are meant to be fired and immediately followed
+by more typing — landing back on home row is the whole point.
 
 **Ctrl+F2/F3/F5/F6/F8 ("move focus to menu bar/Dock/toolbar/floating
-window/status menu") were dropped from consideration entirely.** These
-are documented macOS focus-navigation shortcuts, but on this machine
-none of F2/F5/F6/F8 do anything — confirmed with the physical keyboard
-directly, bypassing Karabiner, so it isn't a Goku/Karabiner output
-problem. Whatever is broken lives in macOS itself (known to be flaky in
-recent macOS versions) and is outside what this config can fix. F3
-(Dock) was never wanted. Only Ctrl+F4 (move focus to active/next window)
-turned out to work reliably, which is what `asdf` on Tab uses.
+window/status menu") were originally dropped from consideration
+entirely — none of F2/F5/F6/F8 did anything, confirmed with the
+physical keyboard directly, bypassing Karabiner, so it wasn't a
+Goku/Karabiner output problem. Only Ctrl+F4 (move focus to
+active/next window, `asdf`) worked reliably at the time.** F2 and F8
+started working at some later point (macOS itself is known to be
+flaky here across versions — nothing in this repo changed to cause
+it), so `asDf` → Ctrl+F2 and `asdF` → Ctrl+F8 were added. `asdF`
+previously sent app-defined pane focus (`Ctrl+\``) instead, but that
+binding saw little use once `Cmd+J` covered the same need, so it was
+replaced rather than kept alongside Ctrl+F8. F3 (Dock) is still not
+wanted.
 
 **Numpad-a is built on Goku's `:simlayers`, not the hand-rolled
 `["layer" 1]`/`:afterup` pattern used everywhere else.** Every other
