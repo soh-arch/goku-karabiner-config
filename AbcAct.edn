@@ -113,7 +113,8 @@
     [:##spacebar      :left_shift nil {:alone :spacebar}]  ;; SandS — the only modifier either hand can reach
     [:##right_command :right_command nil {:alone :japanese_kana}] ;; kana on tap; see NOTES.md for why it is a plain toggle
     [:##right_option  :right_option]
-    [:##fn            :left_control]
+    [:##fn            :left_command]
+    [:##left_control  :left_command]
    ]}
 
   {:des "Core: Accents"
@@ -132,7 +133,7 @@
     [:##caps_lock     :!SCT4 [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f]]
     [:##caps_lock     :!SC5 [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :!act-f]]
     [:##caps_lock     [:clip-airdrop] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :act-f]]
-    [:##caps_lock     :left_command [:!layer-ast] {:alone :escape}] ;; Cmd everywhere but Asterisk, where caps is the Maccy trigger
+    [:##caps_lock     :left_control [:!layer-ast] {:alone :escape}] ;; Ctrl everywhere but Asterisk, where caps is the Maccy trigger
    ]}
 
   {:des "Core: Escape System Actions"

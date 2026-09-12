@@ -237,12 +237,20 @@ source switch — a `select_input_source`-based replacement was tried and
 abandoned after it turned out to be unreliable in practice. See "Japanese
 input: `select_input_source` was tried and abandoned" above for the full
 story. `left_control` no longer has an alone-action (Greek moved to
-`left_option` instead) and is a plain modifier.
+`left_option` instead).
 
-**`fn` sends Left Control.** Plain remap, no alone-action — `fn` isn't
-used for anything else in this config, and physical Left Control was
-already a free, unmapped modifier (see above), so there's no conflict
-between the two keys now both producing the same output.
+**Command duty moved off Caps Lock onto `fn`/Left Control; Caps Lock's
+hold-action became Ctrl instead.** `fn` originally sent Left Control
+(a plain remap, since `fn` wasn't used for anything else and physical
+Left Control was already a free, unmapped modifier — see above). Both
+were then swapped to send Left Command instead, and Caps Lock's own
+held-output (previously Left Command, tap-alone still `:escape`)
+became Left Control. Net effect: Command is now reachable from three
+places (`fn`, physical Left Control, `right_command` held) and Ctrl
+moved onto Caps Lock's long-press, matching the classic Unix
+Caps-as-Ctrl convention. The `[:!layer-ast]` guard on the Caps Lock
+manipulator is unchanged — inside Asterisk, Caps Lock is still the
+Maccy trigger, untouched by this swap.
 
 **Maccy paste-by-index layer exists to keep thumb+pinky on Cmd+Tab.** The
 goal was pasting a specific clipboard history slot without ever letting go
