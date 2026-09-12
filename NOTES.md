@@ -239,6 +239,11 @@ input: `select_input_source` was tried and abandoned" above for the full
 story. `left_control` no longer has an alone-action (Greek moved to
 `left_option` instead) and is a plain modifier.
 
+**`fn` sends Left Control.** Plain remap, no alone-action — `fn` isn't
+used for anything else in this config, and physical Left Control was
+already a free, unmapped modifier (see above), so there's no conflict
+between the two keys now both producing the same output.
+
 **Maccy paste-by-index layer exists to keep thumb+pinky on Cmd+Tab.** The
 goal was pasting a specific clipboard history slot without ever letting go
 of L-Command or Tab — see the dedicated section above for why it took six

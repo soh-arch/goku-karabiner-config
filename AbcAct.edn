@@ -113,6 +113,7 @@
     [:##spacebar      :left_shift nil {:alone :spacebar}]  ;; SandS — the only modifier either hand can reach
     [:##right_command :right_command nil {:alone :japanese_kana}] ;; kana on tap; see NOTES.md for why it is a plain toggle
     [:##right_option  :right_option]
+    [:##fn            :left_control]
    ]}
 
   {:des "Core: Accents"
