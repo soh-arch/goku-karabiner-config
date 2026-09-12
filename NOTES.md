@@ -206,6 +206,29 @@ ChatGPT) were on `d` originally and kept firing by accident; moved to `r`
 (a plain launcher key, no activator role) and swapped with what `r` used
 to hold.
 
+**`a`'s alone-tap is Raycast, and `d` shifted down to MdoroMac/Calendar.**
+`a`'s alone-tap used to be Launchpad, which Raycast had effectively
+replaced in practice — Launchpad was almost never reached for, while
+Raycast (previously on `d`'s alone-tap) is the single most-used
+destination in the whole launcher. Since `a` is the easiest key in the
+suite to hit (left pinky, home position, and already the act-a
+activator everyone's finger rests on), Raycast moved there and
+Launchpad was dropped rather than relocated.
+
+That left `d` free, so MdoroMac moved down from `Asdf` into `asdf`,
+and `d`'s act-a slot needed a new occupant. The `s`/`f` pairs both
+follow "same domain, primary/alternate" (Comet↔Chrome are browsers,
+Finder↔iTerm are file/shell), but a second *timer* app to pair with
+MdoroMac doesn't exist — nobody runs two Pomodoro apps. Calendar keeps
+the convention by widening the domain instead of duplicating the app
+category: MdoroMac is time management at the scale of minutes,
+Calendar at the scale of days. Alternatives considered and rejected:
+relocating Launchpad here (preserves a function nobody uses), System
+Settings (useful, but breaks the domain-pairing convention), and
+deliberately leaving the slot empty (defensible — there's precedent in
+Numpad-a's skipped comma — but Calendar was a genuinely wanted
+destination, so the slot didn't need to stay open).
+
 **Input sources: `:input-sources` for English/Greek, a plain toggle for
 Japanese.** `left_command`/`left_option` alone-taps switch to English/
 Greek via `:input-sources` directly. `right_command`'s alone-action is

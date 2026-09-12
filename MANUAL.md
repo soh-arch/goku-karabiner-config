@@ -72,9 +72,9 @@ Spacebarが担っています。同様にCommandは、左CommandがAsteriskの�
 
 | キー | `Cmd →` (通常) | `Cmd+A →` (aも押しながら) |
 |---|---|---|
-| `a`単体タップ | Launchpad起動 | ― |
+| `a`単体タップ | Raycastを起動 | ― |
 | `s`単体タップ | Cometを起動 | Google Chromeを起動 |
-| `d`単体タップ | Raycastを起動 | MdoroMacを起動 |
+| `d`単体タップ | MdoroMacを起動 | カレンダーを起動 |
 | `f`単体タップ | Finderを起動 | iTermを起動 |
 | `q` | Raycastのメモ機能を起動 | このマニュアルを開く(Raycast経由) |
 | `w` | Obsidianを起動 | Bearを起動 |
