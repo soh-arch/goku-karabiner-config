@@ -193,6 +193,58 @@ that triggered this whole auto-repeat investigation. Whether
 `Forward-Delete` was hasn't been retested — worth confirming if `l`
 held down for repeated word-deletes ever misbehaves the same way.
 
+## `asDf`'s u/i/o/p were a line-kill that collapsed into one action
+
+`asDf` (Delete) used to bind `u`/`i`/`o`/`p` to hand-rolled sequences that
+jumped to one line boundary, shift-selected across to the other, and
+deleted: `[:end :!Shome :delete_or_backspace]` for `i`,
+`[:home :!Send :delete_or_backspace]` for `o`, and the same with the
+shift-select doubled for `u`/`p`. `MANUAL.md` described them as "delete
+the current line, backwards / forwards" and "delete the current line
+together with the one above / below."
+
+Three things were wrong with that. `i` and `o` both leave the same final
+state — an emptied line with the cursor at its start — so they were one
+action on two keys. The doubled `Shift+Home`/`Shift+End` in `u`/`p` is a
+no-op in any app where Home/End already sit on the line boundary (at best
+it picks up leading indentation in VS Code-style smart-home apps), so it
+never reached the neighbouring line the docs promised, leaving all four
+keys on effectively one action. And the leading `end`/`home` throws away
+the caret's column before the delete, which is why nothing about these
+bindings composed with the rest of the tier.
+
+That last point is the real break. Everywhere else in this family a
+delete tier is its select tier plus a delete: `asDf`'s `h`/`j`/`k`/`l`
+are `aSdf`'s motions plus a delete, and `AsDf`'s whole row is `ASdf`'s
+motions plus a delete. `asDf`'s `u`/`i`/`o`/`p` were the only cells that
+opted out, which also contradicted `MANUAL.md`'s own claim that the
+delete tiers delete *using the boundary* the cursor tiers move to.
+
+**Fix**: compose them from `aSdf` like every other cell —
+`[:!Spage_up :delete_or_backspace]`, `[:!Shome :delete_or_backspace]`,
+`[:!Send :delete_forward]`, `[:!Spage_down :delete_forward]`. The
+geometry (u = up, i = left, o = right, p = down) now survives into the
+delete tier, and act-a genuinely amplifies: `asDf` deletes to the
+Home/End/Page boundary, `AsDf` to the Cmd boundary (line start/end,
+document start/end).
+
+Deleting a whole line outright is not lost — Bra Numpad's `q` still does
+it, and it keeps the `[:end :!Shome :delete_or_backspace]` implementation
+this change removed from `asDf`. Note that neither form removes the
+newline; both empty the line and leave it in place. If a true
+`Cmd+Shift+K`-style line delete is ever wanted on the Asterisk side, it
+belongs in a free slot rather than back in `u`/`i`/`o`/`p`, whose four
+cells carry the boundary geometry.
+
+**The same fix applied to `o`/`p` in both delete tiers.** The
+forward-direction rule established above — a forward delete must end its
+`to` array with `delete_forward`, or a held key repeats only the trailing
+`delete_or_backspace` and starts eating backwards — had been applied to
+`j` and `l` but never to `u`/`i`/`o`/`p`. `asDf`'s new `o`/`p` and
+`AsDf`'s `o`/`p` (`[:!SCright_arrow …]`, `[:!SCdown_arrow …]`) now end
+with `delete_forward`; `u`/`i` are backward-directed and correctly keep
+`delete_or_backspace`.
+
 ## ASDF's j/k (previous-desktop/next-desktop) removed
 
 `ASDF` (Amplified Window Management) originally bound `j`/`k` to Raycast's

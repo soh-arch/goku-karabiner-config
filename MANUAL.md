@@ -140,7 +140,7 @@ Spacebarが担っています。同様にCommandは、左CommandがAsteriskの�
 | `a` | Command+↑ (文書の先頭へ) | Command+← (行の先頭へ) | Command+→ (行の末尾へ) | Command+↓ (文書の末尾へ) |
 | `s` | Shift+Page Up (選択) | Shift+Home (行頭まで選択) | Shift+End (行末まで選択) | Shift+Page Down (選択) |
 | `a`+`s` | Shift+Command+↑ (文書先頭まで選択) | Shift+Command+← (行頭まで選択) | Shift+Command+→ (行末まで選択) | Shift+Command+↓ (文書末尾まで選択) |
-| `d` | 現在行と上の行をまとめて削除 | 現在行を削除(後方) | 現在行を削除(前方) | 現在行と下の行をまとめて削除 |
+| `d` | Shift+Page Up (1画面分を選択して削除) | Shift+Home (行頭まで選択して削除) | Shift+End (行末まで選択して削除) | Shift+Page Down (1画面分を選択して削除) |
 | `a`+`d` | 文書の先頭まで選択して削除 | 行の先頭まで選択して削除 | 行の末尾まで選択して削除 | 文書の末尾まで選択して削除 |
 | `s`+`d` | Command+X (カット) | Command+C (コピー) | Command+V (ペースト) | Shift+Command+Option+V (書式を合わせてペースト) |
 | `a`+`s`+`d` | Option+Shift+↑ (現在行を上に複製) | Option+↑ (現在行を上へ移動) | Option+↓ (現在行を下へ移動) | Option+Shift+↓ (現在行を下に複製) |

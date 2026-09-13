@@ -1061,7 +1061,7 @@ body.searching .chapter-nav{ margin-top:0; }
             <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot on-d"></span><span class="dot"></span></span></span></td>
             <td class="row-label">Delete<span class="formula">Cmd+D →</span></td>
             <td>Char back</td><td>Line below</td><td>Line above</td><td>Char forward</td>
-            <td>Line + one above</td><td>Line, backwards</td><td>Line, forwards</td><td>Line + one below</td>
+            <td>Page up<span class="hint">⇧PgUp</span></td><td>Line start<span class="hint">⇧Home</span></td><td>Line end<span class="hint">⇧End</span></td><td>Page down<span class="hint">⇧PgDn</span></td>
             <td class="dim">Select all</td><td class="dim">Select all</td><td class="dim">Select all</td><td class="dim">Select all</td>
           </tr>
           <tr>
@@ -1523,7 +1523,7 @@ body.searching .chapter-nav{ margin-top:0; }
     ""    : { name:"Text Cursor",          concept:"Direct navigation",   desc:"Plain arrows and page boundaries — the ground state." },
     "A"   : { name:"Amplified Cursor",     concept:"Bigger units",        desc:"Word and paragraph jumps; line and document boundaries." },
     "S"   : { name:"Select",               concept:"Range selection",     desc:"The same motions, extended as a selection." },
-    "D"   : { name:"Delete",               concept:"Removal",             desc:"Backspace, forward delete, single and double line removal." },
+    "D"   : { name:"Delete",               concept:"Removal",             desc:"Select the baseline unit — char, line, boundary — then delete it." },
     "F"   : { name:"Mouse Cursor",         concept:"Pointer & scroll",    desc:"Move the pointer and scroll without leaving the home row." },
     "AS"  : { name:"Amplified Select",     concept:"Wide selection",      desc:"Select by word, paragraph, line or document boundary." },
     "AD"  : { name:"Amplified Delete",     concept:"Wide removal",        desc:"Select that same unit, then delete it." },
