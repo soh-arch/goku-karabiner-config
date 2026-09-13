@@ -198,6 +198,31 @@ Why individual bindings ended up where they did, beyond what's obvious from
 reading `AbcAct.edn` or `MANUAL.md`. Collected from design discussions so
 the reasoning doesn't have to be re-derived (or re-explained) later.
 
+**Amplified Delete's `h`/`l` fixed from Cmd to Option — the "one act,
+one modifier flavor" rule caught a real inconsistency.** Across the
+`h`/`j`/`k`/`l` navigation family, act-a alone always means "Option
+flavor" (Amplified Cursor: `⌥←`/`⌥→` word jump, `⌥↓`/`⌥↑` paragraph
+jump) and act-s alone always means "Shift flavor" (Select). Amplified
+Delete (`a`+`d`, act-a only) should follow the same flavor, but `h`/`l`
+were wired to `!Cdelete_or_backspace`/`[:!SCright_arrow
+:delete_forward]` — Cmd, not Option — while its own doc label already
+claimed "単語削除" (word delete). Fixed to `!Odelete_or_backspace`/
+`!Odelete_forward`, which is also how macOS natively spells "delete
+word backward/forward" as a single keystroke — no select-then-delete
+needed, unlike `j`/`k`/`u`/`i`/`o`/`p`.
+
+`j`/`k` (paragraph delete) and `u`/`i`/`o`/`p` (line/doc-boundary
+delete) keep their `Shift+Option`/`Shift+Cmd` chords unchanged. That
+Shift isn't "borrowed from act-s" — deleting a *span* (a paragraph, or
+everything up to a boundary) has no single-keystroke native action the
+way word-delete does, so it's implemented as select-then-delete, and
+building a selection at all requires Shift regardless of which act key
+triggered it. The user-facing flavor still matches its Cursor
+counterpart (paragraph delete pairs with paragraph jump, boundary
+delete pairs with boundary jump) — the rule is about the flavor being
+consistent from the user's perspective, not about which physical
+modifier keys happen to be involved in the underlying implementation.
+
 **`d` swaps to Raycast/Maccy, `r` takes Claude/Chatgpt (Asterisk Left).**
 `d` doubles as the `act-d` layer activator (held down, it changes what
 other keys do), so holding it even briefly to reach another key risks

@@ -280,10 +280,10 @@
 
     ;; ── AsDf ─────────────────────────
     ;; Amplified Delete
-    [:##h             :!Cdelete_or_backspace [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :act-d :!act-f]]
+    [:##h             :!Odelete_or_backspace [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :act-d :!act-f]]
     [:##j             [:!SOdown_arrow :delete_forward] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :act-d :!act-f]]
     [:##k             [:!SOup_arrow :delete_or_backspace] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :act-d :!act-f]]
-    [:##l             [:!SCright_arrow :delete_forward] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :act-d :!act-f]]
+    [:##l             :!Odelete_forward [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :act-d :!act-f]]
     [:##u             [:!SCup_arrow :delete_or_backspace] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :act-d :!act-f]]
     [:##i             [:!SCleft_arrow :delete_or_backspace] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :act-d :!act-f]]
     [:##o             [:!SCright_arrow :delete_or_backspace] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :act-d :!act-f]]

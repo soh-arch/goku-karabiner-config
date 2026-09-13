@@ -119,7 +119,7 @@ Spacebarが担っています。同様にCommandは、左CommandがAsteriskの�
 | `s` | Shift+← (1文字選択) | Shift+↓ (1行選択) | Shift+↑ (1行選択) | Shift+→ (1文字選択) |
 | `a`+`s` | Shift+Option+← (単語単位で選択) | Shift+Option+↓ (段落単位で選択) | Shift+Option+↑ (段落単位で選択) | Shift+Option+→ (単語単位で選択) |
 | `d` | 1文字削除(後退) | 下1行を削除 | 上1行を削除 | 1文字削除(前方) |
-| `a`+`d` | Command+Delete (単語削除・後方) | 段落を選択して削除(下方向) | 段落を選択して削除(上方向) | Command+Delete (単語削除・前方) |
+| `a`+`d` | Option+Delete (単語削除・後方) | 段落を選択して削除(下方向) | 段落を選択して削除(上方向) | Option+Delete (単語削除・前方) |
 | `s`+`d` | 変換の再変換系ショートカット(Ctrl+Shift+R) | 変換の再変換系ショートカット(Ctrl+J) | 変換の再変換系ショートカット(Ctrl+K) | 変換の再変換系ショートカット(Ctrl+`;`) |
 | `a`+`s`+`d` | Command+`[` | Command+Z (取り消し) | Shift+Command+Z (やり直し) | Command+`]` |
 | `f` | マウスカーソルを左へ移動 | マウスカーソルを下へ移動 | マウスカーソルを上へ移動 | マウスカーソルを右へ移動 |
