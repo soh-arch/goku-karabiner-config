@@ -717,7 +717,7 @@ body.searching .chapter-nav{ margin-top:0; }
             <span class="keycap mod k-trigger" style="--sp:9">shift</span><span class="keycap k-mapped">z</span><span class="keycap k-mapped">x</span><span class="keycap k-mapped">c</span><span class="keycap k-mapped">v</span><span class="keycap k-mapped">b</span><span class="keycap k-mapped">n</span><span class="keycap k-mapped">m</span><span class="keycap k-mapped">,</span><span class="keycap k-mapped">.</span><span class="keycap k-mapped">/</span><span class="keycap mod k-trigger" style="--sp:9">shift</span>
           </div>
           <div class="kb-row" aria-hidden="true">
-            <span class="keycap mod">fn</span><span class="keycap mod">ctrl</span><span class="keycap mod k-mapped">opt</span><span class="keycap mod k-trigger" style="--sp:5">⌘</span><span class="keycap mod k-mapped" style="--sp:20">space</span><span class="keycap mod k-mapped" style="--sp:5">⌘</span><span class="keycap mod">opt</span><span class="keycap mod">◄</span><span class="kb-arrows"><span class="keycap-half">▲</span><span class="keycap-half">▼</span></span><span class="keycap mod">►</span>
+            <span class="keycap mod k-mapped">fn</span><span class="keycap mod k-mapped">ctrl</span><span class="keycap mod k-mapped">opt</span><span class="keycap mod k-trigger" style="--sp:5">⌘</span><span class="keycap mod k-mapped" style="--sp:20">space</span><span class="keycap mod k-mapped" style="--sp:5">⌘</span><span class="keycap mod">opt</span><span class="keycap mod">◄</span><span class="kb-arrows"><span class="keycap-half">▲</span><span class="keycap-half">▼</span></span><span class="keycap mod">►</span>
           </div>
         </div>
       </div>
@@ -858,20 +858,29 @@ body.searching .chapter-nav{ margin-top:0; }
           <tr><td><span class="key">R-⇧</span></td><td><strong>Cket layer</strong></td><td class="dim"><code>\</code> — with L-⇧ held: <code>|</code></td></tr>
           <tr><td><span class="key">Caps Lock</span></td><td>⌃ &nbsp;<span class="dim">(inside Asterisk it is a system-action key, §06)</span></td><td class="dim">Esc &nbsp;<span class="dim">(inside Asterisk, physical Escape is a separate system-action key, §07)</span></td></tr>
           <tr><td><span class="key">Space</span></td><td>⇧ &nbsp;<span class="dim">(the only modifier either thumb can reach)</span></td><td class="dim">Space</td></tr>
-          <tr><td><span class="key">R-⌘</span></td><td>⌘</td><td class="dim">Switch to Japanese input (Romaji)</td></tr>
+          <tr><td><span class="key">R-⌘</span></td><td>⌘</td><td class="dim">Japanese <code>かな</code> key code — toggles the IME's kana / alphanumeric mode, not an input-source switch</td></tr>
           <tr><td><span class="key">L-⌥</span></td><td>⌥</td><td class="dim">Switch to Greek input</td></tr>
+          <tr><td><span class="key">fn</span></td><td>⌘ &nbsp;<span class="dim">(plain remap, not a hold action)</span></td><td class="dim">—</td></tr>
+          <tr><td><span class="key">L-⌃</span></td><td>⌘ &nbsp;<span class="dim">(plain remap, not a hold action)</span></td><td class="dim">—</td></tr>
         </tbody>
       </table>
     </div>
+    <p class="sec-desc" style="margin-top:12px">
+      Every modifier that a trigger key took over reappears somewhere else: <strong>⌘</strong> on
+      <span class="key">fn</span>, physical <span class="key">L-⌃</span> and <span class="key">R-⌘</span>
+      (L-⌘ is the Asterisk trigger), <strong>⇧</strong> on <span class="key">Space</span>
+      (both Shifts are layer triggers), <strong>⌃</strong> on <span class="key">Caps Lock</span>.
+      Both <span class="key">⌥</span> keys stay ordinary.
+    </p>
 
     <div class="sub-head">1.2 — Accent dead keys <span style="text-transform:none;letter-spacing:0;font-weight:600">(outside Asterisk and Cket)</span></div>
-    <p class="sec-desc" style="margin-bottom:12px">Press, then type a letter. Standard macOS dead-key behaviour.</p>
+    <p class="sec-desc" style="margin-bottom:12px">Press, then type a letter — the standard ABC Extended dead keys. <span class="key">\</span> is the exception: it types <code>œ</code> outright, with nothing to follow.</p>
     <div class="virt-key-grid" style="max-width:none;grid-template-columns:repeat(auto-fill,minmax(190px,1fr))">
       <div class="virt-key-card"><span class="key">[</span><span>Acute → é</span></div>
       <div class="virt-key-card"><span class="key">]</span><span>Grave → è</span></div>
-      <div class="virt-key-card"><span class="key">\</span><span>Umlaut → ü</span></div>
+      <div class="virt-key-card"><span class="key">\</span><span>œ <span class="dim">(⌥Q — not a dead key)</span></span></div>
       <div class="virt-key-card"><span class="key">⇧ [</span><span>Circumflex → â</span></div>
-      <div class="virt-key-card"><span class="key">⇧ ]</span><span>Umlaut (alt.) → ü</span></div>
+      <div class="virt-key-card"><span class="key">⇧ ]</span><span>Umlaut → ü</span></div>
       <div class="virt-key-card"><span class="key">⇧ \</span><span>Cedilla → ç</span></div>
     </div>
 
@@ -994,7 +1003,10 @@ body.searching .chapter-nav{ margin-top:0; }
           <span class="key">h</span><span class="key">j</span><span class="key">k</span><span class="key">l</span> are
           <strong>directions</strong> (left / down / up / right).
           <span class="key">u</span><span class="key">i</span><span class="key">o</span><span class="key">p</span> are
-          <strong>boundaries</strong> (page up / line start / line end / page down). All 16 tiers keep that split.
+          <strong>boundaries</strong> (page up / line start / line end / page down) — but only the four
+          cursor and select tiers read that literally, and the two delete tiers as boundary-scoped deletes.
+          In the other ten tiers <span class="key">u</span><span class="key">i</span><span class="key">o</span><span class="key">p</span>
+          carry that row's own four actions (clipboard, scroll, drag, tabs, windows), so read the cells, not the column headings.
           <span class="key">[</span><span class="key">]</span><span class="key">;</span><span class="key">'</span> are a
           <strong>support group</strong> in the last four columns — they only respond to
           <span class="key">d</span> and <span class="key">f</span>, so their value is the same on every row of a
@@ -1062,7 +1074,7 @@ body.searching .chapter-nav{ margin-top:0; }
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot on-s"></span><span class="dot on-d"></span><span class="dot"></span></span></span></td>
             <td class="row-label">Reconvert &amp; Clipboard<span class="formula">Cmd+S+D →</span></td>
-            <td>Reconvert<span class="hint">⌃⇧R</span></td><td>To hiragana<span class="hint">⌃J</span></td><td>To katakana<span class="hint">⌃K</span></td><td>IME convert<span class="hint">⌃;</span></td>
+            <td>Reconvert<span class="hint">⌃⇧R</span></td><td>To hiragana<span class="hint">⌃J</span></td><td>To katakana<span class="hint">⌃K</span></td><td>To half-width<span class="hint">⌃;</span></td>
             <td>Cut</td><td>Copy</td><td>Paste</td><td>Paste &amp; match style</td>
             <td class="dim">Select all</td><td class="dim">Select all</td><td class="dim">Select all</td><td class="dim">Select all</td>
           </tr>
@@ -1107,7 +1119,7 @@ body.searching .chapter-nav{ margin-top:0; }
             <td><span class="act-badge"><span class="dots"><span class="dot on-a"></span><span class="dot on-s"></span><span class="dot"></span><span class="dot on-f"></span></span></span></td>
             <td class="row-label">Fast Drag &amp; Drop<span class="formula">Cmd+A+S+F →</span></td>
             <td>← ×2</td><td>↓ ×2</td><td>↑ ×2</td><td>→ ×2</td>
-            <td>← ½</td><td>↓ ½</td><td>↑ ½</td><td>→ ½</td>
+            <td>← ½ ×2</td><td>↓ ½ ×2</td><td>↑ ½ ×2</td><td>→ ½ ×2</td>
             <td class="dim">Left click</td><td class="dim">Right click</td><td class="dim">Left click</td><td class="dim">Right click</td>
           </tr>
         </tbody>
@@ -1180,7 +1192,7 @@ body.searching .chapter-nav{ margin-top:0; }
       </div>
     </div>
 
-    <div class="sub-head">6.1 — Symbols</div>
+    <div class="sub-head">5.1 — Symbols</div>
     <div class="table-wrap">
       <table class="wide-table equal-cols">
         <thead><tr><th>Act</th><th class="kcol">L-⇧</th><th class="kcol">z</th><th class="kcol">x</th><th class="kcol">c</th><th class="kcol">v</th><th class="kcol">b</th><th class="kcol">n</th><th class="kcol">m</th><th class="kcol">,</th><th class="kcol">.</th><th class="kcol">/</th><th class="kcol">R-⇧</th></tr></thead>
@@ -1197,7 +1209,7 @@ body.searching .chapter-nav{ margin-top:0; }
       </table>
     </div>
 
-    <div class="sub-head">6.2 — Clip slots 0–11</div>
+    <div class="sub-head">5.2 — Clip slots 0–11</div>
     <p class="sec-desc" style="margin-bottom:12px">
       Twelve named clipboard buffers, separate from Maccy's history. Hold <span class="key">s</span> to
       <strong>store</strong>, hold <span class="key">d</span> to <strong>paste</strong>.
@@ -1219,7 +1231,7 @@ body.searching .chapter-nav{ margin-top:0; }
     </div>
     <p class="note"><strong>Save</strong> copies the current selection into the slot; <strong>Paste</strong> puts that slot back on the clipboard and pastes it.</p>
 
-    <div class="sub-head">6.3 — Function keys</div>
+    <div class="sub-head">5.3 — Function keys</div>
     <div class="table-wrap">
       <table class="wide-table equal-cols">
         <thead><tr><th>Act</th><th class="kcol">L-⇧</th><th class="kcol">z</th><th class="kcol">x</th><th class="kcol">c</th><th class="kcol">v</th><th class="kcol">b</th><th class="kcol">n</th><th class="kcol">m</th><th class="kcol">,</th><th class="kcol">.</th><th class="kcol">/</th><th class="kcol">R-⇧</th></tr></thead>
@@ -1241,7 +1253,7 @@ body.searching .chapter-nav{ margin-top:0; }
         <h2>Caps Lock — System Actions</h2>
         <p class="sec-desc">
           Inside Asterisk, Caps Lock is a system-action key. Outside it, Caps Lock is just
-          <strong>⌘ on hold, Esc on tap</strong>.
+          <strong>⌃ on hold, Esc on tap</strong>.
         </p>
       </div>
     </div>

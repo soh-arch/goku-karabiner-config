@@ -183,14 +183,26 @@ array shape `j`/`k` already use rather than relying on a lone
 trailing key's native direction already matches their intent, so they
 were never affected.
 
+**`AsDf`'s `l` changed again later, back to a lone key entry.** The
+Cmd-to-Option fix (see "Amplified Delete's `h`/`l` fixed from Cmd to
+Option" further below) replaced `l`'s select-then-delete array with a
+single `!Odelete_forward` chord, the same shape category (`to` is one
+entry, not an array) as the original `:delete_forward`-alone binding
+that triggered this whole auto-repeat investigation. Whether
+`Option+Forward-Delete`'s OS auto-repeat is as unreliable as bare
+`Forward-Delete` was hasn't been retested — worth confirming if `l`
+held down for repeated word-deletes ever misbehaves the same way.
+
 ## ASDF's j/k (previous-desktop/next-desktop) removed
 
 `ASDF` (Amplified Window Management) originally bound `j`/`k` to Raycast's
 `previous-desktop`/`next-desktop` window-management commands, alongside
 `h`/`l` for `previous-display`/`next-display`. Removed because virtual
 desktops (Spaces) aren't part of the actual workflow — the owner doesn't
-use them — so the binding had no real use. `h`/`l` (display switching) are
-kept. `j`/`k` are undefined in this tier for now.
+use them — so the binding had no real use. Display switching was kept, but
+has since moved to `i`/`o`, and `h`/`j`/`k`/`l` now all carry half-placement
+toggles (`left`/`bottom`/`top`/`right-half`) — see the Window Management
+entry under "Design rationale for specific keymaps" below.
 
 ## Design rationale for specific keymaps
 
@@ -311,11 +323,21 @@ slot is what let `Cmd+A` move to the auxiliary-key group instead (see
 below). Select-all's own `Cmd+A` prefix isn't rebound anywhere else yet.
 
 **`AsDf` (Amplified Delete) reuses the same building blocks as Navigation
-rather than inventing new ones.** `j`/`k` select a paragraph
+rather than inventing new ones — except `h`/`l`, which are a genuine
+single-keystroke native action instead.** `j`/`k` select a paragraph
 (`Shift+Option+Up/Down`, matching Navigation `ASdf`'s j/k) then delete;
 `u`/`i`/`o`/`p` select to a Cmd-boundary (matching Navigation `ASdf`'s u/i/
-o/p) then delete. `h`/`l` (`Cmd+Delete` / `Cmd+Forward-Delete`, word-level)
-were already consistent and untouched.
+o/p) then delete. `h`/`l` briefly deleted to the *line* boundary instead
+of by word (`h` was `Cmd+Delete`, `l` selected to line end with
+`Shift+Cmd+Right` before deleting) — a real inconsistency caught later:
+every other row in this family maps act-a alone to "Option flavor," and
+Cmd-boundary-delete didn't match that, despite already being documented
+elsewhere as "word delete." Fixed to `!Odelete_or_backspace`/
+`!Odelete_forward` — macOS's own native single-keystroke word-delete,
+which needs no select-then-delete step at all (see "Amplified Delete's
+`h`/`l` fixed from Cmd to Option" above for the full reasoning, including
+why `j`/`k`/`u`/`i`/`o`/`p`'s Shift-based select-then-delete wasn't
+changed alongside it).
 
 **`open_bracket`/`close_bracket`/`semicolon`/`quote` are a deliberately
 sparse auxiliary group, not a 16-tier system like h/j/k/l.** These four
@@ -343,11 +365,10 @@ never change them. Assignments:
 memory.** `j`/`k` used to duplicate `h`/`l`'s tab-cycling (`Ctrl+Tab`/
 `Shift+Ctrl+Tab`) — a "vertical tab switcher" feel that's intuitive in
 apps like Cursor, but ultimately judged to be a habit rather than a
-necessity. Reassigned to close tab (`Cmd+W`) / reopen closed tab
-(`Shift+Cmd+T`), which used to live on `i`/`o`. `i`/`o` now pin
-(`Shift+Opt+P`) / duplicate (`Shift+Opt+D`) the current tab — used often
-enough to earn dedicated keys rather than being folded into the tab-cycle
-duplication.
+necessity. Reassigned to close tab (`Cmd+W`) / new tab (`Cmd+T`). `i`/`o`
+now pin (`Shift+Opt+P`) / reopen the last closed tab (`Shift+Cmd+T`) —
+used often enough to earn dedicated keys rather than being folded into
+the tab-cycle duplication.
 
 **`aSDF`/`ASDF` (Window Management) split by operation scale, not by
 "which tier already had it."** `aSDF` (not amplified) does small nudge
@@ -396,9 +417,9 @@ Paste & Match Style (paste that also conforms formatting).
 The in/out reading is deliberately **not** applied everywhere — it is a
 fallback mnemonic for tiers where the usual "outer = bigger boundary"
 axis has nothing to grip. It fits `aSDf` (clipboard), `aSDF` (shrink /
-grow) and `AsDF` (hide / expose). It does not fit `asDF`'s pin/duplicate
-or `ASDF`'s previous/next display, and those are left alone rather than
-forced.
+grow) and `AsDF` (hide / expose). It does not fit `asDF`'s pin /
+reopen-closed-tab or `ASDF`'s previous/next display, and those are left
+alone rather than forced.
 
 **`Bra: Depiction` was removed; Bra is a single-purpose numpad layer.**
 Depiction reproduced Concepts' (an iPad drawing app) own internal
@@ -437,13 +458,16 @@ trigger with right-hand content**. Bra and Cket are both same-hand
 (trigger and keys under one hand, which is cramped); Asterisk is the only
 cross-hand layer, and it is the comfortable one.
 
-**Spacebar carries Shift, Caps Lock carries Command.** Both physical
-Shift keys are layer triggers (L-Shift → Bra, R-Shift → Cket) and
-L-Command triggers Asterisk, so neither role can sit on its own key.
-Spacebar is the only modifier position either thumb can reach, which
+**Spacebar carries Shift; the layer triggers give up their own roles.**
+Both physical Shift keys are layer triggers (L-Shift → Bra, R-Shift →
+Cket) and L-Command triggers Asterisk, so neither role can sit on its own
+key. Spacebar is the only modifier position either thumb can reach, which
 makes it the right home for Shift — a modifier that constantly needs to
 be pressed by the hand *not* typing the letter. Command is less
-hand-sensitive, so it goes to Caps Lock and R-Command.
+hand-sensitive, so at the time it went to Caps Lock and R-Command. It has
+since moved again — Command now lives on `fn`, physical L-Control and
+R-Command, and Caps Lock holds Ctrl instead; see "Command duty moved off
+Caps Lock onto `fn`/Left Control" below.
 
 R-Option used to be a second Shift, and was returned to a plain Option in
 the same pass. With Spacebar reachable by either thumb, a second Shift
@@ -464,17 +488,20 @@ Fixed by switching to `!E` and moving the modifier-qualified rules
 ahead of the plain ones in the rule list.
 
 The one exception is inside Asterisk, where Caps Lock is the Maccy
-trigger (`:!layer-ast` guards the Cmd rule). That guard is enough
-because Karabiner does not re-feed a manipulator's `to` output through
-its own manipulators — the same reason the older `caps_lock →
-right_shift` mapping never activated Cket. So Caps Lock emitting
-`left_command` cannot re-enter the L-Command/Asterisk rule.
+trigger — `:!layer-ast` guards Caps Lock's own modifier rule (Ctrl now,
+Command when this was written). That guard is enough because Karabiner
+does not re-feed a manipulator's `to` output through its own
+manipulators — the same reason the older `caps_lock → right_shift`
+mapping never activated Cket. The live case for that today is `fn` and
+physical L-Control: both emit `left_command`, and neither re-enters the
+L-Command/Asterisk trigger rule.
 
 **Escape carries destructive system actions; Caps Lock keeps the routine ones.**
 Both live inside Asterisk. Caps Lock's Act-gated family (voice input,
 screenshot variants, AirDrop) are things worth reaching for often, so
-they stayed on the key that's already the everyday Command. Sleep,
-restart, and log out are rare and irreversible, so they moved to a key
+they stayed on the key the left pinky already rests on — Caps Lock, which
+outside Asterisk is the everyday Ctrl. Sleep, restart, and log out are
+rare and irreversible, so they moved to a key
 that had zero prior identity (physical Escape is otherwise unused —
 Caps Lock's own alone-tap already produces `:escape`, but that's a
 different manipulator on a different `from` key). Shut down was dropped
@@ -673,7 +700,8 @@ installed from the Raycast Store:
 - `raycast/window-management` — all the `h/j/k/l/u/i/o/p` window
   moves/resizes, and the `[`/`]`/`;`/`'` sixth-of-screen placements
 - `raycast/raycast-notes` — `q` in the Asterisk suite
-- `raycast/emoji-symbols` — left_shift inside the Bra layer
+- `raycast/emoji-symbols` — left_shift in Asterisk's alternate symbol
+  row (`Asdf`, i.e. act-a held)
 - `mooxl/deepcast` — `t` (Japanese/English translation). This one is a
   third-party extension by an individual developer (not a
   Raycast-maintained core extension), so it carries more risk of
