@@ -734,6 +734,71 @@ romaji input, the original worry that ruled out the Spacebar-hold
 Numpad approach), before deciding whether it replaces, supplements, or
 gets abandoned relative to Bra's existing Numpad.
 
+## Terminal overrides: why they live in Karabiner, not in iTerm2
+
+`AbcAct.edn` carries a `Terminal: Asterisk Right Overrides` block that
+re-sends the text-editing tiers as shell control sequences whenever
+iTerm2 is frontmost (`:applications {:terminal [...]}`, compiled to a
+`frontmost_application_if` condition). The block sits *before*
+`Asterisk Right: Navigation Suite` because Karabiner fires only the
+first matching manipulator — the terminal-conditioned copies have to
+be reached first or the general ones win.
+
+**Why not translate on the iTerm2 side.** iTerm2 can remap keys per
+profile, so ⌘← could be turned into `^A` there instead. Three reasons
+it belongs here. It would be a two-stage conversion (Karabiner
+synthesises ⌘←, iTerm2 turns it back into `^A`) where one stage does.
+It would consume ⌘Z, killing iTerm2's own "Undo Close Session". And
+the tiers built out of multi-event `to` chains (the old line-deletes)
+arrive at iTerm2 already decomposed into separate events, so there is
+nothing left for a 1:1 key remap to match on.
+
+**Tiers with no shell equivalent send `vk_none` rather than nothing at
+all.** Omitting a rule does not mean "no output" — it means the
+general rule underneath still fires and sends a macOS editing key that
+the shell either ignores or, worse, mangles. `asDf`'s `u`/`i`/`o`/`p`
+end in a real `delete_or_backspace`, so leaving them unguarded would
+eat a character per press. Every cell the design deliberately gives up
+on (paragraph moves, multi-line deletes, duplicate/move line) is
+therefore spelled out with an explicit `:vk_none`.
+
+**`aSDf`'s `h`/`j`/`k`/`l` were the dangerous ones.** That tier is the
+Japanese IME's reconversion row, but what it actually sends is raw
+Control characters: `⌃J`, `⌃K`, `⌃⇧R`, `⌃;`. In a terminal those never
+reach an IME — they hit ZLE directly, and `⌃J` is `accept-line`, i.e.
+a half-typed `rm -rf …` runs with no confirmation. Suppressing these
+four is the reason the block exists at all; everything else is
+comfort.
+
+**Word-wise motions use ⌥-chords, not `ESC`-prefixed pairs.** The
+obvious encoding for `backward-word` is the two events `ESC` then `b`,
+which Karabiner can send as `[:escape :b]`. It is wrong here: per
+"`asDf`/`AsDf` delete on hold" above, only the *trailing* entry of a
+multi-entry `to` array survives OS auto-repeat, so holding the key
+types `bbbbb…` into the command line. Word motion and word delete are
+exactly the operations one holds down, so `Asdf`'s `h`/`l` and
+`AsDf`'s `l` send single `⌥b`/`⌥f`/`⌥d` chords instead, which repeat
+cleanly — at the cost of requiring iTerm2's **Left Option Key = Esc+**
+(Settings → Profiles → Keys). That setting is the one piece of this
+feature that does not live in this repo. `AsDf`'s `h` needs no such
+help: `backward-kill-word` is plain `^W`.
+
+**`^U` is left at zsh's default.** zsh binds `^U` to
+`kill-whole-line`, not bash's `backward-kill-line`, so `asDf`'s `i`
+deletes the whole line rather than back to its start as `MANUAL.md`
+describes. This is a deliberate choice, not an oversight — the whole
+line is what one actually wants when abandoning a command. A
+`bindkey '^U' backward-kill-line` in `.zshrc` would restore the
+MANUAL's semantics if that ever stops feeling right.
+
+**`.zshrc` dependency.** `asDf`'s `l` keeps its native
+`delete_forward`, which reaches zsh as `^[[3~` — a sequence zsh binds
+to nothing at all (bash's readline does bind it, which is the source
+of "it works in bash but not zsh" reports). It needs
+`bindkey '^[[3~' delete-char`. Do not lower `KEYTIMEOUT` and do not
+enable `set -o vi`; the emacs keymap is what every binding above
+assumes.
+
 ## External dependencies (this repo is public — beyond plain `open -a` app launches)
 
 This repo alone does not fully reproduce a working setup. Besides the
@@ -792,3 +857,12 @@ shortcut's construction lives in this repo — see the `:clip-airdrop`
 history earlier in this file for why UI-scripting and direct
 `NSSharingService` calls were tried and abandoned before landing on
 this.
+
+**iTerm2's own profile settings and `.zshrc` (the terminal override
+block).** Two settings outside this repo have to be in place before
+the `Terminal: Asterisk Right Overrides` rules behave as designed:
+iTerm2's **Left Option Key = Esc+** (Settings → Profiles → Keys →
+General), without which `Asdf`'s `h`/`l` and `AsDf`'s `l` type `∫`,
+`ƒ`, `∂` instead of moving and deleting by word; and
+`bindkey '^[[3~' delete-char` in `.zshrc`, without which `asDf`'s `l`
+(forward delete) does nothing. See "Terminal overrides" above.
