@@ -46,3 +46,7 @@ Issues and Pull Requests may not receive a response.
 
 - Separate concerns between the active configuration and the archive once the
   active layout stabilizes.
+
+## License
+
+[MIT](./LICENSE) — fork, adapt, and reuse freely.
