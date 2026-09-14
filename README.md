@@ -40,20 +40,17 @@ local clone. [`MANUAL.md`](./MANUAL.md) carries the same reference in Markdown
 
 ## Notes
 
-Implementation gotchas and past debugging history live in
-[`NOTES.md`](./NOTES.md) — worth a look before reworking anything involving
-held modifiers, multi-action `to` chains, or global app hotkeys.
+[`NOTES.md`](./NOTES.md) collects the Karabiner/Goku gotchas found while
+building this config — why multi-entry `to` arrays can't hold a modifier, why
+only the first matching manipulator fires, why `select_input_source` was
+abandoned for Japanese input, and more. Written for my future self, but most of
+it applies to any Goku setup.
 
 ## Contributing
 
 Forking and referencing this configuration is welcome. That said, this is a
 personal, individually-tuned setup rather than a general-purpose project, so
 Issues and Pull Requests may not receive a response.
-
-## Roadmap
-
-- Separate concerns between the active configuration and the archive once the
-  active layout stabilizes.
 
 ## License
 
