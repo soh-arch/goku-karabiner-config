@@ -3,11 +3,14 @@
 Goku (Karabiner-Elements) keymap configurations. This repository doubles as a
 backup of the configuration in active use and an archive of past drafts.
 
+**📖 [AbcAct Keymap Reference](https://soh-arch.github.io/goku-karabiner-config/)** —
+the illustrated manual for the active configuration.
+
 ## Files
 
 | File | Status | Notes |
 | --- | --- | --- |
-| [`AbcAct.edn`](./AbcAct.edn) | **Active** | Currently symlinked to `~/.config/karabiner.edn` and in daily use. Asterisk / Bra / Cket layer system with an Act-key axis. See [`docs/index.html`](./docs/index.html) for the illustrated reference manual, or [`MANUAL.md`](./MANUAL.md) for the same content in plain Markdown. |
+| [`AbcAct.edn`](./AbcAct.edn) | **Active** | Currently symlinked to `~/.config/karabiner.edn` and in daily use. Asterisk / Bra / Cket layer system with an Act-key axis. See the [reference manual](https://soh-arch.github.io/goku-karabiner-config/) for the illustrated version, or [`MANUAL.md`](./MANUAL.md) for the same content in plain Markdown. |
 | [`HySCOT.edn`](./HySCOT.edn) | Archived draft | SCOT Matrix layout (Shift/Cmd/Opt/Ctrl priority rows on the right hand). |
 | [`HyMeCO.edn`](./HyMeCO.edn) | Archived draft | Hyper/Meh two-tier layer system with semicolon/quote/slash sub-layers. |
 
@@ -24,28 +27,30 @@ goku
 
 ## Manual
 
-[`docs/index.html`](./docs/index.html) is a self-contained, single-file reference
-manual for `AbcAct.edn` — open it in a browser, or serve `docs/` via GitHub Pages.
-It covers every layer and all 16 Act tiers, with an interactive tier explorer,
-searchable tables, and light/dark themes. [`MANUAL.md`](./MANUAL.md) carries the
-same reference in Markdown (Japanese).
+**<https://soh-arch.github.io/goku-karabiner-config/>**
+
+The reference manual for `AbcAct.edn` is published via GitHub Pages. It covers
+every layer and all 16 Act tiers, with an interactive tier explorer, searchable
+tables, and light/dark themes (English).
+
+The page is a self-contained, single-file document — its source is
+[`docs/index.html`](./docs/index.html), which can also be opened straight from a
+local clone. [`MANUAL.md`](./MANUAL.md) carries the same reference in Markdown
+(Japanese).
 
 ## Notes
 
-Implementation gotchas and past debugging history live in
-[`NOTES.md`](./NOTES.md) — worth a look before reworking anything involving
-held modifiers, multi-action `to` chains, or global app hotkeys.
+[`NOTES.md`](./NOTES.md) collects the Karabiner/Goku gotchas found while
+building this config — why multi-entry `to` arrays can't hold a modifier, why
+only the first matching manipulator fires, why `select_input_source` was
+abandoned for Japanese input, and more. Written for my future self, but most of
+it applies to any Goku setup.
 
 ## Contributing
 
 Forking and referencing this configuration is welcome. That said, this is a
 personal, individually-tuned setup rather than a general-purpose project, so
 Issues and Pull Requests may not receive a response.
-
-## Roadmap
-
-- Separate concerns between the active configuration and the archive once the
-  active layout stabilizes.
 
 ## License
 
