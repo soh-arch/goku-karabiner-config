@@ -31,3 +31,7 @@ same debugging loop doesn't happen twice. Add new gotchas there too.
 
 Before every commit, run the EDN bracket-balance check on `AbcAct.edn`
 and, if `docs/index.html` changed, the HTML tag-balance check.
+
+If `docs/index.html` changed in a way that shows in the README screenshots,
+re-run `scripts/shoot-readme-images.py` and commit the regenerated
+`assets/*.png` alongside it — otherwise the README shows a stale manual.

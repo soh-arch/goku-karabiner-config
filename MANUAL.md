@@ -1,5 +1,8 @@
 # AbcAct 操作マニュアル
 
+> **図解版（英語）**: <https://soh-arch.github.io/goku-karabiner-config/>
+> 内容は同じですが、キーボード図・16ティアのインタラクティブな探索・全文検索がつきます。
+
 このマニュアルは、Goku/Karabiner-Elementsの設定ファイル(`AbcAct.edn`)がどう動くかを、
 技術的な仕組みを知らなくても使えるように、実際の操作と結果だけで説明したものです。
 
