@@ -437,6 +437,19 @@ window's presence to the opposite extreme of fullscreen. `ASDF`'s `i`/`o`
 (previous/next-display) replaced `make-smaller`/`make-larger`, which was
 redundant with `aSDF`'s own `i`/`o` already covering that.
 
+Note what this leaves: `Cmd+H` is bound in two tiers — `ASDF`'s `p`
+(above) and `AsDF`'s `i` (Hide app, in App Management). The `ASDF` one
+has the rationale just given, so the duplication is deliberate rather
+than a leftover, but `ASDF`'s `p` is also the only cell in either Window
+Management row that isn't a `:wm` call. Recorded, not resolved — whether
+that slot should keep `Cmd+H` is a design question, not a bug.
+
+(Repeated outputs are not in themselves a smell here: the terminal
+override block deliberately re-sends `Ctrl+U`/`Ctrl+K` across several
+tiers, and the Maccy layer shadows a whole family of `Cmd`-chords. What
+makes this one worth writing down is that both bindings mean the same
+thing to the user, not just to the OS.)
+
 **`aSDf`/`ASDf` h/j/k/l regrouped by family, not by directional shape.**
 The original assignment put commands with no left/down/up/right meaning
 (Undo/Redo, copy/paste, reconversion shortcuts) onto arrow-shaped keys
@@ -908,3 +921,53 @@ General), without which `Asdf`'s `h`/`l` and `AsDf`'s `l` type `∫`,
 `ƒ`, `∂` instead of moving and deleting by word; and
 `bindkey '^[[3~' delete-char` in `.zshrc`, without which `asDf`'s `l`
 (forward delete) does nothing. See "Terminal overrides" above.
+
+**A reassigned macOS shortcut (⌥⌃F1 / ⇧⌥⌃F1, `asDF`'s `u`/`p`).** These
+are macOS's own "move focus to the next/previous window in the
+application" actions — but not at their stock key combination. The stock
+chord could not be made to fire on this machine (a US-layout keyboard
+against a default binding that assumes JIS), so the action was reassigned
+to ⌥⌃F1 / ⇧⌥⌃F1 in System Settings → Keyboard → Keyboard Shortcuts.
+AbcAct only sends those key codes; without that reassignment on the
+machine, both keys silently do nothing. Same passive-listener shape as
+Amical/Maccy, except the listener is macOS itself. Note this also rules
+out "just send ⌘\` instead" as a simplification — ⌘\` is precisely the
+binding that would not fire.
+
+**macOS keyboard-navigation focus shortcuts (⌃F2 / ⌃F4 / ⌃F8, the Tab
+suite).** Focus-movement to the menu bar, the active/next window, and the
+status menus are macOS keyboard-navigation shortcuts, so they depend on
+that feature being enabled and on the F-row behaving as function keys.
+See "Ctrl+F2/F3/F5/F6/F8 …" earlier in this file for the history: most of
+that family did nothing at all for a long time, and F2/F8 started working
+on a later macOS without anything in this repo changing. Treat any of
+them going quiet again as an OS-side change, not a config regression.
+
+**Mission Control family (⌃↑ / ⌃↓ / ⌃← / ⌃→, `AsDF`).** All four are
+System Settings → Keyboard → Keyboard Shortcuts → Mission Control
+entries. ⌃↓ (Application windows) in particular is not reliably enabled
+by default. ⌃← / ⌃→ (move one space left/right) only do anything when
+more than one desktop exists — with a single desktop they are silent
+no-ops, which is easy to mistake for a broken binding.
+
+**Japanese input method (⌃⇧R / ⌃J / ⌃K / ⌃;, `aSDf`'s h/j/k/l).** The
+reconversion family is the Japanese IME's own set of Control shortcuts.
+They do something only while the Japanese input source is active and its
+Control-key shortcuts are enabled; under any other input source they fall
+through to whatever the focused app makes of a bare Control chord.
+
+**A Raycast *script command*, not an extension
+(`raycast://script-commands/open-abcact-manual`, `q` + act-a).** Every
+other Raycast call in this file targets a Store extension. This one
+targets a script command — a script that must exist in a directory
+Raycast is configured to scan. Nothing about it is version controlled
+here. It is also the only shell string in `AbcAct.edn` that does not go
+through `:templates`.
+
+**Input sources (`:english`, `:greek`, `:japanese_kana`).** The
+`:input-sources` map names US Extended and Greek by input-source ID, and
+R-Cmd's alone-action sends `japanese_kana`. All three need the
+corresponding source enabled in System Settings → Keyboard → Text Input →
+Input Sources; a source that isn't installed makes its switch a no-op.
+The design reasoning for these three is separate, earlier in this file —
+this entry is only about the setup they assume.
