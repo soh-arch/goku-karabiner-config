@@ -770,6 +770,25 @@ a half-typed `rm -rf …` runs with no confirmation. Suppressing these
 four is the reason the block exists at all; everything else is
 comfort.
 
+**Both Select tiers are suppressed, and `ASdf` had to be.** Selection
+has no counterpart on a shell line, so `aSdf` and `ASdf` were
+originally left alone on the assumption that Shift-arrows and
+⇧⌘-arrows would fall through to a terminal that ignores them. Half of
+that assumption was wrong: enumerating iTerm2's menu bar shows **⇧⌘↑**
+and **⇧⌘↓** bound to Edit → Previous/Next Mark, so `ASdf`'s `j`/`k`
+(and `u`/`p`, which send the same two chords) scrolled the viewport
+off the prompt instead of doing nothing. Nothing is destroyed, but a
+key pressed to select text silently jumping the screen is its own kind
+of wrong. All sixteen cells of the two tiers are now explicit
+`:vk_none`, which also means a future iTerm2 release binding ⇧⌘← or
+⇧⌘→ cannot reintroduce the same surprise.
+
+The same enumeration cleared every other chord the Asterisk tiers send
+into iTerm2. The remaining menu hits are all deliberate: ⌘X/⌘C/⌘V
+(`aSDf`'s clipboard row), ⌘A (the auxiliary keys' Select All), and
+⌘W/⌘T/⇧⌘T/⌘Q/⌘H (the `f` tiers' tab and app management). The control
+characters and Option chords this block introduces hit nothing.
+
 **Word-wise motions use ⌥-chords, not `ESC`-prefixed pairs.** The
 obvious encoding for `backward-word` is the two events `ESC` then `b`,
 which Karabiner can send as `[:escape :b]`. It is wrong here: per

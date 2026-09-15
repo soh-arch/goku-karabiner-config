@@ -247,6 +247,28 @@
     [:##o             :!Te [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f :terminal]]
     [:##p             :!SOperiod [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f :terminal]]
 
+    ;; ── aSdf ─────────────────────────
+    ;; Select
+    [:##h             :vk_none [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f :terminal]]
+    [:##j             :vk_none [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f :terminal]]
+    [:##k             :vk_none [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f :terminal]]
+    [:##l             :vk_none [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f :terminal]]
+    [:##u             :vk_none [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f :terminal]]
+    [:##i             :vk_none [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f :terminal]]
+    [:##o             :vk_none [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f :terminal]]
+    [:##p             :vk_none [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f :terminal]]
+
+    ;; ── ASdf ─────────────────────────
+    ;; Amplified Select
+    [:##h             :vk_none [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :!act-d :!act-f :terminal]]
+    [:##j             :vk_none [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :!act-d :!act-f :terminal]]
+    [:##k             :vk_none [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :!act-d :!act-f :terminal]]
+    [:##l             :vk_none [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :!act-d :!act-f :terminal]]
+    [:##u             :vk_none [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :!act-d :!act-f :terminal]]
+    [:##i             :vk_none [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :!act-d :!act-f :terminal]]
+    [:##o             :vk_none [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :!act-d :!act-f :terminal]]
+    [:##p             :vk_none [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :!act-d :!act-f :terminal]]
+
     ;; ── asDf ─────────────────────────
     ;; Delete
     [:##j             :vk_none [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :!act-f :terminal]]
