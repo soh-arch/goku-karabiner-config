@@ -1052,7 +1052,7 @@ body.searching .chapter-nav{ margin-top:0; }
             <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot on-d"></span><span class="dot"></span></span></span></td>
             <td class="row-label">Delete<span class="formula">Cmd+D →</span></td>
             <td>Char back</td><td>Line below</td><td>Line above</td><td>Char forward</td>
-            <td>Line, backwards (extended)</td><td>Line, backwards</td><td>Line, forwards</td><td>Line, forwards (extended)</td>
+            <td>Line, with indent</td><td>Line, keeps indent</td><td>Line, forwards</td><td>Line, forwards</td>
             <td class="dim">Select all</td><td class="dim">Select all</td><td class="dim">Select all</td><td class="dim">Select all</td>
           </tr>
           <tr>
@@ -1079,7 +1079,7 @@ body.searching .chapter-nav{ margin-top:0; }
         </tbody>
       </table>
     </div>
-    <p class="note">All four of Delete's <code>u i o p</code> remove the current line. <code>u</code> and <code>p</code> simply repeat the selection keystroke that <code>i</code> and <code>o</code> send once: where Home and End are absolute they behave identically, while in editors that toggle Home between the first non-whitespace character and column 0, <code>u</code> takes the leading indent with the line.</p>
+    <p class="note">All four of Delete's <code>u i o p</code> remove the current line; the pairs differ over indentation. <code>u</code> sends <kbd>⇧Home</kbd> twice where <code>i</code> sends it once, so in editors that toggle Home between the first non-whitespace character and column 0 — Cursor, VS Code — <code>u</code> takes the leading indent with the line and <code>i</code> leaves it standing. Where Home is absolute the two collapse to the same thing. End does not toggle, so <code>p</code> keeps the doubled shape only for symmetry with <code>u</code> and behaves like <code>o</code>.</p>
 
     <div class="sub-head">4.3 — Mouse pointer</div>
     <div class="table-wrap">

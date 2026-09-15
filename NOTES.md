@@ -183,7 +183,7 @@ array shape `j`/`k` already use rather than relying on a lone
 trailing key's native direction already matches their intent, so they
 were never affected.
 
-## `asDf`'s u/p send the selection key twice — reason unrecorded
+## `asDf`'s u/p send the selection key twice, to take the indent with the line
 
 `asDf` (Delete) binds all four of `u`/`i`/`o`/`p` to "delete the current
 line", and the outer pair differs from the inner pair only by sending the
@@ -196,20 +196,22 @@ o  [:home :!Send          :delete_or_backspace]
 p  [:home :!Send  :!Send  :delete_or_backspace]
 ```
 
-In a plain text field, Home and End are absolute, so the second press is
-a no-op and `u` behaves exactly like `i` (and `p` like `o`). In editors
-where Home toggles between the first non-whitespace character and column
-0 — VS Code and Cursor do this — the second `Shift+Home` extends the
-selection over the leading indentation, so `u` deletes the indent along
-with the line while `i` leaves it. End does not toggle the same way in
-those editors, which would make `p` and `o` identical there.
+**The doubled `Shift+Home` on `u` is deliberate, and Cursor is what it
+was written for.** Cursor (like VS Code) toggles Home between the first
+non-whitespace character and column 0, so one `Shift+Home` from the end
+of the line selects the text but stops at the indent; the second press
+extends over the indentation. `u` therefore deletes the line *including*
+its leading indent, and `i` deletes the line's text and leaves the indent
+standing. That distinction is the whole point of the pair.
 
-Whether that asymmetry is the intent (indent-aware delete on `u`, `p`
-kept doubled only for visual symmetry with `u`) or an oversight is **not
-recorded anywhere**, and is not being guessed at here. Flagged so the
-next person who wonders why the arrays differ doesn't have to re-derive
-this much. `MANUAL.md` used to show `u`/`p` as unbound, which is how this
-went unnoticed.
+The behavior is editor-dependent by nature: in a plain text field Home
+and End are absolute, the second press is a no-op, and `u` collapses to
+the same thing as `i`. End does not toggle the way Home does even in
+Cursor, so `p` and `o` are effectively the same key there — `p` keeps the
+doubled form for symmetry with `u` rather than for an effect of its own.
+
+Do not "simplify" these four arrays to a single shared shape. The
+duplication looks redundant and isn't.
 
 ## ASDF's j/k (previous-desktop/next-desktop) removed
 
