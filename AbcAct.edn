@@ -66,6 +66,10 @@
 ;; ### Cket Suites
 ;; Media: volume / brightness / illumination / playback
 
+;; ### Terminal Overrides (Asterisk Right, iTerm2 only)
+;; The text-editing tiers re-emit shell control sequences instead of
+;; macOS editing keys; tiers with no shell equivalent send nothing.
+
 ;; ### Escape Suite (Asterisk, destructive system actions)
 ;; asdf: Lock screen (no Act)
 ;; Asdf: Sleep
@@ -92,6 +96,10 @@
   :clip-airdrop "export TMP=\"$TMPDIR/clip.png\"; osascript -l JavaScript -e 'ObjC.import(\"AppKit\"); var pb = $.NSPasteboard.generalPasteboard; var data = pb.dataForType(\"public.png\"); if (data.isNil()) { Application(\"System Events\").displayDialog(\"No image available\", {buttons: [\"OK\"]}) } else { data.writeToFileAtomically($.NSProcessInfo.processInfo.environment.objectForKey(\"TMP\").js, true) }' && shortcuts run \"AirDrop Clip\" -i \"$TMP\"" ;; requires the "AirDrop Clip" Shortcuts.app shortcut, not tracked in this repo (see NOTES.md)
  }
 
+ :applications {
+  :terminal ["^com\\.googlecode\\.iterm2$"]
+ }
+
  :input-sources {
   :english {:input_source_id "com.apple.keylayout.USExtended"}
   :greek   {:input_source_id "com.apple.keylayout.Greek"}
@@ -104,16 +112,17 @@
  :main [
   {:des "Core: Layer Activators"
    :rules [
-    [:##left_shift    ["layer-bra" 1] [:!layer-ast :!layer-cket] {:afterup ["layer-bra" 0] :alone :grave_accent_and_tilde}] ;; ) Bra / alone `
-    [:##left_shift    ["layer-bra" 1] [:!layer-ast :layer-cket] {:afterup ["layer-bra" 0] :alone :!Sgrave_accent_and_tilde}] ;; Shift+L-Shift → ~
-    [:##right_shift   ["layer-cket" 1] [:!layer-ast :!layer-bra] {:afterup ["layer-cket" 0] :alone :backslash}] ;; ( Cket / alone \
-    [:##right_shift   ["layer-cket" 1] [:!layer-ast :layer-bra] {:afterup ["layer-cket" 0] :alone :!Sbackslash}] ;; Shift+R-Shift → |
+    [:##left_shift    ["layer-bra" 1] [:!layer-ast :!layer-cket] {:afterup ["layer-bra" 0] :alone :grave_accent_and_tilde}]
+    [:##left_shift    ["layer-bra" 1] [:!layer-ast :layer-cket] {:afterup ["layer-bra" 0] :alone :!Sgrave_accent_and_tilde}]
+    [:##right_shift   ["layer-cket" 1] [:!layer-ast :!layer-bra] {:afterup ["layer-cket" 0] :alone :backslash}]
+    [:##right_shift   ["layer-cket" 1] [:!layer-ast :layer-bra] {:afterup ["layer-cket" 0] :alone :!Sbackslash}]
     [:##left_option   :left_option nil {:alone :greek}]
-    [:##left_command  ["layer-ast" 1] nil {:afterup ["layer-ast" 0] :alone :english}]  ;; * Asterisk
-    [:##spacebar      :left_shift nil {:alone :spacebar}]  ;; SandS — the only modifier either hand can reach
-    [:##right_command :right_command nil {:alone :japanese_kana}] ;; kana on tap; see NOTES.md for why it is a plain toggle
+    [:##left_command  ["layer-ast" 1] nil {:afterup ["layer-ast" 0] :alone :english}]
+    [:##spacebar      :left_shift nil {:alone :spacebar}]
+    [:##right_command :right_command nil {:alone :japanese_kana}]
     [:##right_option  :right_option]
-    [:##fn            :left_control]
+    [:##fn            :left_command]
+    [:##left_control  :left_command]
    ]}
 
   {:des "Core: Accents"
@@ -132,12 +141,12 @@
     [:##caps_lock     :!SCT4 [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f]]
     [:##caps_lock     :!SC5 [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :!act-f]]
     [:##caps_lock     [:clip-airdrop] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :act-f]]
-    [:##caps_lock     :left_command [:!layer-ast] {:alone :escape}] ;; Cmd everywhere but Asterisk, where caps is the Maccy trigger
+    [:##caps_lock     :left_control [:!layer-ast] {:alone :escape}]
    ]}
 
   {:des "Core: Escape System Actions"
    :rules [
-    [:##escape        :!TCq [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f]] ;; lock screen, no Act
+    [:##escape        :!TCq [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f]]
     [:##escape        [:pwr "sleepnow"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
     [:##escape        [:sys-evt "restart"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f]]
     [:##escape        [:sys-evt "log out"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :!act-f]]
@@ -147,7 +156,7 @@
    :rules [
     ;; act-a is unreachable while Tab is held (both pinky), so this family
     ;; never uses it. See NOTES.md.
-    [:##tab           :!Tf4 [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f]] ;; next window
+    [:##tab           :!Tf4 [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f]]
     [:##tab           :!Tf2 [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :!act-f]]
     [:##tab           :!Tf8 [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :act-f]]
    ]}
@@ -163,8 +172,8 @@
     [:##f             ["act-f" 1] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a] {:afterup ["act-f" 0] :alone [:app "iTerm"]}]
     [:##q             [:ray "raycast/raycast-notes/raycast-notes"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f]]
     [:##q             "open 'raycast://script-commands/open-abcact-manual'" [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
-    [:##w             [:app "Obsidian"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f]]
-    [:##w             [:app "Bear"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
+    [:##w             [:app "Writer"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f]]
+    [:##w             [:app "Obsidian"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
     [:##e             [:app "Cursor"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f]]
     [:##e             [:app "Logseq"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
     [:##r             [:app "Claude"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f]]
@@ -220,6 +229,85 @@
     [:##z             :!Cz :layer-maccy]
    ]}
 
+  {:des "Terminal: Asterisk Right Overrides"
+   :rules [
+    ;; ── asdf ─────────────────────────
+    ;; Text Cursor
+    [:##i             :!Ta [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f :terminal]]
+    [:##o             :!Te [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f :terminal]]
+
+    ;; ── Asdf ─────────────────────────
+    ;; Amplified Text Cursor
+    [:##h             :!Ob [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f :terminal]] ;; ⌥ arrives as ESC only while iTerm2's Left Option Key is set to Esc+ (in iTerm2's own profile, not here)
+    [:##j             :!On [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f :terminal]]
+    [:##k             :!Op [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f :terminal]]
+    [:##l             :!Of [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f :terminal]]
+    [:##u             :!SOcomma [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f :terminal]]
+    [:##i             :!Ta [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f :terminal]]
+    [:##o             :!Te [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f :terminal]]
+    [:##p             :!SOperiod [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f :terminal]]
+
+    ;; ── aSdf ─────────────────────────
+    ;; Select
+    [:##h             :vk_none [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f :terminal]]
+    [:##j             :vk_none [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f :terminal]]
+    [:##k             :vk_none [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f :terminal]]
+    [:##l             :vk_none [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f :terminal]]
+    [:##u             :vk_none [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f :terminal]]
+    [:##i             :vk_none [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f :terminal]]
+    [:##o             :vk_none [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f :terminal]]
+    [:##p             :vk_none [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f :terminal]]
+
+    ;; ── ASdf ─────────────────────────
+    ;; Amplified Select
+    [:##h             :vk_none [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :!act-d :!act-f :terminal]]
+    [:##j             :vk_none [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :!act-d :!act-f :terminal]]
+    [:##k             :vk_none [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :!act-d :!act-f :terminal]]
+    [:##l             :vk_none [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :!act-d :!act-f :terminal]]
+    [:##u             :vk_none [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :!act-d :!act-f :terminal]]
+    [:##i             :vk_none [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :!act-d :!act-f :terminal]]
+    [:##o             :vk_none [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :!act-d :!act-f :terminal]]
+    [:##p             :vk_none [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :!act-d :!act-f :terminal]]
+
+    ;; ── asDf ─────────────────────────
+    ;; Delete
+    [:##j             :vk_none [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :!act-f :terminal]]
+    [:##k             :vk_none [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :!act-f :terminal]]
+    [:##u             :vk_none [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :!act-f :terminal]]
+    [:##i             :!Tu [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :!act-f :terminal]]
+    [:##o             :!Tk [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :!act-f :terminal]]
+    [:##p             :vk_none [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :!act-f :terminal]]
+
+    ;; ── AsDf ─────────────────────────
+    ;; Amplified Delete
+    [:##h             :!Tw [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :act-d :!act-f :terminal]]
+    [:##j             :vk_none [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :act-d :!act-f :terminal]]
+    [:##k             :vk_none [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :act-d :!act-f :terminal]]
+    [:##l             :!Od [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :act-d :!act-f :terminal]]
+    [:##u             :vk_none [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :act-d :!act-f :terminal]]
+    [:##i             :!Tu [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :act-d :!act-f :terminal]]
+    [:##o             :!Tk [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :act-d :!act-f :terminal]]
+    [:##p             :vk_none [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :act-d :!act-f :terminal]]
+
+    ;; ── aSDf ─────────────────────────
+    ;; Reconversion & Copy Paste
+    [:##h             :vk_none [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :act-d :!act-f :terminal]]
+    [:##j             :vk_none [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :act-d :!act-f :terminal]]
+    [:##k             :vk_none [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :act-d :!act-f :terminal]]
+    [:##l             :vk_none [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :act-d :!act-f :terminal]]
+
+    ;; ── ASDf ─────────────────────────
+    ;; Undo/Redo & Duplicate/Move Line
+    [:##h             :vk_none [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :!act-f :terminal]]
+    [:##j             :!TShyphen [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :!act-f :terminal]]
+    [:##k             :!Or [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :!act-f :terminal]]
+    [:##l             :vk_none [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :!act-f :terminal]]
+    [:##u             :vk_none [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :!act-f :terminal]]
+    [:##i             :vk_none [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :!act-f :terminal]]
+    [:##o             :vk_none [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :!act-f :terminal]]
+    [:##p             :vk_none [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :!act-f :terminal]]
+   ]}
+
   {:des "Asterisk Right: Navigation Suite"
    :rules [
     ;; ── asdf ─────────────────────────
@@ -271,22 +359,22 @@
     [:##h             :delete_or_backspace [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :!act-f]]
     [:##j             [:!Sdown_arrow :delete_forward] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :!act-f]]
     [:##k             [:!Sup_arrow :delete_or_backspace] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :!act-f]]
-    [:##l             [:!Sright_arrow :delete_forward] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :!act-f]]
-    [:##u             [:end :!Shome :!Shome :delete_or_backspace] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :!act-f]]
-    [:##i             [:end :!Shome :delete_or_backspace] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :!act-f]]
-    [:##o             [:home :!Send :delete_or_backspace] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :!act-f]]
-    [:##p             [:home :!Send :!Send :delete_or_backspace] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :!act-f]]
+    [:##l             :delete_forward [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :!act-f]]
+    [:##u             [:!Spage_up :delete_or_backspace] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :!act-f]]
+    [:##i             [:!Shome :delete_or_backspace] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :!act-f]]
+    [:##o             [:!Send :delete_forward] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :!act-f]]
+    [:##p             [:!Spage_down :delete_forward] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :!act-f]]
 
     ;; ── AsDf ─────────────────────────
     ;; Amplified Delete
-    [:##h             :!Cdelete_or_backspace [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :act-d :!act-f]]
+    [:##h             :!Odelete_or_backspace [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :act-d :!act-f]]
     [:##j             [:!SOdown_arrow :delete_forward] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :act-d :!act-f]]
     [:##k             [:!SOup_arrow :delete_or_backspace] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :act-d :!act-f]]
-    [:##l             [:!SCright_arrow :delete_forward] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :act-d :!act-f]]
+    [:##l             :!Odelete_forward [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :act-d :!act-f]]
     [:##u             [:!SCup_arrow :delete_or_backspace] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :act-d :!act-f]]
     [:##i             [:!SCleft_arrow :delete_or_backspace] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :act-d :!act-f]]
-    [:##o             [:!SCright_arrow :delete_or_backspace] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :act-d :!act-f]]
-    [:##p             [:!SCdown_arrow :delete_or_backspace] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :act-d :!act-f]]
+    [:##o             [:!SCright_arrow :delete_forward] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :act-d :!act-f]]
+    [:##p             [:!SCdown_arrow :delete_forward] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :act-d :!act-f]]
 
     ;; ── aSDf ─────────────────────────
     ;; Reconversion & Copy Paste
@@ -306,10 +394,10 @@
     [:##j             :!Cz [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :!act-f]]
     [:##k             :!SCz [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :!act-f]]
     [:##l             :!Cclose_bracket [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :!act-f]]
-    [:##u             :!SOup_arrow [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :!act-f]] ;; duplicate line up
-    [:##i             :!Oup_arrow [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :!act-f]] ;; move line up
-    [:##o             :!Odown_arrow [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :!act-f]] ;; move line down
-    [:##p             :!SOdown_arrow [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :!act-f]] ;; duplicate line down
+    [:##u             :!SOup_arrow [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :!act-f]]
+    [:##i             :!Oup_arrow [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :!act-f]]
+    [:##o             :!Odown_arrow [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :!act-f]]
+    [:##p             :!SOdown_arrow [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :!act-f]]
 
     ;; ── asdF ─────────────────────────
     ;; Mouse Cursor
@@ -358,12 +446,12 @@
     ;; ── asDF ─────────────────────────
     ;; Tab Management
     [:##h             :!STtab [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :act-f]]
-    [:##j             :!Cw [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :act-f]] ;; close tab
-    [:##k             :!Ct [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :act-f]] ;; new tab
+    [:##j             :!Cw [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :act-f]]
+    [:##k             :!Ct [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :act-f]]
     [:##l             :!Ttab [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :act-f]]
     [:##u             :!SOTf1 [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :act-f]]
     [:##i             :!SOp [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :act-f]] ;; pin tab; ⇧⌥P is bound to the Shortkeys Chrome extension's "Pin/unpin tab" action (see NOTES.md)
-    [:##o             :!SCt [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :act-f]] ;; reopen closed tab
+    [:##o             :!SCt [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :act-f]]
     [:##p             :!OTf1 [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :act-f]]
 
     ;; ── AsDF ─────────────────────────

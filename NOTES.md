@@ -183,41 +183,67 @@ array shape `j`/`k` already use rather than relying on a lone
 trailing key's native direction already matches their intent, so they
 were never affected.
 
-## `asDf`'s u/p send the selection key twice, to take the indent with the line
+**`AsDf`'s `l` changed again later, back to a lone key entry.** The
+Cmd-to-Option fix (see "Amplified Delete's `h`/`l` fixed from Cmd to
+Option" further below) replaced `l`'s select-then-delete array with a
+single `!Odelete_forward` chord, the same shape category (`to` is one
+entry, not an array) as the original `:delete_forward`-alone binding
+that triggered this whole auto-repeat investigation. Whether
+`Option+Forward-Delete`'s OS auto-repeat is as unreliable as bare
+`Forward-Delete` was hasn't been retested — worth confirming if `l`
+held down for repeated word-deletes ever misbehaves the same way.
 
-`asDf` (Delete) binds all four of `u`/`i`/`o`/`p` to "delete the current
-line", and the outer pair differs from the inner pair only by sending the
-selection key one extra time:
+## `asDf`'s u/i/o/p were a line-kill that collapsed into one action
 
-```
-u  [:end  :!Shome :!Shome :delete_or_backspace]
-i  [:end  :!Shome         :delete_or_backspace]
-o  [:home :!Send          :delete_or_backspace]
-p  [:home :!Send  :!Send  :delete_or_backspace]
-```
+`asDf` (Delete) used to bind `u`/`i`/`o`/`p` to hand-rolled sequences that
+jumped to one line boundary, shift-selected across to the other, and
+deleted: `[:end :!Shome :delete_or_backspace]` for `i`,
+`[:home :!Send :delete_or_backspace]` for `o`, and the same with the
+shift-select doubled for `u`/`p`. `MANUAL.md` described them as "delete
+the current line, backwards / forwards" and "delete the current line
+together with the one above / below."
 
-**The doubled `Shift+Home` on `u` is deliberate, and Cursor is what it
-was written for.** Cursor (like VS Code) toggles Home between the first
-non-whitespace character and column 0, so one `Shift+Home` from the end
-of the line selects the text but stops at the indent; the second press
-extends over the indentation. `u` therefore deletes the line *including*
-its leading indent, and `i` deletes the line's text and leaves the indent
-standing. That distinction is the whole point of the pair.
+Three things were wrong with that. `i` and `o` both leave the same final
+state — an emptied line with the cursor at its start — so they were one
+action on two keys. The doubled `Shift+Home`/`Shift+End` in `u`/`p` is a
+no-op in any app where Home/End already sit on the line boundary (at best
+it picks up leading indentation in VS Code-style smart-home apps), so it
+never reached the neighbouring line the docs promised, leaving all four
+keys on effectively one action. And the leading `end`/`home` throws away
+the caret's column before the delete, which is why nothing about these
+bindings composed with the rest of the tier.
 
-The behavior is editor-dependent by nature: in a plain text field Home
-and End are absolute, the second press is a no-op, and `u` collapses to
-the same thing as `i`. End does not toggle the way Home does even in
-Cursor, so `p` and `o` are effectively the same key there — `p` keeps the
-doubled form for symmetry with `u` rather than for an effect of its own.
+That last point is the real break. Everywhere else in this family a
+delete tier is its select tier plus a delete: `asDf`'s `h`/`j`/`k`/`l`
+are `aSdf`'s motions plus a delete, and `AsDf`'s whole row is `ASdf`'s
+motions plus a delete. `asDf`'s `u`/`i`/`o`/`p` were the only cells that
+opted out, which also contradicted `MANUAL.md`'s own claim that the
+delete tiers delete *using the boundary* the cursor tiers move to.
 
-Do not "simplify" these four arrays to a single shared shape. The
-duplication looks redundant and isn't.
+**Fix**: compose them from `aSdf` like every other cell —
+`[:!Spage_up :delete_or_backspace]`, `[:!Shome :delete_or_backspace]`,
+`[:!Send :delete_forward]`, `[:!Spage_down :delete_forward]`. The
+geometry (u = up, i = left, o = right, p = down) now survives into the
+delete tier, and act-a genuinely amplifies: `asDf` deletes to the
+Home/End/Page boundary, `AsDf` to the Cmd boundary (line start/end,
+document start/end).
 
-None of the above was written down anywhere until this entry. The shape
-of the arrays was the only record of it, and on its own that shape reads
-as an accident — which is how `MANUAL.md` came to list `u`/`p` as
-unbound. Recorded here from the author's own account of the intent, not
-recovered from the repo.
+Deleting a whole line outright is not lost — Bra Numpad's `q` still does
+it, and it keeps the `[:end :!Shome :delete_or_backspace]` implementation
+this change removed from `asDf`. Note that neither form removes the
+newline; both empty the line and leave it in place. If a true
+`Cmd+Shift+K`-style line delete is ever wanted on the Asterisk side, it
+belongs in a free slot rather than back in `u`/`i`/`o`/`p`, whose four
+cells carry the boundary geometry.
+
+**The same fix applied to `o`/`p` in both delete tiers.** The
+forward-direction rule established above — a forward delete must end its
+`to` array with `delete_forward`, or a held key repeats only the trailing
+`delete_or_backspace` and starts eating backwards — had been applied to
+`j` and `l` but never to `u`/`i`/`o`/`p`. `asDf`'s new `o`/`p` and
+`AsDf`'s `o`/`p` (`[:!SCright_arrow …]`, `[:!SCdown_arrow …]`) now end
+with `delete_forward`; `u`/`i` are backward-directed and correctly keep
+`delete_or_backspace`.
 
 ## ASDF's j/k (previous-desktop/next-desktop) removed
 
@@ -225,14 +251,41 @@ recovered from the repo.
 `previous-desktop`/`next-desktop` window-management commands, alongside
 `h`/`l` for `previous-display`/`next-display`. Removed because virtual
 desktops (Spaces) aren't part of the actual workflow — the owner doesn't
-use them — so the binding had no real use. `h`/`l` (display switching) are
-kept. `j`/`k` are undefined in this tier for now.
+use them — so the binding had no real use. Display switching was kept, but
+has since moved to `i`/`o`, and `h`/`j`/`k`/`l` now all carry half-placement
+toggles (`left`/`bottom`/`top`/`right-half`) — see the Window Management
+entry under "Design rationale for specific keymaps" below.
 
 ## Design rationale for specific keymaps
 
 Why individual bindings ended up where they did, beyond what's obvious from
 reading `AbcAct.edn` or `MANUAL.md`. Collected from design discussions so
 the reasoning doesn't have to be re-derived (or re-explained) later.
+
+**Amplified Delete's `h`/`l` fixed from Cmd to Option — the "one act,
+one modifier flavor" rule caught a real inconsistency.** Across the
+`h`/`j`/`k`/`l` navigation family, act-a alone always means "Option
+flavor" (Amplified Cursor: `⌥←`/`⌥→` word jump, `⌥↓`/`⌥↑` paragraph
+jump) and act-s alone always means "Shift flavor" (Select). Amplified
+Delete (`a`+`d`, act-a only) should follow the same flavor, but `h`/`l`
+were wired to `!Cdelete_or_backspace`/`[:!SCright_arrow
+:delete_forward]` — Cmd, not Option — while its own doc label already
+claimed "単語削除" (word delete). Fixed to `!Odelete_or_backspace`/
+`!Odelete_forward`, which is also how macOS natively spells "delete
+word backward/forward" as a single keystroke — no select-then-delete
+needed, unlike `j`/`k`/`u`/`i`/`o`/`p`.
+
+`j`/`k` (paragraph delete) and `u`/`i`/`o`/`p` (line/doc-boundary
+delete) keep their `Shift+Option`/`Shift+Cmd` chords unchanged. That
+Shift isn't "borrowed from act-s" — deleting a *span* (a paragraph, or
+everything up to a boundary) has no single-keystroke native action the
+way word-delete does, so it's implemented as select-then-delete, and
+building a selection at all requires Shift regardless of which act key
+triggered it. The user-facing flavor still matches its Cursor
+counterpart (paragraph delete pairs with paragraph jump, boundary
+delete pairs with boundary jump) — the rule is about the flavor being
+consistent from the user's perspective, not about which physical
+modifier keys happen to be involved in the underlying implementation.
 
 **`d` swaps to Raycast/Maccy, `r` takes Claude/Chatgpt (Asterisk Left).**
 `d` doubles as the `act-d` layer activator (held down, it changes what
@@ -273,12 +326,20 @@ source switch — a `select_input_source`-based replacement was tried and
 abandoned after it turned out to be unreliable in practice. See "Japanese
 input: `select_input_source` was tried and abandoned" above for the full
 story. `left_control` no longer has an alone-action (Greek moved to
-`left_option` instead) and is a plain modifier.
+`left_option` instead).
 
-**`fn` sends Left Control.** Plain remap, no alone-action — `fn` isn't
-used for anything else in this config, and physical Left Control was
-already a free, unmapped modifier (see above), so there's no conflict
-between the two keys now both producing the same output.
+**Command duty moved off Caps Lock onto `fn`/Left Control; Caps Lock's
+hold-action became Ctrl instead.** `fn` originally sent Left Control
+(a plain remap, since `fn` wasn't used for anything else and physical
+Left Control was already a free, unmapped modifier — see above). Both
+were then swapped to send Left Command instead, and Caps Lock's own
+held-output (previously Left Command, tap-alone still `:escape`)
+became Left Control. Net effect: Command is now reachable from three
+places (`fn`, physical Left Control, `right_command` held) and Ctrl
+moved onto Caps Lock's long-press, matching the classic Unix
+Caps-as-Ctrl convention. The `[:!layer-ast]` guard on the Caps Lock
+manipulator is unchanged — inside Asterisk, Caps Lock is still the
+Maccy trigger, untouched by this swap.
 
 **Maccy paste-by-index layer exists to keep thumb+pinky on Cmd+Tab.** The
 goal was pasting a specific clipboard history slot without ever letting go
@@ -314,11 +375,21 @@ slot is what let `Cmd+A` move to the auxiliary-key group instead (see
 below). Select-all's own `Cmd+A` prefix isn't rebound anywhere else yet.
 
 **`AsDf` (Amplified Delete) reuses the same building blocks as Navigation
-rather than inventing new ones.** `j`/`k` select a paragraph
+rather than inventing new ones — except `h`/`l`, which are a genuine
+single-keystroke native action instead.** `j`/`k` select a paragraph
 (`Shift+Option+Up/Down`, matching Navigation `ASdf`'s j/k) then delete;
 `u`/`i`/`o`/`p` select to a Cmd-boundary (matching Navigation `ASdf`'s u/i/
-o/p) then delete. `h`/`l` (`Cmd+Delete` / `Cmd+Forward-Delete`, word-level)
-were already consistent and untouched.
+o/p) then delete. `h`/`l` briefly deleted to the *line* boundary instead
+of by word (`h` was `Cmd+Delete`, `l` selected to line end with
+`Shift+Cmd+Right` before deleting) — a real inconsistency caught later:
+every other row in this family maps act-a alone to "Option flavor," and
+Cmd-boundary-delete didn't match that, despite already being documented
+elsewhere as "word delete." Fixed to `!Odelete_or_backspace`/
+`!Odelete_forward` — macOS's own native single-keystroke word-delete,
+which needs no select-then-delete step at all (see "Amplified Delete's
+`h`/`l` fixed from Cmd to Option" above for the full reasoning, including
+why `j`/`k`/`u`/`i`/`o`/`p`'s Shift-based select-then-delete wasn't
+changed alongside it).
 
 **`open_bracket`/`close_bracket`/`semicolon`/`quote` are a deliberately
 sparse auxiliary group, not a 16-tier system like h/j/k/l.** These four
@@ -346,23 +417,10 @@ never change them. Assignments:
 memory.** `j`/`k` used to duplicate `h`/`l`'s tab-cycling (`Ctrl+Tab`/
 `Shift+Ctrl+Tab`) — a "vertical tab switcher" feel that's intuitive in
 apps like Cursor, but ultimately judged to be a habit rather than a
-necessity. Reassigned to close tab (`Cmd+W`) / reopen closed tab
-(`Shift+Cmd+T`), which used to live on `i`/`o`. `i`/`o` took pin
-(`Shift+Opt+P`) / duplicate (`Shift+Opt+D`) the current tab — used often
-enough to earn dedicated keys rather than being folded into the tab-cycle
-duplication.
-
-A later pass (`750d8ed`) rearranged that again: reopen-closed-tab moved
-from `k` to `o`, new tab (`Cmd+T`) took `k`, and duplicate-tab
-(`Shift+Opt+D`) was dropped from the tier without being rebound anywhere
-— `Shift+Opt+D` no longer appears in this config at all. **The tier as it
-actually stands: `h` previous tab, `j` close tab, `k` new tab, `l` next
-tab, `u`/`p` same-app window cycling, `i` pin, `o` reopen closed tab.**
-
-That commit updated `AbcAct.edn`, `MANUAL.md` and `docs/index.html` but
-not this file, so the paragraph above described a layout that no longer
-existed for a while. Worth remembering that this file is the one that
-gets forgotten — it has no table to visibly contradict.
+necessity. Reassigned to close tab (`Cmd+W`) / new tab (`Cmd+T`). `i`/`o`
+now pin (`Shift+Opt+P`) / reopen the last closed tab (`Shift+Cmd+T`) —
+used often enough to earn dedicated keys rather than being folded into
+the tab-cycle duplication.
 
 **`aSDF`/`ASDF` (Window Management) split by operation scale, not by
 "which tier already had it."** `aSDF` (not amplified) does small nudge
@@ -379,13 +437,18 @@ window's presence to the opposite extreme of fullscreen. `ASDF`'s `i`/`o`
 (previous/next-display) replaced `make-smaller`/`make-larger`, which was
 redundant with `aSDF`'s own `i`/`o` already covering that.
 
-Note what this leaves: `Cmd+H` is bound twice in the Right block —
-`ASDF`'s `p` (above) and `AsDF`'s `i` (Hide app, in App Management). The
-`ASDF` one has the rationale just given, so the duplication is deliberate
-rather than a leftover, but it is the only output in the block bound in
-two places, and `ASDF`'s `p` is also the only cell in either Window
+Note what this leaves: `Cmd+H` is bound in two tiers — `ASDF`'s `p`
+(above) and `AsDF`'s `i` (Hide app, in App Management). The `ASDF` one
+has the rationale just given, so the duplication is deliberate rather
+than a leftover, but `ASDF`'s `p` is also the only cell in either Window
 Management row that isn't a `:wm` call. Recorded, not resolved — whether
 that slot should keep `Cmd+H` is a design question, not a bug.
+
+(Repeated outputs are not in themselves a smell here: the terminal
+override block deliberately re-sends `Ctrl+U`/`Ctrl+K` across several
+tiers, and the Maccy layer shadows a whole family of `Cmd`-chords. What
+makes this one worth writing down is that both bindings mean the same
+thing to the user, not just to the OS.)
 
 **`aSDf`/`ASDf` h/j/k/l regrouped by family, not by directional shape.**
 The original assignment put commands with no left/down/up/right meaning
@@ -419,9 +482,9 @@ Paste & Match Style (paste that also conforms formatting).
 The in/out reading is deliberately **not** applied everywhere — it is a
 fallback mnemonic for tiers where the usual "outer = bigger boundary"
 axis has nothing to grip. It fits `aSDf` (clipboard), `aSDF` (shrink /
-grow) and `AsDF` (hide / expose). It does not fit `asDF`'s pin/duplicate
-or `ASDF`'s previous/next display, and those are left alone rather than
-forced.
+grow) and `AsDF` (hide / expose). It does not fit `asDF`'s pin /
+reopen-closed-tab or `ASDF`'s previous/next display, and those are left
+alone rather than forced.
 
 **`Bra: Depiction` was removed; Bra is a single-purpose numpad layer.**
 Depiction reproduced Concepts' (an iPad drawing app) own internal
@@ -460,13 +523,16 @@ trigger with right-hand content**. Bra and Cket are both same-hand
 (trigger and keys under one hand, which is cramped); Asterisk is the only
 cross-hand layer, and it is the comfortable one.
 
-**Spacebar carries Shift, Caps Lock carries Command.** Both physical
-Shift keys are layer triggers (L-Shift → Bra, R-Shift → Cket) and
-L-Command triggers Asterisk, so neither role can sit on its own key.
-Spacebar is the only modifier position either thumb can reach, which
+**Spacebar carries Shift; the layer triggers give up their own roles.**
+Both physical Shift keys are layer triggers (L-Shift → Bra, R-Shift →
+Cket) and L-Command triggers Asterisk, so neither role can sit on its own
+key. Spacebar is the only modifier position either thumb can reach, which
 makes it the right home for Shift — a modifier that constantly needs to
 be pressed by the hand *not* typing the letter. Command is less
-hand-sensitive, so it goes to Caps Lock and R-Command.
+hand-sensitive, so at the time it went to Caps Lock and R-Command. It has
+since moved again — Command now lives on `fn`, physical L-Control and
+R-Command, and Caps Lock holds Ctrl instead; see "Command duty moved off
+Caps Lock onto `fn`/Left Control" below.
 
 R-Option used to be a second Shift, and was returned to a plain Option in
 the same pass. With Spacebar reachable by either thumb, a second Shift
@@ -487,17 +553,20 @@ Fixed by switching to `!E` and moving the modifier-qualified rules
 ahead of the plain ones in the rule list.
 
 The one exception is inside Asterisk, where Caps Lock is the Maccy
-trigger (`:!layer-ast` guards the Cmd rule). That guard is enough
-because Karabiner does not re-feed a manipulator's `to` output through
-its own manipulators — the same reason the older `caps_lock →
-right_shift` mapping never activated Cket. So Caps Lock emitting
-`left_command` cannot re-enter the L-Command/Asterisk rule.
+trigger — `:!layer-ast` guards Caps Lock's own modifier rule (Ctrl now,
+Command when this was written). That guard is enough because Karabiner
+does not re-feed a manipulator's `to` output through its own
+manipulators — the same reason the older `caps_lock → right_shift`
+mapping never activated Cket. The live case for that today is `fn` and
+physical L-Control: both emit `left_command`, and neither re-enters the
+L-Command/Asterisk trigger rule.
 
 **Escape carries destructive system actions; Caps Lock keeps the routine ones.**
 Both live inside Asterisk. Caps Lock's Act-gated family (voice input,
 screenshot variants, AirDrop) are things worth reaching for often, so
-they stayed on the key that's already the everyday Command. Sleep,
-restart, and log out are rare and irreversible, so they moved to a key
+they stayed on the key the left pinky already rests on — Caps Lock, which
+outside Asterisk is the everyday Ctrl. Sleep, restart, and log out are
+rare and irreversible, so they moved to a key
 that had zero prior identity (physical Escape is otherwise unused —
 Caps Lock's own alone-tap already produces `:escape`, but that's a
 different manipulator on a different `from` key). Shut down was dropped
@@ -678,6 +747,113 @@ romaji input, the original worry that ruled out the Spacebar-hold
 Numpad approach), before deciding whether it replaces, supplements, or
 gets abandoned relative to Bra's existing Numpad.
 
+## Terminal overrides: why they live in Karabiner, not in iTerm2
+
+`AbcAct.edn` carries a `Terminal: Asterisk Right Overrides` block that
+re-sends the text-editing tiers as shell control sequences whenever
+iTerm2 is frontmost (`:applications {:terminal [...]}`, compiled to a
+`frontmost_application_if` condition). The block sits *before*
+`Asterisk Right: Navigation Suite` because Karabiner fires only the
+first matching manipulator — the terminal-conditioned copies have to
+be reached first or the general ones win.
+
+**Why not translate on the iTerm2 side.** iTerm2 can remap keys per
+profile, so ⌘← could be turned into `^A` there instead. Three reasons
+it belongs here. It would be a two-stage conversion (Karabiner
+synthesises ⌘←, iTerm2 turns it back into `^A`) where one stage does.
+It would consume ⌘Z, killing iTerm2's own "Undo Close Session". And
+the tiers built out of multi-event `to` chains (the old line-deletes)
+arrive at iTerm2 already decomposed into separate events, so there is
+nothing left for a 1:1 key remap to match on.
+
+**Tiers with no shell equivalent send `vk_none` rather than nothing at
+all.** Omitting a rule does not mean "no output" — it means the
+general rule underneath still fires and sends a macOS editing key that
+the shell either ignores or, worse, mangles. `asDf`'s `u`/`i`/`o`/`p`
+end in a real `delete_or_backspace`, so leaving them unguarded would
+eat a character per press. Every cell the design deliberately gives up
+on — multi-line deletes, duplicate/move line, and the reconversion row
+below — is therefore spelled out with an explicit `:vk_none`.
+
+**`aSDf`'s `h`/`j`/`k`/`l` were the dangerous ones.** That tier is the
+Japanese IME's reconversion row, but what it actually sends is raw
+Control characters: `⌃J`, `⌃K`, `⌃⇧R`, `⌃;`. In a terminal those never
+reach an IME — they hit ZLE directly, and `⌃J` is `accept-line`, i.e.
+a half-typed `rm -rf …` runs with no confirmation. Suppressing these
+four is the reason the block exists at all; everything else is
+comfort.
+
+**Both Select tiers are suppressed, and `ASdf` had to be.** Selection
+has no counterpart on a shell line, so `aSdf` and `ASdf` were
+originally left alone on the assumption that Shift-arrows and
+⇧⌘-arrows would fall through to a terminal that ignores them. Half of
+that assumption was wrong: enumerating iTerm2's menu bar shows **⇧⌘↑**
+and **⇧⌘↓** bound to Edit → Previous/Next Mark, so `ASdf`'s `j`/`k`
+(and `u`/`p`, which send the same two chords) scrolled the viewport
+off the prompt instead of doing nothing. Nothing is destroyed, but a
+key pressed to select text silently jumping the screen is its own kind
+of wrong. All sixteen cells of the two tiers are now explicit
+`:vk_none`, which also means a future iTerm2 release binding ⇧⌘← or
+⇧⌘→ cannot reintroduce the same surprise.
+
+The same enumeration cleared every other chord the Asterisk tiers send
+into iTerm2. The remaining menu hits are all deliberate: ⌘X/⌘C/⌘V
+(`aSDf`'s clipboard row), ⌘A (the auxiliary keys' Select All), and
+⌘W/⌘T/⇧⌘T/⌘Q/⌘H (the `f` tiers' tab and app management). The control
+characters and Option chords this block introduces hit nothing.
+
+**Word-wise motions use ⌥-chords, not `ESC`-prefixed pairs.** The
+obvious encoding for `backward-word` is the two events `ESC` then `b`,
+which Karabiner can send as `[:escape :b]`. It is wrong here: per
+"`asDf`/`AsDf` delete on hold" above, only the *trailing* entry of a
+multi-entry `to` array survives OS auto-repeat, so holding the key
+types `bbbbb…` into the command line. Word motion and word delete are
+exactly the operations one holds down, so `Asdf`'s `h`/`l` and
+`AsDf`'s `l` send single `⌥b`/`⌥f`/`⌥d` chords instead, which repeat
+cleanly — at the cost of requiring iTerm2's **Left Option Key = Esc+**
+(Settings → Profiles → Keys). That setting is the one piece of this
+feature that does not live in this repo. `AsDf`'s `h` needs no such
+help: `backward-kill-word` is plain `^W`.
+
+**Undo, redo and history search reuse tiers the GUI already spends on
+the same ideas.** `ASDf`'s `j`/`k` are undo/redo everywhere else, and
+in a terminal they send `^_` and `⌥r`. `^_` — not the more commonly
+cited `^X u` — because both are bound to `undo` in zsh's emacs keymap
+and `^X u` would need a two-entry `to` array, which loses auto-repeat
+to the trailing-entry rule above; undo is very much a key one holds.
+Whether iTerm2 actually encodes `⌃⇧-` as 0x1f is the one thing here
+that can only be settled by typing it into `cat -v`; if it ever comes
+back empty, `⌃/` is the usual alternative encoding of the same byte.
+`⌥r` reaches zsh as `^[r`, which is already bound to `redo` — contrary
+to what one would guess from zsh's reputation of leaving redo
+unbound — so no `.zshrc` entry is needed.
+
+`Asdf`'s `j`/`k`, which have no paragraph to move by in a shell, take
+`⌥n`/`⌥p` (`history-search-forward`/`backward`): type `git c`, hold
+`Cmd+A` and press `k` to walk back through commands starting with
+those letters. This does not compete with fzf, which is already
+installed and owns `^R` (`fzf-history-widget`) — `^[p` is prefix
+matching from what is already on the line, `^R` is a fuzzy picker over
+everything. `Asdf`'s `u`/`p` complete the geometry with `⌥<`/`⌥>`
+(`beginning-of-buffer-or-history` / `end-of-buffer-or-history`), the
+same up/down sense they carry as PageUp/PageDown in the GUI tiers.
+
+**`^U` is left at zsh's default.** zsh binds `^U` to
+`kill-whole-line`, not bash's `backward-kill-line`, so `asDf`'s `i`
+deletes the whole line rather than back to its start as `MANUAL.md`
+describes. This is a deliberate choice, not an oversight — the whole
+line is what one actually wants when abandoning a command. A
+`bindkey '^U' backward-kill-line` in `.zshrc` would restore the
+MANUAL's semantics if that ever stops feeling right.
+
+**`.zshrc` dependency.** `asDf`'s `l` keeps its native
+`delete_forward`, which reaches zsh as `^[[3~` — a sequence zsh binds
+to nothing at all (bash's readline does bind it, which is the source
+of "it works in bash but not zsh" reports). It needs
+`bindkey '^[[3~' delete-char`. Do not lower `KEYTIMEOUT` and do not
+enable `set -o vi`; the emacs keymap is what every binding above
+assumes.
+
 ## External dependencies (this repo is public — beyond plain `open -a` app launches)
 
 This repo alone does not fully reproduce a working setup. Besides the
@@ -696,8 +872,8 @@ installed from the Raycast Store:
 - `raycast/window-management` — all the `h/j/k/l/u/i/o/p` window
   moves/resizes, and the `[`/`]`/`;`/`'` sixth-of-screen placements
 - `raycast/raycast-notes` — `q` in the Asterisk suite
-- `raycast/emoji-symbols` — left_shift in the Asterisk Bottom block's
-  `Asdf` tier (act-a held). Not in Bra, which has no emoji binding.
+- `raycast/emoji-symbols` — left_shift in Asterisk's alternate symbol
+  row (`Asdf`, i.e. act-a held)
 - `mooxl/deepcast` — `t` (Japanese/English translation). This one is a
   third-party extension by an individual developer (not a
   Raycast-maintained core extension), so it carries more risk of
@@ -736,6 +912,15 @@ shortcut's construction lives in this repo — see the `:clip-airdrop`
 history earlier in this file for why UI-scripting and direct
 `NSSharingService` calls were tried and abandoned before landing on
 this.
+
+**iTerm2's own profile settings and `.zshrc` (the terminal override
+block).** Two settings outside this repo have to be in place before
+the `Terminal: Asterisk Right Overrides` rules behave as designed:
+iTerm2's **Left Option Key = Esc+** (Settings → Profiles → Keys →
+General), without which `Asdf`'s `h`/`l` and `AsDf`'s `l` type `∫`,
+`ƒ`, `∂` instead of moving and deleting by word; and
+`bindkey '^[[3~' delete-char` in `.zshrc`, without which `asDf`'s `l`
+(forward delete) does nothing. See "Terminal overrides" above.
 
 **A reassigned macOS shortcut (⌥⌃F1 / ⇧⌥⌃F1, `asDF`'s `u`/`p`).** These
 are macOS's own "move focus to the next/previous window in the

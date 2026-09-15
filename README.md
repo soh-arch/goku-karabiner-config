@@ -1,13 +1,45 @@
 # goku-karabiner-config
 
-Goku (Karabiner-Elements) keymap configurations. This repository doubles as a
-backup of the configuration in active use and an archive of past drafts.
+Goku (Karabiner-Elements) keymap configurations for macOS. This repository doubles
+as a backup of the configuration in active use and an archive of past drafts.
 
-## Files
+<a href="https://soh-arch.github.io/goku-karabiner-config/">
+  <img src="assets/manual-hero.png" alt="The AbcAct keymap reference manual: a full keyboard diagram with the four Act keys a, s, d and f highlighted on the home row">
+</a>
+
+### [📖 Read the manual →](https://soh-arch.github.io/goku-karabiner-config/)
+
+## The Act system
+
+**Hold one key. The whole right hand changes meaning.**
+
+Three hold-keys open three layers. Inside the main layer, four Act keys under the
+left hand — `a` `s` `d` `f` — are held, not tapped, and stack freely into 16 tiers
+that each give the right hand a different, consistent meaning. The fingers never
+leave the home row.
+
+<a href="https://soh-arch.github.io/goku-karabiner-config/#act">
+  <img src="assets/act-tiers.png" alt="The 16 Act tiers, from the ground state through every combination of a, s, d and f — text cursor, select, delete, mouse cursor, drag and drop, tab, app and window management">
+</a>
+
+## Documentation
+
+- **[Reference manual](https://soh-arch.github.io/goku-karabiner-config/)** (English)
+  — illustrated and searchable, with an interactive explorer for all 16 tiers.
+  Published via GitHub Pages; the source is the single self-contained file
+  [`docs/index.html`](./docs/index.html).
+- **[`MANUAL.md`](./MANUAL.md)** (Japanese) — the same reference in plain Markdown.
+- **[`NOTES.md`](./NOTES.md)** (English) — the Karabiner/Goku gotchas found while
+  building this config: why multi-entry `to` arrays can't hold a modifier, why only
+  the first matching manipulator fires, why `select_input_source` was abandoned for
+  Japanese input, and more. Written for my future self, but most of it applies to
+  any Goku setup.
+
+## Keymaps
 
 | File | Status | Notes |
 | --- | --- | --- |
-| [`AbcAct.edn`](./AbcAct.edn) | **Active** | Currently symlinked to `~/.config/karabiner.edn` and in daily use. Asterisk / Bra / Cket layer system with an Act-key axis. See [`docs/index.html`](./docs/index.html) for the illustrated reference manual, or [`MANUAL.md`](./MANUAL.md) for the same content in plain Markdown. |
+| [`AbcAct.edn`](./AbcAct.edn) | **Active** | Currently symlinked to `~/.config/karabiner.edn` and in daily use. Asterisk / Bra / Cket layer system with an Act-key axis. |
 | [`HySCOT.edn`](./HySCOT.edn) | Archived draft | SCOT Matrix layout (Shift/Cmd/Opt/Ctrl priority rows on the right hand). |
 | [`HyMeCO.edn`](./HyMeCO.edn) | Archived draft | Hyper/Meh two-tier layer system with semicolon/quote/slash sub-layers. |
 
@@ -22,27 +54,12 @@ ln -s /path/to/AbcAct.edn ~/.config/karabiner.edn
 goku
 ```
 
-## Manual
-
-[`docs/index.html`](./docs/index.html) is a self-contained, single-file reference
-manual for `AbcAct.edn` — open it in a browser, or serve `docs/` via GitHub Pages.
-It covers every layer and all 16 Act tiers, with an interactive tier explorer,
-searchable tables, and light/dark themes. [`MANUAL.md`](./MANUAL.md) carries the
-same reference in Markdown (Japanese).
-
-## Notes
-
-Implementation gotchas and past debugging history live in
-[`NOTES.md`](./NOTES.md) — worth a look before reworking anything involving
-held modifiers, multi-action `to` chains, or global app hotkeys.
-
 ## Contributing
 
 Forking and referencing this configuration is welcome. That said, this is a
 personal, individually-tuned setup rather than a general-purpose project, so
 Issues and Pull Requests may not receive a response.
 
-## Roadmap
+## License
 
-- Separate concerns between the active configuration and the archive once the
-  active layout stabilizes.
+[MIT](./LICENSE) — fork, adapt, and reuse freely.
