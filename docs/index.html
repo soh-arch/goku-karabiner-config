@@ -992,9 +992,12 @@ body.searching .chapter-nav{ margin-top:0; }
         <h2>Right Hand — <code>h j k l</code>, <code>u i o p</code> &amp; <code>[ ] ; '</code></h2>
         <p class="sec-desc">
           <span class="key">h</span><span class="key">j</span><span class="key">k</span><span class="key">l</span> are
-          <strong>directions</strong> (left / down / up / right).
+          <strong>directions</strong> (left / down / up / right) in every tier.
           <span class="key">u</span><span class="key">i</span><span class="key">o</span><span class="key">p</span> are
-          <strong>boundaries</strong> (page up / line start / line end / page down). All 16 tiers keep that split.
+          <strong>boundaries</strong> (page up / line start / line end / page down) — but only in the cursor, select
+          and delete tiers. In the clipboard row, the line duplicate/move row, and the
+          <span class="key">f</span>-side rows (scroll, drag, tabs, windows) the four keys share no direction at all
+          and are repurposed row by row, so read the cells rather than the header.
           <span class="key">[</span><span class="key">]</span><span class="key">;</span><span class="key">'</span> are a
           <strong>support group</strong> in the last four columns — they only respond to
           <span class="key">d</span> and <span class="key">f</span>, so their value is the same on every row of a
@@ -1049,7 +1052,7 @@ body.searching .chapter-nav{ margin-top:0; }
             <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot on-d"></span><span class="dot"></span></span></span></td>
             <td class="row-label">Delete<span class="formula">Cmd+D →</span></td>
             <td>Char back</td><td>Line below</td><td>Line above</td><td>Char forward</td>
-            <td>Line + one above</td><td>Line, backwards</td><td>Line, forwards</td><td>Line + one below</td>
+            <td>Line, backwards (extended)</td><td>Line, backwards</td><td>Line, forwards</td><td>Line, forwards (extended)</td>
             <td class="dim">Select all</td><td class="dim">Select all</td><td class="dim">Select all</td><td class="dim">Select all</td>
           </tr>
           <tr>
@@ -1076,6 +1079,7 @@ body.searching .chapter-nav{ margin-top:0; }
         </tbody>
       </table>
     </div>
+    <p class="note">All four of Delete's <code>u i o p</code> remove the current line. <code>u</code> and <code>p</code> simply repeat the selection keystroke that <code>i</code> and <code>o</code> send once: where Home and End are absolute they behave identically, while in editors that toggle Home between the first non-whitespace character and column 0, <code>u</code> takes the leading indent with the line.</p>
 
     <div class="sub-head">4.3 — Mouse pointer</div>
     <div class="table-wrap">
