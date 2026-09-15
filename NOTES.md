@@ -183,6 +183,34 @@ array shape `j`/`k` already use rather than relying on a lone
 trailing key's native direction already matches their intent, so they
 were never affected.
 
+## `asDf`'s u/p send the selection key twice — reason unrecorded
+
+`asDf` (Delete) binds all four of `u`/`i`/`o`/`p` to "delete the current
+line", and the outer pair differs from the inner pair only by sending the
+selection key one extra time:
+
+```
+u  [:end  :!Shome :!Shome :delete_or_backspace]
+i  [:end  :!Shome         :delete_or_backspace]
+o  [:home :!Send          :delete_or_backspace]
+p  [:home :!Send  :!Send  :delete_or_backspace]
+```
+
+In a plain text field, Home and End are absolute, so the second press is
+a no-op and `u` behaves exactly like `i` (and `p` like `o`). In editors
+where Home toggles between the first non-whitespace character and column
+0 — VS Code and Cursor do this — the second `Shift+Home` extends the
+selection over the leading indentation, so `u` deletes the indent along
+with the line while `i` leaves it. End does not toggle the same way in
+those editors, which would make `p` and `o` identical there.
+
+Whether that asymmetry is the intent (indent-aware delete on `u`, `p`
+kept doubled only for visual symmetry with `u`) or an oversight is **not
+recorded anywhere**, and is not being guessed at here. Flagged so the
+next person who wonders why the arrays differ doesn't have to re-derive
+this much. `MANUAL.md` used to show `u`/`p` as unbound, which is how this
+went unnoticed.
+
 ## ASDF's j/k (previous-desktop/next-desktop) removed
 
 `ASDF` (Amplified Window Management) originally bound `j`/`k` to Raycast's
@@ -311,10 +339,22 @@ memory.** `j`/`k` used to duplicate `h`/`l`'s tab-cycling (`Ctrl+Tab`/
 `Shift+Ctrl+Tab`) — a "vertical tab switcher" feel that's intuitive in
 apps like Cursor, but ultimately judged to be a habit rather than a
 necessity. Reassigned to close tab (`Cmd+W`) / reopen closed tab
-(`Shift+Cmd+T`), which used to live on `i`/`o`. `i`/`o` now pin
+(`Shift+Cmd+T`), which used to live on `i`/`o`. `i`/`o` took pin
 (`Shift+Opt+P`) / duplicate (`Shift+Opt+D`) the current tab — used often
 enough to earn dedicated keys rather than being folded into the tab-cycle
 duplication.
+
+A later pass (`750d8ed`) rearranged that again: reopen-closed-tab moved
+from `k` to `o`, new tab (`Cmd+T`) took `k`, and duplicate-tab
+(`Shift+Opt+D`) was dropped from the tier without being rebound anywhere
+— `Shift+Opt+D` no longer appears in this config at all. **The tier as it
+actually stands: `h` previous tab, `j` close tab, `k` new tab, `l` next
+tab, `u`/`p` same-app window cycling, `i` pin, `o` reopen closed tab.**
+
+That commit updated `AbcAct.edn`, `MANUAL.md` and `docs/index.html` but
+not this file, so the paragraph above described a layout that no longer
+existed for a while. Worth remembering that this file is the one that
+gets forgotten — it has no table to visibly contradict.
 
 **`aSDF`/`ASDF` (Window Management) split by operation scale, not by
 "which tier already had it."** `aSDF` (not amplified) does small nudge
@@ -330,6 +370,14 @@ pairs with `p` (`Cmd+H`, hide): not stopping the app, but shrinking the
 window's presence to the opposite extreme of fullscreen. `ASDF`'s `i`/`o`
 (previous/next-display) replaced `make-smaller`/`make-larger`, which was
 redundant with `aSDF`'s own `i`/`o` already covering that.
+
+Note what this leaves: `Cmd+H` is bound twice in the Right block —
+`ASDF`'s `p` (above) and `AsDF`'s `i` (Hide app, in App Management). The
+`ASDF` one has the rationale just given, so the duplication is deliberate
+rather than a leftover, but it is the only output in the block bound in
+two places, and `ASDF`'s `p` is also the only cell in either Window
+Management row that isn't a `:wm` call. Recorded, not resolved — whether
+that slot should keep `Cmd+H` is a design question, not a bug.
 
 **`aSDf`/`ASDf` h/j/k/l regrouped by family, not by directional shape.**
 The original assignment put commands with no left/down/up/right meaning
@@ -640,7 +688,8 @@ installed from the Raycast Store:
 - `raycast/window-management` — all the `h/j/k/l/u/i/o/p` window
   moves/resizes, and the `[`/`]`/`;`/`'` sixth-of-screen placements
 - `raycast/raycast-notes` — `q` in the Asterisk suite
-- `raycast/emoji-symbols` — left_shift inside the Bra layer
+- `raycast/emoji-symbols` — left_shift in the Asterisk Bottom block's
+  `Asdf` tier (act-a held). Not in Bra, which has no emoji binding.
 - `mooxl/deepcast` — `t` (Japanese/English translation). This one is a
   third-party extension by an individual developer (not a
   Raycast-maintained core extension), so it carries more risk of
@@ -679,3 +728,53 @@ shortcut's construction lives in this repo — see the `:clip-airdrop`
 history earlier in this file for why UI-scripting and direct
 `NSSharingService` calls were tried and abandoned before landing on
 this.
+
+**A reassigned macOS shortcut (⌥⌃F1 / ⇧⌥⌃F1, `asDF`'s `u`/`p`).** These
+are macOS's own "move focus to the next/previous window in the
+application" actions — but not at their stock key combination. The stock
+chord could not be made to fire on this machine (a US-layout keyboard
+against a default binding that assumes JIS), so the action was reassigned
+to ⌥⌃F1 / ⇧⌥⌃F1 in System Settings → Keyboard → Keyboard Shortcuts.
+AbcAct only sends those key codes; without that reassignment on the
+machine, both keys silently do nothing. Same passive-listener shape as
+Amical/Maccy, except the listener is macOS itself. Note this also rules
+out "just send ⌘\` instead" as a simplification — ⌘\` is precisely the
+binding that would not fire.
+
+**macOS keyboard-navigation focus shortcuts (⌃F2 / ⌃F4 / ⌃F8, the Tab
+suite).** Focus-movement to the menu bar, the active/next window, and the
+status menus are macOS keyboard-navigation shortcuts, so they depend on
+that feature being enabled and on the F-row behaving as function keys.
+See "Ctrl+F2/F3/F5/F6/F8 …" earlier in this file for the history: most of
+that family did nothing at all for a long time, and F2/F8 started working
+on a later macOS without anything in this repo changing. Treat any of
+them going quiet again as an OS-side change, not a config regression.
+
+**Mission Control family (⌃↑ / ⌃↓ / ⌃← / ⌃→, `AsDF`).** All four are
+System Settings → Keyboard → Keyboard Shortcuts → Mission Control
+entries. ⌃↓ (Application windows) in particular is not reliably enabled
+by default. ⌃← / ⌃→ (move one space left/right) only do anything when
+more than one desktop exists — with a single desktop they are silent
+no-ops, which is easy to mistake for a broken binding.
+
+**Japanese input method (⌃⇧R / ⌃J / ⌃K / ⌃;, `aSDf`'s h/j/k/l).** The
+reconversion family is the Japanese IME's own set of Control shortcuts.
+They do something only while the Japanese input source is active and its
+Control-key shortcuts are enabled; under any other input source they fall
+through to whatever the focused app makes of a bare Control chord.
+
+**A Raycast *script command*, not an extension
+(`raycast://script-commands/open-abcact-manual`, `q` + act-a).** Every
+other Raycast call in this file targets a Store extension. This one
+targets a script command — a script that must exist in a directory
+Raycast is configured to scan. Nothing about it is version controlled
+here. It is also the only shell string in `AbcAct.edn` that does not go
+through `:templates`.
+
+**Input sources (`:english`, `:greek`, `:japanese_kana`).** The
+`:input-sources` map names US Extended and Greek by input-source ID, and
+R-Cmd's alone-action sends `japanese_kana`. All three need the
+corresponding source enabled in System Settings → Keyboard → Text Input →
+Input Sources; a source that isn't installed makes its switch a no-op.
+The design reasoning for these three is separate, earlier in this file —
+this entry is only about the setup they assume.
