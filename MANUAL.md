@@ -84,7 +84,7 @@ Spacebarが担っています。同様にCommandは、左CommandがAsteriskの�
 | `d`単体タップ | MdoroMacを起動 | カレンダーを起動 |
 | `f`単体タップ | Finderを起動 | iTermを起動 |
 | `q` | Raycastのメモ機能を起動 | このマニュアルを開く(Raycast経由) |
-| `w` | Obsidianを起動 | Bearを起動 |
+| `w` | Writerを起動 | Obsidianを起動 |
 | `e` | Cursorを起動 | Logseqを起動 |
 | `r` | Claudeを起動 | ChatGPTを起動 |
 | `t` | 選択中のテキストを日本語に翻訳(Raycast) | 選択中のテキストを英語に翻訳(Raycast) |
