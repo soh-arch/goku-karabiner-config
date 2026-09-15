@@ -759,8 +759,8 @@ general rule underneath still fires and sends a macOS editing key that
 the shell either ignores or, worse, mangles. `asDf`'s `u`/`i`/`o`/`p`
 end in a real `delete_or_backspace`, so leaving them unguarded would
 eat a character per press. Every cell the design deliberately gives up
-on (paragraph moves, multi-line deletes, duplicate/move line) is
-therefore spelled out with an explicit `:vk_none`.
+on — multi-line deletes, duplicate/move line, and the reconversion row
+below — is therefore spelled out with an explicit `:vk_none`.
 
 **`aSDf`'s `h`/`j`/`k`/`l` were the dangerous ones.** That tier is the
 Japanese IME's reconversion row, but what it actually sends is raw
@@ -782,6 +782,29 @@ cleanly — at the cost of requiring iTerm2's **Left Option Key = Esc+**
 (Settings → Profiles → Keys). That setting is the one piece of this
 feature that does not live in this repo. `AsDf`'s `h` needs no such
 help: `backward-kill-word` is plain `^W`.
+
+**Undo, redo and history search reuse tiers the GUI already spends on
+the same ideas.** `ASDf`'s `j`/`k` are undo/redo everywhere else, and
+in a terminal they send `^_` and `⌥r`. `^_` — not the more commonly
+cited `^X u` — because both are bound to `undo` in zsh's emacs keymap
+and `^X u` would need a two-entry `to` array, which loses auto-repeat
+to the trailing-entry rule above; undo is very much a key one holds.
+Whether iTerm2 actually encodes `⌃⇧-` as 0x1f is the one thing here
+that can only be settled by typing it into `cat -v`; if it ever comes
+back empty, `⌃/` is the usual alternative encoding of the same byte.
+`⌥r` reaches zsh as `^[r`, which is already bound to `redo` — contrary
+to what one would guess from zsh's reputation of leaving redo
+unbound — so no `.zshrc` entry is needed.
+
+`Asdf`'s `j`/`k`, which have no paragraph to move by in a shell, take
+`⌥n`/`⌥p` (`history-search-forward`/`backward`): type `git c`, hold
+`Cmd+A` and press `k` to walk back through commands starting with
+those letters. This does not compete with fzf, which is already
+installed and owns `^R` (`fzf-history-widget`) — `^[p` is prefix
+matching from what is already on the line, `^R` is a fuzzy picker over
+everything. `Asdf`'s `u`/`p` complete the geometry with `⌥<`/`⌥>`
+(`beginning-of-buffer-or-history` / `end-of-buffer-or-history`), the
+same up/down sense they carry as PageUp/PageDown in the GUI tiers.
 
 **`^U` is left at zsh's default.** zsh binds `^U` to
 `kill-whole-line`, not bash's `backward-kill-line`, so `asDf`'s `i`
