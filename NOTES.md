@@ -213,6 +213,12 @@ doubled form for symmetry with `u` rather than for an effect of its own.
 Do not "simplify" these four arrays to a single shared shape. The
 duplication looks redundant and isn't.
 
+None of the above was written down anywhere until this entry. The shape
+of the arrays was the only record of it, and on its own that shape reads
+as an accident — which is how `MANUAL.md` came to list `u`/`p` as
+unbound. Recorded here from the author's own account of the intent, not
+recovered from the repo.
+
 ## ASDF's j/k (previous-desktop/next-desktop) removed
 
 `ASDF` (Amplified Window Management) originally bound `j`/`k` to Raycast's
