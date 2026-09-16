@@ -497,12 +497,12 @@ That outer-equals-amplified relation is a property of *this* tier, not of
 the u/i/o/p axis in general — an earlier version of this paragraph claimed
 the latter, and it doesn't survive a look at the other tiers. It holds
 wherever the four keys form a graded family — this tier, and the
-cursor/select/delete tiers where `u`/`p` reach a document boundary and
-`i`/`o` the line boundary beside it. It simply does not apply where the
-four hold unrelated actions: `asdF` pairs horizontal scroll
-against vertical, `asDF` puts same-app window cycling on `u`/`p` and
-pin/reopen on `i`/`o`, `AsDF` pairs Spaces against hide/expose. Don't reach
-for it as a rule when filling a new slot.
+cursor/select/delete tiers where `u`/`p` reach the wider boundary (the page,
+or the document once act-a is held) and `i`/`o` the line boundary beside it.
+It simply does not apply where the four hold unrelated actions: `asdF` pairs
+horizontal scroll against vertical, `asDF` puts same-app window cycling on
+`u`/`p` and pin/reopen on `i`/`o`, `AsDF` pairs Spaces against hide/expose.
+Don't reach for it as a rule when filling a new slot.
 
 The in/out reading is deliberately **not** applied everywhere — it is a
 fallback mnemonic for tiers where the usual "outer = bigger boundary"

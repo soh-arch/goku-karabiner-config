@@ -31,10 +31,9 @@ a standalone action, use `u`/`i`/`o`/`p`.**
 
 Where a tier divides by granularity at all, **`u`/`i`/`o`/`p` takes the
 coarser unit**: `h`/`j`/`k`/`l` moves one character or one line while
-`u`/`i`/`o`/`p` reaches a page, a line boundary or the whole document;
-`h`/`j`/`k`/`l` nudges a window while `u`/`i`/`o`/`p` maximizes it;
-`h`/`j`/`k`/`l` acts on a tab while `u`/`i`/`o`/`p` acts on the window
-around it.
+`u`/`i`/`o`/`p` jumps to a boundary — the line's, the page's, or the
+document's; `h`/`j`/`k`/`l` nudges a window a short distance while
+`u`/`i`/`o`/`p` resizes it against the whole screen.
 
 Some tiers don't divide by granularity at all. There `u`/`i`/`o`/`p` may be
 used freely: a four-way set (scroll), a group of pairs (cut/copy/paste,
