@@ -121,8 +121,7 @@
     [:##spacebar      :left_shift nil {:alone :spacebar}]
     [:##right_command :right_command nil {:alone :japanese_kana}]
     [:##right_option  :right_option]
-    [:##fn            :left_command]
-    [:##left_control  :left_command]
+    [:##fn            :left_control]
    ]}
 
   {:des "Core: Accents"
@@ -141,7 +140,7 @@
     [:##caps_lock     :!SCT4 [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f]]
     [:##caps_lock     :!SC5 [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :act-d :!act-f]]
     [:##caps_lock     [:clip-airdrop] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :act-f]]
-    [:##caps_lock     :left_control [:!layer-ast] {:alone :escape}]
+    [:##caps_lock     :left_command [:!layer-ast] {:alone :escape}]
    ]}
 
   {:des "Core: Escape System Actions"

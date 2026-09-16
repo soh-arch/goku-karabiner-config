@@ -18,6 +18,11 @@ Two things are patched into a throwaway copy of the page before capture:
     at the top of the viewport — headless Chrome only captures the viewport,
     and `#act` in the URL doesn't reliably scroll it.
 
+  * The page's own theme script overrides `data-theme` on load from
+    localStorage, falling back to the OS `prefers-color-scheme`. Rewriting the
+    attribute is therefore not enough: the theme is pinned by stubbing the
+    localStorage read the page makes, so the shot is identical on any machine.
+
 Heights are hand-tuned to end on a clean boundary (the end of a card, not the
 middle of one). Re-check them after a layout change.
 """
@@ -52,6 +57,18 @@ NO_ANIMATION = """
 </style>
 """
 
+FORCE_THEME = """
+<script>
+(function () {
+  var theme = '%s';
+  var real = Storage.prototype.getItem;
+  Storage.prototype.getItem = function (key) {
+    return key === 'abcact-theme' ? theme : real.call(this, key);
+  };
+})();
+</script>
+"""
+
 KEEP_ONLY = """
 <script>
 window.addEventListener('load', function () {
@@ -68,7 +85,7 @@ window.addEventListener('load', function () {
 
 # (output name, theme, section to isolate — None keeps the whole page top, height in CSS px)
 SHOTS = [
-    ("manual-hero.png", "light", None, 1140),
+    ("manual-hero.png", "dark", None, 1140),
     ("act-tiers.png", "dark", "act", 1190),
 ]
 
@@ -87,7 +104,7 @@ def main():
 
     with tempfile.TemporaryDirectory() as tmp:
         for name, theme, section, height in SHOTS:
-            head = NO_ANIMATION + (KEEP_ONLY % section if section else "")
+            head = NO_ANIMATION + (FORCE_THEME % theme) + (KEEP_ONLY % section if section else "")
             html = source.replace('data-theme="light"', 'data-theme="%s"' % theme)
             html = html.replace("</head>", head + "</head>", 1)
 
