@@ -60,6 +60,29 @@ non-`fn` modifiers; `fn` last.
 never answers question 1. An action that still appears in a run keeps its
 key even when a Raycast equivalent exists.
 
+## Classify an action by what it acts on, never by its shortcut
+
+Which tier an action belongs to is decided by its *object* — the thing it
+opens, moves, closes or focuses. The keystroke that happens to reach it,
+and the family that keystroke belongs to, say nothing about that.
+
+The same trap as above, running the other way: there, an implementation
+detail was read as an answer about placement; here, it is read as an answer
+about kind.
+
+`⌃F3` is the worked example. It sits in the `⌃F` row with "move focus to
+the menu bar", "…to the window toolbar", "…to the status menus", so it is
+natural to file it as a focus-movement action and then find it has no
+opposite anywhere near it. But `⌃F3` points at the Dock, and the Dock is
+where apps are — Apple describes it as "a convenient place to access apps
+and features that you're likely to use every day," used to open apps and
+"switch between apps." Filed by its object it is an app-list surface, a
+permanently visible Launchpad, and it pairs cleanly against closing an app.
+Nothing changed except which question was asked first.
+
+When a placement looks arbitrary, check whether the action was classified
+by its object or by the row its keystroke lives in.
+
 ## Layer/condition guards
 
 Every rule scoped to a layer must spell out its full `:layer-*`/`:act-*`
