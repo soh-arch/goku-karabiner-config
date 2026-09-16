@@ -1004,17 +1004,24 @@ General), without which `Asdf`'s `h`/`l` and `AsDf`'s `l` type `∫`,
 `bindkey '^[[3~' delete-char` in `.zshrc`, without which `asDf`'s `l`
 (forward delete) does nothing. See "Terminal overrides" above.
 
-**A reassigned macOS shortcut (⌥⌃F1 / ⇧⌥⌃F1, `asDF`'s `u`/`p`).** These
-are macOS's own "move focus to the next/previous window in the
-application" actions — but not at their stock key combination. The stock
-chord could not be made to fire on this machine (a US-layout keyboard
-against a default binding that assumes JIS), so the action was reassigned
-to ⌥⌃F1 / ⇧⌥⌃F1 in System Settings → Keyboard → Keyboard Shortcuts.
-AbcAct only sends those key codes; without that reassignment on the
-machine, both keys silently do nothing. Same passive-listener shape as
-Amical/Maccy, except the listener is macOS itself. Note this also rules
-out "just send ⌘\` instead" as a simplification — ⌘\` is precisely the
-binding that would not fire.
+**A macOS shortcut that has to stay enabled (⌥⌃F1 / ⇧⌥⌃F1, `asDF`'s
+`u`/`p`).** These are macOS's own "Move focus to next window" action and
+its Shift-reversed form. The row lives in System Settings → Keyboard →
+Keyboard Shortcuts → Keyboard; AbcAct only sends the key codes, so the
+dependency is that row. Clear its checkbox and both keys silently do
+nothing — which has happened, and took a while to place because nothing
+in this repo had changed. Same passive-listener shape as Amical/Maccy,
+except the listener is macOS itself.
+
+Two things recorded here previously were wrong, and the correction
+matters more than the original claim. The action was *not* reassigned to
+⌥⌃F1 to work around ⌘\` failing on a US-layout keyboard: ⌘\` was tested
+directly on this machine and does cycle an app's windows, so sending it
+instead is a live option rather than a ruled-out one. And the row's value
+cannot be called "reassigned" or "stock" either way — pressing "Restore
+Defaults" on it repeatedly left it at ⌥⌃F1, then once set it to ⌘\`.
+**Treat this row's value as unreliable** and read it off System Settings
+before concluding the keymap is at fault.
 
 **macOS keyboard-navigation focus shortcuts (⌃F2 / ⌃F4 / ⌃F8, the Tab
 suite).** Focus-movement to the menu bar, the active/next window, and the
