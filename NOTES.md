@@ -245,6 +245,23 @@ forward-direction rule established above — a forward delete must end its
 with `delete_forward`; `u`/`i` are backward-directed and correctly keep
 `delete_or_backspace`.
 
+## The Drag tiers' u/i/o/p are unfinished, not a design
+
+`aSdF` and `ASdF` give `u`/`i`/`o`/`p` the same four directions as
+`h`/`j`/`k`/`l` at exactly half the travel — ±800 against ±1600, and ±1600
+against ±3200. `MANUAL.md` used to describe them as "微調整用", a fine
+adjustment.
+
+**Do not read that as a convention.** It was placeholder work: the tier was
+implemented to get the feature in, with `u`/`i`/`o`/`p` left to be revisited
+later, and the revisit never happened. Everywhere else in the config the
+outer four take the *coarser* unit, never the finer one (see the
+h/j/k/l-vs-u/i/o/p section in `CLAUDE.md`). These two tiers are the sole
+deviation, and they are a deviation, not a second rule.
+
+Recorded because the shape is easy to mistake for intent when reading the
+file cold — it looks deliberate and symmetric. It is neither.
+
 ## ASDF's j/k (previous-desktop/next-desktop) removed
 
 `ASDF` (Amplified Window Management) originally bound `j`/`k` to Raycast's
@@ -472,9 +489,20 @@ Note the earlier version of this file had the in/out reading backwards,
 describing paste as "in" from the document's point of view; the
 clipboard-centric reading is the one the layout now follows, because it is
 the one that has to be recalled at typing speed. The outer keys stay the
-amplified form of the inner key next to them, consistent with the rest of
-the u/i/o/p axis: `u` is Cut (copy that also removes the source), `p` is
-Paste & Match Style (paste that also conforms formatting).
+amplified form of the inner key next to them: `u` is Cut (copy that also
+removes the source), `p` is Paste & Match Style (paste that also conforms
+formatting).
+
+That outer-equals-amplified relation is a property of *this* tier, not of
+the u/i/o/p axis in general — an earlier version of this paragraph claimed
+the latter, and it doesn't survive a look at the other tiers. It holds
+wherever the four keys form a graded family — this tier, and the
+cursor/select/delete tiers where `u`/`p` reach the wider boundary (the page,
+or the document once act-a is held) and `i`/`o` the line boundary beside it.
+It simply does not apply where the four hold unrelated actions: `asdF` pairs
+horizontal scroll against vertical, `asDF` puts same-app window cycling on
+`u`/`p` and pin/reopen on `i`/`o`, `AsDF` pairs Spaces against hide/expose.
+Don't reach for it as a rule when filling a new slot.
 
 The in/out reading is deliberately **not** applied everywhere — it is a
 fallback mnemonic for tiers where the usual "outer = bigger boundary"
