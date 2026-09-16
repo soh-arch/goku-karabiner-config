@@ -354,6 +354,55 @@ section above). The two facts have separate causes, but they land on the
 same tier — the one place where `h`/`j`/`k`/`l` is the Japanese IME's own
 fixed set and the layout's rules have nothing to impose on.
 
+## Menu bar, status menus, toolbar: one bar, three owners
+
+The Tab key's three bindings (`⌃F4`, `⌃F2`, `⌃F8`) aim at three different
+objects, and the names Apple uses for them are easy to mix up. Getting the
+names wrong makes the placement look arbitrary when it isn't.
+
+**There is one menu bar, divided into areas.** It is not several bars.
+Apple's Human Interface Guidelines: "the macOS menu bar includes the Apple
+menu on the leading side and menu bar extras on the trailing side." The
+VoiceOver user guide names the areas: "The menu bar at the top of the
+screen contains several menus, such as the Apple menu, the app menu, and
+the status menus," and it describes arrow navigation as moving "among the
+menus in **an area of** the menu bar," with "a sound effect … when you're
+at the end of an area."
+
+**"Status bar" is overloaded, and Apple uses it both ways.** AppKit's class
+for the trailing area is literally `NSStatusBar`, and its `system` method
+"Returns the system-wide status bar located in the menu bar." But the HIG
+uses the same name for the bar along the *bottom* of a Finder window (⌘/).
+The unambiguous name for the trailing area is the one the shortcut itself
+uses — **status menus** ("Move focus to status menus") — and the items in
+it are status items or menu bar extras. `MANUAL.md` says ステータスメニュー,
+which is the right pick for that reason, not because "status bar" is wrong.
+
+Who owns each one decides which tier it belongs to:
+
+| target | Apple's API | owner | changes when |
+|---|---|---|---|
+| toolbar | `NSWindow.toolbar` — "The window's toolbar" | the window | you switch windows |
+| menu bar | `NSApplication.mainMenu` — the app menu | **the app** | you switch apps, not windows |
+| status menus | `NSStatusBar` — "status items displayed within the **system-wide** menu bar" | **each background process** | never; the front app is irrelevant |
+
+`NSToolbar` itself is described as managing "the space above your app's
+custom content and either below or integrated with the window's title
+bar" — so `⌃F5` aims inside a window, not at anything along the top of the
+screen, which the name "toolbar" can suggest.
+
+So the Tab family is a scope ladder that was built before it was named:
+
+    Tab        → ⌃F4   active or next window   — window
+    Tab + d    → ⌃F2   the menu bar            — app
+    Tab + f    → ⌃F8   the status menus        — above the app, system-wide
+
+Apple's own wording for the eight rows, worth quoting because two of them
+are commonly misremembered: `⌃F2` menu bar, `⌃F3` Dock, `⌃F4` "active
+window or next window", `⌃F5` "window toolbar", `⌃F6` "floating window"
+(**not** "next window" — that is `⌃F4`), `⇧⌃F6` "previous panel", `⌃F7`
+"change the way Tab moves focus", `⌃F8` "status menu in the menu bar".
+
 ## Design rationale for specific keymaps
 
 Why individual bindings ended up where they did, beyond what's obvious from
