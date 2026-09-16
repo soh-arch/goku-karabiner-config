@@ -29,15 +29,12 @@ meaning (`aSDf`'s four IME conversions, `ASDf`'s undo / redo / back /
 forward) still put four members of one family there. **If you want to place
 a standalone action, use `u`/`i`/`o`/`p`.**
 
-`u`/`i`/`o`/`p` usually carries a *different granularity* from the
-`h`/`j`/`k`/`l` of the same tier. Which way it goes depends on where
-`h`/`j`/`k`/`l` already sits:
-
-- In the text-editing tiers `h`/`j`/`k`/`l` holds the smallest unit (one
-  character, one line), so `u`/`i`/`o`/`p` takes the coarser one — page,
-  line boundary, whole document.
-- In the drag tiers `h`/`j`/`k`/`l`'s travel is already large, so
-  `u`/`i`/`o`/`p` takes the finer one — half the distance, for nudging.
+Where a tier divides by granularity at all, **`u`/`i`/`o`/`p` takes the
+coarser unit**: `h`/`j`/`k`/`l` moves one character or one line while
+`u`/`i`/`o`/`p` reaches a page, a line boundary or the whole document;
+`h`/`j`/`k`/`l` nudges a window while `u`/`i`/`o`/`p` maximizes it;
+`h`/`j`/`k`/`l` acts on a tab while `u`/`i`/`o`/`p` acts on the window
+around it.
 
 Some tiers don't divide by granularity at all. There `u`/`i`/`o`/`p` may be
 used freely: a four-way set (scroll), a group of pairs (cut/copy/paste,
