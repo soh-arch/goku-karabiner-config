@@ -312,6 +312,48 @@ their own:
 - An action with no direction of its own goes on `u`/`i`/`o`/`p`, the free
   side (`CLAUDE.md`).
 
+## What `act-a` amplifies is set by the tier, not fixed
+
+`act-a` has no single meaning. It is an operator that steps up whatever
+axis of "bigger" the tier's family already has — and which axis that is
+differs from family to family. Reading it as one fixed action ("act-a
+doubles things", "act-a widens the scope") gives the wrong expectation in
+most of the file.
+
+The eight `act-a` pairs in Asterisk Right, with the axis each one steps:
+
+| pair | family | axis `act-a` steps |
+|---|---|---|
+| `asdf` / `Asdf` | Text Cursor | **unit** — arrow → `⌥`arrow, one character to one word |
+| `aSdf` / `ASdf` | Select | **unit** — the same motions with Shift held |
+| `asDf` / `AsDf` | Delete | **unit** — `delete` → `⌥delete` |
+| `aSDf` / `ASDf` | Reconversion & Copy/Paste → Undo/Redo & Duplicate/Move Line | **none** |
+| `asdF` / `AsdF` | Mouse Cursor | **amount** — pointer `±1600` → `±3200`, scroll `±32` → `±64` |
+| `aSdF` / `ASdF` | Drag & Drop | **amount** — `±1600` → `±3200`, `±800` → `±1600` |
+| `asDF` / `AsDF` | Tab → App | **scope** — tab to app on `h`/`j`/`k`/`l`, window to Space on `u`/`p` |
+| `aSDF` / `ASDF` | Window geometry | **range** — placements that keep the window a desktop window → placements that leave that range |
+
+Three things follow.
+
+**An amplified tier does not need a family of its own.** Seven of the
+eight pairs carry one family twice, so the question when placing something
+new is usually not "what goes in `ASdF`" but "what is `aSdF`'s family, and
+what does one step up look like for it".
+
+**Whether two tiers share a binding is derivable, not arbitrary.** The two
+mouse tiers both put left/right click on the aux keys. That looks like an
+inconsistency until you notice `act-a` steps an *amount* there and a click
+has no amount — nothing for the operator to act on, so the binding is
+invariant under `act-a` and correctly appears in both. The same test
+applies anywhere the question comes up.
+
+**`aSDf` / `ASDf` is the one pair where `act-a` amplifies nothing**: the
+two tiers hold unrelated families. It is also the tier whose `h`/`l` and
+`j`/`k` are two of the three non-opposed pairs in the right block (see the
+section above). The two facts have separate causes, but they land on the
+same tier — the one place where `h`/`j`/`k`/`l` is the Japanese IME's own
+fixed set and the layout's rules have nothing to impose on.
+
 ## Design rationale for specific keymaps
 
 Why individual bindings ended up where they did, beyond what's obvious from
@@ -735,13 +777,23 @@ flaky here across versions — nothing in this repo changed to cause
 it), so `asDf` → Ctrl+F2 and `asdF` → Ctrl+F8 were added. `asdF`
 previously sent app-defined pane focus (`Ctrl+\``) instead, but that
 binding saw little use once `Cmd+J` covered the same need, so it was
-replaced rather than kept alongside Ctrl+F8. F5 (window toolbar) and F6
-(floating window) were later found to be live as well — both are enabled
-in System Settings and F5 does fire, though not dependably. Treat this
-whole family as flaky: a working state and a non-working state are each
-liable to be temporary, so a stale "it does nothing" note here is worth
-re-checking against the machine before acting on it. F3 (Dock) is still
-not wanted.
+replaced rather than kept alongside Ctrl+F8. Treat this whole family as
+flaky: a working state and a non-working state are each liable to be
+temporary, so a stale "it does nothing" note here is worth re-checking
+against the machine before acting on it.
+
+Two of the family fail for a reason that is not flakiness, and the
+distinction is worth keeping because both produce the same silence.
+Ctrl+F5 moves focus to `NSWindow.toolbar` — an `NSToolbar` object. An app
+that draws its own toolbar instead of using `NSToolbar` gives the shortcut
+nothing to focus, so it does nothing there and always will: Electron
+builds no `NSToolbar` (`native_window_mac.mm` names the class only in a
+fullscreen comment) and Chromium-based browsers draw their toolbar
+themselves. Ctrl+F6 targets the floating window — an `NSPanel`, which by
+design is kept out of the Window menu's list and only becomes key when
+needed, which is why a separate shortcut for it exists at all; in practice
+only some of Apple's own apps use panels. Re-test a shortcut that went
+quiet; don't re-test one that has no target.
 
 **Numpad-a is built on Goku's `:simlayers`, not the hand-rolled
 `["layer" 1]`/`:afterup` pattern used everywhere else.** Every other
