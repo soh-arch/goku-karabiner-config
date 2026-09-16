@@ -273,6 +273,45 @@ has since moved to `i`/`o`, and `h`/`j`/`k`/`l` now all carry half-placement
 toggles (`left`/`bottom`/`top`/`right-half`) — see the Window Management
 entry under "Design rationale for specific keymaps" below.
 
+## Why the right block is positional, not mnemonic
+
+**The whole `h`/`j`/`k`/`l` + `u`/`i`/`o`/`p` design rests on one
+preference: meaning is carried by position and direction, not by the
+initial letter of the action's name.** It is the same reason to prefer
+vim's motions over Emacs' named commands. Mnemonic bindings are cheap to
+learn and expensive to run — every press is a lookup from intention
+through a word to a letter. Positional bindings are the reverse: more to
+learn once, then no lookup at all.
+
+The difference only shows at length. One `⌘T` costs nothing. A
+tab-management run — close this, next, close, back, new, next, often past
+ten presses — is where recalling `t` / `w` / `⇧⌘T` at every step becomes
+the dominant cost, and where reaching for a direction instead is markedly
+lighter.
+
+That is what decides whether an action needs a key here at all. Actions
+that appear inside a run belong on the keymap. Actions invoked once, from
+outside any run, do not need a slot — a plain app shortcut or Raycast is
+the lighter path. The two are not exclusive: the same action can live in
+both and be used in different situations. "New tab" is one — mid-run it is
+`asDF`'s `k`; when opening a browser from some other app it is the Raycast
+Comet command. Neither displaces the other.
+
+Several rules elsewhere follow from this premise rather than standing on
+their own:
+
+- `h`/`j`/`k`/`l` carries only sets of four (`CLAUDE.md`). A direction
+  means nothing except against its three siblings.
+- Pairs are pairs of opposites, on both axes. Of the 64 pairs in the right
+  block (16 tiers × `h`/`l`, `j`/`k`, `i`/`o`, `u`/`p`), 61 are opposed.
+  The three that are not: `aSDf`'s `h`/`l` and `j`/`k` (the Japanese-input
+  tier, where macOS fixes which letter does what), and `asDF`'s `i`/`o`
+  (pin tab / reopen closed tab, which are unrelated). No pair anywhere
+  shares a direction and differs only in degree — such a pair would carry
+  no positional information, which is the only thing the layout is for.
+- An action with no direction of its own goes on `u`/`i`/`o`/`p`, the free
+  side (`CLAUDE.md`).
+
 ## Design rationale for specific keymaps
 
 Why individual bindings ended up where they did, beyond what's obvious from
@@ -443,13 +482,26 @@ bigger half-placement toggle (`left/bottom/top/right-half`, which cycles
 1/2 → 2/3 → 1/3 on repeated presses via Raycast's own toggle behavior) —
 moving a window a short distance is the smaller operation, cycling through
 size fractions is the bigger one, so amplified gets the bigger operation.
-This is also why `aSDF`'s `p` (`almost-maximize`, actually ~70% per the
-Raycast config) is described as pairing with `u` (`maximize`) — same
-u/p-as-a-pair pattern shows up in `ASDF`, where `u` (`toggle-fullscreen`)
-pairs with `p` (`Cmd+H`, hide): not stopping the app, but shrinking the
-window's presence to the opposite extreme of fullscreen. `ASDF`'s `i`/`o`
-(previous/next-display) replaced `make-smaller`/`make-larger`, which was
-redundant with `aSDF`'s own `i`/`o` already covering that.
+`ASDF`'s `i`/`o` (previous/next-display) replaced
+`make-smaller`/`make-larger`, which was redundant with `aSDF`'s own `i`/`o`
+already covering that.
+
+**`aSDF`'s `u`/`p` (`maximize` / `almost-maximize`) are opposites, not a
+difference of degree.** The Raycast command name is misleading:
+`almost-maximize` is ~70% per the Raycast config, noticeably smaller than
+its name suggests, and it is used here as the smallest size at which a
+window is still a window you work in — a window is not better for being
+smaller, and that floor is real. `maximize` is the other end of the same
+range. Both leave the window on the desktop, sharing it with everything
+else.
+
+`ASDF`'s `u`/`p` amplify that to the ends outside the range, which is what
+act-a means in this pair: `toggle-fullscreen` moves the window off the
+desktop into a Space of its own, and `Cmd+H` takes it out of view
+entirely — not stopping the app, but shrinking its presence to the
+opposite extreme of fullscreen. Adding `a` drops the condition "still a
+window on the desktop". Read `aSDF` and `ASDF` as range / beyond-range,
+not as large / larger.
 
 Note what this leaves: `Cmd+H` is bound in two tiers — `ASDF`'s `p`
 (above) and `AsDF`'s `i` (Hide app, in App Management). The `ASDF` one
@@ -683,8 +735,13 @@ flaky here across versions — nothing in this repo changed to cause
 it), so `asDf` → Ctrl+F2 and `asdF` → Ctrl+F8 were added. `asdF`
 previously sent app-defined pane focus (`Ctrl+\``) instead, but that
 binding saw little use once `Cmd+J` covered the same need, so it was
-replaced rather than kept alongside Ctrl+F8. F3 (Dock) is still not
-wanted.
+replaced rather than kept alongside Ctrl+F8. F5 (window toolbar) and F6
+(floating window) were later found to be live as well — both are enabled
+in System Settings and F5 does fire, though not dependably. Treat this
+whole family as flaky: a working state and a non-working state are each
+liable to be temporary, so a stale "it does nothing" note here is worth
+re-checking against the machine before acting on it. F3 (Dock) is still
+not wanted.
 
 **Numpad-a is built on Goku's `:simlayers`, not the hand-rolled
 `["layer" 1]`/`:afterup` pattern used everywhere else.** Every other
