@@ -403,6 +403,49 @@ window or next window", `⌃F5` "window toolbar", `⌃F6` "floating window"
 (**not** "next window" — that is `⌃F4`), `⇧⌃F6` "previous panel", `⌃F7`
 "change the way Tab moves focus", `⌃F8` "status menu in the menu bar".
 
+## Why the focus-jump shortcuts look unreliable
+
+`⌃F2` and `⌃F8` behave inconsistently enough that it is tempting to write
+the whole family off as broken, or to assume this repo is at fault. Most
+of it is explained, and none of the explanations are Karabiner or Goku.
+Keep them apart, because they want different responses.
+
+**`⌃F2` does nothing in Electron apps.** Not in native ones. This is
+electron#27268, "[OS X] Ctrl+F2 keyboard shortcut to focus menu bar does
+not work (accessibility)" — a regression of electron#6016, which had fixed
+it back in 2016. The issue names VS Code and Slack as affected in
+production, which means **Cursor is affected too**. The issue is closed,
+but the behaviour is what decides; re-test rather than trusting the state
+of the ticket. The only workaround reported there is indirect: press
+`⌃F3` (Dock) first, then `⌃F2`.
+
+**`⌃F2` in full screen moves focus to a menu bar that isn't shown.** Apple
+Support Communities thread 255522449: "it moves the focus to the menu bar
+without being able to see it" — arrow keys do then work, so the focus
+really did move. A recent macOS regression, reported by several people.
+
+**Together these two look like randomness.** One depends on which app is
+frontmost, the other on whether that app is in full screen. Neither is
+visible from the keyboard, so the same keystroke appears to work or not
+for no reason — which is where an impression of general flakiness comes
+from. When `⌃F2` seems dead, check those two before anything else.
+
+**The status menus don't wrap, and you can't get back to the icon row.
+That is structural, not a bug.** Arrow keys in the left area cycle Apple →
+… → Help → Apple because that area is one `NSMenu` owned by one process.
+The trailing area is N independent `NSStatusItem`s owned by N different
+processes, with no container to cycle within — which is also why `⌃F8`
+has to exist separately from `⌃F2`. Once one item's menu is open there is
+no parent row to pop back out to, so reaching another item's menu from
+there is not a thing the structure supports.
+
+**`⌃F8` landing on the first icon and then refusing to move is expected
+too.** Each item's owning process has to accept the key events itself.
+Apple's own `NSStatusBar` documentation sets the expectation: "Because
+there is limited space in which to display status items, status items are
+not guaranteed to be available at all times. For this reason, do not rely
+on them being available." A restart clearing it up fits that shape.
+
 ## Design rationale for specific keymaps
 
 Why individual bindings ended up where they did, beyond what's obvious from
