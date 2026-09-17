@@ -284,12 +284,13 @@ dependency on a browser extension — a listener that is neither macOS, nor
 an app's own hotkey, nor Raycast — so removing it took a whole category of
 external dependency out of the config.
 
-## previous-desktop / next-desktop, removed and then brought back
+## Moving a window to the next Space, removed and then brought back
 
-These two Raycast commands move the focused window to the neighbouring
-Space. They were originally on the amplified window tier's `j`/`k`,
-alongside `previous-display`/`next-display`, and were **removed** on the
-grounds that Spaces weren't part of the workflow.
+Raycast's Move to Previous/Next Space commands were originally on the
+amplified window tier's `j`/`k`, alongside Move to Previous/Next Display,
+and were **removed** on the grounds that Spaces weren't part of the
+workflow. (They were written with the wrong slugs at the time; see the
+external-dependency note on where slugs may come from.)
 
 They are back, on `ASdF`'s `u`/`p`, and the reason they fit now is not
 that the earlier judgement was wrong. The tier they sit in changed. `ASdF`
