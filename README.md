@@ -19,7 +19,7 @@ that each give the right hand a different, consistent meaning. The fingers never
 leave the home row.
 
 <a href="https://soh-arch.github.io/goku-karabiner-config/#act">
-  <img src="assets/act-tiers.png" alt="The 16 Act tiers, from the ground state through every combination of a, s, d and f — text cursor, select, delete, mouse cursor, drag and drop, tab, app and window management">
+  <img src="assets/act-tiers.png" alt="The 16 Act tiers, from the ground state through every combination of a, s, d and f — text cursor, select, delete, mouse cursor, placement, tab, window, app and space">
 </a>
 
 ## Documentation
@@ -46,8 +46,11 @@ leave the home row.
 ## Usage
 
 1. Install [Karabiner-Elements](https://karabiner-elements.pqrs.org/) and [Goku](https://github.com/yqrashawn/GokuRakuJoudo).
-2. Symlink the active file (`AbcAct.edn`) to `~/.config/karabiner.edn`.
-3. Run `goku` to compile it into a Karabiner-Elements complex modification.
+2. Make sure Karabiner has a profile named `Default` — Goku writes into that
+   one unless a config names another, and `AbcAct.edn` doesn't. With a
+   renamed or multi-profile setup, `goku` succeeds and nothing changes.
+3. Symlink the active file (`AbcAct.edn`) to `~/.config/karabiner.edn`.
+4. Run `goku` to compile it into a Karabiner-Elements complex modification.
 
 ```bash
 ln -s /path/to/AbcAct.edn ~/.config/karabiner.edn

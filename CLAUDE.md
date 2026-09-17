@@ -33,8 +33,8 @@ which side it belongs to first.
 Put **only actions that come as a set of four** on `h`/`j`/`k`/`l`. Never
 park a single self-contained action on one of them. This holds without
 exception across all 16 tiers: even the tiers carrying no directional
-meaning (`aSDf`'s four IME conversions, `ASDf`'s undo / redo / back /
-forward) still put four members of one family there. **If you want to place
+meaning (`aSDf`'s four IME conversions, `ASDf`'s outdent / undo / redo /
+indent) still put four members of one family there. **If you want to place
 a standalone action, use `u`/`i`/`o`/`p`.**
 
 Where a tier divides by granularity at all, **`u`/`i`/`o`/`p` takes the
