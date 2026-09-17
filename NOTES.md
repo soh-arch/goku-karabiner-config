@@ -360,7 +360,7 @@ The eight `act-a` pairs in Asterisk Right, with the axis each one steps:
 | `asdF` / `AsdF` | Mouse Cursor | **amount** — pointer `±1600` → `±3200`, scroll `±32` → `±64` |
 | `aSdF` / `ASdF` | Placement | **range** — placing the window within the screen → moving it to another screen or Space |
 | `asDF` / `AsDF` | Tab → Window | **object** — the thing every binding in the tier acts on |
-| `aSDF` / `ASDF` | App → Space | **object** — on `h`/`j`/`k`/`l`; the free side is layouts, which arrange windows rather than Spaces |
+| `aSDF` / `ASDF` | App → Space | **object** — throughout `aSDF`; in `ASDF` only on `h`/`j`/`k`/`l`, since its free side holds layouts, which arrange windows rather than Spaces |
 
 Three things follow.
 
