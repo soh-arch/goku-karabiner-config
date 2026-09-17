@@ -74,7 +74,9 @@ the shorthand only expands correctly as a manipulator's sole `to` value,
 and Goku rejects the file with "invalid to definition" if it's nested
 inside an array. (The raw-map-in-array shape itself is fine and already
 used elsewhere in this file, e.g. `[{:pkey :button1} {:mkey {:x
--1600}}]` in the Drag & Drop tiers.)
+-1600}}]`, which the retired Drag & Drop tiers used — see "The Drag tiers
+were retired" below for why that particular shape never did what it
+looked like it did.)
 
 **Why it didn't work.** `select_input_source` chooses which input source
 macOS treats as active, but doesn't touch Kotoeri's internal かな/英数
@@ -245,33 +247,59 @@ forward-direction rule established above — a forward delete must end its
 with `delete_forward`; `u`/`i` are backward-directed and correctly keep
 `delete_or_backspace`.
 
-## The Drag tiers' u/i/o/p are unfinished, not a design
+## The Drag tiers were retired, and why they never worked
 
-`aSdF` and `ASdF` give `u`/`i`/`o`/`p` the same four directions as
-`h`/`j`/`k`/`l` at exactly half the travel — ±800 against ±1600, and ±1600
-against ±3200. `MANUAL.md` used to describe them as "微調整用", a fine
-adjustment.
+`aSdF` and `ASdF` were Drag & Drop and Fast Drag & Drop until they were
+re-cut into Placement and Screen Placement. They are gone because they
+never worked, not because something better came along.
 
-**Do not read that as a convention.** It was placeholder work: the tier was
-implemented to get the feature in, with `u`/`i`/`o`/`p` left to be revisited
-later, and the revisit never happened. Everywhere else in the config the
-outer four take the *coarser* unit, never the finer one (see the
-h/j/k/l-vs-u/i/o/p section in `CLAUDE.md`). These two tiers are the sole
-deviation, and they are a deviation, not a second rule.
+Their `to` was an array — `[{:pkey :button1} {:mkey {:x -1600}}]` — and
+Karabiner holds only the *last* entry of a `to` array (see "`to` arrays
+don't hold modifiers" above). The button was therefore pressed and
+released immediately, and everything after that was the pointer moving
+with no button down. Dragging does work on the mouse tiers, by holding
+`;` and steering with `h`/`j`/`k`/`l`, which is why nothing was lost.
 
-Recorded because the shape is easy to mistake for intent when reading the
-file cold — it looks deliberate and symmetric. It is neither.
+Their `u`/`i`/`o`/`p` was also placeholder work worth recording, because
+the shape looks deliberate: it repeated `h`/`j`/`k`/`l`'s four directions
+at exactly half the travel — ±800 against ±1600, ±1600 against ±3200 —
+and `MANUAL.md` once called it 微調整用. Everywhere else in the config the
+outer four take the *coarser* unit, never the finer one. The tier was
+shipped to get the feature in with `u`/`i`/`o`/`p` left to revisit, and the
+revisit never happened. A symmetric-looking deviation is still a deviation.
 
-## ASDF's j/k (previous-desktop/next-desktop) removed
+## Tab pinning was dropped, and Shortkeys went with it
 
-`ASDF` (Amplified Window Management) originally bound `j`/`k` to Raycast's
-`previous-desktop`/`next-desktop` window-management commands, alongside
-`h`/`l` for `previous-display`/`next-display`. Removed because virtual
-desktops (Spaces) aren't part of the actual workflow — the owner doesn't
-use them — so the binding had no real use. Display switching was kept, but
-has since moved to `i`/`o`, and `h`/`j`/`k`/`l` now all carry half-placement
-toggles (`left`/`bottom`/`top`/`right-half`) — see the Window Management
-entry under "Design rationale for specific keymaps" below.
+`asDF`'s `i` used to send `⇧⌥P`, which did nothing on its own: it was a
+shortcut defined inside the Shortkeys Chrome extension's settings, bound to
+that extension's "Pin/unpin tab" action. Chrome has no native shortcut for
+pinning, so an extension was the only route.
+
+It was dropped when the tab tier was re-cut, and nothing replaced it. Two
+reasons, both worth recording because the binding worked and was not
+retired for being broken. It is a state toggle on one tab rather than
+something that appears inside a run of tab operations, which is the test
+for whether an action earns a slot here at all. And it was the file's only
+dependency on a browser extension — a listener that is neither macOS, nor
+an app's own hotkey, nor Raycast — so removing it took a whole category of
+external dependency out of the config.
+
+## Moving a window to the next Space, removed and then brought back
+
+Raycast's Move to Previous/Next Space commands were originally on the
+amplified window tier's `j`/`k`, alongside Move to Previous/Next Display,
+and were **removed** on the grounds that Spaces weren't part of the
+workflow. (They were written with the wrong slugs at the time; see the
+external-dependency note on where slugs may come from.)
+
+They are back, on `ASdF`'s `u`/`p`, and the reason they fit now is not
+that the earlier judgement was wrong. The tier they sit in changed. `ASdF`
+is Screen Placement: everything in it moves a window across a boundary it
+could not cross before, and the free side is a nested pair — the outer
+`u`/`p` move the window to the previous/next Space, the inner `i`/`o` to
+the previous/next display. The same operation that had no home under
+"window geometry" has an exact one under "move this window to the
+neighbouring container".
 
 ## Why the right block is positional, not mnemonic
 
@@ -303,12 +331,23 @@ their own:
 - `h`/`j`/`k`/`l` carries only sets of four (`CLAUDE.md`). A direction
   means nothing except against its three siblings.
 - Pairs are pairs of opposites, on both axes. Of the 64 pairs in the right
-  block (16 tiers × `h`/`l`, `j`/`k`, `i`/`o`, `u`/`p`), 61 are opposed.
-  The three that are not: `aSDf`'s `h`/`l` and `j`/`k` (the Japanese-input
-  tier, where macOS fixes which letter does what), and `asDF`'s `i`/`o`
-  (pin tab / reopen closed tab, which are unrelated). No pair anywhere
-  shares a direction and differs only in degree — such a pair would carry
-  no positional information, which is the only thing the layout is for.
+  block (16 tiers × `h`/`l`, `j`/`k`, `i`/`o`, `u`/`p`), 62 are settled and
+  60 of those are opposed. The two that are not are both on `aSDf`, the
+  Japanese-input tier, where macOS fixes which letter does what. The two
+  still unsettled are `ASDF`'s `i`/`o` and `u`/`p`, which hold Raycast
+  layouts — one is chosen, three are not, so whether they read as two
+  opposed pairs can't be checked yet. No pair anywhere shares a direction
+  and differs only in degree — such a pair would carry no positional
+  information, which is the only thing the layout is for.
+- The count includes one pair that a reader will otherwise stop at:
+  `aSDF`'s `i`/`o`, close-all-windows (`⌥⌘W`) against focus-the-Dock
+  (`⌃F3`). It reads as two unrelated actions until the Dock is filed by
+  what it is rather than by the shortcut that reaches it — an app list,
+  the always-visible form of Launchpad (see "Classify an action by what it
+  acts on" in `CLAUDE.md`). The tier's disciplined side and its aux key
+  hold the strong forms of that opposition, `⌘Q` against Launchpad; `i`/`o`
+  are the weaker forms of each, and the direction carries over: put the
+  app's windows away, or call the list of apps up.
 - An action with no direction of its own goes on `u`/`i`/`o`/`p`, the free
   side (`CLAUDE.md`).
 
@@ -329,9 +368,9 @@ The eight `act-a` pairs in Asterisk Right, with the axis each one steps:
 | `asDf` / `AsDf` | Delete | **unit** — `delete` → `⌥delete` |
 | `aSDf` / `ASDf` | Reconversion & Copy/Paste → Undo/Redo & Duplicate/Move Line | **none** |
 | `asdF` / `AsdF` | Mouse Cursor | **amount** — pointer `±1600` → `±3200`, scroll `±32` → `±64` |
-| `aSdF` / `ASdF` | Drag & Drop | **amount** — `±1600` → `±3200`, `±800` → `±1600` |
-| `asDF` / `AsDF` | Tab → App | **scope** — tab to app on `h`/`j`/`k`/`l`, window to Space on `u`/`p` |
-| `aSDF` / `ASDF` | Window geometry | **range** — placements that keep the window a desktop window → placements that leave that range |
+| `aSdF` / `ASdF` | Placement | **range** — placing the window within the screen → moving it to another screen or Space |
+| `asDF` / `AsDF` | Tab → Window | **object** — the thing every binding in the tier acts on |
+| `aSDF` / `ASDF` | App → Space | **object** — throughout `aSDF`; in `ASDF` only on `h`/`j`/`k`/`l`, since its free side holds layouts, which arrange windows rather than Spaces |
 
 Three things follow.
 
@@ -349,16 +388,18 @@ applies anywhere the question comes up.
 
 **`aSDf` / `ASDf` is the one pair where `act-a` amplifies nothing**: the
 two tiers hold unrelated families. It is also the tier whose `h`/`l` and
-`j`/`k` are two of the three non-opposed pairs in the right block (see the
+`j`/`k` are the only two non-opposed pairs in the right block (see the
 section above). The two facts have separate causes, but they land on the
 same tier — the one place where `h`/`j`/`k`/`l` is the Japanese IME's own
 fixed set and the layout's rules have nothing to impose on.
 
 ## Menu bar, status menus, toolbar: one bar, three owners
 
-The Tab key's three bindings (`⌃F4`, `⌃F2`, `⌃F8`) aim at three different
-objects, and the names Apple uses for them are easy to mix up. Getting the
-names wrong makes the placement look arbitrary when it isn't.
+Three shortcuts in the same family — `⌃F4`, `⌃F2`, `⌃F8` — aim at three
+different objects, and the names Apple uses for them are easy to mix up.
+Getting the names wrong makes the placement look arbitrary when it isn't.
+Two of the three are on the Tab key; the third is not, for the reason
+below.
 
 **There is one menu bar, divided into areas.** It is not several bars.
 Apple's Human Interface Guidelines: "the macOS menu bar includes the Apple
@@ -394,8 +435,18 @@ screen, which the name "toolbar" can suggest.
 So the Tab family is a scope ladder that was built before it was named:
 
     Tab        → ⌃F4   active or next window   — window
-    Tab + d    → ⌃F2   the menu bar            — app
-    Tab + f    → ⌃F8   the status menus        — above the app, system-wide
+    Tab + f    → ⌃F2   the menu bar            — app
+
+Holding `act-d` and pressing Tab now matches no rule at all, and what
+comes out is a bare Tab — not `Cmd+Tab`. The layer's trigger consumes
+L-Cmd rather than passing it through (its `to` is only the variable set),
+so there is no held modifier for the fall-through to pick up. Verified on
+hardware, because reading the file supports either answer.
+
+`⌃F8` used to sit on `Tab + d`, and moved to the `ASDF` tier's aux keys
+because that is where its owner sits: `NSStatusBar` is system-wide, so it
+belongs to the widest tier rather than to a key whose other bindings are
+the app's and the window's. Tab keeps the two neighbouring levels.
 
 Apple's own wording for the eight rows, worth quoting because two of them
 are commonly misremembered: `⌃F2` menu bar, `⌃F3` Dock, `⌃F4` "active
@@ -595,54 +646,69 @@ never change them. Assignments:
   `semicolon` specifically is one of the most reachable keys on the board
   (resting right under the home-row pinky), which is part of why Select
   All landed here rather than needing its own dedicated key elsewhere.
-- `act-d` off, `act-f` on (asdF/AsdF/aSdF/ASdF): left/right click
-  (`open_bracket`/`semicolon` = left, `close_bracket`/`quote` = right).
-- `act-d` on, `act-f` on (asDF/AsDF/aSDF/ASDF): window sixth placement
-  (unchanged from the original design).
+- `act-f` on: assigned per tier, so these rules carry the full four-flag
+  guard while the two blocks above cover four tiers each on two flags.
+  The mouse pair (asdF/AsdF) keeps left/right click — `open_bracket`/
+  `semicolon` left, `close_bracket`/`quote` right — and is the one place
+  two tiers agree, because `act-a` steps an *amount* there and a click has
+  no amount to step. Placement takes the sixth corners and Screen
+  Placement the quarter corners, act-a giving the larger fraction. The
+  four scope tiers each take a single action repeated across all four
+  keys, the way Select All does: new tab, Switch Windows, Launchpad, and
+  focus status menus.
 
-**`asDF` (Tab Management) j/k/i/o: distinct actions over shared muscle
-memory.** `j`/`k` used to duplicate `h`/`l`'s tab-cycling (`Ctrl+Tab`/
-`Shift+Ctrl+Tab`) — a "vertical tab switcher" feel that's intuitive in
-apps like Cursor, but ultimately judged to be a habit rather than a
-necessity. Reassigned to close tab (`Cmd+W`) / new tab (`Cmd+T`). `i`/`o`
-now pin (`Shift+Opt+P`) / reopen the last closed tab (`Shift+Cmd+T`) —
-used often enough to earn dedicated keys rather than being folded into
-the tab-cycle duplication.
+**`asDF` (Tab) j/k: distinct actions over shared muscle memory.** `j`/`k`
+used to duplicate `h`/`l`'s tab-cycling (`Ctrl+Tab`/`Shift+Ctrl+Tab`) — a
+"vertical tab switcher" feel that's intuitive in apps like Cursor, but
+ultimately judged to be a habit rather than a necessity. They are now
+close tab (`Cmd+W`) against reopen the last closed one (`Shift+Cmd+T`),
+which is what `j`/`k` carries wherever it isn't a plain direction: `j`
+takes the destructive side, `k` either undoes it or starts something new.
+Eleven of the sixteen tiers put a literal down/up on these two keys; of the
+five that don't, this reading covers `ASDf` (undo / redo), `AsDF` (close
+window / new window) and `aSDF` (quit app / cancel the switcher), and
+`aSDf` is the IME exception named above. New tab moved to the tier's aux keys, where the other three scope
+tiers also keep their way in.
 
-**`aSDF`/`ASDF` (Window Management) split by operation scale, not by
-"which tier already had it."** `aSDF` (not amplified) does small nudge
-moves (Raycast `move-left/down/up/right`); `ASDF` (amplified) does the
-bigger half-placement toggle (`left/bottom/top/right-half`, which cycles
-1/2 → 2/3 → 1/3 on repeated presses via Raycast's own toggle behavior) —
-moving a window a short distance is the smaller operation, cycling through
-size fractions is the bigger one, so amplified gets the bigger operation.
-`ASDF`'s `i`/`o` (previous/next-display) replaced
-`make-smaller`/`make-larger`, which was redundant with `aSDF`'s own `i`/`o`
-already covering that.
+**`aSdF`/`ASdF` (Placement) split by whether the window leaves the screen
+it is on.** `aSdF` places a window within its current screen: nudge moves
+on `h`/`j`/`k`/`l`, sizes on `u`/`i`/`o`/`p`. `ASdF` amplifies that past
+the screen's edge — half-placements on the disciplined side, and a free
+side nested by container size, the outer `u`/`p` moving the window to the
+previous/next Space and the inner `i`/`o` to the previous/next display.
 
-**`aSDF`'s `u`/`p` (`maximize` / `almost-maximize`) are opposites, not a
+**`aSdF`'s `u`/`p` (`maximize` / `almost-maximize`) are opposites, not a
 difference of degree.** The Raycast command name is misleading:
 `almost-maximize` is ~70% per the Raycast config, noticeably smaller than
 its name suggests, and it is used here as the smallest size at which a
 window is still a window you work in — a window is not better for being
 smaller, and that floor is real. `maximize` is the other end of the same
-range. Both leave the window on the desktop, sharing it with everything
-else.
+range.
 
-`ASDF`'s `u`/`p` amplify that to the ends outside the range, which is what
-act-a means in this pair: `toggle-fullscreen` moves the window off the
-desktop into a Space of its own, and `Cmd+H` takes it out of view
-entirely — not stopping the app, but shrinking its presence to the
-opposite extreme of fullscreen. Adding `a` drops the condition "still a
-window on the desktop". Read `aSDF` and `ASDF` as range / beyond-range,
-not as large / larger.
+**`launchpad` does not close on key_up, despite the family it belongs to.**
+Goku's tutorial documents `mission_control` as closing the window it just
+opened when the key is released, and prescribes a trailing `:vk_none` to
+swallow the real key_up. `launchpad` is declared alongside it as the same
+kind of Apple vendor key, so the same failure was expected inside a held
+layer. It does not happen: bare `:launchpad` on `aSDF`'s aux keys opens the
+Applications grid and it stays open, with the layer still held — far enough
+that `asdf`'s `h`/`j`/`k`/`l` then move the selection within it. Verified on
+hardware; no suppression trick is in the file, and none is needed.
 
-Note what this leaves: `Cmd+H` is bound in two tiers — `ASDF`'s `p`
-(above) and `AsDF`'s `i` (Hide app, in App Management). The `ASDF` one
-has the rationale just given, so the duplication is deliberate rather
-than a leftover, but `ASDF`'s `p` is also the only cell in either Window
-Management row that isn't a `:wm` call. Recorded, not resolved — whether
-that slot should keep `Cmd+H` is a design question, not a bug.
+**Fullscreen and `Cmd+M` are the window tier's two extremes.** They sit on
+`AsDF`'s `u`/`p` because both are `NSWindow` state: fullscreen leaves this
+window as the only thing on screen, `Cmd+M` takes it off the screen
+entirely. Neither is a placement, which is why they are not in the
+Placement tiers even though they change how much room a window takes.
+
+**`AsDF`'s `i`/`o` reach the windows `h`/`l` cannot.** `Cmd+` ` cycles the
+app's ordinary windows. Panels are deliberately excluded from that set —
+the HIG tells apps to keep them out of the Window menu's list, and
+`NSPanel` becomes key only when needed — so `Ctrl+F6` / `Shift+Ctrl+F6`
+is the only keyboard route to them. The disciplined side cycles within the
+set; the free side steps outside it. Panels are mostly an Apple-app thing
+in practice, and on this machine the pair does fire in some of Apple's own
+apps and is silent elsewhere — expected, not a fault.
 
 (Repeated outputs are not in themselves a smell here: the terminal
 override block deliberately re-sends `Ctrl+U`/`Ctrl+K` across several
@@ -685,17 +751,16 @@ the latter, and it doesn't survive a look at the other tiers. It holds
 wherever the four keys form a graded family — this tier, and the
 cursor/select/delete tiers where `u`/`p` reach the wider boundary (the page,
 or the document once act-a is held) and `i`/`o` the line boundary beside it.
-It simply does not apply where the four hold unrelated actions: `asdF` pairs
-horizontal scroll against vertical, `asDF` puts same-app window cycling on
-`u`/`p` and pin/reopen on `i`/`o`, `AsDF` pairs Spaces against hide/expose.
-Don't reach for it as a rule when filling a new slot.
+It simply does not apply where the four hold unrelated actions: `asdF`
+pairs horizontal scroll against vertical, `AsDF` pairs window state
+(fullscreen / `Cmd+M`) against panel focus. Don't reach for it as a rule
+when filling a new slot.
 
 The in/out reading is deliberately **not** applied everywhere — it is a
 fallback mnemonic for tiers where the usual "outer = bigger boundary"
-axis has nothing to grip. It fits `aSDf` (clipboard), `aSDF` (shrink /
-grow) and `AsDF` (hide / expose). It does not fit `asDF`'s pin /
-reopen-closed-tab or `ASDF`'s previous/next display, and those are left
-alone rather than forced.
+axis has nothing to grip. It fits `aSDf` (clipboard) and `aSdF` (shrink /
+grow). It does not fit `asDF`'s back/forward or `ASdF`'s previous/next
+display, and those are left alone rather than forced.
 
 **`Bra: Depiction` was removed; Bra is a single-purpose numpad layer.**
 Depiction reproduced Concepts' (an iPad drawing app) own internal
@@ -1090,13 +1155,15 @@ a specific third-party extension/shortcut that isn't version
 controlled here at all. Listed so a fresh clone doesn't leave someone
 wondering why a key silently does nothing.
 
-**Raycast + specific extensions (`:ray`/`:wm` templates, `open -g
-'raycast://...'`).** Raycast itself must be installed, and beyond that
-several rules call specific *extensions* that must be separately
-installed from the Raycast Store:
+**Raycast + specific extensions (`:ray-bg`/`:ray-fg`/`:wm` templates).**
+Raycast itself must be installed, and beyond that several rules call
+specific *extensions* that must be separately installed from the Raycast
+Store:
 
-- `raycast/window-management` — all the `h/j/k/l/u/i/o/p` window
-  moves/resizes, and the `[`/`]`/`;`/`'` sixth-of-screen placements
+- `raycast/window-management` — the Placement and Screen Placement tiers'
+  `h/j/k/l/u/i/o/p`, the sixth- and quarter-of-screen placements on
+  `[`/`]`/`;`/`'`, and the user-defined layouts on the `ASDF` tier
+- `raycast/navigation` — Switch Windows, on the `AsDF` tier's `[`/`]`/`;`/`'`
 - `raycast/raycast-notes` — `q` in the Asterisk suite
 - `raycast/emoji-symbols` — left_shift in Asterisk's alternate symbol
   row (`Asdf`, i.e. act-a held)
@@ -1105,6 +1172,19 @@ installed from the Raycast Store:
   Raycast-maintained core extension), so it carries more risk of
   disappearing or changing behavior out from under this config than
   the others.
+
+There are two Raycast templates, not one plus a variant. `:ray-bg` runs
+`open -g`, `:ray-fg` runs plain `open`. Neither is the default form — the
+name says which one a call site wants.
+
+`-g` is documented by Apple as doing one thing: "do not bring the
+application to the foreground." It says nothing about suppressing a
+command's own interface, and **nothing here behaves as if it did.** Every
+`:ray-bg` call site in this file presents UI — Raycast Notes, DeepCast,
+emoji search — and all of them have always shown it. `:ray-fg` was added
+with Switch Windows because plain `open` is the more obvious form for it,
+not to work around a failure. If a Raycast command ever does come up empty
+under `-g`, `:ray-fg` is where to move it, but that has not happened.
 
 **Amical (`f13`, passive hotkey listener).** AbcAct just sends the
 `f13` key code on Caps Lock + act-a; Amical (a voice-input app) is
@@ -1116,17 +1196,6 @@ even detect that Amical is installed and configured to match.
 Caps Lock while inside the Maccy paste layer sends `f16`, which only
 does anything because Maccy's own settings are configured to use
 `f16` as its popup hotkey.
-
-**Shortkeys Chrome extension (`i` inside Tab Management, ⇧⌥P → pin
-tab).** Chrome has no built-in keyboard shortcut for pinning a tab
-(unlike ⇧⌘T for reopening a closed tab, which is native and needs no
-extension). ⇧⌥P is a custom shortcut the user defined *inside* the
-"Shortkeys (Custom Keyboard Shortcuts)" extension's own settings,
-bound to its "Pin/unpin tab" action — same passive-listener
-relationship as Amical/Maccy above, except the listener here is a
-browser extension rather than a standalone app, and the shortcut
-itself (not just the app) is a user choice with no fixed default to
-document.
 
 **Shortcuts.app — the "AirDrop Clip" shortcut (`:clip-airdrop`,
 active call via `shortcuts run`).** Unlike Amical/Maccy above (which
@@ -1148,40 +1217,58 @@ General), without which `Asdf`'s `h`/`l` and `AsDf`'s `l` type `∫`,
 `bindkey '^[[3~' delete-char` in `.zshrc`, without which `asDf`'s `l`
 (forward delete) does nothing. See "Terminal overrides" above.
 
-**A macOS shortcut that has to stay enabled (⌥⌃F1 / ⇧⌥⌃F1, `asDF`'s
-`u`/`p`).** These are macOS's own "Move focus to next window" action and
-its Shift-reversed form. The row lives in System Settings → Keyboard →
-Keyboard Shortcuts → Keyboard; AbcAct only sends the key codes, so the
-dependency is that row. Clear its checkbox and both keys silently do
-nothing — which has happened, and took a while to place because nothing
-in this repo had changed. Same passive-listener shape as Amical/Maccy,
-except the listener is macOS itself.
+**Same-app window cycling sends `Cmd+` ` directly, and that removed a
+dependency.** `AsDF`'s `h`/`l` used to be `⌥⌃F1` / `⇧⌥⌃F1`, macOS's own
+"Move focus to next window" action, which meant the binding depended on
+one row in System Settings → Keyboard → Keyboard Shortcuts → Keyboard.
+Clearing that checkbox made both keys silently do nothing, which happened
+and took a while to place because nothing in this repo had changed.
 
-Two things recorded here previously were wrong, and the correction
-matters more than the original claim. The action was *not* reassigned to
-⌥⌃F1 to work around ⌘\` failing on a US-layout keyboard: ⌘\` was tested
-directly on this machine and does cycle an app's windows, so sending it
-instead is a live option rather than a ruled-out one. And the row's value
-cannot be called "reassigned" or "stock" either way — pressing "Restore
-Defaults" on it repeatedly left it at ⌥⌃F1, then once set it to ⌘\`.
-**Treat this row's value as unreliable** and read it off System Settings
-before concluding the keymap is at fault.
+`⌘` ` was tested directly on this machine and does cycle an app's
+windows, so it is sent instead and the dependency is gone. Worth keeping
+the reason the row was distrusted: its value could not be called
+"reassigned" or "stock" either way — pressing "Restore Defaults" on it
+repeatedly left it at ⌥⌃F1, then once set it to `⌘` `. **Treat that row's
+value as unreliable** if anything sends you back to it.
 
-**macOS keyboard-navigation focus shortcuts (⌃F2 / ⌃F4 / ⌃F8, the Tab
-suite).** Focus-movement to the menu bar, the active/next window, and the
-status menus are macOS keyboard-navigation shortcuts, so they depend on
-that feature being enabled and on the F-row behaving as function keys.
-See "Ctrl+F2/F3/F5/F6/F8 …" earlier in this file for the history: most of
-that family did nothing at all for a long time, and F2/F8 started working
-on a later macOS without anything in this repo changing. Treat any of
-them going quiet again as an OS-side change, not a config regression.
+**macOS keyboard-navigation focus shortcuts (⌃F2 / ⌃F3 / ⌃F4 / ⌃F6 /
+⌃F8).** Five of the family are now sent: ⌃F4 and ⌃F2 from the Tab key,
+⌃F3 from `aSDF`'s `o`, ⌃F6 / ⇧⌃F6 from `AsDF`'s `i`/`o`, and ⌃F8 from the
+`ASDF` tier's aux keys. All of them depend on keyboard navigation being
+enabled and on the F-row behaving as function keys; each also has its own
+row in System Settings → Keyboard → Keyboard Shortcuts → Keyboard, and a
+cleared checkbox makes the key silently do nothing.
 
-**Mission Control family (⌃↑ / ⌃↓ / ⌃← / ⌃→, `AsDF`).** All four are
+See "Ctrl+F2/F3/F5/F6/F8 …" earlier in this file for the history — most of
+the family did nothing at all for a long time — and "Why the focus-jump
+shortcuts look unreliable" for the causes that are not this repo's. Treat
+any of them going quiet as an OS-side or app-side change first.
+
+**Mission Control family (⌃↑ / ⌃↓ / ⌃← / ⌃→, `ASDF`).** All four are
 System Settings → Keyboard → Keyboard Shortcuts → Mission Control
 entries. ⌃↓ (Application windows) in particular is not reliably enabled
 by default. ⌃← / ⌃→ (move one space left/right) only do anything when
 more than one desktop exists — with a single desktop they are silent
 no-ops, which is easy to mistake for a broken binding.
+
+**Raycast window layouts (`ASDF`'s `u`/`i`/`o`/`p`).** Unlike the rest of
+the `:wm` calls, which target Raycast's built-in geometry commands, these
+four target *user-defined* layouts. A layout is created in Raycast and
+published as a command under the window-management extension, so the
+deeplink has the ordinary `:wm` shape — but the slug is whatever the
+layout was named, exists only in that Raycast install, and is not
+recoverable from this repo. Take slugs from Raycast's own Copy Deeplink;
+a slug that does not exist is a silent no-op, with no error anywhere.
+
+**Every `:wm` and `:ray-*` slug comes from Copy Deeplink, and nothing else
+counts.** Not the manual's prose, not a survey of other people's public
+configs, not the pattern the neighbouring slugs follow. All three have been
+tried here and all three have produced wrong slugs that sat in the file
+looking right. `next-display` is the case worth remembering: it was in this
+file for a long time, was defended on the grounds that a survey had checked
+it, and is actually `move-to-next-display`. A wrong slug fails silently, so
+nothing ever contradicts it — which is exactly why the only acceptable
+provenance is the deeplink Raycast itself hands you.
 
 **Japanese input method (⌃⇧R / ⌃J / ⌃K / ⌃;, `aSDf`'s h/j/k/l).** The
 reconversion family is the Japanese IME's own set of Control shortcuts.

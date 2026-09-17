@@ -7,13 +7,21 @@ file-header legend. Drop trailing inline annotations on individual
 manipulators; they're not needed except in the few cases below.
 
 Rationale, tradeoffs, and "why this and not that" belong in `NOTES.md`,
-not next to the code. Keep them out of the `.edn` file entirely.
+not next to the code. Keep them out of the `.edn` file entirely. **Design
+intent is never an inline comment**, however interesting it is.
 
-The only inline annotations worth keeping are the ones that record a
-dependency the reader can't discover from the file alone — e.g. `f13`
-and `f16` are meaningless without knowing Amical and Maccy are
-configured (in those apps' own settings, not here) to listen for those
-exact key codes as their trigger hotkeys.
+An inline annotation earns its place in exactly two cases:
+
+1. **The line would otherwise look broken.** A reader who can't tell a
+   deliberate binding from a mistake will go looking for a bug that isn't
+   there, or "fix" one that works.
+2. **The line's meaning can't be read off the file.** `f13` and `f16` say
+   nothing on their own — they work only because Amical and Maccy are
+   configured, in those apps' own settings, to listen for those exact key
+   codes.
+
+Both are about the code being unreadable or suspicious on its face.
+Neither is about why the design is the way it is.
 
 ## `h`/`j`/`k`/`l` is the disciplined side; `u`/`i`/`o`/`p` is the free side
 
@@ -25,8 +33,8 @@ which side it belongs to first.
 Put **only actions that come as a set of four** on `h`/`j`/`k`/`l`. Never
 park a single self-contained action on one of them. This holds without
 exception across all 16 tiers: even the tiers carrying no directional
-meaning (`aSDf`'s four IME conversions, `ASDf`'s undo / redo / back /
-forward) still put four members of one family there. **If you want to place
+meaning (`aSDf`'s four IME conversions, `ASDf`'s outdent / undo / redo /
+indent) still put four members of one family there. **If you want to place
 a standalone action, use `u`/`i`/`o`/`p`.**
 
 Where a tier divides by granularity at all, **`u`/`i`/`o`/`p` takes the
@@ -90,6 +98,24 @@ guard stack, even when a shorter, "usually correct" version would work.
 Karabiner fires only the first manipulator whose `from` and `conditions`
 match, so an incomplete guard doesn't fail loudly — it silently lets the
 wrong rule win under some input ordering.
+
+**One exception, and it is narrow.** A rule may omit `:act-*` flags when
+the action it carries covers *every* combination of the omitted ones — a
+complete sub-cube of tiers, not most of it — and no other rule for the same
+`from` key claims any tier inside that sub-cube. Then the short guard is
+not an approximation of the long one; it is the same set, written once.
+
+Use it only when the omission carries information. Select All on the
+auxiliary keys is guarded on `act-d`/`act-f` alone because all four
+`act-a`/`act-s` tiers really do agree, and writing that once says so.
+Spelling it out four times would say the same thing while losing the claim
+that the four agree.
+
+Two conditions, both required. The block must state which tiers it covers,
+in a comment, so a reader can check the sub-cube without deriving it. And
+if any tier inside it later needs its own action, the whole block splits
+into full stacks — it does not grow a narrower rule alongside the wide one,
+because that is exactly the shape where the wrong rule wins silently.
 
 ## Before editing or committing
 
