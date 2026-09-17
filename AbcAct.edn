@@ -77,9 +77,8 @@
 ;; asDf: Log out
 
 ;; ### Tab Suite (Asterisk, focus jump)
-;; asdf: Next window
-;; asDf: Ctrl+F2
-;; asdF: Ctrl+F8
+;; asdf: Ctrl+F4 (active/next window)
+;; asdF: Ctrl+F2 (menu bar)
 
 ;; ### Numpad-a Suite (Simlayer, experimental — Asterisk-independent)
 ;; Numpad: virtual number pad, trigger key `a`

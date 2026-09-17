@@ -268,6 +268,22 @@ outer four take the *coarser* unit, never the finer one. The tier was
 shipped to get the feature in with `u`/`i`/`o`/`p` left to revisit, and the
 revisit never happened. A symmetric-looking deviation is still a deviation.
 
+## Tab pinning was dropped, and Shortkeys went with it
+
+`asDF`'s `i` used to send `⇧⌥P`, which did nothing on its own: it was a
+shortcut defined inside the Shortkeys Chrome extension's settings, bound to
+that extension's "Pin/unpin tab" action. Chrome has no native shortcut for
+pinning, so an extension was the only route.
+
+It was dropped when the tab tier was re-cut, and nothing replaced it. Two
+reasons, both worth recording because the binding worked and was not
+retired for being broken. It is a state toggle on one tab rather than
+something that appears inside a run of tab operations, which is the test
+for whether an action earns a slot here at all. And it was the file's only
+dependency on a browser extension — a listener that is neither macOS, nor
+an app's own hotkey, nor Raycast — so removing it took a whole category of
+external dependency out of the config.
+
 ## previous-desktop / next-desktop, removed and then brought back
 
 These two Raycast commands move the focused window to the neighbouring
@@ -344,7 +360,7 @@ The eight `act-a` pairs in Asterisk Right, with the axis each one steps:
 | `asdF` / `AsdF` | Mouse Cursor | **amount** — pointer `±1600` → `±3200`, scroll `±32` → `±64` |
 | `aSdF` / `ASdF` | Placement | **range** — placing the window within the screen → moving it to another screen or Space |
 | `asDF` / `AsDF` | Tab → Window | **object** — the thing every binding in the tier acts on |
-| `aSDF` / `ASDF` | App → Space | **object** — the thing every binding in the tier acts on |
+| `aSDF` / `ASDF` | App → Space | **object** — on `h`/`j`/`k`/`l`; the free side is layouts, which arrange windows rather than Spaces |
 
 Three things follow.
 
@@ -362,16 +378,18 @@ applies anywhere the question comes up.
 
 **`aSDf` / `ASDf` is the one pair where `act-a` amplifies nothing**: the
 two tiers hold unrelated families. It is also the tier whose `h`/`l` and
-`j`/`k` are two of the three non-opposed pairs in the right block (see the
+`j`/`k` are the only two non-opposed pairs in the right block (see the
 section above). The two facts have separate causes, but they land on the
 same tier — the one place where `h`/`j`/`k`/`l` is the Japanese IME's own
 fixed set and the layout's rules have nothing to impose on.
 
 ## Menu bar, status menus, toolbar: one bar, three owners
 
-The Tab key's three bindings (`⌃F4`, `⌃F2`, `⌃F8`) aim at three different
-objects, and the names Apple uses for them are easy to mix up. Getting the
-names wrong makes the placement look arbitrary when it isn't.
+Three shortcuts in the same family — `⌃F4`, `⌃F2`, `⌃F8` — aim at three
+different objects, and the names Apple uses for them are easy to mix up.
+Getting the names wrong makes the placement look arbitrary when it isn't.
+Two of the three are on the Tab key; the third is not, for the reason
+below.
 
 **There is one menu bar, divided into areas.** It is not several bars.
 Apple's Human Interface Guidelines: "the macOS menu bar includes the Apple
@@ -709,6 +727,7 @@ pairs horizontal scroll against vertical, `AsDF` pairs window state
 when filling a new slot.
 
 The in/out reading is deliberately **not** applied everywhere — it is a
+fallback mnemonic for tiers where the usual "outer = bigger boundary"
 axis has nothing to grip. It fits `aSDf` (clipboard) and `aSdF` (shrink /
 grow). It does not fit `asDF`'s back/forward or `ASdF`'s previous/next
 display, and those are left alone rather than forced.
@@ -1106,13 +1125,15 @@ a specific third-party extension/shortcut that isn't version
 controlled here at all. Listed so a fresh clone doesn't leave someone
 wondering why a key silently does nothing.
 
-**Raycast + specific extensions (`:ray`/`:wm` templates, `open -g
-'raycast://...'`).** Raycast itself must be installed, and beyond that
-several rules call specific *extensions* that must be separately
-installed from the Raycast Store:
+**Raycast + specific extensions (`:ray-bg`/`:ray-fg`/`:wm` templates).**
+Raycast itself must be installed, and beyond that several rules call
+specific *extensions* that must be separately installed from the Raycast
+Store:
 
-- `raycast/window-management` — all the `h/j/k/l/u/i/o/p` window
-  moves/resizes, and the `[`/`]`/`;`/`'` sixth-of-screen placements
+- `raycast/window-management` — the Placement and Screen Placement tiers'
+  `h/j/k/l/u/i/o/p`, the sixth- and quarter-of-screen placements on
+  `[`/`]`/`;`/`'`, and the user-defined layouts on the `ASDF` tier
+- `raycast/navigation` — Switch Windows, on the `AsDF` tier's `[`/`]`/`;`/`'`
 - `raycast/raycast-notes` — `q` in the Asterisk suite
 - `raycast/emoji-symbols` — left_shift in Asterisk's alternate symbol
   row (`Asdf`, i.e. act-a held)
@@ -1121,6 +1142,16 @@ installed from the Raycast Store:
   Raycast-maintained core extension), so it carries more risk of
   disappearing or changing behavior out from under this config than
   the others.
+
+There are two Raycast templates, not one plus a variant. `:ray-bg` runs
+`open -g`, which launches without bringing the app forward; `:ray-fg` runs
+plain `open`. Neither is the default form — the name says which one a call
+site wants. Published advice claims `-g` suppresses commands that present
+UI; **that has not happened here.** Every `:ray-bg` call site in this file
+is a UI-presenting command (Raycast Notes, DeepCast, emoji search) and all
+of them have always shown their UI on this machine, with no instance of
+one failing. `:ray-fg` exists because Switch Windows was added and plain
+`open` is the more obvious form for it, not because anything broke.
 
 **Amical (`f13`, passive hotkey listener).** AbcAct just sends the
 `f13` key code on Caps Lock + act-a; Amical (a voice-input app) is
