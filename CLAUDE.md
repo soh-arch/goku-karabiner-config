@@ -99,6 +99,24 @@ Karabiner fires only the first manipulator whose `from` and `conditions`
 match, so an incomplete guard doesn't fail loudly — it silently lets the
 wrong rule win under some input ordering.
 
+**One exception, and it is narrow.** A rule may omit `:act-*` flags when
+the action it carries covers *every* combination of the omitted ones — a
+complete sub-cube of tiers, not most of it — and no other rule for the same
+`from` key claims any tier inside that sub-cube. Then the short guard is
+not an approximation of the long one; it is the same set, written once.
+
+Use it only when the omission carries information. Select All on the
+auxiliary keys is guarded on `act-d`/`act-f` alone because all four
+`act-a`/`act-s` tiers really do agree, and writing that once says so.
+Spelling it out four times would say the same thing while losing the claim
+that the four agree.
+
+Two conditions, both required. The block must state which tiers it covers,
+in a comment, so a reader can check the sub-cube without deriving it. And
+if any tier inside it later needs its own action, the whole block splits
+into full stacks — it does not grow a narrower rule alongside the wide one,
+because that is exactly the shape where the wrong rule wins silently.
+
 ## Before editing or committing
 
 Check `NOTES.md` first when touching held modifiers, multi-action `to`
