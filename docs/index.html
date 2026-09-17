@@ -815,7 +815,7 @@ body.searching .chapter-nav{ margin-top:0; }
           <span class="concept">Target</span>
         </div>
         <span class="name">s — Select</span>
-        <span class="desc">Turns a movement into a selection, or a pointer move into a drag.</span>
+        <span class="desc">Turns a movement into a selection; with <b>f</b>, turns pointer control into window placement.</span>
       </div>
       <div class="act-card c-d">
         <div class="act-card-top">
@@ -1006,7 +1006,7 @@ body.searching .chapter-nav{ margin-top:0; }
           <strong>boundaries</strong> (page up / line start / line end / page down) — but only the four
           cursor and select tiers read that literally, and the two delete tiers as boundary-scoped deletes.
           In the other ten tiers <span class="key">u</span><span class="key">i</span><span class="key">o</span><span class="key">p</span>
-          carry that row's own four actions (clipboard, scroll, drag, tabs, windows), so read the cells, not the column headings.
+          carry that row's own four actions (clipboard, scroll, placement, tabs, windows), so read the cells, not the column headings.
           <span class="key">[</span><span class="key">]</span><span class="key">;</span><span class="key">'</span> are a
           <strong>support group</strong> in the last four columns — they only respond to
           <span class="key">d</span> and <span class="key">f</span>, so their value is the same on every row of a
@@ -1110,22 +1110,20 @@ body.searching .chapter-nav{ margin-top:0; }
           </tr>
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot on-s"></span><span class="dot"></span><span class="dot on-f"></span></span></span></td>
-            <td class="row-label">Drag &amp; Drop<span class="formula">Cmd+S+F →</span></td>
-            <td>←</td><td>↓</td><td>↑</td><td>→</td>
-            <td>← ½</td><td>↓ ½</td><td>↑ ½</td><td>→ ½</td>
-            <td class="dim">Left click</td><td class="dim">Right click</td><td class="dim">Left click</td><td class="dim">Right click</td>
+            <td class="row-label">Placement<span class="formula">Cmd+S+F →</span></td>
+            <td>Nudge left</td><td>Nudge down</td><td>Nudge up</td><td>Nudge right</td><td>Maximize</td><td>Shrink</td><td>Grow</td><td>Almost maximize<span class="hint">≈70%</span></td>
+            <td class="dim">Top-left sixth</td><td class="dim">Top-right sixth</td><td class="dim">Bottom-left sixth</td><td class="dim">Bottom-right sixth</td>
           </tr>
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot on-a"></span><span class="dot on-s"></span><span class="dot"></span><span class="dot on-f"></span></span></span></td>
-            <td class="row-label">Fast Drag &amp; Drop<span class="formula">Cmd+A+S+F →</span></td>
-            <td>← ×2</td><td>↓ ×2</td><td>↑ ×2</td><td>→ ×2</td>
-            <td>← ½ ×2</td><td>↓ ½ ×2</td><td>↑ ½ ×2</td><td>→ ½ ×2</td>
-            <td class="dim">Left click</td><td class="dim">Right click</td><td class="dim">Left click</td><td class="dim">Right click</td>
+            <td class="row-label">Screen Placement<span class="formula">Cmd+A+S+F →</span></td>
+            <td>Left half<span class="hint">½ → ⅔ → ⅓</span></td><td>Bottom half<span class="hint">½ → ⅔ → ⅓</span></td><td>Top half<span class="hint">½ → ⅔ → ⅓</span></td><td>Right half<span class="hint">½ → ⅔ → ⅓</span></td><td>Previous Space</td><td>Previous display</td><td>Next display</td><td>Next Space</td>
+            <td class="dim">Top-left quarter</td><td class="dim">Top-right quarter</td><td class="dim">Bottom-left quarter</td><td class="dim">Bottom-right quarter</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <p class="note">Drag tiers hold the left mouse button down while moving; the click keys are in the same rows, under <code>[ ] ; '</code>.</p>
+    <p class="note">Dragging lives on the mouse tiers: hold <code>;</code> to keep the button down and steer with <code>h j k l</code>. The placement tiers took over the window geometry that used to sit under <code>s+d+f</code>.</p>
 
     <div class="sub-head">4.4 — Tabs, apps &amp; windows</div>
     <div class="table-wrap">
@@ -1134,31 +1132,27 @@ body.searching .chapter-nav{ margin-top:0; }
         <tbody>
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot on-d"></span><span class="dot on-f"></span></span></span></td>
-            <td class="row-label">Tab Management<span class="formula">Cmd+D+F →</span></td>
-            <td>Previous tab</td><td>Close tab</td><td>New tab</td><td>Next tab</td>
-            <td>Previous window, same app</td><td>Pin tab<span class="hint">⇧⌥P</span></td><td>Reopen closed tab<span class="hint">⇧⌘T</span></td><td>Next window, same app</td>
-            <td class="dim">Top-left sixth</td><td class="dim">Top-right sixth</td><td class="dim">Bottom-left sixth</td><td class="dim">Bottom-right sixth</td>
+            <td class="row-label">Tab<span class="formula">Cmd+D+F →</span></td>
+            <td>Previous tab</td><td>Close tab</td><td>Reopen closed tab<span class="hint">⇧⌘T</span></td><td>Next tab</td><td>First tab<span class="hint">⌘1</span></td><td>Back<span class="hint">⌘[</span></td><td>Forward<span class="hint">⌘]</span></td><td>Last tab<span class="hint">⌘9</span></td>
+            <td class="dim">New tab</td><td class="dim">New tab</td><td class="dim">New tab</td><td class="dim">New tab</td>
           </tr>
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot on-a"></span><span class="dot"></span><span class="dot on-d"></span><span class="dot on-f"></span></span></span></td>
-            <td class="row-label">App Management<span class="formula">Cmd+A+D+F →</span></td>
-            <td>Previous app<span class="hint">⇧⌘Tab</span></td><td>Quit app</td><td>Mission Control</td><td>Next app<span class="hint">⌘Tab</span></td>
-            <td>Previous Space</td><td>Hide app</td><td>App Exposé</td><td>Next Space</td>
-            <td class="dim">Top-left sixth</td><td class="dim">Top-right sixth</td><td class="dim">Bottom-left sixth</td><td class="dim">Bottom-right sixth</td>
+            <td class="row-label">Window<span class="formula">Cmd+A+D+F →</span></td>
+            <td>Previous window, same app<span class="hint">⇧⌘`</span></td><td>Close window<span class="hint">⇧⌘W</span></td><td>New window<span class="hint">⌘N</span></td><td>Next window, same app<span class="hint">⌘`</span></td><td>Toggle fullscreen</td><td>Previous panel<span class="hint">⇧⌃F6</span></td><td>Floating window<span class="hint">⌃F6</span></td><td>Minimize<span class="hint">⌘M</span></td>
+            <td class="dim">Switch Windows</td><td class="dim">Switch Windows</td><td class="dim">Switch Windows</td><td class="dim">Switch Windows</td>
           </tr>
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot on-s"></span><span class="dot on-d"></span><span class="dot on-f"></span></span></span></td>
-            <td class="row-label">Window Management<span class="formula">Cmd+S+D+F →</span></td>
-            <td>Nudge left</td><td>Nudge down</td><td>Nudge up</td><td>Nudge right</td>
-            <td>Maximize</td><td>Shrink</td><td>Grow</td><td>Almost maximize<span class="hint">≈70%</span></td>
-            <td class="dim">Top-left sixth</td><td class="dim">Top-right sixth</td><td class="dim">Bottom-left sixth</td><td class="dim">Bottom-right sixth</td>
+            <td class="row-label">App<span class="formula">Cmd+S+D+F →</span></td>
+            <td>Previous app<span class="hint">⇧⌘Tab</span></td><td>Quit app</td><td>Cancel the switcher<span class="hint">.</span></td><td>Next app<span class="hint">⌘Tab</span></td><td>Hide others<span class="hint">⌥⌘H</span></td><td>Close all windows<span class="hint">⌥⌘W</span></td><td>Focus the Dock<span class="hint">⌃F3</span></td><td>Hide app<span class="hint">⌘H</span></td>
+            <td class="dim">Launchpad</td><td class="dim">Launchpad</td><td class="dim">Launchpad</td><td class="dim">Launchpad</td>
           </tr>
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot on-a"></span><span class="dot on-s"></span><span class="dot on-d"></span><span class="dot on-f"></span></span></span></td>
-            <td class="row-label">Amplified Window<span class="formula">Cmd+A+S+D+F →</span></td>
-            <td>Left half<span class="hint">½ → ⅔ → ⅓</span></td><td>Bottom half<span class="hint">½ → ⅔ → ⅓</span></td><td>Top half<span class="hint">½ → ⅔ → ⅓</span></td><td>Right half<span class="hint">½ → ⅔ → ⅓</span></td>
-            <td>Toggle fullscreen</td><td>Previous display</td><td>Next display</td><td>Hide app</td>
-            <td class="dim">Top-left sixth</td><td class="dim">Top-right sixth</td><td class="dim">Bottom-left sixth</td><td class="dim">Bottom-right sixth</td>
+            <td class="row-label">Space<span class="formula">Cmd+A+S+D+F →</span></td>
+            <td>Previous Space<span class="hint">⌃←</span></td><td>App Exposé<span class="hint">⌃↓</span></td><td>Mission Control<span class="hint">⌃↑</span></td><td>Next Space<span class="hint">⌃→</span></td><td>Layout 1</td><td>Layout 2</td><td>Layout 3</td><td>Layout 4</td>
+            <td class="dim">Focus status menus<span class="hint">⌃F8</span></td><td class="dim">Focus status menus</td><td class="dim">Focus status menus</td><td class="dim">Focus status menus</td>
           </tr>
         </tbody>
       </table>
@@ -1366,16 +1360,10 @@ body.searching .chapter-nav{ margin-top:0; }
             <td class="dim">⌃F4 — move focus to active/next window</td>
           </tr>
           <tr>
-            <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot on-d"></span><span class="dot"></span></span></span></td>
-            <td><code>Cmd+D → Tab</code></td>
-            <td class="row-label">⌃F2</td>
-            <td class="dim">move focus to menu bar</td>
-          </tr>
-          <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot on-f"></span></span></span></td>
             <td><code>Cmd+F → Tab</code></td>
-            <td class="row-label">⌃F8</td>
-            <td class="dim">move focus to status menus</td>
+            <td class="row-label">⌃F2</td>
+            <td class="dim">move focus to the menu bar</td>
           </tr>
         </tbody>
       </table>
@@ -1467,7 +1455,7 @@ body.searching .chapter-nav{ margin-top:0; }
       </div>
       <div class="glossary-item">
         <div class="glossary-term">Select (s)</div>
-        <p class="glossary-def">Turns a movement into a selection; with <b>f</b>, turns a pointer move into a drag.</p>
+        <p class="glossary-def">Turns a movement into a selection; with <b>f</b>, turns pointer control into window placement.</p>
       </div>
       <div class="glossary-item">
         <div class="glossary-term">Delete (d)</div>
@@ -1529,13 +1517,13 @@ body.searching .chapter-nav{ margin-top:0; }
     "AD"  : { name:"Amplified Delete",     concept:"Wide removal",        desc:"Select that same unit, then delete it." },
     "AF"  : { name:"Fast Mouse Cursor",    concept:"Accelerated pointer", desc:"Identical pointer moves at double the step." },
     "SD"  : { name:"Reconvert & Clipboard",concept:"IME + clipboard",     desc:"Japanese reconversion on h j k l; copy, cut, paste on u i o p." },
-    "SF"  : { name:"Drag & Drop",          concept:"Pointer dragging",    desc:"Holds the mouse button down while moving." },
-    "DF"  : { name:"Tab Management",       concept:"Tabs & app windows",  desc:"Cycle, close, open new/reopen closed tabs, pin tabs." },
+    "SF"  : { name:"Placement",             concept:"Within the screen",   desc:"Nudge, shrink, grow and maximize the front window." },
+    "DF"  : { name:"Tab",                   concept:"Inside the app",      desc:"Cycle, close and reopen tabs; jump to the ends; back and forward." },
     "ASD" : { name:"Undo & Line Ops",      concept:"History + lines",     desc:"Undo, redo, outdent, indent; duplicate and move lines." },
-    "ASF" : { name:"Fast Drag & Drop",     concept:"Accelerated drag",    desc:"Dragging at double the step." },
-    "ADF" : { name:"App Management",       concept:"Application switching",desc:"Switch, quit, hide apps; Mission Control, Exposé, Spaces." },
-    "SDF" : { name:"Window Management",    concept:"Small window moves",  desc:"Nudge, shrink, grow, maximize the front window." },
-    "ASDF": { name:"Amplified Window",     concept:"Screen-scale placement", desc:"Half-screen toggles, display switching, fullscreen." }
+    "ASF" : { name:"Screen Placement",      concept:"Across screens",      desc:"Half-screen toggles; move the window to another display or Space." },
+    "ADF" : { name:"Window",                concept:"Inside the app",      desc:"Cycle, close and open windows; fullscreen, minimize, panels." },
+    "SDF" : { name:"App",                   concept:"Beyond the app",      desc:"Switch, quit and hide apps; close all windows; focus the Dock." },
+    "ASDF": { name:"Space",                 concept:"Beyond the app",      desc:"Move between Spaces; Mission Control, App Exposé, saved layouts." }
   };
 
   var COMBO_GROUPS = [
