@@ -1,3 +1,7 @@
+;; ARCHIVED DRAFT — not the live config. The keymap in use is
+;; AbcAct.edn; this file is kept as a frozen snapshot and is not
+;; maintained. Parts of it are known not to work; see NOTES.md.
+;;
 ;; ==========================================================================================
 ;;  SCOT & SEMI Keyboard Architecture
 ;;  A hybrid spatial layer mapping system for macOS.
