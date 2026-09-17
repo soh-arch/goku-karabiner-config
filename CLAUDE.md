@@ -138,3 +138,61 @@ machine's to answer, or yours.
 If `docs/index.html` changed in a way that shows in the README screenshots,
 re-run `scripts/shoot-readme-images.py` and commit the regenerated
 `assets/*.png` alongside it — otherwise the README shows a stale manual.
+
+## Commits and pull requests
+
+Write commit messages in English, following Conventional Commits. Write
+pull requests — title and description — in English only.
+
+Open one pull request per cohesive unit of functionality. Before adding
+new content to an existing pull request, confirm it is not already closed.
+
+Never push directly to a protected branch. Nothing here is protected in
+GitHub's settings, so this holds as discipline rather than as an enforced
+rule: work on a branch and open a pull request instead of committing to
+`main`.
+
+Before starting complex work, briefly state the plan and align on the
+approach first.
+
+## Naming
+
+Use simple, concise English names for files and folders — clear to an
+outside reader and unremarkable next to files from other projects. A
+project-specific term is the exception, and `AbcAct.edn`, `HyMeCO.edn` and
+`HySCOT.edn` are it: each names the keymap it holds, which is the point of
+them.
+
+## Images
+
+Before committing an image that will be published — the README, `docs/`,
+`assets/` — confirm its EXIF carries no location data. **Any GPS tag count
+above zero means the file carries coordinates**: strip them or choose
+another image, and do not commit it.
+
+```bash
+python3 -c "import sys
+from PIL import Image
+for p in sys.argv[1:]:
+    print(p, len(Image.open(p).getexif().get_ifd(0x8825)), 'GPS tags')" assets/*.png
+```
+
+If the check cannot run — the format will not open, Pillow is missing —
+treat the image as carrying location data and stop. Say so rather than
+committing on the assumption that it is clean.
+
+The screenshots `scripts/shoot-readme-images.py` regenerates carry none,
+because they are rendered from a local page. A photograph added by hand is
+the case this guards against.
+
+## Artifacts
+
+Before producing an artifact — a page, a diagram, slides, a chart, any
+one-off thing made to be looked at — read
+`.claude/skills/visual-design-direction/SKILL.md` and follow it. A built-in
+design skill does not replace it.
+
+**This governs artifacts and nothing else.** `docs/index.html` is the
+published manual, not an artifact: it carries its own design, and it is
+not to be restyled to match this direction. Touch it only when the change
+asked for is a change to the manual.
