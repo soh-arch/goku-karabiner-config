@@ -163,28 +163,6 @@ project-specific term is the exception, and `AbcAct.edn`, `HyMeCO.edn` and
 `HySCOT.edn` are it: each names the keymap it holds, which is the point of
 them.
 
-## Images
-
-Before committing an image that will be published — the README, `docs/`,
-`assets/` — confirm its EXIF carries no location data. **Any GPS tag count
-above zero means the file carries coordinates**: strip them or choose
-another image, and do not commit it.
-
-```bash
-python3 -c "import sys
-from PIL import Image
-for p in sys.argv[1:]:
-    print(p, len(Image.open(p).getexif().get_ifd(0x8825)), 'GPS tags')" assets/*.png
-```
-
-If the check cannot run — the format will not open, Pillow is missing —
-treat the image as carrying location data and stop. Say so rather than
-committing on the assumption that it is clean.
-
-The screenshots `scripts/shoot-readme-images.py` regenerates carry none,
-because they are rendered from a local page. A photograph added by hand is
-the case this guards against.
-
 ## Artifacts
 
 Before producing an artifact — a page, a diagram, slides, a chart, any
