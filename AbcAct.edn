@@ -435,7 +435,7 @@
     [:##j             [:wm "bottom-half"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :!act-d :act-f]]
     [:##k             [:wm "top-half"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :!act-d :act-f]]
     [:##l             [:wm "right-half"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :!act-d :act-f]]
-    [:##u             [:wm "previous-desktop"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :!act-d :act-f]]
+    [:##u             [:wm "move-to-previous-space"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :!act-d :act-f]]
     [:##i             [:wm "move-to-previous-display"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :!act-d :act-f]]
     [:##o             [:wm "move-to-next-display"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :!act-d :act-f]]
     [:##p             [:wm "move-to-next-space"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :!act-d :act-f]]
