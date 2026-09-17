@@ -312,6 +312,140 @@ their own:
 - An action with no direction of its own goes on `u`/`i`/`o`/`p`, the free
   side (`CLAUDE.md`).
 
+## What `act-a` amplifies is set by the tier, not fixed
+
+`act-a` has no single meaning. It is an operator that steps up whatever
+axis of "bigger" the tier's family already has — and which axis that is
+differs from family to family. Reading it as one fixed action ("act-a
+doubles things", "act-a widens the scope") gives the wrong expectation in
+most of the file.
+
+The eight `act-a` pairs in Asterisk Right, with the axis each one steps:
+
+| pair | family | axis `act-a` steps |
+|---|---|---|
+| `asdf` / `Asdf` | Text Cursor | **unit** — arrow → `⌥`arrow, one character to one word |
+| `aSdf` / `ASdf` | Select | **unit** — the same motions with Shift held |
+| `asDf` / `AsDf` | Delete | **unit** — `delete` → `⌥delete` |
+| `aSDf` / `ASDf` | Reconversion & Copy/Paste → Undo/Redo & Duplicate/Move Line | **none** |
+| `asdF` / `AsdF` | Mouse Cursor | **amount** — pointer `±1600` → `±3200`, scroll `±32` → `±64` |
+| `aSdF` / `ASdF` | Drag & Drop | **amount** — `±1600` → `±3200`, `±800` → `±1600` |
+| `asDF` / `AsDF` | Tab → App | **scope** — tab to app on `h`/`j`/`k`/`l`, window to Space on `u`/`p` |
+| `aSDF` / `ASDF` | Window geometry | **range** — placements that keep the window a desktop window → placements that leave that range |
+
+Three things follow.
+
+**An amplified tier does not need a family of its own.** Seven of the
+eight pairs carry one family twice, so the question when placing something
+new is usually not "what goes in `ASdF`" but "what is `aSdF`'s family, and
+what does one step up look like for it".
+
+**Whether two tiers share a binding is derivable, not arbitrary.** The two
+mouse tiers both put left/right click on the aux keys. That looks like an
+inconsistency until you notice `act-a` steps an *amount* there and a click
+has no amount — nothing for the operator to act on, so the binding is
+invariant under `act-a` and correctly appears in both. The same test
+applies anywhere the question comes up.
+
+**`aSDf` / `ASDf` is the one pair where `act-a` amplifies nothing**: the
+two tiers hold unrelated families. It is also the tier whose `h`/`l` and
+`j`/`k` are two of the three non-opposed pairs in the right block (see the
+section above). The two facts have separate causes, but they land on the
+same tier — the one place where `h`/`j`/`k`/`l` is the Japanese IME's own
+fixed set and the layout's rules have nothing to impose on.
+
+## Menu bar, status menus, toolbar: one bar, three owners
+
+The Tab key's three bindings (`⌃F4`, `⌃F2`, `⌃F8`) aim at three different
+objects, and the names Apple uses for them are easy to mix up. Getting the
+names wrong makes the placement look arbitrary when it isn't.
+
+**There is one menu bar, divided into areas.** It is not several bars.
+Apple's Human Interface Guidelines: "the macOS menu bar includes the Apple
+menu on the leading side and menu bar extras on the trailing side." The
+VoiceOver user guide names the areas: "The menu bar at the top of the
+screen contains several menus, such as the Apple menu, the app menu, and
+the status menus," and it describes arrow navigation as moving "among the
+menus in **an area of** the menu bar," with "a sound effect … when you're
+at the end of an area."
+
+**"Status bar" is overloaded, and Apple uses it both ways.** AppKit's class
+for the trailing area is literally `NSStatusBar`, and its `system` method
+"Returns the system-wide status bar located in the menu bar." But the HIG
+uses the same name for the bar along the *bottom* of a Finder window (⌘/).
+The unambiguous name for the trailing area is the one the shortcut itself
+uses — **status menus** ("Move focus to status menus") — and the items in
+it are status items or menu bar extras. `MANUAL.md` says ステータスメニュー,
+which is the right pick for that reason, not because "status bar" is wrong.
+
+Who owns each one decides which tier it belongs to:
+
+| target | Apple's API | owner | changes when |
+|---|---|---|---|
+| toolbar | `NSWindow.toolbar` — "The window's toolbar" | the window | you switch windows |
+| menu bar | `NSApplication.mainMenu` — the app menu | **the app** | you switch apps, not windows |
+| status menus | `NSStatusBar` — "status items displayed within the **system-wide** menu bar" | **each background process** | never; the front app is irrelevant |
+
+`NSToolbar` itself is described as managing "the space above your app's
+custom content and either below or integrated with the window's title
+bar" — so `⌃F5` aims inside a window, not at anything along the top of the
+screen, which the name "toolbar" can suggest.
+
+So the Tab family is a scope ladder that was built before it was named:
+
+    Tab        → ⌃F4   active or next window   — window
+    Tab + d    → ⌃F2   the menu bar            — app
+    Tab + f    → ⌃F8   the status menus        — above the app, system-wide
+
+Apple's own wording for the eight rows, worth quoting because two of them
+are commonly misremembered: `⌃F2` menu bar, `⌃F3` Dock, `⌃F4` "active
+window or next window", `⌃F5` "window toolbar", `⌃F6` "floating window"
+(**not** "next window" — that is `⌃F4`), `⇧⌃F6` "previous panel", `⌃F7`
+"change the way Tab moves focus", `⌃F8` "status menu in the menu bar".
+
+## Why the focus-jump shortcuts look unreliable
+
+`⌃F2` and `⌃F8` behave inconsistently enough that it is tempting to write
+the whole family off as broken, or to assume this repo is at fault. Most
+of it is explained, and none of the explanations are Karabiner or Goku.
+Keep them apart, because they want different responses.
+
+**`⌃F2` does nothing in Electron apps.** Not in native ones. This is
+electron#27268, "[OS X] Ctrl+F2 keyboard shortcut to focus menu bar does
+not work (accessibility)" — a regression of electron#6016, which had fixed
+it back in 2016. The issue names VS Code and Slack as affected in
+production, which means **Cursor is affected too**. The issue is closed,
+but the behaviour is what decides; re-test rather than trusting the state
+of the ticket. The only workaround reported there is indirect: press
+`⌃F3` (Dock) first, then `⌃F2`.
+
+**`⌃F2` in full screen moves focus to a menu bar that isn't shown.** Apple
+Support Communities thread 255522449: "it moves the focus to the menu bar
+without being able to see it" — arrow keys do then work, so the focus
+really did move. A recent macOS regression, reported by several people.
+
+**Together these two look like randomness.** One depends on which app is
+frontmost, the other on whether that app is in full screen. Neither is
+visible from the keyboard, so the same keystroke appears to work or not
+for no reason — which is where an impression of general flakiness comes
+from. When `⌃F2` seems dead, check those two before anything else.
+
+**The status menus don't wrap, and you can't get back to the icon row.
+That is structural, not a bug.** Arrow keys in the left area cycle Apple →
+… → Help → Apple because that area is one `NSMenu` owned by one process.
+The trailing area is N independent `NSStatusItem`s owned by N different
+processes, with no container to cycle within — which is also why `⌃F8`
+has to exist separately from `⌃F2`. Once one item's menu is open there is
+no parent row to pop back out to, so reaching another item's menu from
+there is not a thing the structure supports.
+
+**`⌃F8` landing on the first icon and then refusing to move is expected
+too.** Each item's owning process has to accept the key events itself.
+Apple's own `NSStatusBar` documentation sets the expectation: "Because
+there is limited space in which to display status items, status items are
+not guaranteed to be available at all times. For this reason, do not rely
+on them being available." A restart clearing it up fits that shape.
+
 ## Design rationale for specific keymaps
 
 Why individual bindings ended up where they did, beyond what's obvious from
@@ -735,13 +869,23 @@ flaky here across versions — nothing in this repo changed to cause
 it), so `asDf` → Ctrl+F2 and `asdF` → Ctrl+F8 were added. `asdF`
 previously sent app-defined pane focus (`Ctrl+\``) instead, but that
 binding saw little use once `Cmd+J` covered the same need, so it was
-replaced rather than kept alongside Ctrl+F8. F5 (window toolbar) and F6
-(floating window) were later found to be live as well — both are enabled
-in System Settings and F5 does fire, though not dependably. Treat this
-whole family as flaky: a working state and a non-working state are each
-liable to be temporary, so a stale "it does nothing" note here is worth
-re-checking against the machine before acting on it. F3 (Dock) is still
-not wanted.
+replaced rather than kept alongside Ctrl+F8. Treat this whole family as
+flaky: a working state and a non-working state are each liable to be
+temporary, so a stale "it does nothing" note here is worth re-checking
+against the machine before acting on it.
+
+Two of the family fail for a reason that is not flakiness, and the
+distinction is worth keeping because both produce the same silence.
+Ctrl+F5 moves focus to `NSWindow.toolbar` — an `NSToolbar` object. An app
+that draws its own toolbar instead of using `NSToolbar` gives the shortcut
+nothing to focus, so it does nothing there and always will: Electron
+builds no `NSToolbar` (`native_window_mac.mm` names the class only in a
+fullscreen comment) and Chromium-based browsers draw their toolbar
+themselves. Ctrl+F6 targets the floating window — an `NSPanel`, which by
+design is kept out of the Window menu's list and only becomes key when
+needed, which is why a separate shortcut for it exists at all; in practice
+only some of Apple's own apps use panels. Re-test a shortcut that went
+quiet; don't re-test one that has no target.
 
 **Numpad-a is built on Goku's `:simlayers`, not the hand-rolled
 `["layer" 1]`/`:afterup` pattern used everywhere else.** Every other
@@ -1004,17 +1148,24 @@ General), without which `Asdf`'s `h`/`l` and `AsDf`'s `l` type `∫`,
 `bindkey '^[[3~' delete-char` in `.zshrc`, without which `asDf`'s `l`
 (forward delete) does nothing. See "Terminal overrides" above.
 
-**A reassigned macOS shortcut (⌥⌃F1 / ⇧⌥⌃F1, `asDF`'s `u`/`p`).** These
-are macOS's own "move focus to the next/previous window in the
-application" actions — but not at their stock key combination. The stock
-chord could not be made to fire on this machine (a US-layout keyboard
-against a default binding that assumes JIS), so the action was reassigned
-to ⌥⌃F1 / ⇧⌥⌃F1 in System Settings → Keyboard → Keyboard Shortcuts.
-AbcAct only sends those key codes; without that reassignment on the
-machine, both keys silently do nothing. Same passive-listener shape as
-Amical/Maccy, except the listener is macOS itself. Note this also rules
-out "just send ⌘\` instead" as a simplification — ⌘\` is precisely the
-binding that would not fire.
+**A macOS shortcut that has to stay enabled (⌥⌃F1 / ⇧⌥⌃F1, `asDF`'s
+`u`/`p`).** These are macOS's own "Move focus to next window" action and
+its Shift-reversed form. The row lives in System Settings → Keyboard →
+Keyboard Shortcuts → Keyboard; AbcAct only sends the key codes, so the
+dependency is that row. Clear its checkbox and both keys silently do
+nothing — which has happened, and took a while to place because nothing
+in this repo had changed. Same passive-listener shape as Amical/Maccy,
+except the listener is macOS itself.
+
+Two things recorded here previously were wrong, and the correction
+matters more than the original claim. The action was *not* reassigned to
+⌥⌃F1 to work around ⌘\` failing on a US-layout keyboard: ⌘\` was tested
+directly on this machine and does cycle an app's windows, so sending it
+instead is a live option rather than a ruled-out one. And the row's value
+cannot be called "reassigned" or "stock" either way — pressing "Restore
+Defaults" on it repeatedly left it at ⌥⌃F1, then once set it to ⌘\`.
+**Treat this row's value as unreliable** and read it off System Settings
+before concluding the keymap is at fault.
 
 **macOS keyboard-navigation focus shortcuts (⌃F2 / ⌃F4 / ⌃F8, the Tab
 suite).** Focus-movement to the menu bar, the active/next window, and the
