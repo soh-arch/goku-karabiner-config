@@ -124,11 +124,11 @@ chains, or global app hotkeys — known gotchas are recorded there so the
 same debugging loop doesn't happen twice. Add new gotchas there too.
 
 Before every commit, run `python3 scripts/check.py`. It reads the files
-and needs nothing installed. It checks bracket balance in `AbcAct.edn`,
-tag balance in `docs/index.html`, that no two rules on the same key in the
-same `:des` block can both match — the failure the guard rule above exists
-to prevent, and the one that never announces itself — and that code
-outside comments stays ASCII.
+and needs nothing installed. It checks bracket balance in every `.edn`,
+tag balance in `docs/index.html`, that no rule is unreachable — an earlier
+rule on the same key matching every state it does, which is the failure
+the guard rule above exists to prevent and the one that never announces
+itself — and that code outside comments and strings stays ASCII.
 
 It cannot check a Raycast slug, a key code, or whether a binding is in the
 right tier. A wrong slug is a well-formed string that matches no command
