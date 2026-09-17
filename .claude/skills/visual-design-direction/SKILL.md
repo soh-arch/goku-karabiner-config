@@ -84,3 +84,14 @@ text          #8E554B
 - **Composed dark `text`**: Use for links, stateful copy, and semantically meaningful labels. Never rely on color alone; pair it with language, icons, placement, and form.
 
 Do not scatter chromatic colors merely as attractive accents. Use them as part of the information architecture: they should help people understand what is happening, where attention belongs, and which action to take.
+
+## Contrast
+
+Every `text` token clears WCAG AA for normal text (4.5:1) on all three grounds, and so does white on any `solid`. Two measured exceptions do not, and neither is visible from the hex values:
+
+- `text-faint` on `bg-sunken` — 4.35:1
+- the four `solid` tones on `bg-sunken` — 4.28:1 to 4.34:1
+
+So on `bg-sunken`, set copy in `text` or `text-muted`, and reach for a color's `text` tone rather than its `solid` one.
+
+Of the three neutral borders, only `border-strong` reaches the 3:1 a UI boundary needs (3.10:1 against `bg`). `border` is 1.95:1 and `border-subtle` 1.35:1, which is why they read as rules rather than as edges.
