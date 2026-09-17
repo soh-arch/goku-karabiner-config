@@ -437,8 +437,8 @@
     [:##l             [:wm "right-half"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :!act-d :act-f]]
     [:##u             [:wm "previous-desktop"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :!act-d :act-f]]
     [:##i             [:wm "previous-display"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :!act-d :act-f]]
-    [:##o             [:wm "next-display"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :!act-d :act-f]]
-    [:##p             [:wm "next-desktop"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :!act-d :act-f]]
+    [:##o             [:wm "move-to-next-display"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :!act-d :act-f]]
+    [:##p             [:wm "move-to-next-space"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :!act-d :act-f]]
 
     ;; ── asDF ─────────────────────────
     ;; Tab

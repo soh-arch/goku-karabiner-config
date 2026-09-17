@@ -1259,6 +1259,16 @@ layout was named, exists only in that Raycast install, and is not
 recoverable from this repo. Take slugs from Raycast's own Copy Deeplink;
 a slug that does not exist is a silent no-op, with no error anywhere.
 
+**Every `:wm` and `:ray-*` slug comes from Copy Deeplink, and nothing else
+counts.** Not the manual's prose, not a survey of other people's public
+configs, not the pattern the neighbouring slugs follow. All three have been
+tried here and all three have produced wrong slugs that sat in the file
+looking right. `next-display` is the case worth remembering: it was in this
+file for a long time, was defended on the grounds that a survey had checked
+it, and is actually `move-to-next-display`. A wrong slug fails silently, so
+nothing ever contradicts it — which is exactly why the only acceptable
+provenance is the deeplink Raycast itself hands you.
+
 **Japanese input method (⌃⇧R / ⌃J / ⌃K / ⌃;, `aSDf`'s h/j/k/l).** The
 reconversion family is the Japanese IME's own set of Control shortcuts.
 They do something only while the Japanese input source is active and its
