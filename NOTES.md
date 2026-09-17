@@ -436,6 +436,12 @@ So the Tab family is a scope ladder that was built before it was named:
     Tab        → ⌃F4   active or next window   — window
     Tab + f    → ⌃F2   the menu bar            — app
 
+Holding `act-d` and pressing Tab now matches no rule at all, and what
+comes out is a bare Tab — not `Cmd+Tab`. The layer's trigger consumes
+L-Cmd rather than passing it through (its `to` is only the variable set),
+so there is no held modifier for the fall-through to pick up. Verified on
+hardware, because reading the file supports either answer.
+
 `⌃F8` used to sit on `Tab + d`, and moved to the `ASDF` tier's aux keys
 because that is where its owner sits: `NSStatusBar` is system-wide, so it
 belongs to the widest tier rather than to a key whose other bindings are
@@ -678,6 +684,16 @@ window is still a window you work in — a window is not better for being
 smaller, and that floor is real. `maximize` is the other end of the same
 range.
 
+**`launchpad` does not close on key_up, despite the family it belongs to.**
+Goku's tutorial documents `mission_control` as closing the window it just
+opened when the key is released, and prescribes a trailing `:vk_none` to
+swallow the real key_up. `launchpad` is declared alongside it as the same
+kind of Apple vendor key, so the same failure was expected inside a held
+layer. It does not happen: bare `:launchpad` on `aSDF`'s aux keys opens the
+Applications grid and it stays open, with the layer still held — far enough
+that `asdf`'s `h`/`j`/`k`/`l` then move the selection within it. Verified on
+hardware; no suppression trick is in the file, and none is needed.
+
 **Fullscreen and `Cmd+M` are the window tier's two extremes.** They sit on
 `AsDF`'s `u`/`p` because both are `NSWindow` state: fullscreen leaves this
 window as the only thing on screen, `Cmd+M` takes it off the screen
@@ -690,8 +706,8 @@ the HIG tells apps to keep them out of the Window menu's list, and
 `NSPanel` becomes key only when needed — so `Ctrl+F6` / `Shift+Ctrl+F6`
 is the only keyboard route to them. The disciplined side cycles within the
 set; the free side steps outside it. Panels are mostly an Apple-app thing
-in practice, so this pair is expected to be quiet in Chromium and Electron
-apps.
+in practice, and on this machine the pair does fire in some of Apple's own
+apps and is silent elsewhere — expected, not a fault.
 
 (Repeated outputs are not in themselves a smell here: the terminal
 override block deliberately re-sends `Ctrl+U`/`Ctrl+K` across several
