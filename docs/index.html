@@ -17,8 +17,8 @@
   --surface:       #FFFFFF;
   --surface-2:     #FBF9F3;
   --ink:           #211D16;
-  --sub:           #6E6759;
-  --faint:         #9C9484;
+  --sub:           #5C5749;
+  --faint:         #756E60;
   --border:        #E5DFD1;
   --border-strong: #D2CAB8;
   --keycap:        #FCFAF5;
@@ -48,8 +48,8 @@
   --surface:       #1D1B16;
   --surface-2:     #242119;
   --ink:           #EDE8DC;
-  --sub:           #A79E8B;
-  --faint:         #6E6759;
+  --sub:           #B3AA96;
+  --faint:         #918978;
   --border:        #2E2A21;
   --border-strong: #403A2D;
   --keycap:        #26231C;
@@ -1651,7 +1651,7 @@ body.searching .chapter-nav{ margin-top:0; }
   /* ---------- Scrollspy ---------- */
   var spyMap = {};
   navPills.forEach(function(p){ spyMap[p.dataset.target] = p; });
-  var spyTargets = ['overview','act','launcher','nav','bottom','system','bra','cket','glossary']
+  var spyTargets = ['overview','act','launcher','nav','bottom','system','escape','tab','bra','cket','glossary']
     .map(function(id){ return document.getElementById(id); })
     .filter(Boolean);
   var spy = new IntersectionObserver(function(entries){
