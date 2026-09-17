@@ -1071,9 +1071,8 @@ below — is therefore spelled out with an explicit `:vk_none`.
 Japanese IME's reconversion row, but what it actually sends is raw
 Control characters: `⌃J`, `⌃K`, `⌃⇧R`, `⌃;`. In a terminal those never
 reach an IME — they hit ZLE directly, and `⌃J` is `accept-line`, i.e.
-a half-typed `rm -rf …` runs with no confirmation. Suppressing these
-four is the reason the block exists at all; everything else is
-comfort.
+a half-typed `rm -rf …` runs with no confirmation. These four are the
+only cells in the block whose unguarded behaviour destroys something.
 
 **Both Select tiers are suppressed, and `ASdf` had to be.** Selection
 has no counterpart on a shell line, so `aSdf` and `ASdf` were
@@ -1133,10 +1132,17 @@ same up/down sense they carry as PageUp/PageDown in the GUI tiers.
 **`^U` is left at zsh's default.** zsh binds `^U` to
 `kill-whole-line`, not bash's `backward-kill-line`, so `asDf`'s `i`
 deletes the whole line rather than back to its start as `MANUAL.md`
-describes. This is a deliberate choice, not an oversight — the whole
-line is what one actually wants when abandoning a command. A
+describes. It is left at the default rather than corrected; a
 `bindkey '^U' backward-kill-line` in `.zshrc` would restore the
-MANUAL's semantics if that ever stops feeling right.
+MANUAL's semantics.
+
+**The block is scoped to iTerm2 and nothing else.** The condition is
+`^com\.googlecode\.iterm2$`, so Terminal.app, any other terminal
+emulator, and terminals embedded in editors all receive the ordinary
+tiers — including `aSDf`'s control characters. iTerm2 is the only
+terminal app in use here. Widening the condition would mean naming apps
+that aren't used, and adding an editor would silence that editor's own
+text tiers, since the condition can only see the frontmost application.
 
 **`.zshrc` dependency.** `asDf`'s `l` keeps its native
 `delete_forward`, which reaches zsh as `^[[3~` — a sequence zsh binds
