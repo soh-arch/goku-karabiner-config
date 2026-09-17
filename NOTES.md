@@ -338,6 +338,15 @@ their own:
   opposed pairs can't be checked yet. No pair anywhere shares a direction
   and differs only in degree — such a pair would carry no positional
   information, which is the only thing the layout is for.
+- The count includes one pair that a reader will otherwise stop at:
+  `aSDF`'s `i`/`o`, close-all-windows (`⌥⌘W`) against focus-the-Dock
+  (`⌃F3`). It reads as two unrelated actions until the Dock is filed by
+  what it is rather than by the shortcut that reaches it — an app list,
+  the always-visible form of Launchpad (see "Classify an action by what it
+  acts on" in `CLAUDE.md`). The tier's disciplined side and its aux key
+  hold the strong forms of that opposition, `⌘Q` against Launchpad; `i`/`o`
+  are the weaker forms of each, and the direction carries over: put the
+  app's windows away, or call the list of apps up.
 - An action with no direction of its own goes on `u`/`i`/`o`/`p`, the free
   side (`CLAUDE.md`).
 
@@ -646,8 +655,12 @@ used to duplicate `h`/`l`'s tab-cycling (`Ctrl+Tab`/`Shift+Ctrl+Tab`) — a
 "vertical tab switcher" feel that's intuitive in apps like Cursor, but
 ultimately judged to be a habit rather than a necessity. They are now
 close tab (`Cmd+W`) against reopen the last closed one (`Shift+Cmd+T`),
-which is the destructive-versus-undo reading `j`/`k` carries everywhere
-else. New tab moved to the tier's aux keys, where the other three scope
+which is what `j`/`k` carries wherever it isn't a plain direction: `j`
+takes the destructive side, `k` either undoes it or starts something new.
+Eleven of the sixteen tiers put a literal down/up on these two keys; of the
+five that don't, this reading covers `ASDf` (undo / redo), `AsDF` (close
+window / new window) and `aSDF` (quit app / cancel the switcher), and
+`aSDf` is the IME exception named above. New tab moved to the tier's aux keys, where the other three scope
 tiers also keep their way in.
 
 **`aSdF`/`ASdF` (Placement) split by whether the window leaves the screen
@@ -1144,14 +1157,17 @@ Store:
   the others.
 
 There are two Raycast templates, not one plus a variant. `:ray-bg` runs
-`open -g`, which launches without bringing the app forward; `:ray-fg` runs
-plain `open`. Neither is the default form — the name says which one a call
-site wants. Published advice claims `-g` suppresses commands that present
-UI; **that has not happened here.** Every `:ray-bg` call site in this file
-is a UI-presenting command (Raycast Notes, DeepCast, emoji search) and all
-of them have always shown their UI on this machine, with no instance of
-one failing. `:ray-fg` exists because Switch Windows was added and plain
-`open` is the more obvious form for it, not because anything broke.
+`open -g`, `:ray-fg` runs plain `open`. Neither is the default form — the
+name says which one a call site wants.
+
+`-g` is documented by Apple as doing one thing: "do not bring the
+application to the foreground." It says nothing about suppressing a
+command's own interface, and **nothing here behaves as if it did.** Every
+`:ray-bg` call site in this file presents UI — Raycast Notes, DeepCast,
+emoji search — and all of them have always shown it. `:ray-fg` was added
+with Switch Windows because plain `open` is the more obvious form for it,
+not to work around a failure. If a Raycast command ever does come up empty
+under `-g`, `:ray-fg` is where to move it, but that has not happened.
 
 **Amical (`f13`, passive hotkey listener).** AbcAct just sends the
 `f13` key code on Caps Lock + act-a; Amical (a voice-input app) is
