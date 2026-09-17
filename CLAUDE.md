@@ -7,13 +7,21 @@ file-header legend. Drop trailing inline annotations on individual
 manipulators; they're not needed except in the few cases below.
 
 Rationale, tradeoffs, and "why this and not that" belong in `NOTES.md`,
-not next to the code. Keep them out of the `.edn` file entirely.
+not next to the code. Keep them out of the `.edn` file entirely. **Design
+intent is never an inline comment**, however interesting it is.
 
-The only inline annotations worth keeping are the ones that record a
-dependency the reader can't discover from the file alone — e.g. `f13`
-and `f16` are meaningless without knowing Amical and Maccy are
-configured (in those apps' own settings, not here) to listen for those
-exact key codes as their trigger hotkeys.
+An inline annotation earns its place in exactly two cases:
+
+1. **The line would otherwise look broken.** A reader who can't tell a
+   deliberate binding from a mistake will go looking for a bug that isn't
+   there, or "fix" one that works.
+2. **The line's meaning can't be read off the file.** `f13` and `f16` say
+   nothing on their own — they work only because Amical and Maccy are
+   configured, in those apps' own settings, to listen for those exact key
+   codes.
+
+Both are about the code being unreadable or suspicious on its face.
+Neither is about why the design is the way it is.
 
 ## `h`/`j`/`k`/`l` is the disciplined side; `u`/`i`/`o`/`p` is the free side
 
