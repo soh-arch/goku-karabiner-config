@@ -835,18 +835,14 @@ body.searching .chapter-nav{ margin-top:0; }
       </div>
     </div>
 
-    <div class="sub-head">Notation used in this manual</div>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>Written as</th><th>Means</th></tr></thead>
-        <tbody>
-          <tr><td><code>Cmd → h</code></td><td class="dim">Hold L-⌘, press <span class="key">h</span>. No Act keys held.</td></tr>
-          <tr><td><code>Cmd+A → h</code></td><td class="dim">Hold L-⌘ <em>and</em> <span class="key">a</span>, press <span class="key">h</span>.</td></tr>
-          <tr><td><code>Cmd+S+F → h</code></td><td class="dim">Hold L-⌘ <em>and</em> <span class="key">s</span> <em>and</em> <span class="key">f</span>, press <span class="key">h</span>.</td></tr>
-          <tr><td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot on-s"></span><span class="dot"></span><span class="dot on-f"></span></span></span></td><td class="dim">The same thing, as an indicator: dots are <b>a s d f</b>, lit = held.</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <div class="sub-head">The Act indicator</div>
+    <p class="sec-desc">
+      Every tier in this manual carries an indicator:
+      <span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot on-s"></span><span class="dot"></span><span class="dot on-f"></span></span></span>.
+      The four dots are <b>a s d f</b> in that order, and a lit dot is a key held
+      down — so this one is <span class="key">s</span> and <span class="key">f</span>
+      held together, on top of the L-⌘ that opens the layer.
+    </p>
 
     <div class="sub-head">1.1 — Hold vs. tap on the trigger keys</div>
     <div class="table-wrap">
@@ -1184,6 +1180,7 @@ body.searching .chapter-nav{ margin-top:0; }
           <tr><td class="dim">a</td><td><span class="key">u</span> <span class="key">i</span> <span class="key">o</span> <span class="key">p</span></td><td>History top <span class="hint">⌥&lt;</span> · line start · line end · history end <span class="hint">⌥&gt;</span></td></tr>
           <tr><td class="dim">d</td><td><span class="key">i</span> <span class="key">o</span></td><td>Kill line <span class="hint">⌃U</span> · kill to end <span class="hint">⌃K</span></td></tr>
           <tr><td class="dim">a+d</td><td><span class="key">h</span> <span class="key">l</span></td><td>Kill word back <span class="hint">⌃W</span> · kill word forward <span class="hint">⌥D</span></td></tr>
+          <tr><td class="dim">a+d</td><td><span class="key">i</span> <span class="key">o</span></td><td>Kill line <span class="hint">⌃U</span> · kill to end <span class="hint">⌃K</span></td></tr>
           <tr><td class="dim">a+s+d</td><td><span class="key">j</span> <span class="key">k</span></td><td>Undo <span class="hint">⌃_</span> · redo <span class="hint">⌥R</span></td></tr>
         </tbody>
       </table>
