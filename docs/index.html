@@ -17,8 +17,8 @@
   --surface:       #FFFFFF;
   --surface-2:     #FBF9F3;
   --ink:           #211D16;
-  --sub:           #6E6759;
-  --faint:         #9C9484;
+  --sub:           #5C5749;
+  --faint:         #756E60;
   --border:        #E5DFD1;
   --border-strong: #D2CAB8;
   --keycap:        #FCFAF5;
@@ -48,8 +48,8 @@
   --surface:       #1D1B16;
   --surface-2:     #242119;
   --ink:           #EDE8DC;
-  --sub:           #A79E8B;
-  --faint:         #6E6759;
+  --sub:           #B3AA96;
+  --faint:         #918978;
   --border:        #2E2A21;
   --border-strong: #403A2D;
   --keycap:        #26231C;
@@ -865,12 +865,9 @@ body.searching .chapter-nav{ margin-top:0; }
       </table>
     </div>
     <p class="sec-desc" style="margin-top:12px">
-      Every modifier that a trigger key took over reappears somewhere else: <strong>⌘</strong> on
-      <span class="key">Caps Lock</span> and <span class="key">R-⌘</span>
-      (L-⌘ is the Asterisk trigger), <strong>⇧</strong> on <span class="key">Space</span>
-      (both Shifts are layer triggers), <strong>⌃</strong> on <span class="key">fn</span>
-      and physical <span class="key">L-⌃</span>.
-      Both <span class="key">⌥</span> keys stay ordinary.
+      Four keys became layer triggers, so every modifier they carried had to
+      land somewhere else. That is what this table is: the reassignment, not
+      a set of conveniences.
     </p>
 
     <div class="sub-head">1.2 — Accent dead keys <span style="text-transform:none;letter-spacing:0;font-weight:600">(outside Asterisk and Cket)</span></div>
@@ -1060,29 +1057,29 @@ body.searching .chapter-nav{ margin-top:0; }
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot on-d"></span><span class="dot"></span></span></span></td>
             <td class="row-label">Delete<span class="formula">Cmd+D →</span></td>
-            <td>Char back</td><td>Line below</td><td>Line above</td><td>Char forward</td>
+            <td>Char back</td><td>Line below<span class="hint">⇧↓ Del</span></td><td>Line above<span class="hint">⇧↑ Del</span></td><td>Char forward</td>
             <td>Page up<span class="hint">⇧PgUp</span></td><td>Line start<span class="hint">⇧Home</span></td><td>Line end<span class="hint">⇧End</span></td><td>Page down<span class="hint">⇧PgDn</span></td>
             <td class="dim">Select all</td><td class="dim">Select all</td><td class="dim">Select all</td><td class="dim">Select all</td>
           </tr>
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot on-a"></span><span class="dot"></span><span class="dot on-d"></span><span class="dot"></span></span></span></td>
             <td class="row-label">Amplified Delete<span class="formula">Cmd+A+D →</span></td>
-            <td>Word ←<span class="hint">⌥Del</span></td><td>Paragraph ↓</td><td>Paragraph ↑</td><td>Word →<span class="hint">⌥FwdDel</span></td>
-            <td>Doc top</td><td>Line start</td><td>Line end</td><td>Doc end</td>
+            <td>Word ←<span class="hint">⌥Del</span></td><td>Paragraph ↓<span class="hint">⇧⌥↓ Del</span></td><td>Paragraph ↑<span class="hint">⇧⌥↑ Del</span></td><td>Word →<span class="hint">⌥FwdDel</span></td>
+            <td>Doc top<span class="hint">⇧⌘↑ Del</span></td><td>Line start<span class="hint">⇧⌘← Del</span></td><td>Line end<span class="hint">⇧⌘→ Del</span></td><td>Doc end<span class="hint">⇧⌘↓ Del</span></td>
             <td class="dim">Select all</td><td class="dim">Select all</td><td class="dim">Select all</td><td class="dim">Select all</td>
           </tr>
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot on-s"></span><span class="dot on-d"></span><span class="dot"></span></span></span></td>
             <td class="row-label">Reconvert &amp; Clipboard<span class="formula">Cmd+S+D →</span></td>
             <td>Reconvert<span class="hint">⌃⇧R</span></td><td>To hiragana<span class="hint">⌃J</span></td><td>To katakana<span class="hint">⌃K</span></td><td>To half-width<span class="hint">⌃;</span></td>
-            <td>Cut</td><td>Copy</td><td>Paste</td><td>Paste &amp; match style</td>
+            <td>Cut<span class="hint">⌘X</span></td><td>Copy<span class="hint">⌘C</span></td><td>Paste<span class="hint">⌘V</span></td><td>Paste &amp; match style<span class="hint">⇧⌥⌘V</span></td>
             <td class="dim">Select all</td><td class="dim">Select all</td><td class="dim">Select all</td><td class="dim">Select all</td>
           </tr>
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot on-a"></span><span class="dot on-s"></span><span class="dot on-d"></span><span class="dot"></span></span></span></td>
             <td class="row-label">Undo &amp; Line Ops<span class="formula">Cmd+A+S+D →</span></td>
             <td>Outdent<span class="hint">⌘[</span></td><td>Undo<span class="hint">⌘Z</span></td><td>Redo<span class="hint">⇧⌘Z</span></td><td>Indent<span class="hint">⌘]</span></td>
-            <td>Duplicate line up</td><td>Move line up</td><td>Move line down</td><td>Duplicate line down</td>
+            <td>Duplicate line up<span class="hint">⇧⌥↑</span></td><td>Move line up<span class="hint">⌥↑</span></td><td>Move line down<span class="hint">⌥↓</span></td><td>Duplicate line down<span class="hint">⇧⌥↓</span></td>
             <td class="dim">Select all</td><td class="dim">Select all</td><td class="dim">Select all</td><td class="dim">Select all</td>
           </tr>
         </tbody>
@@ -1123,7 +1120,7 @@ body.searching .chapter-nav{ margin-top:0; }
         </tbody>
       </table>
     </div>
-    <p class="note">Dragging lives on the mouse tiers: hold <code>;</code> to keep the button down and steer with <code>h j k l</code>. The placement tiers took over the window geometry that used to sit under <code>s+d+f</code>.</p>
+    <p class="note">Dragging lives on the mouse tiers: hold <code>;</code> to keep the button down and steer with <code>h j k l</code>.</p>
 
     <div class="sub-head">4.4 — Tabs, apps &amp; windows</div>
     <div class="table-wrap">
@@ -1133,7 +1130,7 @@ body.searching .chapter-nav{ margin-top:0; }
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot on-d"></span><span class="dot on-f"></span></span></span></td>
             <td class="row-label">Tab<span class="formula">Cmd+D+F →</span></td>
-            <td>Previous tab</td><td>Close tab</td><td>Reopen closed tab<span class="hint">⇧⌘T</span></td><td>Next tab</td><td>First tab<span class="hint">⌘1</span></td><td>Back<span class="hint">⌘[</span></td><td>Forward<span class="hint">⌘]</span></td><td>Last tab<span class="hint">⌘9</span></td>
+            <td>Previous tab<span class="hint">⌃⇧⇥</span></td><td>Close tab<span class="hint">⌘W</span></td><td>Reopen closed tab<span class="hint">⇧⌘T</span></td><td>Next tab<span class="hint">⌃⇥</span></td><td>First tab<span class="hint">⌘1</span></td><td>Back<span class="hint">⌘[</span></td><td>Forward<span class="hint">⌘]</span></td><td>Last tab<span class="hint">⌘9</span></td>
             <td class="dim">New tab</td><td class="dim">New tab</td><td class="dim">New tab</td><td class="dim">New tab</td>
           </tr>
           <tr>
@@ -1145,7 +1142,7 @@ body.searching .chapter-nav{ margin-top:0; }
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot on-s"></span><span class="dot on-d"></span><span class="dot on-f"></span></span></span></td>
             <td class="row-label">App<span class="formula">Cmd+S+D+F →</span></td>
-            <td>Previous app<span class="hint">⇧⌘Tab</span></td><td>Quit app</td><td>Cancel the switcher<span class="hint">.</span></td><td>Next app<span class="hint">⌘Tab</span></td><td>Hide others<span class="hint">⌥⌘H</span></td><td>Close all windows<span class="hint">⌥⌘W</span></td><td>Focus the Dock<span class="hint">⌃F3</span></td><td>Hide app<span class="hint">⌘H</span></td>
+            <td>Previous app<span class="hint">⇧⌘Tab</span></td><td>Quit app<span class="hint">⌘Q</span></td><td>Cancel the switcher<span class="hint">.</span></td><td>Next app<span class="hint">⌘Tab</span></td><td>Hide others<span class="hint">⌥⌘H</span></td><td>Close all windows<span class="hint">⌥⌘W</span></td><td>Focus the Dock<span class="hint">⌃F3</span></td><td>Hide app<span class="hint">⌘H</span></td>
             <td class="dim">Launchpad</td><td class="dim">Launchpad</td><td class="dim">Launchpad</td><td class="dim">Launchpad</td>
           </tr>
           <tr>
@@ -1157,7 +1154,7 @@ body.searching .chapter-nav{ margin-top:0; }
         </tbody>
       </table>
     </div>
-    <p class="note">Half-placements <strong>cycle</strong> ½ → ⅔ → ⅓ on repeated presses (Raycast setting).</p>
+    <p class="note">The half-placement cycle is a Raycast setting, not something this keymap does.</p>
 
     <div class="sub-head">4.5 — Literal space</div>
     <div class="table-wrap">
@@ -1455,7 +1452,7 @@ body.searching .chapter-nav{ margin-top:0; }
       </div>
       <div class="glossary-item">
         <div class="glossary-term">Select (s)</div>
-        <p class="glossary-def">Turns a movement into a selection; with <b>f</b>, turns pointer control into window placement.</p>
+        <p class="glossary-def">The tier acts on a range rather than a point — text gets selected instead of traversed, and a window gets placed instead of a pointer moved.</p>
       </div>
       <div class="glossary-item">
         <div class="glossary-term">Delete (d)</div>
@@ -1491,7 +1488,7 @@ body.searching .chapter-nav{ margin-top:0; }
     <div class="footer-links">
       <a href="https://github.com/yqrashawn/GokuRakuJoudo">Goku ↗</a>
       <a href="https://karabiner-elements.pqrs.org/">Karabiner-Elements ↗</a>
-      <a href="../NOTES.md">Implementation notes</a>
+      <a href="https://github.com/soh-arch/goku-karabiner-config/blob/main/NOTES.md">Implementation notes ↗</a>
     </div>
     <button class="to-top" id="toTop">Back to top ↑</button>
   </div>
@@ -1651,7 +1648,7 @@ body.searching .chapter-nav{ margin-top:0; }
   /* ---------- Scrollspy ---------- */
   var spyMap = {};
   navPills.forEach(function(p){ spyMap[p.dataset.target] = p; });
-  var spyTargets = ['overview','act','launcher','nav','bottom','system','bra','cket','glossary']
+  var spyTargets = ['overview','act','launcher','nav','bottom','system','escape','tab','bra','cket','glossary']
     .map(function(id){ return document.getElementById(id); })
     .filter(Boolean);
   var spy = new IntersectionObserver(function(entries){

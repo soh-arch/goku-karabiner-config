@@ -931,10 +931,11 @@ Goku/Karabiner output problem. Only Ctrl+F4 (move focus to
 active/next window, `asdf`) worked reliably at the time.** F2 and F8
 started working at some later point (macOS itself is known to be
 flaky here across versions — nothing in this repo changed to cause
-it), so `asDf` → Ctrl+F2 and `asdF` → Ctrl+F8 were added. `asdF`
-previously sent app-defined pane focus (`Ctrl+\``) instead, but that
-binding saw little use once `Cmd+J` covered the same need, so it was
-replaced rather than kept alongside Ctrl+F8. Treat this whole family as
+it), so Ctrl+F2 was added on `asDf` and Ctrl+F8 on `asdF`. The latter
+displaced app-defined pane focus (`Ctrl+\``), which saw little use once
+`Cmd+J` covered the same need. Both have since moved — Ctrl+F2 to `asdF`
+and Ctrl+F8 off the Tab key entirely — for the reasons in "Menu bar,
+status menus, toolbar" above. Treat this whole family as
 flaky: a working state and a non-working state are each liable to be
 temporary, so a stale "it does nothing" note here is worth re-checking
 against the machine before acting on it.
