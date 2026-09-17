@@ -123,8 +123,17 @@ Check `NOTES.md` first when touching held modifiers, multi-action `to`
 chains, or global app hotkeys — known gotchas are recorded there so the
 same debugging loop doesn't happen twice. Add new gotchas there too.
 
-Before every commit, run the EDN bracket-balance check on `AbcAct.edn`
-and, if `docs/index.html` changed, the HTML tag-balance check.
+Before every commit, run `python3 scripts/check.py`. It reads the files
+and needs nothing installed. It checks bracket balance in `AbcAct.edn`,
+tag balance in `docs/index.html`, that no two rules on the same key in the
+same `:des` block can both match — the failure the guard rule above exists
+to prevent, and the one that never announces itself — and that code
+outside comments stays ASCII.
+
+It cannot check a Raycast slug, a key code, or whether a binding is in the
+right tier. A wrong slug is a well-formed string that matches no command
+and fails silently; `goku` catches unknown key names; the rest is the
+machine's to answer, or yours.
 
 If `docs/index.html` changed in a way that shows in the README screenshots,
 re-run `scripts/shoot-readme-images.py` and commit the regenerated
