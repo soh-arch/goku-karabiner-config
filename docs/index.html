@@ -1167,6 +1167,30 @@ body.searching .chapter-nav{ margin-top:0; }
     </div>
     <p class="note">The real Space bar is <strong>⇧</strong> on hold, so it cannot produce a held or modified space. This is where that space lives.</p>
 
+    <div class="sub-head">4.6 — Inside iTerm2</div>
+    <p class="sec-desc">
+      A shell line has no selection and no paragraphs, so the eight text tiers
+      send shell control sequences there instead of macOS editing keys. Only
+      the cells below change; everything not listed behaves as it does
+      everywhere else.
+    </p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Act</th><th>Keys</th><th>In iTerm2</th></tr></thead>
+        <tbody>
+          <tr><td class="dim">none</td><td><span class="key">i</span> <span class="key">o</span></td><td>Line start <span class="hint">⌃A</span> · line end <span class="hint">⌃E</span></td></tr>
+          <tr><td class="dim">a</td><td><span class="key">h</span> <span class="key">l</span></td><td>Word back <span class="hint">⌥B</span> · word forward <span class="hint">⌥F</span></td></tr>
+          <tr><td class="dim">a</td><td><span class="key">j</span> <span class="key">k</span></td><td>History search forward <span class="hint">⌥N</span> · backward <span class="hint">⌥P</span></td></tr>
+          <tr><td class="dim">a</td><td><span class="key">u</span> <span class="key">i</span> <span class="key">o</span> <span class="key">p</span></td><td>History top <span class="hint">⌥&lt;</span> · line start · line end · history end <span class="hint">⌥&gt;</span></td></tr>
+          <tr><td class="dim">d</td><td><span class="key">i</span> <span class="key">o</span></td><td>Kill line <span class="hint">⌃U</span> · kill to end <span class="hint">⌃K</span></td></tr>
+          <tr><td class="dim">a+d</td><td><span class="key">h</span> <span class="key">l</span></td><td>Kill word back <span class="hint">⌃W</span> · kill word forward <span class="hint">⌥D</span></td></tr>
+          <tr><td class="dim">a+s+d</td><td><span class="key">j</span> <span class="key">k</span></td><td>Undo <span class="hint">⌃_</span> · redo <span class="hint">⌥R</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note"><strong>Inert in iTerm2:</strong> both select tiers entirely (<span class="key">s</span> and <span class="key">a+s</span>, all eight keys each), the multi-line deletes on <span class="key">d</span> and <span class="key">a+d</span>, the reconversion row on <span class="key">s+d</span>, and the line operations on <span class="key">a+s+d</span>. They are silenced rather than left to fall through, because what would fall through is a macOS editing key the shell mangles.</p>
+    <p class="note">Word motion and word delete need iTerm2's <strong>Left Option Key = Esc+</strong> (Settings → Profiles → Keys). That setting is the one part of this feature that does not live in this repo. The switch applies to iTerm2 alone — other terminal apps, and terminals embedded in editors, get the ordinary tiers.</p>
+
   </section>
 
 
