@@ -233,10 +233,10 @@ document start/end).
 Deleting a whole line outright is not lost — Bra Numpad's `q` still does
 it, and it keeps the `[:end :!Shome :delete_or_backspace]` implementation
 this change removed from `asDf`. Note that neither form removes the
-newline; both empty the line and leave it in place. If a true
-`Cmd+Shift+K`-style line delete is ever wanted on the Asterisk side, it
-belongs in a free slot rather than back in `u`/`i`/`o`/`p`, whose four
-cells carry the boundary geometry.
+newline; both empty the line and leave it in place. Nothing on the
+Asterisk side does a true `Cmd+Shift+K`-style line delete, and this change
+did not add one — the four cells that used to approximate it now carry the
+boundary geometry instead.
 
 **The same fix applied to `o`/`p` in both delete tiers.** The
 forward-direction rule established above — a forward delete must end its
@@ -266,7 +266,7 @@ at exactly half the travel — ±800 against ±1600, ±1600 against ±3200 —
 and `MANUAL.md` once called it 微調整用. Everywhere else in the config the
 outer four take the *coarser* unit, never the finer one. The tier was
 shipped to get the feature in with `u`/`i`/`o`/`p` left to revisit, and the
-revisit never happened. A symmetric-looking deviation is still a deviation.
+revisit never happened.
 
 ## Tab pinning was dropped, and Shortkeys went with it
 
@@ -794,11 +794,6 @@ was left in Bra rather than moved elsewhere because there was no
 candidate suite worth putting in Bra instead; inventing one to justify
 keeping the layer would repeat exactly the mistake Depiction was.
 
-If Bra is ever rebuilt, the shape worth reaching for is a **left-pinky
-trigger with right-hand content**. Bra and Cket are both same-hand
-(trigger and keys under one hand, which is cramped); Asterisk is the only
-cross-hand layer, and it is the comfortable one.
-
 **Spacebar carries Shift; the layer triggers give up their own roles.**
 Both physical Shift keys are layer triggers (L-Shift → Bra, R-Shift →
 Cket) and L-Command triggers Asterisk, so neither role can sit on its own
@@ -1267,15 +1262,15 @@ layout was named, exists only in that Raycast install, and is not
 recoverable from this repo. Take slugs from Raycast's own Copy Deeplink;
 a slug that does not exist is a silent no-op, with no error anywhere.
 
-**Every `:wm` and `:ray-*` slug comes from Copy Deeplink, and nothing else
-counts.** Not the manual's prose, not a survey of other people's public
-configs, not the pattern the neighbouring slugs follow. All three have been
-tried here and all three have produced wrong slugs that sat in the file
-looking right. `next-display` is the case worth remembering: it was in this
-file for a long time, was defended on the grounds that a survey had checked
-it, and is actually `move-to-next-display`. A wrong slug fails silently, so
-nothing ever contradicts it — which is exactly why the only acceptable
-provenance is the deeplink Raycast itself hands you.
+**Three other ways of arriving at a slug were tried here, and all three
+produced wrong ones.** The manual's prose, a survey of other people's
+public configs, and the pattern the neighbouring slugs follow each yielded
+a slug that sat in the file looking right. `next-display` is the case
+worth recording: it was in this file for a long time and was defended on
+the grounds that a survey had checked it, while the working slug is
+`move-to-next-display`. A wrong slug fails silently, so nothing ever
+contradicts it — which is why the slugs in the file now were taken from
+Raycast's own Copy Deeplink.
 
 **Japanese input method (⌃⇧R / ⌃J / ⌃K / ⌃;, `aSDf`'s h/j/k/l).** The
 reconversion family is the Japanese IME's own set of Control shortcuts.
