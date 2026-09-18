@@ -616,17 +616,11 @@ rather than inventing new ones — except `h`/`l`, which are a genuine
 single-keystroke native action instead.** `j`/`k` select a paragraph
 (`Shift+Option+Up/Down`, matching Navigation `ASdf`'s j/k) then delete;
 `u`/`i`/`o`/`p` select to a Cmd-boundary (matching Navigation `ASdf`'s u/i/
-o/p) then delete. `h`/`l` briefly deleted to the *line* boundary instead
-of by word (`h` was `Cmd+Delete`, `l` selected to line end with
-`Shift+Cmd+Right` before deleting) — a real inconsistency caught later:
-every other row in this family maps act-a alone to "Option flavor," and
-Cmd-boundary-delete didn't match that, despite already being documented
-elsewhere as "word delete." Fixed to `!Odelete_or_backspace`/
-`!Odelete_forward` — macOS's own native single-keystroke word-delete,
-which needs no select-then-delete step at all (see "Amplified Delete's
-`h`/`l` fixed from Cmd to Option" above for the full reasoning, including
-why `j`/`k`/`u`/`i`/`o`/`p`'s Shift-based select-then-delete wasn't
-changed alongside it).
+o/p) then delete. `h`/`l` are the exception — see "Amplified Delete's
+`h`/`l` fixed from Cmd to Option" above for why they ended up as a single
+`!Odelete_or_backspace`/`!Odelete_forward` chord rather than a
+select-then-delete pair, and why `j`/`k`/`u`/`i`/`o`/`p` weren't changed
+alongside them.
 
 **`open_bracket`/`close_bracket`/`semicolon`/`quote` are a deliberately
 sparse auxiliary group, not a 16-tier system like h/j/k/l.** These four
@@ -785,8 +779,8 @@ Spacebar's hold action was the everyday Command key — every ordinary Cmd
 shortcut went through it — and those outputs never appear in this config,
 so counting `:!C` from-keys here says nothing about how much Spacebar is
 used. Depiction was one consumer, not the reason Spacebar existed.
-(Spacebar has since become Shift; see "Spacebar carries Shift, Caps Lock
-carries Command" below.)
+(Spacebar has since become Shift; see "Spacebar carries Shift; the layer
+triggers give up their own roles" below.)
 
 Bra keeping only the numpad is a narrowing, not a loss: the layer had
 been two unrelated suites sharing one trigger, and is now one coherent
@@ -803,10 +797,7 @@ Cket) and L-Command triggers Asterisk, so neither role can sit on its own
 key. Spacebar is the only modifier position either thumb can reach, which
 makes it the right home for Shift — a modifier that constantly needs to
 be pressed by the hand *not* typing the letter. Command is less
-hand-sensitive, so at the time it went to Caps Lock and R-Command. It has
-since moved again — Command now lives on `fn`, physical L-Control and
-R-Command, and Caps Lock holds Ctrl instead; see "Command duty moved off
-Caps Lock onto `fn`/Left Control" below.
+hand-sensitive, so it went to Caps Lock and R-Command.
 
 R-Option used to be a second Shift, and was returned to a plain Option in
 the same pass. With Spacebar reachable by either thumb, a second Shift
@@ -827,19 +818,18 @@ Fixed by switching to `!E` and moving the modifier-qualified rules
 ahead of the plain ones in the rule list.
 
 The one exception is inside Asterisk, where Caps Lock is the Maccy
-trigger — `:!layer-ast` guards Caps Lock's own modifier rule (Ctrl now,
-Command when this was written). That guard is enough because Karabiner
-does not re-feed a manipulator's `to` output through its own
-manipulators — the same reason the older `caps_lock → right_shift`
-mapping never activated Cket. The live case for that today is `fn` and
-physical L-Control: both emit `left_command`, and neither re-enters the
-L-Command/Asterisk trigger rule.
+trigger — `:!layer-ast` guards Caps Lock's own modifier rule. That guard
+is enough because Karabiner does not re-feed a manipulator's `to` output
+through its own manipulators — the same reason the older `caps_lock →
+right_shift` mapping never activated Cket. Caps Lock is the live case:
+outside Asterisk it emits `left_command`, and that output does not
+re-enter the L-Command/Asterisk trigger rule.
 
 **Escape carries destructive system actions; Caps Lock keeps the routine ones.**
 Both live inside Asterisk. Caps Lock's Act-gated family (voice input,
 screenshot variants, AirDrop) are things worth reaching for often, so
 they stayed on the key the left pinky already rests on — Caps Lock, which
-outside Asterisk is the everyday Ctrl. Sleep, restart, and log out are
+outside Asterisk is the everyday Command. Sleep, restart, and log out are
 rare and irreversible, so they moved to a key
 that had zero prior identity (physical Escape is otherwise unused —
 Caps Lock's own alone-tap already produces `:escape`, but that's a
