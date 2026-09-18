@@ -576,8 +576,7 @@ between the two keys now both producing the same output.
 
 The opposite arrangement was tried once — `fn` and Left Control sending
 Left Command, with Caps Lock's hold becoming Left Control — and was
-rolled back. Command is wanted under the pinky, not under `fn`. Don't
-re-do the swap without asking first.
+rolled back. Command is wanted under the pinky, not under `fn`.
 
 **Maccy paste-by-index layer exists to keep thumb+pinky on Cmd+Tab.** The
 goal was pasting a specific clipboard history slot without ever letting go
@@ -661,14 +660,18 @@ never change them. Assignments:
 used to duplicate `h`/`l`'s tab-cycling (`Ctrl+Tab`/`Shift+Ctrl+Tab`) — a
 "vertical tab switcher" feel that's intuitive in apps like Cursor, but
 ultimately judged to be a habit rather than a necessity. They are now
-close tab (`Cmd+W`) against reopen the last closed one (`Shift+Cmd+T`),
-which is what `j`/`k` carries wherever it isn't a plain direction: `j`
-takes the destructive side, `k` either undoes it or starts something new.
-Eleven of the sixteen tiers put a literal down/up on these two keys; of the
-five that don't, this reading covers `ASDf` (undo / redo), `AsDF` (close
-window / new window) and `aSDF` (quit app / cancel the switcher), and
-`aSDf` is the IME exception named above. New tab moved to the tier's aux keys, where the other three scope
-tiers also keep their way in.
+close tab (`Cmd+W`) against reopen the last closed one (`Shift+Cmd+T`).
+New tab moved to the tier's aux keys, where the other three scope tiers
+also keep their way in.
+
+Eleven of the sixteen tiers put a literal down/up on these two keys, and
+that constraint left a tendency behind in the five that don't: the down
+key took the action that removes something, the up key the one that
+brings it back or starts a new one. `ASDf` is undo / redo, `AsDF` close
+window / new window, `aSDF` quit app / cancel the switcher, and this tier
+came out the same way; `aSDf` is the IME exception named above. The
+direction produced the tendency — the tiers were not filled against it as
+a rule.
 
 **`aSdF`/`ASdF` (Placement) split by whether the window leaves the screen
 it is on.** `aSdF` places a window within its current screen: nudge moves
@@ -908,15 +911,6 @@ to work during the NSSharingService investigation above, and
 subprocess can read it back via
 `NSProcessInfo.processInfo.environment`, since JXA has no direct
 equivalent of AppleScript's `path to temporary items` shorthand here.
-
-**Tab's focus-jump family never uses act-a.** Both Tab and the Act keys
-live on the left hand, and Tab sits directly above `a` — same finger
-(left pinky) reaches both. Holding Tab down already occupies that
-pinky, so act-a is physically unreachable without letting go of Tab.
-act-d and act-f (left middle/index fingers) have no such conflict and
-stay on home position throughout, which matters here specifically
-because these actions are meant to be fired and immediately followed
-by more typing — landing back on home row is the whole point.
 
 **Ctrl+F2/F3/F5/F6/F8 ("move focus to menu bar/Dock/toolbar/floating
 window/status menu") were originally dropped from consideration
