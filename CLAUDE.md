@@ -23,6 +23,48 @@ An inline annotation earns its place in exactly two cases:
 Both are about the code being unreadable or suspicious on its face.
 Neither is about why the design is the way it is.
 
+## `NOTES.md` is a record, not a rulebook
+
+`README.md` gives `NOTES.md` its job: the Karabiner/Goku gotchas found
+while building this config, written for my future self. The section above
+hands it rationale and tradeoffs as well. **All of that is
+backward-looking** — what was hit, what was tried, what was decided and
+why.
+
+Standing rules that bind a decision not yet made belong here in
+`CLAUDE.md` instead. A rule written into `NOTES.md` is wrong twice over:
+it sits in the file that does not hold rules, and because that file is a
+record, it reads as one that was already settled.
+
+So do not write a rule into `NOTES.md`, and do not promote one observation
+into a law. Four shapes to watch for:
+
+1. **A prescription for work not yet done.** "If Bra is ever rebuilt, the
+   shape worth reaching for is a left-pinky trigger with right-hand
+   content." Nobody decided that.
+2. **An absolute.** "…and nothing else counts." "The only acceptable
+   provenance is …." The observation underneath is usually true and worth
+   keeping; the absolute on top of it is the invention.
+3. **A law over a whole family.** "This family never uses act-a." Check
+   whether the stated reason covers every case before writing it down —
+   Tab does not use act-s either, and a pinky conflict with `a` says
+   nothing about that.
+4. **An aphorism.** "A symmetric-looking deviation is still a deviation."
+   One placeholder tier turned into a maxim.
+
+Write what happened and what was observed. Where a genuine rule seems to
+be emerging, propose it rather than record it; once decided, it goes here.
+
+**The trap:** correcting an invented rule does not mean replacing it with
+the true one. Some principles in this config are deliberately unwritten,
+and for those the correct state is that nothing is written. Deletion is
+the whole fix.
+
+This is not tidiness. A rule sitting in a record gets quoted as settled —
+the first example above was read straight out of `NOTES.md` by another
+session, hardened into the imperative, and built on before anyone noticed
+it had never been decided.
+
 ## `h`/`j`/`k`/`l` is the disciplined side; `u`/`i`/`o`/`p` is the free side
 
 The right hand's eight keys are not peers. **`h`/`j`/`k`/`l` is the
