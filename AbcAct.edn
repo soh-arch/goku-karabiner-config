@@ -153,8 +153,6 @@
 
   {:des "Core: Tab Focus Jump"
    :rules [
-    ;; act-a is unreachable while Tab is held (both pinky), so this family
-    ;; never uses it. See NOTES.md.
     [:##tab           :!Tf4 [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f]]
     [:##tab           :!Tf2 [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :act-f]]
    ]}
