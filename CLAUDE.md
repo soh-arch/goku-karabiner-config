@@ -175,17 +175,20 @@ Check `NOTES.md` first when touching held modifiers, multi-action `to`
 chains, or global app hotkeys — known gotchas are recorded there so the
 same debugging loop doesn't happen twice. Add new gotchas there too.
 
-Before every commit, run `python3 scripts/check.py`. It reads the files
-and needs nothing installed. It checks bracket balance in every `.edn`,
-tag balance in `docs/index.html`, that no rule is unreachable — an earlier
-rule on the same key matching every state it does, which is the failure
-the guard rule above exists to prevent and the one that never announces
-itself — and that code outside comments and strings stays ASCII.
+Before committing a change to `AbcAct.edn`, run `python3 scripts/check.py`.
+It needs nothing installed, and it checks one thing: that no rule is
+unreachable — an earlier rule on the same key matching every state it
+does, which is the failure the guard rule above exists to prevent and the
+one that never announces itself.
 
 It cannot check a Raycast slug, a key code, or whether a binding is in the
 right tier. A wrong slug is a well-formed string that matches no command
 and fails silently; `goku` catches unknown key names; the rest is the
 machine's to answer, or yours.
+
+Keep the script to checks like the one it has: a mistake that recurs despite
+care, that nothing else reports, and that a script catches cleanly. A
+check that duplicates a loud failure elsewhere does not belong in it.
 
 If `docs/index.html` changed in a way that shows in the README screenshots,
 re-run `scripts/shoot-readme-images.py` and commit the regenerated
