@@ -625,22 +625,23 @@ alongside them.
 **`open_bracket`/`close_bracket`/`semicolon`/`quote` are a deliberately
 sparse auxiliary group, not a 16-tier system like h/j/k/l.** These four
 keys support the main navigation/edit system rather than carrying
-independent per-tier meaning, so they're keyed only on `act-d`/`act-f`
-(4 states) instead of all four act flags (16 states) — `act-a`/`act-s`
-never change them. Assignments:
-- `act-d` off, `act-f` off (asdf/Asdf/aSdf/ASdf): Return. Replaces an
+independent per-tier meaning. Assignments:
+- asdf/Asdf: Return. Replaces an
   earlier Spacebar mapping on `open_bracket`/`close_bracket`, which became
   redundant once Spacebar's own alone-action (plain Spacebar tap) covered
   that role in daily use. `backslash` used to share this Spacebar mapping
   but isn't considered part of this four-key group and was left
   unassigned (native passthrough) when the group's definition narrowed to
-  just these four keys.
+  just these four keys. aSdf/ASdf shared Return until they were given
+  Delete (`delete_or_backspace`), which split that four-tier block into
+  full guard stacks.
 - `act-d` on, `act-f` off (asDf/AsDf/aSDf/ASDf): Select All (`Cmd+A`).
   `semicolon` specifically is one of the most reachable keys on the board
   (resting right under the home-row pinky), which is part of why Select
   All landed here rather than needing its own dedicated key elsewhere.
 - `act-f` on: assigned per tier, so these rules carry the full four-flag
-  guard while the two blocks above cover four tiers each on two flags.
+  guard, as the Return and Delete tiers now do; only Select All still
+  covers four tiers on two flags.
   The mouse pair (asdF/AsdF) keeps left/right click — `open_bracket`/
   `semicolon` left, `close_bracket`/`quote` right — and is the one place
   two tiers agree, because `act-a` steps an *amount* there and a click has

@@ -487,16 +487,33 @@
 
   {:des "Asterisk Right: Auxiliary Keys"
    ;; open_bracket/close_bracket/semicolon/quote support h/j/k/l and u/i/o/p rather than
-   ;; carrying independent meaning per tier. On the act-f side each tier assigns them
-   ;; separately, so those rules spell out all four act flags; the two blocks below it
-   ;; genuinely cover four tiers at once and are guarded on act-d/act-f alone.
+   ;; carrying independent meaning per tier. Only the Select All block covers four
+   ;; tiers at once and is guarded on act-d/act-f alone; every other block spells out
+   ;; all four act flags.
    :rules [
-    ;; asdf / Asdf / aSdf / ASdf → left column Return, right column Shift+Return
-    ;; Physical placement carries the weight difference, matching the L/R click split below.
-    [:##open_bracket  :return_or_enter [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-d :!act-f]]
-    [:##semicolon     :return_or_enter [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-d :!act-f]]
-    [:##close_bracket :!Sreturn_or_enter [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-d :!act-f]]
-    [:##quote         :!Sreturn_or_enter [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-d :!act-f]]
+    ;; asdf — Return left, Shift+Return right
+    [:##open_bracket  :return_or_enter [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f]]
+    [:##close_bracket :!Sreturn_or_enter [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f]]
+    [:##semicolon     :return_or_enter [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f]]
+    [:##quote         :!Sreturn_or_enter [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f]]
+
+    ;; Asdf — Return left, Shift+Return right
+    [:##open_bracket  :return_or_enter [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
+    [:##close_bracket :!Sreturn_or_enter [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
+    [:##semicolon     :return_or_enter [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
+    [:##quote         :!Sreturn_or_enter [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
+
+    ;; aSdf — Delete
+    [:##open_bracket  :delete_or_backspace [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f]]
+    [:##close_bracket :delete_or_backspace [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f]]
+    [:##semicolon     :delete_or_backspace [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f]]
+    [:##quote         :delete_or_backspace [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :act-s :!act-d :!act-f]]
+
+    ;; ASdf — Delete
+    [:##open_bracket  :delete_or_backspace [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :!act-d :!act-f]]
+    [:##close_bracket :delete_or_backspace [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :!act-d :!act-f]]
+    [:##semicolon     :delete_or_backspace [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :!act-d :!act-f]]
+    [:##quote         :delete_or_backspace [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :!act-d :!act-f]]
 
     ;; asDf / AsDf / aSDf / ASDf → Select All
     [:##open_bracket  :!Ca [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-d :!act-f]]
