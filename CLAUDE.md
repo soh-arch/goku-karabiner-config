@@ -186,9 +186,10 @@ right tier. A wrong slug is a well-formed string that matches no command
 and fails silently; `goku` catches unknown key names; the rest is the
 machine's to answer, or yours.
 
-Keep the script to checks like the one it has: a mistake that recurs despite
-care, that nothing else reports, and that a script catches cleanly. A
-check that duplicates a loud failure elsewhere does not belong in it.
+Keep the script to checks like the one it has: a mistake an LLM keeps
+making despite care, that nothing else reports, and that a script catches
+cleanly. A check that duplicates a loud failure elsewhere, or guards a
+mistake that rarely happens, does not belong in it.
 
 If `docs/index.html` changed in a way that shows in the README screenshots,
 re-run `scripts/shoot-readme-images.py` and commit the regenerated
