@@ -477,12 +477,10 @@
     [:##j             :!Tdown_arrow [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :act-f]]
     [:##k             :!Tup_arrow [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :act-f]]
     [:##l             :!Tright_arrow [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :act-f]]
-    ;; Three of the four layout slugs are still unchosen. These are Raycast
-    ;; Window Management commands, and a slug that does not exist is a silent no-op.
-    [:##u             [:wm "claude-terminal"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :act-f]]
-    [:##i             [:wm "TODO-layout-2"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :act-f]]
-    [:##o             [:wm "TODO-layout-3"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :act-f]]
-    [:##p             [:wm "TODO-layout-4"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :act-f]]
+    [:##u             :vk_none [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :act-f]]
+    [:##i             :vk_none [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :act-f]]
+    [:##o             :vk_none [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :act-f]]
+    [:##p             :vk_none [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :act-s :act-d :act-f]]
    ]}
 
   {:des "Asterisk Right: Auxiliary Keys"

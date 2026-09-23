@@ -334,9 +334,8 @@ their own:
   block (16 tiers × `h`/`l`, `j`/`k`, `i`/`o`, `u`/`p`), 62 are settled and
   60 of those are opposed. The two that are not are both on `aSDf`, the
   Japanese-input tier, where macOS fixes which letter does what. The two
-  still unsettled are `ASDF`'s `i`/`o` and `u`/`p`, which hold Raycast
-  layouts — one is chosen, three are not, so whether they read as two
-  opposed pairs can't be checked yet. No pair anywhere shares a direction
+  not settled are `ASDF`'s `i`/`o` and `u`/`p`, which are empty — see
+  "Raycast window layouts" below. No pair anywhere shares a direction
   and differs only in degree — such a pair would carry no positional
   information, which is the only thing the layout is for.
 - The count includes one pair that a reader will otherwise stop at:
@@ -370,7 +369,7 @@ The eight `act-a` pairs in Asterisk Right, with the axis each one steps:
 | `asdF` / `AsdF` | Mouse Cursor | **amount** — pointer `±1600` → `±3200`, scroll `±32` → `±64` |
 | `aSdF` / `ASdF` | Placement | **range** — placing the window within the screen → moving it to another screen or Space |
 | `asDF` / `AsDF` | Tab → Window | **object** — the thing every binding in the tier acts on |
-| `aSDF` / `ASDF` | App → Space | **object** — throughout `aSDF`; in `ASDF` only on `h`/`j`/`k`/`l`, since its free side holds layouts, which arrange windows rather than Spaces |
+| `aSDF` / `ASDF` | App → Space | **object** — throughout `aSDF`; in `ASDF` only on `h`/`j`/`k`/`l`, since its free side is empty |
 
 Three things follow.
 
@@ -1149,7 +1148,7 @@ Store:
 
 - `raycast/window-management` — the Placement and Screen Placement tiers'
   `h/j/k/l/u/i/o/p`, the sixth- and quarter-of-screen placements on
-  `[`/`]`/`;`/`'`, and the user-defined layouts on the `ASDF` tier
+  `[`/`]`/`;`/`'`
 - `raycast/navigation` — Switch Windows, on the `AsDF` tier's `[`/`]`/`;`/`'`
 - `raycast/raycast-notes` — `q` in the Asterisk suite
 - `raycast/emoji-symbols` — left_shift in Asterisk's alternate symbol
@@ -1238,14 +1237,12 @@ by default. ⌃← / ⌃→ (move one space left/right) only do anything when
 more than one desktop exists — with a single desktop they are silent
 no-ops, which is easy to mistake for a broken binding.
 
-**Raycast window layouts (`ASDF`'s `u`/`i`/`o`/`p`).** Unlike the rest of
-the `:wm` calls, which target Raycast's built-in geometry commands, these
-four target *user-defined* layouts. A layout is created in Raycast and
-published as a command under the window-management extension, so the
-deeplink has the ordinary `:wm` shape — but the slug is whatever the
-layout was named, exists only in that Raycast install, and is not
-recoverable from this repo. Take slugs from Raycast's own Copy Deeplink;
-a slug that does not exist is a silent no-op, with no error anywhere.
+**Raycast window layouts (`ASDF`'s `u`/`i`/`o`/`p`).** These four keys
+called user-defined Raycast window layouts — one named `claude-terminal`,
+three never chosen. Custom window layouts turned out to be a paid Raycast
+feature and stopped working, so the four keys were emptied (`:vk_none`).
+macOS's own Arrange commands (Window > Move & Resize) were considered as a
+replacement; the keys were left empty instead.
 
 **Three other ways of arriving at a slug were tried here, and all three
 produced wrong ones.** The manual's prose, a survey of other people's
