@@ -48,11 +48,6 @@ it had never been decided.
 The file already does this well in places — "see '`to` arrays don't hold
 modifiers' above", "See 'Japanese input: `select_input_source` was tried
 and abandoned' above for the full story" — and that is the shape to copy.
-A second telling is not a convenience. It is a second thing to find when
-the first turns out to be wrong, and the copy that gets missed is the one
-left standing. The `AsDf` entry under "Design rationale" shows the failure
-in miniature: it restates the Cmd-to-Option fix in full and *then* points
-at the section that already holds it. Point, and stop.
 
 ## `h`/`j`/`k`/`l` is the disciplined side; `u`/`i`/`o`/`p` is the free side
 
