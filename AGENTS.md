@@ -87,8 +87,7 @@ alongside the wide one.
 ## Before editing or committing
 
 Check `NOTES.md` first when touching held modifiers, multi-action `to`
-chains, or global app hotkeys — known gotchas are recorded there so the
-same debugging loop doesn't happen twice. Add new gotchas there too.
+chains, or global app hotkeys. Add new gotchas there too.
 
 Before committing a change to `AbcAct.edn`, run `python3 scripts/check.py`.
 It needs nothing installed, and it checks one thing: that no rule is
