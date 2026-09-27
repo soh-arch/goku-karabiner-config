@@ -663,7 +663,7 @@
 
   {:des "Bra: Web Search"
    :rules [
-    [:f "cd \"$HOME\"; f=$(mktemp); trap 'rm -f \"$f\"' EXIT; osascript -l JavaScript - /opt/homebrew/bin/claude \"$f\" <<'EOF'
+    [:f "cd \"$HOME\"; f=$(mktemp); d=\"${TMPDIR:-/tmp}/web-search\"; mkdir -p \"$d\"; n=0; while ! mkdir \"$d/$n\" 2>/dev/null; do p=$(cat \"$d/$n/pid\" 2>/dev/null); if [ -n \"$p\" ] && ! kill -0 \"$p\" 2>/dev/null; then rm -rf \"$d/$n\"; else n=$((n + 1)); fi; done; echo $$ > \"$d/$n/pid\"; osascript -l JavaScript - /opt/homebrew/bin/claude \"$f\" \"$n\" \"$d/$n\" <<'EOF' &
 ObjC.import('Cocoa');
 var CSS = '<meta charset=\"utf-8\"><style>body{font:15px -apple-system}h1{font-size:20px}h2{font-size:18px}h3,h4,h5,h6{font-size:16px}p,ul,ol{margin:0 0 10px}pre,code{font:13px Menlo}</style>';
 var SP = '<p style=\"font-size:4px\">&nbsp;</p>';
@@ -788,6 +788,8 @@ function run(argv) {
   sv.documentView = tv;
   fx.addSubview(sv);
   w.center;
+  var n = Number(argv[2]) % 10;
+  w.setFrameOrigin($.NSMakePoint(w.frame.origin.x + 24 * n, w.frame.origin.y - 24 * n));
   w.makeKeyAndOrderFront(null);
   app.activateIgnoringOtherApps(true);
   w.makeFirstResponder(field);
@@ -849,9 +851,11 @@ function run(argv) {
     }
   }
   if (task && task.running) task.terminate;
+  $.NSFileManager.defaultManager.removeItemAtPathError(argv[1], $());
+  $.NSFileManager.defaultManager.removeItemAtPathError(argv[3], $());
 }
 EOF
-" [:layer-bra :!layer-ast]]
+echo $! > \"$d/$n/pid\"; wait" [:layer-bra :!layer-ast]]
    ]}
 
   {:des "Numpad-a: Virtual Numpad (Simlayer, experimental)"
