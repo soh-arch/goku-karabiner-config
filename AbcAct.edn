@@ -796,6 +796,10 @@ function run(argv) {
   while (w.isVisible) {
     var e = app.nextEventMatchingMaskUntilDateInModeDequeue(0xffffffff, $.NSDate.dateWithTimeIntervalSinceNow(0.1), $.NSDefaultRunLoopMode, true);
     if (e && !e.isNil()) {
+      if (Number(e.type) === 10 && (Number(e.modifierFlags) & 0x1e0000) === 0x100000) {
+        var act = {v: 'paste:', c: 'copy:', x: 'cut:', a: 'selectAll:'}[e.charactersIgnoringModifiers.js];
+        if (act && app.sendActionToFrom(act, $(), $())) continue;
+      }
       var k = Number(e.type) === 10 ? e.keyCode : -1;
       if ((k === 36 || k === 76 || k === 53) && !w.fieldEditorForObject(true, field).hasMarkedText) {
         if (k === 53) {
