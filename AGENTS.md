@@ -6,6 +6,15 @@ Write each entry in `AGENTS.md` as a brief instruction saying what is
 actually wanted. A short example is welcome as a model to follow, but this
 is not a file for explaining facts.
 
+When editing this file:
+
+- Not everything needs a rule or a recommendation. Leaving a topic
+  unmentioned is sometimes the right choice.
+- Write from what the owner actually raised, not from what an agent would
+  like to add.
+- Keep the owner's nuance. Do not strengthen or shift it by guesswork; when
+  that risk comes up, ask the owner.
+
 ## Comment policy for `AbcAct.edn`
 
 Keep structural comments — section-title banners, block dividers, the
