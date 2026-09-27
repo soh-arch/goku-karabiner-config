@@ -39,15 +39,10 @@ why.
 Read `NOTES.md` only when a task actively calls for that record — a past
 gotcha or attempt it needs. Do not read it by default.
 
-**The trap:** correcting an invented rule does not mean replacing it with
-the true one. Some principles in this config are deliberately unwritten,
-and for those the correct state is that nothing is written. Deletion is
-the whole fix.
-
-This is not tidiness. A rule sitting in a record gets quoted as settled —
-the first example above was read straight out of `NOTES.md` by another
-session, hardened into the imperative, and built on before anyone noticed
-it had never been decided.
+`NOTES.md` holds no rules. When one turns up there, delete it rather than
+rewriting it into a correct rule: some principles in this config are
+deliberately unwritten, and for those the correct state is that nothing is
+written. A rule left in a record gets quoted as settled.
 
 **Never write the same thing twice in `NOTES.md`. Reference it instead.**
 The file already does this well in places — "see '`to` arrays don't hold
