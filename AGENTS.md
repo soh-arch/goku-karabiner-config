@@ -2,11 +2,6 @@
 
 ## Working in this repository
 
-### Check `NOTES.md` first
-
-Check `NOTES.md` first when touching held modifiers, multi-action `to`
-chains, or global app hotkeys. Add new gotchas there too.
-
 ### Run `scripts/check.py`
 
 Before committing a change to `AbcAct.edn`, run `python3 scripts/check.py`.
