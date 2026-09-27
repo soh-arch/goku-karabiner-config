@@ -34,30 +34,6 @@ why.
 Read `NOTES.md` only when a task actively calls for that record — a past
 gotcha or attempt it needs. Do not read it by default.
 
-Standing rules that bind a decision not yet made belong here in
-`AGENTS.md` instead. A rule written into `NOTES.md` is wrong twice over:
-it sits in the file that does not hold rules, and because that file is a
-record, it reads as one that was already settled.
-
-So do not write a rule into `NOTES.md`, and do not promote one observation
-into a law. Four shapes to watch for:
-
-1. **A prescription for work not yet done.** "If Bra is ever rebuilt, the
-   shape worth reaching for is a left-pinky trigger with right-hand
-   content." Nobody decided that.
-2. **An absolute.** "…and nothing else counts." "The only acceptable
-   provenance is …." The observation underneath is usually true and worth
-   keeping; the absolute on top of it is the invention.
-3. **A law over a whole family.** "This family never uses act-a." Check
-   whether the stated reason covers every case before writing it down —
-   Tab does not use act-s either, and a pinky conflict with `a` says
-   nothing about that.
-4. **An aphorism.** "A symmetric-looking deviation is still a deviation."
-   One placeholder tier turned into a maxim.
-
-Write what happened and what was observed. Where a genuine rule seems to
-be emerging, propose it rather than record it; once decided, it goes here.
-
 **The trap:** correcting an invented rule does not mean replacing it with
 the true one. Some principles in this config are deliberately unwritten,
 and for those the correct state is that nothing is written. Deletion is
