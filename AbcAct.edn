@@ -748,6 +748,7 @@ function run(argv) {
   var w = $.NSPanel.alloc.initWithContentRectStyleMaskBackingDefer($.NSMakeRect(0, 0, W, H), 1 | 2 | 4 | 8 | 16 | 32768, 2, false);
   w.titlebarAppearsTransparent = true;
   w.titleVisibility = 1;
+  w.title = 'Web Search';
   [2].forEach(function (i) {
     var b = w.standardWindowButton(i);
     if (!b.isNil()) b.hidden = true;
@@ -817,6 +818,7 @@ function run(argv) {
           task.standardOutput = $.NSFileHandle.fileHandleForWritingAtPath(argv[1]);
           task.standardError = $.NSFileHandle.fileHandleWithNullDevice;
           task.launchAndReturnError(null);
+          w.title = q;
           field.editable = false;
           w.makeFirstResponder(tv);
         }
