@@ -1,4 +1,4 @@
-# CLAUDE.md
+# AGENTS.md
 
 ## Comment policy for `AbcAct.edn`
 
@@ -35,7 +35,7 @@ Read `NOTES.md` only when a task actively calls for that record — a past
 gotcha or attempt it needs. Do not read it by default.
 
 Standing rules that bind a decision not yet made belong here in
-`CLAUDE.md` instead. A rule written into `NOTES.md` is wrong twice over:
+`AGENTS.md` instead. A rule written into `NOTES.md` is wrong twice over:
 it sits in the file that does not hold rules, and because that file is a
 record, it reads as one that was already settled.
 
