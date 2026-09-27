@@ -2,26 +2,6 @@
 
 ## Working in this repository
 
-### Run `scripts/check.py`
-
-Before committing a change to `AbcAct.edn`, run `python3 scripts/check.py`.
-It needs nothing installed, and it checks one thing: that no rule is
-unreachable — an earlier rule on the same key matching every state it
-does, which is the failure the guard rule exists to prevent and a failure
-that produces no error.
-
-It cannot check a Raycast slug, a key code, or whether a binding is in the
-right tier. A wrong slug is a well-formed string that matches no command
-and fails silently; `goku` catches unknown key names; the rest must be
-checked on the machine or by you.
-
-### Extending `scripts/check.py`
-
-Keep the script to checks like the one it has: a mistake an LLM keeps
-making despite care, that nothing else reports, and that a script catches
-cleanly. A check that duplicates a loud failure elsewhere, or guards a
-mistake that rarely happens, does not belong in it.
-
 ### README screenshots
 
 If `docs/index.html` changed in a way that shows in the README screenshots,
