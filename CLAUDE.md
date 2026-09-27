@@ -32,7 +32,7 @@ backward-looking** — what was hit, what was tried, what was decided and
 why.
 
 Read `NOTES.md` only when a task actively calls for that record — a past
-gotcha, attempt, or decision it needs. Do not read it by default.
+gotcha or attempt it needs. Do not read it by default.
 
 Standing rules that bind a decision not yet made belong here in
 `CLAUDE.md` instead. A rule written into `NOTES.md` is wrong twice over:
