@@ -1,25 +1,76 @@
 # AGENTS.md
 
-## Writing this file
+## Working in this repository
 
-Write each entry in `AGENTS.md` as a brief instruction saying what is
-actually wanted. A short example is welcome as a model to follow, but this
-is not a file for explaining facts.
+### Check `NOTES.md` first
 
-When editing this file:
+Check `NOTES.md` first when touching held modifiers, multi-action `to`
+chains, or global app hotkeys. Add new gotchas there too.
 
-- Not everything needs a rule or a recommendation. Leaving a topic
-  unmentioned is sometimes the right choice.
-- Write from what the owner actually raised, not from what an agent would
-  like to add.
-- Keep the owner's nuance. Do not strengthen or shift it by guesswork; when
-  that risk comes up, ask the owner.
+### Run `scripts/check.py`
 
-## Comment policy for `AbcAct.edn`
+Before committing a change to `AbcAct.edn`, run `python3 scripts/check.py`.
+It needs nothing installed, and it checks one thing: that no rule is
+unreachable — an earlier rule on the same key matching every state it
+does, which is the failure the guard rule exists to prevent and a failure
+that produces no error.
+
+It cannot check a Raycast slug, a key code, or whether a binding is in the
+right tier. A wrong slug is a well-formed string that matches no command
+and fails silently; `goku` catches unknown key names; the rest must be
+checked on the machine or by you.
+
+### Extending `scripts/check.py`
+
+Keep the script to checks like the one it has: a mistake an LLM keeps
+making despite care, that nothing else reports, and that a script catches
+cleanly. A check that duplicates a loud failure elsewhere, or guards a
+mistake that rarely happens, does not belong in it.
+
+### README screenshots
+
+If `docs/index.html` changed in a way that shows in the README screenshots,
+re-run `scripts/shoot-readme-images.py` and commit the regenerated
+`assets/*.png` alongside it.
+
+### Commits and pull requests
+
+Write commit messages in English, following Conventional Commits. Write
+pull requests — title and description — in English only.
+
+Open one pull request per cohesive unit of functionality. Before adding
+new content to an existing pull request, confirm it is not already closed.
+
+Work on a branch and open a pull request instead of committing to `main`.
+
+Before starting complex work, briefly state the plan and align on the
+approach first.
+
+### Naming
+
+Use simple, concise English names for files and folders — clear to an
+outside reader and unremarkable next to files from other projects. A
+project-specific term is the exception, as in `AbcAct.edn`, `HyMeCO.edn`
+and `HySCOT.edn`.
+
+### Artifacts
+
+Before producing an artifact — a page, a diagram, slides, a chart, any
+one-off thing made to be looked at — read
+`.claude/skills/visual-design-direction/SKILL.md` and follow it. A built-in
+design skill does not replace it.
+
+**This governs artifacts and nothing else.** Do not restyle
+`docs/index.html` to match this direction; touch it only when the change
+asked for is a change to the manual.
+
+## `AbcAct.edn`
+
+### Comment policy
 
 Keep structural comments — section-title banners, block dividers, the
 file-header legend. Drop trailing inline annotations on individual
-manipulators; they're not needed except in the few cases below.
+manipulators; they're not needed except in the two cases below.
 
 Rationale, tradeoffs, and "why this and not that" belong in `NOTES.md`,
 not next to the code. Keep them out of the `.edn` file entirely. **Design
@@ -27,26 +78,32 @@ intent is never an inline comment**, however interesting it is.
 
 An inline annotation earns its place in exactly two cases:
 
-1. **The line would otherwise look broken.**
-2. **The line's meaning can't be read off the file.** `f13` and `f16` say
-   nothing on their own.
+1. The line would otherwise look broken.
+2. The line's meaning can't be read off the file (e.g. `f13`, `f16`).
 
-## `NOTES.md` is a record, not a rulebook
+### Layer and condition guards
 
-Read `NOTES.md` only when a task actively calls for that record — a past
-gotcha or attempt it needs. Do not read it by default.
+Every rule scoped to a layer must spell out its full `:layer-*`/`:act-*`
+guard stack, even when a shorter, "usually correct" version would work.
 
-`NOTES.md` holds no rules. When one turns up there, delete it rather than
-rewriting it into a correct rule: some principles in this config are
-deliberately unwritten, and for those the correct state is that nothing is
-written. A rule left in a record gets quoted as settled.
+The one exception is narrow. A rule may omit `:act-*` flags only when both
+hold:
 
-**Never write the same thing twice in `NOTES.md`. Reference it instead.**
-The file already does this well in places — "see '`to` arrays don't hold
-modifiers' above", "See 'Japanese input: `select_input_source` was tried
-and abandoned' above for the full story" — and that is the shape to copy.
+1. The action it carries covers *every* combination of the omitted flags —
+   a complete sub-cube of tiers, not most of it.
+2. No other rule for the same `from` key claims any tier inside that
+   sub-cube.
 
-## Right block: disciplined and free sides
+Use it only when the omission carries information. For example, Select All
+on the auxiliary keys is guarded on `act-d`/`act-f` alone.
+
+When using it, both of these are required:
+
+- State which tiers the block covers, in a comment.
+- If any tier inside it later needs its own action, split the whole block
+  into full stacks — do not grow a narrower rule alongside the wide one.
+
+### Right block: disciplined and free sides
 
 The right block currently shows these tendencies. Use them as a reference
 when adding an action.
@@ -63,11 +120,11 @@ when adding an action.
   freely: a four-way direction set (scroll), or two pairs from different
   families (copy/paste with cut/paste-plain; fullscreen with hide).
 
-## Consider classifying an action by what it acts on
+### Classifying an action by its object
 
 An action's tier can also be judged by its *object* — the thing it opens,
-moves, closes or focuses — rather than by the keystroke that reaches it or
-the family that keystroke belongs to.
+moves, closes or focuses — rather than by its keystroke or that
+keystroke's family.
 
 For example, `⌃F3` sits among focus shortcuts but points at the Dock, so
 it can also be read as an app list rather than as focus movement.
@@ -75,76 +132,34 @@ it can also be read as an app list rather than as focus movement.
 When a placement looks arbitrary, check whether the action was classified
 by its object or by the row its keystroke lives in.
 
-## Layer/condition guards
+## `NOTES.md`
 
-Every rule scoped to a layer must spell out its full `:layer-*`/`:act-*`
-guard stack, even when a shorter, "usually correct" version would work.
+Read `NOTES.md` only when a task actively calls for that record — a past
+gotcha or attempt it needs. Do not read it by default.
 
-**One exception, and it is narrow.** A rule may omit `:act-*` flags when
-the action it carries covers *every* combination of the omitted ones — a
-complete sub-cube of tiers, not most of it — and no other rule for the same
-`from` key claims any tier inside that sub-cube.
+`NOTES.md` holds no rules. When one turns up there, delete it rather than
+rewriting it into a correct rule: some principles in this config are
+deliberately unwritten, and for those the correct state is that nothing is
+written. A rule left in a record gets quoted as settled.
 
-Use it only when the omission carries information. For example, Select All
-on the auxiliary keys is guarded on `act-d`/`act-f` alone.
+**Never write the same thing twice in `NOTES.md`. Reference it instead.**
+The file already does this well in places, and that is the shape to copy:
 
-Two conditions, both required. The block must state which tiers it covers,
-in a comment. And if any tier inside it later needs its own action, the
-whole block splits into full stacks — it does not grow a narrower rule
-alongside the wide one.
+- "see '`to` arrays don't hold modifiers' above"
+- "See 'Japanese input: `select_input_source` was tried and abandoned'
+  above for the full story"
 
-## Before editing or committing
+## Editing this file
 
-Check `NOTES.md` first when touching held modifiers, multi-action `to`
-chains, or global app hotkeys. Add new gotchas there too.
+Write each entry in `AGENTS.md` as a brief instruction saying what is
+actually wanted. A short example is welcome as a model to follow, but this
+is not a file for explaining facts.
 
-Before committing a change to `AbcAct.edn`, run `python3 scripts/check.py`.
-It needs nothing installed, and it checks one thing: that no rule is
-unreachable — an earlier rule on the same key matching every state it
-does, which is the failure the guard rule above exists to prevent and the
-one that never announces itself.
+When editing this file:
 
-It cannot check a Raycast slug, a key code, or whether a binding is in the
-right tier. A wrong slug is a well-formed string that matches no command
-and fails silently; `goku` catches unknown key names; the rest is the
-machine's to answer, or yours.
-
-Keep the script to checks like the one it has: a mistake an LLM keeps
-making despite care, that nothing else reports, and that a script catches
-cleanly. A check that duplicates a loud failure elsewhere, or guards a
-mistake that rarely happens, does not belong in it.
-
-If `docs/index.html` changed in a way that shows in the README screenshots,
-re-run `scripts/shoot-readme-images.py` and commit the regenerated
-`assets/*.png` alongside it.
-
-## Commits and pull requests
-
-Write commit messages in English, following Conventional Commits. Write
-pull requests — title and description — in English only.
-
-Open one pull request per cohesive unit of functionality. Before adding
-new content to an existing pull request, confirm it is not already closed.
-
-Work on a branch and open a pull request instead of committing to `main`.
-
-Before starting complex work, briefly state the plan and align on the
-approach first.
-
-## Naming
-
-Use simple, concise English names for files and folders — clear to an
-outside reader and unremarkable next to files from other projects. A
-project-specific term is the exception, as in `AbcAct.edn`, `HyMeCO.edn`
-and `HySCOT.edn`.
-
-## Artifacts
-
-Before producing an artifact — a page, a diagram, slides, a chart, any
-one-off thing made to be looked at — read
-`.claude/skills/visual-design-direction/SKILL.md` and follow it. A built-in
-design skill does not replace it.
-
-**This governs artifacts and nothing else.** Do not restyle
-`docs/index.html` to match this direction; touch it only when the change
-asked for is a change to the manual.
+- Not everything needs a rule or a recommendation. Leaving a topic
+  unmentioned is sometimes the right choice.
+- Write from what the owner actually raised, not from what an agent would
+  like to add.
+- Keep the owner's nuance. Do not strengthen or shift it by guesswork; when
+  that risk comes up, ask the owner.
