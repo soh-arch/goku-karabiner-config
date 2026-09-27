@@ -1,5 +1,10 @@
 # AGENTS.md
 
+## Writing this file
+
+Do not state facts in `AGENTS.md`. Write each entry as a brief instruction
+saying what is actually wanted.
+
 ## Comment policy for `AbcAct.edn`
 
 Keep structural comments — section-title banners, block dividers, the
