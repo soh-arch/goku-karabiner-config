@@ -745,10 +745,10 @@ function run(argv) {
   var app = $.NSApplication.sharedApplication;
   app.setActivationPolicy(1);
   var W = 640, H = 420;
-  var w = $.NSPanel.alloc.initWithContentRectStyleMaskBackingDefer($.NSMakeRect(0, 0, W, H), 1 | 2 | 8 | 16 | 32768, 2, false);
+  var w = $.NSPanel.alloc.initWithContentRectStyleMaskBackingDefer($.NSMakeRect(0, 0, W, H), 1 | 2 | 4 | 8 | 16 | 32768, 2, false);
   w.titlebarAppearsTransparent = true;
   w.titleVisibility = 1;
-  [0, 1, 2].forEach(function (i) {
+  [2].forEach(function (i) {
     var b = w.standardWindowButton(i);
     if (!b.isNil()) b.hidden = true;
   });
@@ -793,7 +793,7 @@ function run(argv) {
   w.makeFirstResponder(field);
   render(' ');
   var task = null, shown = '';
-  while (w.isVisible) {
+  while (w.isVisible || w.isMiniaturized) {
     var e = app.nextEventMatchingMaskUntilDateInModeDequeue(0xffffffff, $.NSDate.dateWithTimeIntervalSinceNow(0.1), $.NSDefaultRunLoopMode, true);
     if (e && !e.isNil()) {
       if (Number(e.type) === 10 && (Number(e.modifierFlags) & 0x1e0000) === 0x100000) {
