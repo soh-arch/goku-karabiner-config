@@ -18,16 +18,9 @@ intent is never an inline comment**, however interesting it is.
 
 An inline annotation earns its place in exactly two cases:
 
-1. **The line would otherwise look broken.** A reader who can't tell a
-   deliberate binding from a mistake will go looking for a bug that isn't
-   there, or "fix" one that works.
+1. **The line would otherwise look broken.**
 2. **The line's meaning can't be read off the file.** `f13` and `f16` say
-   nothing on their own — they work only because Amical and Maccy are
-   configured, in those apps' own settings, to listen for those exact key
-   codes.
-
-Both are about the code being unreadable or suspicious on its face.
-Neither is about why the design is the way it is.
+   nothing on their own.
 
 ## `NOTES.md` is a record, not a rulebook
 
