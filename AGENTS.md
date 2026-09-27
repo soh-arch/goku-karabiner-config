@@ -24,12 +24,6 @@ An inline annotation earns its place in exactly two cases:
 
 ## `NOTES.md` is a record, not a rulebook
 
-`README.md` gives `NOTES.md` its job: the Karabiner/Goku gotchas found
-while building this config, written for my future self. The section above
-hands it rationale and tradeoffs as well. **All of that is
-backward-looking** — what was hit, what was tried, what was decided and
-why.
-
 Read `NOTES.md` only when a task actively calls for that record — a past
 gotcha or attempt it needs. Do not read it by default.
 
@@ -45,17 +39,13 @@ and abandoned' above for the full story" — and that is the shape to copy.
 
 ## `h`/`j`/`k`/`l` is the disciplined side; `u`/`i`/`o`/`p` is the free side
 
-The right hand's eight keys are not peers. **`h`/`j`/`k`/`l` is the
-disciplined side and `u`/`i`/`o`/`p` is the free side** — an asymmetry that
-runs through all 16 tiers. When deciding where a new action goes, settle
-which side it belongs to first.
+The right block currently tends to split into a disciplined side
+(`h`/`j`/`k`/`l`) and a free side (`u`/`i`/`o`/`p`). When adding an action,
+use that split as a reference.
 
-Put **only actions that come as a set of four** on `h`/`j`/`k`/`l`. Never
-park a single self-contained action on one of them. This holds without
-exception across all 16 tiers: even the tiers carrying no directional
-meaning (`aSDf`'s four IME conversions, `ASDf`'s outdent / undo / redo /
-indent) still put four members of one family there. **If you want to place
-a standalone action, use `u`/`i`/`o`/`p`.**
+`h`/`j`/`k`/`l` tends to hold actions that come as a set of four, and
+standalone actions tend to sit on `u`/`i`/`o`/`p`. Refer to that when
+placing a new one.
 
 Where a tier divides by granularity at all, **`u`/`i`/`o`/`p` takes the
 coarser unit**: `h`/`j`/`k`/`l` moves one character or one line while
