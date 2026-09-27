@@ -107,7 +107,7 @@ mistake that rarely happens, does not belong in it.
 
 If `docs/index.html` changed in a way that shows in the README screenshots,
 re-run `scripts/shoot-readme-images.py` and commit the regenerated
-`assets/*.png` alongside it — otherwise the README shows a stale manual.
+`assets/*.png` alongside it.
 
 ## Commits and pull requests
 
@@ -117,10 +117,7 @@ pull requests — title and description — in English only.
 Open one pull request per cohesive unit of functionality. Before adding
 new content to an existing pull request, confirm it is not already closed.
 
-Never push directly to a protected branch. Nothing here is protected in
-GitHub's settings, so this holds as discipline rather than as an enforced
-rule: work on a branch and open a pull request instead of committing to
-`main`.
+Work on a branch and open a pull request instead of committing to `main`.
 
 Before starting complex work, briefly state the plan and align on the
 approach first.
@@ -129,9 +126,8 @@ approach first.
 
 Use simple, concise English names for files and folders — clear to an
 outside reader and unremarkable next to files from other projects. A
-project-specific term is the exception, and `AbcAct.edn`, `HyMeCO.edn` and
-`HySCOT.edn` are it: each names the keymap it holds, which is the point of
-them.
+project-specific term is the exception, as in `AbcAct.edn`, `HyMeCO.edn`
+and `HySCOT.edn`.
 
 ## Artifacts
 
