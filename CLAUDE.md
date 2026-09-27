@@ -107,10 +107,6 @@ Which tier an action belongs to is decided by its *object* — the thing it
 opens, moves, closes or focuses. The keystroke that happens to reach it,
 and the family that keystroke belongs to, say nothing about that.
 
-The same trap as above, running the other way: there, an implementation
-detail was read as an answer about placement; here, it is read as an answer
-about kind.
-
 `⌃F3` is the worked example. It sits in the `⌃F` row with "move focus to
 the menu bar", "…to the window toolbar", "…to the status menus", so it is
 natural to file it as a focus-movement action and then find it has no
