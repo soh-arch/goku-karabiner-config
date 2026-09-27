@@ -54,11 +54,11 @@ when adding an action.
   freely: a four-way direction set (scroll), or two pairs from different
   families (copy/paste with cut/paste-plain; fullscreen with hide).
 
-## Classify an action by what it acts on, never by its shortcut
+## Consider classifying an action by what it acts on
 
-Which tier an action belongs to is decided by its *object* — the thing it
-opens, moves, closes or focuses. The keystroke that happens to reach it,
-and the family that keystroke belongs to, say nothing about that.
+An action's tier can also be judged by its *object* — the thing it opens,
+moves, closes or focuses — rather than by the keystroke that reaches it or
+the family that keystroke belongs to.
 
 For example, `⌃F3` sits among focus shortcuts but points at the Dock, so
 it can also be read as an app list rather than as focus movement.
