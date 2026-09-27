@@ -136,7 +136,6 @@ one-off thing made to be looked at — read
 `.claude/skills/visual-design-direction/SKILL.md` and follow it. A built-in
 design skill does not replace it.
 
-**This governs artifacts and nothing else.** `docs/index.html` is the
-published manual, not an artifact: it carries its own design, and it is
-not to be restyled to match this direction. Touch it only when the change
+**This governs artifacts and nothing else.** Do not restyle
+`docs/index.html` to match this direction; touch it only when the change
 asked for is a change to the manual.
