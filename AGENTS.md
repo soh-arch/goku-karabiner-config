@@ -37,21 +37,19 @@ The file already does this well in places — "see '`to` arrays don't hold
 modifiers' above", "See 'Japanese input: `select_input_source` was tried
 and abandoned' above for the full story" — and that is the shape to copy.
 
-## `h`/`j`/`k`/`l` is the disciplined side; `u`/`i`/`o`/`p` is the free side
+## Right block: disciplined and free sides
 
-The right block currently tends to split into a disciplined side
-(`h`/`j`/`k`/`l`) and a free side (`u`/`i`/`o`/`p`). When adding an action,
-use that split as a reference.
+The right block currently shows these tendencies. Use them as a reference
+when adding an action.
 
-`h`/`j`/`k`/`l` tends to hold actions that come as a set of four, and
-standalone actions tend to sit on `u`/`i`/`o`/`p`. Refer to that when
-placing a new one.
-
-Where a tier divides by granularity at all, **`u`/`i`/`o`/`p` takes the
-coarser unit**: `h`/`j`/`k`/`l` moves one character or one line while
-`u`/`i`/`o`/`p` jumps to a boundary — the line's, the page's, or the
-document's; `h`/`j`/`k`/`l` nudges a window a short distance while
-`u`/`i`/`o`/`p` resizes it against the whole screen.
+- It splits into a disciplined side (`h`/`j`/`k`/`l`) and a free side
+  (`u`/`i`/`o`/`p`).
+- `h`/`j`/`k`/`l` holds actions that come as a set of four; standalone
+  actions sit on `u`/`i`/`o`/`p`.
+- Where a tier divides by granularity, `u`/`i`/`o`/`p` takes the coarser
+  unit: `h`/`j`/`k`/`l` moves one character or line while `u`/`i`/`o`/`p`
+  jumps to a boundary; `h`/`j`/`k`/`l` nudges a window while
+  `u`/`i`/`o`/`p` resizes it against the whole screen.
 
 Some tiers don't divide by granularity at all. There `u`/`i`/`o`/`p` may be
 used freely: a four-way direction set (scroll), or two pairs from different
