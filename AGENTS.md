@@ -2,8 +2,9 @@
 
 ## Writing this file
 
-Do not state facts in `AGENTS.md`. Write each entry as a brief instruction
-saying what is actually wanted.
+Write each entry in `AGENTS.md` as a brief instruction saying what is
+actually wanted. A short example is welcome as a model to follow, but this
+is not a file for explaining facts.
 
 ## Comment policy for `AbcAct.edn`
 
