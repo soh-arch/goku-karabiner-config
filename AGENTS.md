@@ -50,12 +50,9 @@ when adding an action.
   unit: `h`/`j`/`k`/`l` moves one character or line while `u`/`i`/`o`/`p`
   jumps to a boundary; `h`/`j`/`k`/`l` nudges a window while
   `u`/`i`/`o`/`p` resizes it against the whole screen.
-
-Some tiers don't divide by granularity at all. There `u`/`i`/`o`/`p` may be
-used freely: a four-way direction set (scroll), or two pairs from different
-families (copy/paste with cut/paste-plain; fullscreen with hide). That is
-what the free side means — and keeping that freedom *out* of `h`/`j`/`k`/`l`
-is what the disciplined side is for.
+- Where a tier doesn't divide by granularity, `u`/`i`/`o`/`p` is used
+  freely: a four-way direction set (scroll), or two pairs from different
+  families (copy/paste with cut/paste-plain; fullscreen with hide).
 
 ## Classify an action by what it acts on, never by its shortcut
 
@@ -63,15 +60,8 @@ Which tier an action belongs to is decided by its *object* — the thing it
 opens, moves, closes or focuses. The keystroke that happens to reach it,
 and the family that keystroke belongs to, say nothing about that.
 
-`⌃F3` is the worked example. It sits in the `⌃F` row with "move focus to
-the menu bar", "…to the window toolbar", "…to the status menus", so it is
-natural to file it as a focus-movement action and then find it has no
-opposite anywhere near it. But `⌃F3` points at the Dock, and the Dock is
-where apps are — Apple describes it as "a convenient place to access apps
-and features that you're likely to use every day," used to open apps and
-"switch between apps." Filed by its object it is an app-list surface, a
-permanently visible Launchpad, and it pairs cleanly against closing an app.
-Nothing changed except which question was asked first.
+For example, `⌃F3` sits among focus shortcuts but points at the Dock, so
+it can also be read as an app list rather than as focus movement.
 
 When a placement looks arbitrary, check whether the action was classified
 by its object or by the row its keystroke lives in.
@@ -80,9 +70,6 @@ by its object or by the row its keystroke lives in.
 
 Every rule scoped to a layer must spell out its full `:layer-*`/`:act-*`
 guard stack, even when a shorter, "usually correct" version would work.
-Karabiner fires only the first manipulator whose `from` and `conditions`
-match, so an incomplete guard doesn't fail loudly — it silently lets the
-wrong rule win under some input ordering.
 
 **One exception, and it is narrow.** A rule may omit `:act-*` flags when
 the action it carries covers *every* combination of the omitted ones — a
