@@ -101,25 +101,6 @@ families (copy/paste with cut/paste-plain; fullscreen with hide). That is
 what the free side means — and keeping that freedom *out* of `h`/`j`/`k`/`l`
 is what the disciplined side is for.
 
-## Two questions, in this order
-
-Before placing an action, answer both. They are independent, and
-collapsing them into one is the easy mistake.
-
-**1. Does it need a key here at all?** Actions that appear inside a *run*
-of operations belong on the keymap; actions invoked once, from outside any
-run, do not. This is not exclusive — the same action can live on the
-keymap and in Raycast, used in different situations. See "Why the right
-block is positional, not mnemonic" in `NOTES.md`.
-
-**2. If it needs a key, how is it implemented?** Raycast when the action
-presents UI; a plain script (`osascript`/shell) when it doesn't; then
-non-`fn` modifiers; `fn` last.
-
-**The trap:** "Raycast already has this command" answers question 2. It
-never answers question 1. An action that still appears in a run keeps its
-key even when a Raycast equivalent exists.
-
 ## Classify an action by what it acts on, never by its shortcut
 
 Which tier an action belongs to is decided by its *object* — the thing it
