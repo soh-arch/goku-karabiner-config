@@ -795,7 +795,7 @@ function run(argv) {
   app.activateIgnoringOtherApps(true);
   w.makeFirstResponder(field);
   render(' ');
-  var task = null, shown = '';
+  var task = null, shown = '', failed = false, ep = argv[1] + '.err';
   while (w.isVisible || w.isMiniaturized) {
     var e = app.nextEventMatchingMaskUntilDateInModeDequeue(0xffffffff, $.NSDate.dateWithTimeIntervalSinceNow(0.1), $.NSDefaultRunLoopMode, true);
     if (e && !e.isNil()) {
@@ -816,8 +816,9 @@ function run(argv) {
           task.arguments = $(['-p', '次の質問についてWeb検索して答えてください。\\n\\n質問: ' + q, '--append-system-prompt', 'やりとり一回限りのものなので、次の質問に繋げるようなメッセージは不要です。', '--model', 'sonnet', '--effort', 'medium', '--allowedTools', 'WebSearch,WebFetch', '--output-format', 'stream-json', '--verbose', '--include-partial-messages']);
           task.standardInput = $.NSFileHandle.fileHandleWithNullDevice;
           task.standardOutput = $.NSFileHandle.fileHandleForWritingAtPath(argv[1]);
-          task.standardError = $.NSFileHandle.fileHandleWithNullDevice;
-          task.launchAndReturnError(null);
+          $.NSFileManager.defaultManager.createFileAtPathContentsAttributes(ep, $(), $());
+          task.standardError = $.NSFileHandle.fileHandleForWritingAtPath(ep);
+          failed = !task.launchAndReturnError($());
           w.title = q;
           field.editable = false;
           w.makeFirstResponder(tv);
@@ -827,6 +828,7 @@ function run(argv) {
       app.sendEvent(e);
     }
     if (!task) continue;
+    var exited = failed || !task.running;
     var s = $.NSString.stringWithContentsOfFileEncodingError(argv[1], 4, null);
     if (s.isNil()) continue;
     var text = '', searches = [], answered = {}, done = false;
@@ -846,7 +848,13 @@ function run(argv) {
     });
     var pending = searches.filter(function (x) { return !answered[x.id]; });
     var lines = (text ? pending : searches).map(function (x) { return 'WebSearch: ' + x.query; });
-    var view = [text || (done ? 'Finished without a response' : 'No response yet')].concat(lines).join('\\n\\n');
+    var status = text || (done ? 'Finished without a response' : 'No response yet');
+    if (exited && !done) {
+      var er = $.NSString.stringWithContentsOfFileEncodingError(ep, 4, null);
+      er = er.isNil() ? '' : er.js.trim();
+      status = (text ? text + '\\n\\n' : '') + '**' + (failed ? 'Could not start ' + argv[0] : 'Claude Code exited without a response') + '**' + (er ? '\\n\\n```\\n' + er + '\\n```' : '');
+    }
+    var view = [status].concat(lines).join('\\n\\n');
     if (view !== shown) {
       tv.textStorage.setAttributedString(render(view));
       shown = view;
@@ -854,6 +862,7 @@ function run(argv) {
   }
   if (task && task.running) task.terminate;
   $.NSFileManager.defaultManager.removeItemAtPathError(argv[1], $());
+  $.NSFileManager.defaultManager.removeItemAtPathError(ep, $());
   $.NSFileManager.defaultManager.removeItemAtPathError(argv[3], $());
 }
 EOF
