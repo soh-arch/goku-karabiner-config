@@ -661,20 +661,193 @@
     [:##right_shift   :f12 [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :act-f]]
    ]}
 
-  {:des "Bra: Virtual Numpad"
+  {:des "Bra: Web Search"
    :rules [
-    [:z :0 [:layer-bra :!layer-ast]]
-    [:x :1 [:layer-bra :!layer-ast]]
-    [:c :2 [:layer-bra :!layer-ast]]
-    [:v :3 [:layer-bra :!layer-ast]]
-    [:s :4 [:layer-bra :!layer-ast]]
-    [:d :5 [:layer-bra :!layer-ast]]
-    [:f :6 [:layer-bra :!layer-ast]]
-    [:w :7 [:layer-bra :!layer-ast]]
-    [:e :8 [:layer-bra :!layer-ast]]
-    [:r :9 [:layer-bra :!layer-ast]]
-    [:a :delete_or_backspace [:layer-bra :!layer-ast]]
-    [:q [:end :!Shome :delete_or_backspace] [:layer-bra :!layer-ast]]
+    [:f "cd \"$HOME\"; f=$(mktemp); trap 'rm -f \"$f\"' EXIT; osascript -l JavaScript - /opt/homebrew/bin/claude \"$f\" <<'EOF'
+ObjC.import('Cocoa');
+var CSS = '<meta charset=\"utf-8\"><style>body{font:15px -apple-system}h1{font-size:20px}h2{font-size:18px}h3,h4,h5,h6{font-size:16px}p,ul,ol{margin:0 0 10px}pre,code{font:13px Menlo}</style>';
+var SP = '<p style=\"font-size:4px\">&nbsp;</p>';
+function box(style) {
+  return ['<table style=\"width:100%;border-collapse:collapse\"><tr><td style=\"' + style + '\">', '</td></tr></table>'];
+}
+var CODE = box('border:0;background:rgba(128,128,128,.15);padding:8px');
+var QUOTE = box('border:0;border-left:3px solid #888;padding:0 0 0 10px;font-size:15px');
+var HR = '<table style=\"width:100%;border-collapse:collapse\"><tr><td style=\"border:0;border-top:1px solid #888;font-size:1px\">&nbsp;</td></tr></table>';
+var CELL = 'border:1px solid #888;padding:2px 8px';
+function tags(c, parent) {
+  switch (c.kind) {
+    case 0: return parent === 4 ? ['', ''] : ['<p>', '</p>'];
+    case 1: var h = 'h' + Math.min(Math.max(c.level, 1), 6); return ['<' + h + '>', '</' + h + '>'];
+    case 2: return ['<ol>', '</ol>', true];
+    case 3: return ['<ul>', '</ul>', true];
+    case 4: return ['<li>', '</li>'];
+    case 5: return [CODE[0] + '<pre style=\"margin:0\">', '</pre>' + CODE[1], true];
+    case 6: return [QUOTE[0], QUOTE[1], true];
+    case 7: return [HR, '', true];
+    case 8: return ['<table style=\"border-collapse:collapse\">', '</table>', true];
+    case 9: case 10: return ['<tr>', '</tr>'];
+    case 11: var t = parent === 9 ? 'th' : 'td'; return ['<' + t + ' style=\"' + CELL + '\">', '</' + t + '>'];
+    default: return ['<div>', '</div>'];
+  }
+}
+function esc(t) {
+  return t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\"/g, '&quot;');
+}
+function toHTML(src) {
+  var o = $.NSAttributedStringMarkdownParsingOptions.alloc.init;
+  o.interpretedSyntax = 0;
+  var s = $.NSAttributedString.alloc.initWithMarkdownStringOptionsBaseURLError(src, o, null, null);
+  var text = s.string.js, html = '', stack = [];
+  function close() {
+    var c = stack.pop();
+    html += c.close;
+    if (c.sp && !stack.length) html += SP;
+  }
+  s.enumerateAttributesInRangeOptionsUsingBlock($.NSMakeRange(0, s.length), 0, function (d, r) {
+    var loc = Number(r.location), len = Number(r.length);
+    var chain = [], p = d.objectForKey('NSPresentationIntent');
+    while (p && !p.isNil()) {
+      chain.unshift({id: Number(p.identity), kind: Number(p.intentKind), level: Number(p.headerLevel)});
+      p = p.parentIntent;
+    }
+    var k = 0;
+    while (k < stack.length && k < chain.length && stack[k].id === chain[k].id) k++;
+    while (stack.length > k) close();
+    for (var j = k; j < chain.length; j++) {
+      var tg = tags(chain[j], j > 0 ? chain[j - 1].kind : -1);
+      html += tg[0];
+      stack.push({id: chain[j].id, close: tg[1], sp: !!tg[2]});
+    }
+    var inner = chain.length ? chain[chain.length - 1].kind : -1;
+    if (inner === 7) return;
+    var inPre = chain.some(function (x) { return x.kind === 5; });
+    var t = esc(text.substr(loc, len));
+    t = inPre ? t.replace(/\\n$/, '') : t.replace(/\\n/g, '<br>');
+    var inl = d.objectForKey('NSInlinePresentationIntent'), v = inl.isNil() ? 0 : Number(inl.js);
+    if (v & 4) t = '<code>' + t + '</code>';
+    if (v & 1) t = '<em>' + t + '</em>';
+    if (v & 2) t = '<strong>' + t + '</strong>';
+    if (v & 32) t = '<del>' + t + '</del>';
+    var link = d.objectForKey('NSLink');
+    if (!link.isNil()) t = '<a href=\"' + esc(link.absoluteString.js) + '\">' + t + '</a>';
+    html += t;
+  });
+  while (stack.length) close();
+  return html;
+}
+function render(src) {
+  var out = $.NSMutableAttributedString.alloc.init;
+  out.appendAttributedString($.NSAttributedString.alloc.initWithHTMLDocumentAttributes($(CSS + toHTML(src)).dataUsingEncoding(4), null));
+  out.addAttributeValueRange('NSColor', $.NSColor.labelColor, $.NSMakeRange(0, out.length));
+  return out;
+}
+function run(argv) {
+  var app = $.NSApplication.sharedApplication;
+  app.setActivationPolicy(1);
+  var W = 640, H = 420;
+  var w = $.NSPanel.alloc.initWithContentRectStyleMaskBackingDefer($.NSMakeRect(0, 0, W, H), 1 | 2 | 8 | 16 | 32768, 2, false);
+  w.titlebarAppearsTransparent = true;
+  w.titleVisibility = 1;
+  [0, 1, 2].forEach(function (i) {
+    var b = w.standardWindowButton(i);
+    if (!b.isNil()) b.hidden = true;
+  });
+  w.movableByWindowBackground = true;
+  w.opaque = false;
+  w.backgroundColor = $.NSColor.clearColor;
+  w.level = 3;
+  w.floatingPanel = true;
+  w.hidesOnDeactivate = false;
+  w.releasedWhenClosed = false;
+  var fx = $.NSVisualEffectView.alloc.initWithFrame($.NSMakeRect(0, 0, W, H));
+  fx.material = 6;
+  fx.blendingMode = 0;
+  fx.state = 1;
+  fx.autoresizingMask = 18;
+  w.contentView = fx;
+  var field = $.NSTextField.alloc.initWithFrame($.NSMakeRect(20, H - 66, W - 40, 30));
+  field.bezeled = false;
+  field.drawsBackground = false;
+  field.focusRingType = 1;
+  field.font = $.NSFont.systemFontOfSize(20);
+  field.placeholderString = 'Search the web';
+  field.autoresizingMask = 10;
+  fx.addSubview(field);
+  var sv = $.NSScrollView.alloc.initWithFrame($.NSMakeRect(0, 0, W, H - 80));
+  sv.drawsBackground = false;
+  sv.hasVerticalScroller = true;
+  sv.autohidesScrollers = true;
+  sv.autoresizingMask = 18;
+  var tv = $.NSTextView.alloc.initWithFrame($.NSMakeRect(0, 0, W, H - 80));
+  tv.layoutManager;
+  tv.editable = false;
+  tv.drawsBackground = false;
+  tv.textContainerInset = $.NSMakeSize(20, 8);
+  tv.textContainer.lineFragmentPadding = 2;
+  tv.autoresizingMask = 2;
+  sv.documentView = tv;
+  fx.addSubview(sv);
+  w.center;
+  w.makeKeyAndOrderFront(null);
+  app.activateIgnoringOtherApps(true);
+  w.makeFirstResponder(field);
+  render(' ');
+  var task = null, shown = '';
+  while (w.isVisible) {
+    var e = app.nextEventMatchingMaskUntilDateInModeDequeue(0xffffffff, $.NSDate.dateWithTimeIntervalSinceNow(0.1), $.NSDefaultRunLoopMode, true);
+    if (e && !e.isNil()) {
+      var k = Number(e.type) === 10 ? e.keyCode : -1;
+      if ((k === 36 || k === 76 || k === 53) && !w.fieldEditorForObject(true, field).hasMarkedText) {
+        if (k === 53) {
+          w.close;
+          continue;
+        }
+        var q = field.stringValue.js.trim();
+        if (!task && q) {
+          task = $.NSTask.alloc.init;
+          task.executableURL = $.NSURL.fileURLWithPath(argv[0]);
+          task.arguments = $(['-p', '次の質問についてWeb検索して答えてください。\\n\\n質問: ' + q, '--append-system-prompt', 'やりとり一回限りのものなので、次の質問に繋げるようなメッセージは不要です。', '--model', 'sonnet', '--effort', 'medium', '--allowedTools', 'WebSearch,WebFetch', '--output-format', 'stream-json', '--verbose', '--include-partial-messages']);
+          task.standardInput = $.NSFileHandle.fileHandleWithNullDevice;
+          task.standardOutput = $.NSFileHandle.fileHandleForWritingAtPath(argv[1]);
+          task.standardError = $.NSFileHandle.fileHandleWithNullDevice;
+          task.launchAndReturnError(null);
+          field.editable = false;
+          w.makeFirstResponder(tv);
+        }
+        continue;
+      }
+      app.sendEvent(e);
+    }
+    if (!task) continue;
+    var s = $.NSString.stringWithContentsOfFileEncodingError(argv[1], 4, null);
+    if (s.isNil()) continue;
+    var text = '', searches = [], answered = {}, done = false;
+    s.js.split('\\n').forEach(function (l) {
+      try {
+        var j = JSON.parse(l);
+        if (j.type === 'stream_event' && j.event.type === 'content_block_start' && j.event.content_block.type === 'text' && text) text += '\\n\\n';
+        if (j.type === 'stream_event' && j.event.type === 'content_block_delta' && j.event.delta.type === 'text_delta') text += j.event.delta.text;
+        if (j.type === 'assistant') j.message.content.forEach(function (c) {
+          if (c.type === 'tool_use' && c.name === 'WebSearch') searches.push({id: c.id, query: c.input.query});
+        });
+        if (j.type === 'user' && Array.isArray(j.message.content)) j.message.content.forEach(function (c) {
+          if (c.type === 'tool_result') answered[c.tool_use_id] = true;
+        });
+        if (j.type === 'result') done = true;
+      } catch (err) {}
+    });
+    var pending = searches.filter(function (x) { return !answered[x.id]; });
+    var lines = (text ? pending : searches).map(function (x) { return 'WebSearch: ' + x.query; });
+    var view = [text || (done ? 'Finished without a response' : 'No response yet')].concat(lines).join('\\n\\n');
+    if (view !== shown) {
+      tv.textStorage.setAttributedString(render(view));
+      shown = view;
+    }
+  }
+  if (task && task.running) task.terminate;
+}
+EOF
+" [:layer-bra :!layer-ast]]
    ]}
 
   {:des "Numpad-a: Virtual Numpad (Simlayer, experimental)"
