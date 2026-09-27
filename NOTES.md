@@ -328,7 +328,7 @@ Comet command. Neither displaces the other.
 Several rules elsewhere follow from this premise rather than standing on
 their own:
 
-- `h`/`j`/`k`/`l` carries only sets of four (`CLAUDE.md`). A direction
+- `h`/`j`/`k`/`l` carries only sets of four (`AGENTS.md`). A direction
   means nothing except against its three siblings.
 - Pairs are pairs of opposites, on both axes. Of the 64 pairs in the right
   block (16 tiers × `h`/`l`, `j`/`k`, `i`/`o`, `u`/`p`), 62 are settled and
@@ -343,12 +343,12 @@ their own:
   (`⌃F3`). It reads as two unrelated actions until the Dock is filed by
   what it is rather than by the shortcut that reaches it — an app list,
   the always-visible form of Launchpad (see "Classify an action by what it
-  acts on" in `CLAUDE.md`). The tier's disciplined side and its aux key
+  acts on" in `AGENTS.md`). The tier's disciplined side and its aux key
   hold the strong forms of that opposition, `⌘Q` against Launchpad; `i`/`o`
   are the weaker forms of each, and the direction carries over: put the
   app's windows away, or call the list of apps up.
 - An action with no direction of its own goes on `u`/`i`/`o`/`p`, the free
-  side (`CLAUDE.md`).
+  side (`AGENTS.md`).
 
 ## What `act-a` amplifies is set by the tier, not fixed
 
