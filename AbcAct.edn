@@ -852,7 +852,7 @@ function run(argv) {
     if (exited && !done) {
       var er = $.NSString.stringWithContentsOfFileEncodingError(ep, 4, null);
       er = er.isNil() ? '' : er.js.trim();
-      status = (text ? text + '\\n\\n' : '') + '**' + (failed ? 'Could not start ' + argv[0] : 'Claude Code exited without a response') + '**' + (er ? '\\n\\n```\\n' + er + '\\n```' : '');
+      status = (text ? text + '\\n\\n' : '') + '**Error while running Claude Code**' + (er ? '\\n\\n```\\n' + er + '\\n```' : '');
     }
     var view = [status].concat(lines).join('\\n\\n');
     if (view !== shown) {
