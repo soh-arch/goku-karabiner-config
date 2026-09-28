@@ -1291,6 +1291,12 @@ therefore sends `selectAll:` to `NSNull` instead of the first responder,
 raises `-[NSNull selectAll:]: unrecognized selector`, and the uncaught exception
 ends the script, so the panel vanishes. Pass `$()` for a real nil.
 
+**Cmd shortcuts need a main menu.** ⌘X, ⌘C, ⌘V and ⌘A reach a text
+field through the Edit menu's key equivalents. A script-built window has
+no main menu, so those keys do nothing in its fields. The run loop has
+to catch them itself and send `cut:`, `copy:`, `paste:` or `selectAll:`
+to the first responder — which is where the `null` problem above bites.
+
 **A minimized window is not visible.** `isVisible` is false while a
 window sits in the Dock, so a run loop written as `while (w.isVisible)`
 exits the moment the window is minimized. Test `w.isVisible ||
