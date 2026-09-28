@@ -174,8 +174,6 @@
     [:##e             [:app "Logseq"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
     [:##r             [:app "Claude"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f]]
     [:##r             [:app "Chatgpt"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
-    [:##t             [:ray-bg "mooxl/deepcast/japanese?arguments=%7B%22text%22%3A%22%22%7D"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f]]
-    [:##t             [:ray-bg "mooxl/deepcast/englishUS?arguments=%7B%22text%22%3A%22%22%7D"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
     [:##y             [:app "Deepl"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f]]
     [:##y             [:app "Dictionary"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :act-a :!act-s :!act-d :!act-f]]
     [:##g             [:app "Slack"] [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :!act-f]]
@@ -659,6 +657,12 @@
     [:##period        :f10 [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :act-f]]
     [:##slash         :f11 [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :act-f]]
     [:##right_shift   :f12 [:layer-ast :!layer-maccy :!layer-bra :!layer-cket :!act-a :!act-s :!act-d :act-f]]
+   ]}
+
+  {:des "Bra: Translate"
+   :rules [
+    [:e [:ray-bg "mooxl/deepcast/englishUS?arguments=%7B%22text%22%3A%22%22%7D"] [:layer-bra :!layer-ast]]
+    [:r [:ray-bg "mooxl/deepcast/japanese?arguments=%7B%22text%22%3A%22%22%7D"] [:layer-bra :!layer-ast]]
    ]}
 
   {:des "Bra: Web Search"
