@@ -1278,3 +1278,37 @@ corresponding source enabled in System Settings → Keyboard → Text Input →
 Input Sources; a source that isn't installed makes its switch a no-op.
 The design reasoning for these three is separate, earlier in this file —
 this entry is only about the setup they assume.
+
+## JXA panels launched from `shell_command`
+
+Found while building the web search panel, a Cocoa window driven from
+`osascript -l JavaScript` inside a `shell_command`.
+
+**JavaScript `null` is not nil.** The bridge turns `null` into an
+`NSNull` object. `app.sendActionToFrom('selectAll:', null, null)`
+therefore sends `selectAll:` to `NSNull` instead of the first responder,
+raises `-[NSNull selectAll:]: unrecognized selector`, and the uncaught exception
+ends the script, so the panel vanishes. Pass `$()` for a real nil.
+
+**A minimized window is not visible.** `isVisible` is false while a
+window sits in the Dock, so a run loop written as `while (w.isVisible)`
+exits the moment the window is minimized. Test `w.isVisible ||
+w.isMiniaturized` instead.
+
+**The launching shell can exit before the window does.** With two panels
+open from Karabiner, the first panel's `sh` was gone while its
+`osascript` kept running with parent PID 1; the second panel's `sh` was
+still alive. Why the shell exited was not found, and it did not happen
+when the same command was started from Claude Code's shell. An `EXIT`
+trap in that shell fires early and removes whatever it cleans up while the panel
+still needs it, so cleanup belongs in the JXA script itself, and any
+"is this panel still open" check should look at the `osascript` PID
+(`$!`), not the shell's `$$`.
+
+**Reading other windows' positions was abandoned.** To stagger new
+panels, `CGWindowListCopyWindowInfo` was tried for finding where the
+open ones sit. Run from Claude Code's sandboxed shell it listed only
+system windows (Control Center, Window Server), not even a panel opened
+seconds earlier. Whether it would see them when run from Karabiner was
+not tested. Numbered slot directories under `$TMPDIR`, each holding its
+owner's PID, replaced it.
