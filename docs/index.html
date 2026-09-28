@@ -746,7 +746,8 @@ body.searching .chapter-nav{ margin-top:0; }
       <button class="nav-pill" data-target="tab"><span class="num">08</span>Tab</button>
       <button class="nav-pill" data-target="bra"><span class="num">09</span>Bra Layer</button>
       <button class="nav-pill" data-target="cket"><span class="num">10</span>Cket Layer</button>
-      <button class="nav-pill" data-target="glossary"><span class="num">11</span>Glossary</button>
+      <button class="nav-pill" data-target="typing"><span class="num">11</span>Typing Aids</button>
+      <button class="nav-pill" data-target="glossary"><span class="num">12</span>Glossary</button>
     </div>
   </nav>
 
@@ -787,7 +788,7 @@ body.searching .chapter-nav{ margin-top:0; }
           <span class="concept">Aside</span>
         </div>
         <span class="name">Bra</span>
-        <span class="desc">One-handed numpad — the left hand types digits while the right hand stays free.</span>
+        <span class="desc">Web search panel.</span>
       </div>
       <div class="act-card layer-aside">
         <div class="act-card-top">
@@ -844,7 +845,7 @@ body.searching .chapter-nav{ margin-top:0; }
       held together, on top of the L-⌘ that opens the layer.
     </p>
 
-    <div class="sub-head">1.1 — Hold vs. tap on the trigger keys</div>
+    <div class="sub-head">Hold vs. tap on the trigger keys</div>
     <div class="table-wrap">
       <table>
         <thead><tr><th>Key</th><th>Hold</th><th>Tap alone</th></tr></thead>
@@ -859,22 +860,6 @@ body.searching .chapter-nav{ margin-top:0; }
           <tr><td><span class="key">fn</span></td><td>⌃ &nbsp;<span class="dim">(plain remap, not a hold action)</span></td><td class="dim">—</td></tr>
         </tbody>
       </table>
-    </div>
-    <p class="sec-desc" style="margin-top:12px">
-      Four keys became layer triggers, so every modifier they carried had to
-      land somewhere else. That is what this table is: the reassignment, not
-      a set of conveniences.
-    </p>
-
-    <div class="sub-head">1.2 — Accent dead keys <span style="text-transform:none;letter-spacing:0;font-weight:600">(outside Asterisk and Cket)</span></div>
-    <p class="sec-desc" style="margin-bottom:12px">Press, then type a letter — the standard ABC Extended dead keys. <span class="key">\</span> is the exception: it types <code>œ</code> outright, with nothing to follow.</p>
-    <div class="virt-key-grid" style="max-width:none;grid-template-columns:repeat(auto-fill,minmax(190px,1fr))">
-      <div class="virt-key-card"><span class="key">[</span><span>Acute → é</span></div>
-      <div class="virt-key-card"><span class="key">]</span><span>Grave → è</span></div>
-      <div class="virt-key-card"><span class="key">\</span><span>œ <span class="dim">(⌥Q — not a dead key)</span></span></div>
-      <div class="virt-key-card"><span class="key">⇧ [</span><span>Circumflex → â</span></div>
-      <div class="virt-key-card"><span class="key">⇧ ]</span><span>Umlaut → ü</span></div>
-      <div class="virt-key-card"><span class="key">⇧ \</span><span>Cedilla → ç</span></div>
     </div>
 
   </section>
@@ -1392,27 +1377,18 @@ body.searching .chapter-nav{ margin-top:0; }
     <div class="sec-head">
       <span class="sec-num">09</span>
       <div>
-        <h2>Bra Layer — One-Handed Numpad</h2>
-        <p class="sec-desc">Hold <span class="key">L-⇧</span>. A single-purpose layer: the left hand becomes a numpad while the right hand stays free.</p>
+        <h2>Bra Layer</h2>
+        <p class="sec-desc">Hold <span class="key">L-⇧</span>.</p>
       </div>
     </div>
-
-    <div class="sub-head">Numpad layout</div>
-    <div class="virt-key-grid">
-      <div class="virt-key-card"><span class="key">q</span><span>Delete line</span></div>
-      <div class="virt-key-card"><span class="key">w</span><span>7</span></div>
-      <div class="virt-key-card"><span class="key">e</span><span>8</span></div>
-      <div class="virt-key-card"><span class="key">r</span><span>9</span></div>
-      <div class="virt-key-card"><span class="key">a</span><span>Backspace</span></div>
-      <div class="virt-key-card"><span class="key">s</span><span>4</span></div>
-      <div class="virt-key-card"><span class="key">d</span><span>5</span></div>
-      <div class="virt-key-card"><span class="key">f</span><span>6</span></div>
-      <div class="virt-key-card"><span class="key">z</span><span>0</span></div>
-      <div class="virt-key-card"><span class="key">x</span><span>1</span></div>
-      <div class="virt-key-card"><span class="key">c</span><span>2</span></div>
-      <div class="virt-key-card"><span class="key">v</span><span>3</span></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Key</th><th>Action</th></tr></thead>
+        <tbody>
+          <tr><td><span class="key">f</span></td><td>Web search panel <span class="dim">— asks Claude Code to search the web and shows the answer</span></td></tr>
+        </tbody>
+      </table>
     </div>
-
   </section>
 
   <!-- ================= 10 Cket ================= -->
@@ -1440,10 +1416,60 @@ body.searching .chapter-nav{ margin-top:0; }
     </div>
   </section>
 
-  <!-- ================= 11 Glossary ================= -->
-  <section class="section reveal" id="glossary" data-category="glossary">
+  <!-- ================= 11 Typing Aids ================= -->
+  <section class="section reveal" id="typing" data-category="typing">
     <div class="sec-head">
       <span class="sec-num">11</span>
+      <div>
+        <h2>Typing Aids</h2>
+        <p class="sec-desc">Digits and accented letters, typed from the letter keys.</p>
+      </div>
+    </div>
+
+    <div class="sub-head">Numpad <span style="text-transform:none;letter-spacing:0;font-weight:600">(hold <code>a</code>, outside every layer)</span></div>
+    <div class="virt-key-grid" style="max-width:none;grid-template-columns:repeat(6,1fr)">
+      <div></div>
+      <div class="virt-key-card"><span class="key">2</span><span>7</span></div>
+      <div class="virt-key-card"><span class="key">3</span><span>8</span></div>
+      <div class="virt-key-card"><span class="key">4</span><span>9</span></div>
+      <div class="virt-key-card"><span class="key">5</span><span>/</span></div>
+      <div class="virt-key-card"><span class="key">6</span><span>^</span></div>
+      <div></div>
+      <div class="virt-key-card"><span class="key">w</span><span>4</span></div>
+      <div class="virt-key-card"><span class="key">e</span><span>5</span></div>
+      <div class="virt-key-card"><span class="key">r</span><span>6</span></div>
+      <div class="virt-key-card"><span class="key">t</span><span>*</span></div>
+      <div></div>
+      <div class="virt-key-card"><span class="key">a</span><span>Hold</span></div>
+      <div class="virt-key-card"><span class="key">s</span><span>1</span></div>
+      <div class="virt-key-card"><span class="key">d</span><span>2</span></div>
+      <div class="virt-key-card"><span class="key">f</span><span>3</span></div>
+      <div class="virt-key-card"><span class="key">g</span><span>-</span></div>
+      <div></div>
+      <div class="virt-key-card"><span class="key">z</span><span>Delete line</span></div>
+      <div class="virt-key-card"><span class="key">x</span><span>Backspace</span></div>
+      <div class="virt-key-card"><span class="key">c</span><span>0</span></div>
+      <div class="virt-key-card"><span class="key">v</span><span>=</span></div>
+      <div class="virt-key-card"><span class="key">b</span><span>+</span></div>
+      <div></div>
+    </div>
+
+    <div class="sub-head">Accent dead keys <span style="text-transform:none;letter-spacing:0;font-weight:600">(outside Asterisk and Cket)</span></div>
+    <p class="sec-desc" style="margin-bottom:12px">Press, then type a letter — the standard ABC Extended dead keys. <span class="key">\</span> is the exception: it types <code>œ</code> outright, with nothing to follow.</p>
+    <div class="virt-key-grid" style="max-width:none;grid-template-columns:repeat(auto-fill,minmax(190px,1fr))">
+      <div class="virt-key-card"><span class="key">[</span><span>Acute → é</span></div>
+      <div class="virt-key-card"><span class="key">]</span><span>Grave → è</span></div>
+      <div class="virt-key-card"><span class="key">\</span><span>œ <span class="dim">(⌥Q — not a dead key)</span></span></div>
+      <div class="virt-key-card"><span class="key">⇧ [</span><span>Circumflex → â</span></div>
+      <div class="virt-key-card"><span class="key">⇧ ]</span><span>Umlaut → ü</span></div>
+      <div class="virt-key-card"><span class="key">⇧ \</span><span>Cedilla → ç</span></div>
+    </div>
+  </section>
+
+  <!-- ================= 12 Glossary ================= -->
+  <section class="section reveal" id="glossary" data-category="glossary">
+    <div class="sec-head">
+      <span class="sec-num">12</span>
       <div>
         <h2>Glossary</h2>
         <p class="sec-desc">The handful of words this manual uses in a specific sense.</p>
@@ -1668,7 +1694,7 @@ body.searching .chapter-nav{ margin-top:0; }
   /* ---------- Scrollspy ---------- */
   var spyMap = {};
   navPills.forEach(function(p){ spyMap[p.dataset.target] = p; });
-  var spyTargets = ['overview','act','launcher','nav','bottom','system','escape','tab','bra','cket','glossary']
+  var spyTargets = ['overview','act','launcher','nav','bottom','system','escape','tab','bra','cket','typing','glossary']
     .map(function(id){ return document.getElementById(id); })
     .filter(Boolean);
   var spy = new IntersectionObserver(function(entries){
