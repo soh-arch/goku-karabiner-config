@@ -28,7 +28,6 @@ leave the home row.
   — illustrated and searchable, with an interactive explorer for all 16 tiers.
   Published via GitHub Pages; the source is the single self-contained file
   [`docs/index.html`](./docs/index.html).
-- **[`MANUAL.md`](./MANUAL.md)** (Japanese) — the same reference in plain Markdown.
 - **[`NOTES.md`](./NOTES.md)** (English) — the Karabiner/Goku gotchas found while
   building this config: why multi-entry `to` arrays can't hold a modifier, why only
   the first matching manipulator fires, why `select_input_source` was abandoned for
