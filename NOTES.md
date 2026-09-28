@@ -4,6 +4,9 @@ Implementation details and Karabiner/Goku gotchas that don't belong in the
 README but are worth keeping around so the same debugging loop doesn't
 happen twice.
 
+Entries are appended; check the git history for when one was written
+and `AbcAct.edn` for how the config stands now.
+
 ## `to` arrays don't hold modifiers
 
 A `to` list with more than one entry is executed as a one-shot macro: every
