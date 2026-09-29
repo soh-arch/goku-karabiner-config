@@ -819,7 +819,7 @@ function run(argv) {
         if (!task && q) {
           task = $.NSTask.alloc.init;
           task.executableURL = $.NSURL.fileURLWithPath(argv[0]);
-          task.arguments = $(['-p', '次の質問についてWeb検索して答えてください。\\n\\n質問: ' + q, '--append-system-prompt', 'やりとり一回限りのものなので、次の質問に繋げるようなメッセージは不要です。', '--model', 'sonnet', '--effort', 'medium', '--allowedTools', 'WebSearch,WebFetch', '--output-format', 'stream-json', '--verbose', '--include-partial-messages']);
+          task.arguments = $(['-p', '次の質問についてWeb検索して答えてください。\\n\\n質問: ' + q, '--append-system-prompt', 'やりとり一回限りのものなので、次の質問に繋げるようなメッセージは不要です。', '--model', 'sonnet', '--effort', 'low', '--allowedTools', 'WebSearch,WebFetch', '--output-format', 'stream-json', '--verbose', '--include-partial-messages']);
           task.standardInput = $.NSFileHandle.fileHandleWithNullDevice;
           task.standardOutput = $.NSFileHandle.fileHandleForWritingAtPath(argv[1]);
           $.NSFileManager.defaultManager.createFileAtPathContentsAttributes(ep, $(), $());
