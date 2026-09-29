@@ -17,6 +17,7 @@ Open one pull request per cohesive unit of functionality. Before adding
 new content to an existing pull request, confirm it is not already closed.
 
 Work on a branch and open a pull request instead of committing to `main`.
+A chore may be committed to `main` directly.
 
 Before starting complex work, briefly state the plan and align on the
 approach first.

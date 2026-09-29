@@ -1319,3 +1319,40 @@ system windows (Control Center, Window Server), not even a panel opened
 seconds earlier. Whether it would see them when run from Karabiner was
 not tested. Numbered slot directories under `$TMPDIR`, each holding its
 owner's PID, replaced it.
+
+## Why the layers are named Asterisk, Bra and Cket
+
+The names follow a left–right symmetry. "Bracket" is split in two: Bra is
+the left half and Cket the right. Asterisk sits between them. The triggers
+repeat that layout on the keyboard — Asterisk on L-Cmd near the middle, Bra
+on L-Shift at the left, Cket on R-Shift at the right.
+
+Dirac's bra–ket notation was known when the names were chosen, but the
+names were not meant to copy it wholesale.
+
+The roles follow it too: Asterisk is the central layer, and Bra and Cket
+are auxiliary.
+
+The A–B–C order was intended from the start, and gives the config its name
+together with the Act keys: Asterisk, Bra, Cket, Act — `AbcAct`.
+
+## Asterisk and the Act keys: five left-hand fingers
+
+Putting Asterisk on L-Cmd and pairing it with the Act keys, so that the
+five fingers of the left hand control the action, was part of AbcAct from
+its early stages and is one of its founding ideas.
+
+## The special treatment of `a`
+
+Among the non-modifier keys, `a` is treated unlike the others:
+
+- Tapped under Asterisk, it opens Raycast.
+- It is the only Act that works in the left block, the one block whose Act
+  tiers are incomplete.
+- It triggers the numpad (the `numpad-a` simlayer).
+- It is the only Act whose meaning is Amplify or Alter rather than a change
+  of function.
+
+This is part of a wider pattern in which the letter A gets special
+treatment across the keymap design, and it shows in the name as well —
+see "Why the layers are named Asterisk, Bra and Cket" above.
