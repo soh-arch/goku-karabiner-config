@@ -1356,3 +1356,15 @@ Among the non-modifier keys, `a` is treated unlike the others:
 This is part of a wider pattern in which the letter A gets special
 treatment across the keymap design, and it shows in the name as well —
 see "Why the layers are named Asterisk, Bra and Cket" above.
+
+## Why Cket is a layer of its own
+
+Cket's functions are kept apart from Asterisk for these reasons:
+
+- They are meant to be used without spreading both hands; Cket's keys are
+  ergonomically easy to work with one hand.
+- Pressing them repeatedly in a row carries meaning.
+- They need to be used intuitively and instantly, so they are kept apart
+  from Asterisk's many-function system.
+- They change system state and need no link to text editing or app
+  launching, so they can be isolated.
