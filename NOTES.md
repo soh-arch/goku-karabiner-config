@@ -1380,3 +1380,26 @@ answer is short, and the result can go straight into the next step.
 
 **A window is always shown.** At this stage, every Bra action shows some
 window — Raycast's or a self-built one, in any form.
+
+## A later `shell_command` ended a panel running in the foreground
+
+When `scripts/bra.js` was launched as the foreground process of a
+`shell_command`, the next `shell_command` closed the open panel. That
+included pressing another Bra key and opening an app from Asterisk
+(`open -a`). Launching it in the background
+(`osascript … > /dev/null 2>&1 &`) stopped this. Whether Karabiner
+deliberately ends the previous command was not confirmed in its
+documentation. See "The launching shell can exit before the window does"
+above for the earlier sighting.
+
+## Window buttons ignored the first click
+
+After focus moved to another app and back, the panel's close, minimize
+and zoom buttons often needed two clicks. Logging every event the run loop
+received showed that the `mouseDown` reached the button both times. A
+click that failed came with no `mouseEntered` since the last
+`mouseExited`; a click that worked came right after a `mouseEntered`. The
+cause behind the missing `mouseEntered` was not found. Calling
+`app.finishLaunching` did not help. What fixed it: on a `mouseDown`
+inside a standard window button's frame, the run loop calls
+`performClick` on that button instead of passing the event on.
