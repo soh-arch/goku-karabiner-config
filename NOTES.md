@@ -1368,3 +1368,15 @@ Cket's functions are kept apart from Asterisk for these reasons:
   from Asterisk's many-function system.
 - They change system state and need no link to text editing or app
   launching, so they can be isolated.
+
+## Early thinking on reworking Bra as a delegation layer
+
+An early-stage sketch of a new Bra, recorded as it stood at the time — not
+a settled design.
+
+**Role.** Bra would delegate workflows nimbly. "Nimbly" meant four things:
+the result arrives fast, the work just before it is not left behind, the
+answer is short, and the result can go straight into the next step.
+
+**A window is always shown.** At this stage, every Bra action shows some
+window — Raycast's or a self-built one, in any form.
