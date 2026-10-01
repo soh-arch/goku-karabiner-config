@@ -23,7 +23,7 @@ var SYSTEM = {
 };
 
 var FUNCTIONS = {
-  'attach-answer': {title: 'Explain', prompt: '添付の内容を説明・要約してください。'},
+  'attach-answer': {title: 'Explain', prompt: '添付の内容に応じて、次のように応答してください。\n\n- 短文や語句の場合: Web検索を用いて解説する\n- 長文のテキストや、それを含むファイルの場合: 要約する'},
   'attach-translate': {title: 'Translate', prompt: '添付の内容を翻訳してください。'},
   'attach-format': {title: 'Format', prompt: '添付の内容の書式を整えてください。内容は変えないでください。添付が画像の場合は、画像に含まれるテキストを書き起こしてください。'},
   'attach-rewrite': {title: 'Rewrite', prompt: '添付の文章を推敲してください。意味は変えずに、より自然で読みやすくしてください。'},
@@ -68,9 +68,12 @@ function buildSystem(fn) {
 }
 
 function toolArgs(fn, att) {
-  if (fn.id === 'direct-answer') return ['--tools', 'WebSearch,WebFetch', '--allowedTools', 'WebSearch,WebFetch'];
-  if (att && att.kind === 'image') return ['--tools', 'Read', '--allowedTools', 'Read', '--add-dir', att.dir];
-  return ['--tools', ''];
+  var tools = [];
+  if (fn.id === 'direct-answer' || fn.id === 'attach-answer') tools.push('WebSearch', 'WebFetch');
+  if (att && att.kind === 'image') tools.push('Read');
+  if (!tools.length) return ['--tools', ''];
+  var args = ['--tools', tools.join(','), '--allowedTools', tools.join(',')];
+  return att && att.kind === 'image' ? args.concat(['--add-dir', att.dir]) : args;
 }
 
 function claudeArgs(fn, input, att) {
