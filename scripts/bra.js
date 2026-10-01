@@ -21,6 +21,7 @@ var SYSTEM = {
   pasteable: '結果のテキストだけを返してください。そのまま貼り付けて使えるように、説明や注釈は付けないでください。',
   markdown: '見出し、箇条書き、太字、表などの Markdown を積極的に使って、読みやすく構成してください。',
   sameFormat: 'Markdown を使うかプレーンテキストにするかは、元の文章の書式に合わせてください。指示で書式が指定された場合はそちらに従ってください。',
+  keepLanguage: '元の文章の言語は変えないでください。翻訳はしないでください。指示で言語が指定された場合はそちらに従ってください。',
   direction: '翻訳の方向は、元の文章が日本語なら英語、それ以外の言語なら日本語です。指示で別の言語が指定された場合はそちらに従ってください。'
 };
 
@@ -73,6 +74,7 @@ function buildSystem(fn) {
   if (fn.purpose === 'answer') s.push(SYSTEM.markdown);
   else s.push(SYSTEM.pasteable, SYSTEM.sameFormat);
   if (fn.purpose === 'translate') s.push(SYSTEM.direction);
+  if (fn.purpose === 'format' || fn.purpose === 'rewrite') s.push(SYSTEM.keepLanguage);
   return s.join('\n');
 }
 
