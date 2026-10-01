@@ -26,15 +26,15 @@ var SYSTEM = {
 };
 
 var FUNCTIONS = {
-  'attach-answer': {title: 'Explain', prompt: '添付の内容に応じて、次のように応答してください。\n\n- 短文や語句の場合: Web検索を用いて解説する\n- 長文のテキストや、それを含むファイルの場合: 要約する。要約の分量は{limit}にする。最も重要な点から順に書き、分量に収まらない細部は省く', limit: {ratio: 1 / 5, max: 400}},
+  'attach-answer': {title: 'Answer', prompt: '添付の内容に応じて、次のように応答してください。\n\n- 短文や語句の場合: Web検索を用いて解説する\n- 長文のテキストや、それを含むファイルの場合: 要約する。要約の分量は{limit}にする。最も重要な点から順に書き、分量に収まらない細部は省く', limit: {ratio: 1 / 5, max: 400}},
   'attach-translate': {title: 'Translate', prompt: '添付の内容を翻訳してください。'},
   'attach-format': {title: 'Format', prompt: '添付の内容の書式を整えてください。内容は変えないでください。添付が画像の場合は、画像に含まれるテキストを書き起こしてください。'},
   'attach-rewrite': {title: 'Rewrite', prompt: '添付の文章を推敲してください。意味は変えずに、より自然で読みやすくしてください。'},
-  'direct-answer': {title: 'Web Search', placeholder: 'Search the web', prompt: '次の質問についてWeb検索して答えてください。\n\n質問: {input}'},
+  'direct-answer': {title: 'Answer', placeholder: 'Search the web', prompt: '次の質問についてWeb検索して答えてください。\n\n質問: {input}'},
   'direct-translate': {title: 'Translate', placeholder: 'Text to translate', prompt: '次の文章を翻訳してください。\n\n{input}'},
   'direct-format': {title: 'Format', placeholder: 'Text to format', prompt: '次の文章の書式を整えてください。内容は変えないでください。\n\n{input}'},
   'direct-rewrite': {title: 'Rewrite', placeholder: 'Text to fix', prompt: '次の文章の誤字脱字、文法、不自然な表現を直してください。\n\n{input}'},
-  'both-answer': {title: 'Ask', placeholder: 'Ask about the attachment', prompt: '添付の内容について、次の質問に答えてください。\n\n質問: {input}'},
+  'both-answer': {title: 'Answer', placeholder: 'Ask about the attachment', prompt: '添付の内容について、次の質問に答えてください。\n\n質問: {input}'},
   'both-translate': {title: 'Translate', placeholder: 'How to translate', prompt: '次の指示に従って、添付の内容を翻訳してください。\n\n指示: {input}'},
   'both-format': {title: 'Format', placeholder: 'Shape to format into', prompt: '添付の内容を、次の指定どおりの形に整えてください。\n\n指定: {input}'},
   'both-rewrite': {title: 'Rewrite', placeholder: 'How to rewrite', prompt: '次の指示に従って、添付の文章を書き直してください。\n\n指示: {input}'}
