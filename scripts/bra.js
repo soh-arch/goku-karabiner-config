@@ -19,11 +19,13 @@ var TRANSIENT = 'org.nspasteboard.TransientType';
 var SYSTEM = {
   common: 'やりとり一回限りのものなので、次の質問に繋げるようなメッセージは不要です。前置きや締めの言葉は書かないでください。',
   pasteable: '結果のテキストだけを返してください。そのまま貼り付けて使えるように、説明や注釈は付けないでください。',
+  markdown: '見出し、箇条書き、太字、表などの Markdown を積極的に使って、読みやすく構成してください。',
+  sameFormat: 'Markdown を使うかプレーンテキストにするかは、元の文章の書式に合わせてください。指示で書式が指定された場合はそちらに従ってください。',
   direction: '翻訳の方向は、元の文章が日本語なら英語、それ以外の言語なら日本語です。指示で別の言語が指定された場合はそちらに従ってください。'
 };
 
 var FUNCTIONS = {
-  'attach-answer': {title: 'Explain', prompt: '添付の内容に応じて、次のように応答してください。\n\n- 短文や語句の場合: Web検索を用いて解説する\n- 長文のテキストや、それを含むファイルの場合: 要約する'},
+  'attach-answer': {title: 'Explain', prompt: '添付の内容に応じて、次のように応答してください。\n\n- 短文や語句の場合: Web検索を用いて解説する\n- 長文のテキストや、それを含むファイルの場合: 要約する。要約の分量は、原文の文字数の1/5以下、かつ400文字以内にする。最も重要な点から順に書き、分量に収まらない細部は省く'},
   'attach-translate': {title: 'Translate', prompt: '添付の内容を翻訳してください。'},
   'attach-format': {title: 'Format', prompt: '添付の内容の書式を整えてください。内容は変えないでください。添付が画像の場合は、画像に含まれるテキストを書き起こしてください。'},
   'attach-rewrite': {title: 'Rewrite', prompt: '添付の文章を推敲してください。意味は変えずに、より自然で読みやすくしてください。'},
@@ -62,7 +64,8 @@ function buildPrompt(fn, input, att) {
 
 function buildSystem(fn) {
   var s = [SYSTEM.common];
-  if (fn.purpose !== 'answer') s.push(SYSTEM.pasteable);
+  if (fn.purpose === 'answer') s.push(SYSTEM.markdown);
+  else s.push(SYSTEM.pasteable, SYSTEM.sameFormat);
   if (fn.purpose === 'translate') s.push(SYSTEM.direction);
   return s.join('\n');
 }
