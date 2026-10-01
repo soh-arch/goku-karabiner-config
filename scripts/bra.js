@@ -299,10 +299,6 @@ function run(argv) {
   w.titlebarAppearsTransparent = true;
   w.titleVisibility = 1;
   w.title = fn.def.title;
-  [2].forEach(function (i) {
-    var b = w.standardWindowButton(i);
-    if (!b.isNil()) b.hidden = true;
-  });
   w.movableByWindowBackground = true;
   w.opaque = false;
   w.backgroundColor = $.NSColor.clearColor;
@@ -400,6 +396,15 @@ function run(argv) {
       infoUntil = 0;
     }
     if (e && !e.isNil()) {
+      if (Number(e.type) === 1 && !e.window.isNil() && Number(e.window.windowNumber) === Number(w.windowNumber)) {
+        var hit = [0, 1, 2].map(function (i) { return w.standardWindowButton(i); }).filter(function (b) {
+          return !b.isNil() && !b.hidden && $.NSPointInRect(e.locationInWindow, b.convertRectToView(b.bounds, $()));
+        })[0];
+        if (hit) {
+          hit.performClick($());
+          continue;
+        }
+      }
       var isKey = Number(e.type) === 10, mods = Number(e.modifierFlags) & 0x1e0000;
       if (isKey && Number(e.keyCode) === COPY_ALL.keyCode && mods === COPY_ALL.mods) {
         copyAll();
