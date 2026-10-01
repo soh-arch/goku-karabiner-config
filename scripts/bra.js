@@ -25,7 +25,7 @@ var SYSTEM = {
 };
 
 var FUNCTIONS = {
-  'attach-answer': {title: 'Explain', prompt: '添付の内容に応じて、次のように応答してください。\n\n- 短文や語句の場合: Web検索を用いて解説する\n- 長文のテキストや、それを含むファイルの場合: 要約する。要約の分量は、原文の文字数の1/5以下、かつ400文字以内にする。最も重要な点から順に書き、分量に収まらない細部は省く'},
+  'attach-answer': {title: 'Explain', prompt: '添付の内容に応じて、次のように応答してください。\n\n- 短文や語句の場合: Web検索を用いて解説する\n- 長文のテキストや、それを含むファイルの場合: 要約する。要約の分量は{limit}にする。最も重要な点から順に書き、分量に収まらない細部は省く', limit: {ratio: 1 / 5, max: 400}},
   'attach-translate': {title: 'Translate', prompt: '添付の内容を翻訳してください。'},
   'attach-format': {title: 'Format', prompt: '添付の内容の書式を整えてください。内容は変えないでください。添付が画像の場合は、画像に含まれるテキストを書き起こしてください。'},
   'attach-rewrite': {title: 'Rewrite', prompt: '添付の文章を推敲してください。意味は変えずに、より自然で読みやすくしてください。'},
@@ -55,8 +55,14 @@ function fill(t, vars) {
   return t.replace(/\{(\w+)\}/g, function (all, k) { return k in vars ? vars[k] : all; });
 }
 
+function limitText(limit, att) {
+  if (!limit) return '';
+  if (att && att.kind === 'text') return Math.min(Math.floor(att.text.length * limit.ratio), limit.max) + '文字以内';
+  return '原文の文字数の' + Math.round(limit.ratio * 100) + '%以下、かつ' + limit.max + '文字以内';
+}
+
 function buildPrompt(fn, input, att) {
-  var p = fill(fn.def.prompt, {input: input || ''});
+  var p = fill(fn.def.prompt, {input: input || '', limit: limitText(fn.def.limit, att)});
   if (att && att.kind === 'image') p += '\n\n' + fill(ATTACHMENT.image, {path: att.path});
   else if (att) p += '\n\n' + fill(ATTACHMENT.text, {text: att.text});
   return p;
