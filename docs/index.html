@@ -690,7 +690,7 @@ body.searching .chapter-nav{ margin-top:0; }
       AbcAct is a layered keymap for macOS. Three hold-keys open three layers; inside the main
       layer, four <strong>Act</strong> keys under the left hand — <strong>a</strong>, <strong>s</strong>,
       <strong>d</strong>, <strong>f</strong> — combine freely into <strong>16 tiers</strong> that
-      redefine the right hand. The fingers never leave the home row.
+      redefine the right hand.
     </p>
     <div class="hero-cta">
       <a class="btn btn-primary" href="#act">Explore the Act System <span class="arr">↓</span></a>
@@ -700,9 +700,9 @@ body.searching .chapter-nav{ margin-top:0; }
     <!-- Keyboard diagram, modeled on a real MacBook (Touch ID, no Touch Bar) layout. -->
     <div class="kb-stage reveal">
       <div class="kb-scroll">
-        <div class="kb" role="img" aria-label="Keyboard diagram. Held triggers for the three main layers: left Command, left Shift and right Shift. Act keys a, s, d and f sit on the left home row. The keys they remap are h j k l, u i o p, the bracket, semicolon and quote group, q w e r t y g, the whole bottom letter row, the number row, backslash, tab, caps lock, spacebar, left Option and right Command.">
+        <div class="kb" role="img" aria-label="Keyboard diagram. Held triggers for the three main layers: left Command, left Shift and right Shift. Act keys a, s, d and f sit on the left home row. The keys they remap are h j k l, u i o p, the bracket, semicolon and quote group, q w e r t y g, the whole bottom letter row, the number row, backslash, tab, caps lock, spacebar, left Option, right Command, fn and escape.">
           <div class="kb-row" aria-hidden="true">
-            <span class="keycap mod" style="--sp:6">esc</span><span class="keycap mod">F1</span><span class="keycap mod">F2</span><span class="keycap mod">F3</span><span class="keycap mod">F4</span><span class="keycap mod">F5</span><span class="keycap mod">F6</span><span class="keycap mod">F7</span><span class="keycap mod">F8</span><span class="keycap mod">F9</span><span class="keycap mod">F10</span><span class="keycap mod">F11</span><span class="keycap mod">F12</span><span class="keycap touchid"></span>
+            <span class="keycap mod k-mapped" style="--sp:6">esc</span><span class="keycap mod">F1</span><span class="keycap mod">F2</span><span class="keycap mod">F3</span><span class="keycap mod">F4</span><span class="keycap mod">F5</span><span class="keycap mod">F6</span><span class="keycap mod">F7</span><span class="keycap mod">F8</span><span class="keycap mod">F9</span><span class="keycap mod">F10</span><span class="keycap mod">F11</span><span class="keycap mod">F12</span><span class="keycap touchid"></span>
           </div>
           <div class="kb-row" aria-hidden="true">
             <span class="keycap">`</span><span class="keycap k-mapped">1</span><span class="keycap k-mapped">2</span><span class="keycap k-mapped">3</span><span class="keycap k-mapped">4</span><span class="keycap k-mapped">5</span><span class="keycap k-mapped">6</span><span class="keycap k-mapped">7</span><span class="keycap k-mapped">8</span><span class="keycap k-mapped">9</span><span class="keycap k-mapped">0</span><span class="keycap">-</span><span class="keycap">=</span><span class="keycap mod" style="--sp:6">delete</span>
@@ -728,7 +728,7 @@ body.searching .chapter-nav{ margin-top:0; }
         <span><i></i>Unchanged</span>
       </div>
       <p class="kb-caption">
-        <b>3</b> layers · <b>16</b> Act tiers · trigger <b>hold L-⌘</b> · compiled from <code>AbcAct.edn</code>
+        <b>3</b> layers · <b>16</b> Act tiers · compiled from <code>AbcAct.edn</code>
       </p>
     </div>
   </section>
@@ -767,7 +767,6 @@ body.searching .chapter-nav{ margin-top:0; }
         <p class="sec-desc">
           Hold <span class="key">L-⌘</span> and the <strong>Asterisk</strong> layer is live for as long as
           you hold it. Add Act keys under the left hand to pick which of the 16 tiers the right hand is in.
-          Tap a hold-key on its own and it types something instead.
         </p>
       </div>
     </div>
@@ -808,7 +807,7 @@ body.searching .chapter-nav{ margin-top:0; }
           <span class="concept">Scale</span>
         </div>
         <span class="name">a — Amplify</span>
-        <span class="desc">Same action, bigger unit: word, paragraph, document, half-screen.</span>
+        <span class="desc">Same action, bigger unit.</span>
       </div>
       <div class="act-card c-s">
         <div class="act-card-top">
@@ -816,7 +815,7 @@ body.searching .chapter-nav{ margin-top:0; }
           <span class="concept">Target</span>
         </div>
         <span class="name">s — Select</span>
-        <span class="desc">Turns a movement into a selection; with <b>f</b>, turns pointer control into window placement.</span>
+        <span class="desc">Turns a movement into a selection.</span>
       </div>
       <div class="act-card c-d">
         <div class="act-card-top">
@@ -824,7 +823,7 @@ body.searching .chapter-nav{ margin-top:0; }
           <span class="concept">Remove</span>
         </div>
         <span class="name">d — Delete</span>
-        <span class="desc">Removes, reverts, or cuts away what the movement covered.</span>
+        <span class="desc">Removes what the movement covered.</span>
       </div>
       <div class="act-card c-f">
         <div class="act-card-top">
@@ -832,7 +831,7 @@ body.searching .chapter-nav{ margin-top:0; }
           <span class="concept">Shift focus</span>
         </div>
         <span class="name">f — Focus</span>
-        <span class="desc">Moves attention instead of text: pointer, tab, app, window.</span>
+        <span class="desc">Moves attention instead of text.</span>
       </div>
     </div>
 
@@ -853,9 +852,9 @@ body.searching .chapter-nav{ margin-top:0; }
           <tr><td><span class="key">L-⌘</span></td><td><strong>Asterisk layer</strong></td><td class="dim">Switch to English input (US Extended)</td></tr>
           <tr><td><span class="key">L-⇧</span></td><td><strong>Bra layer</strong></td><td class="dim"><code>`</code> — with R-⇧ held: <code>~</code></td></tr>
           <tr><td><span class="key">R-⇧</span></td><td><strong>Cket layer</strong></td><td class="dim"><code>\</code> — with L-⇧ held: <code>|</code></td></tr>
-          <tr><td><span class="key">Caps Lock</span></td><td>⌘ &nbsp;<span class="dim">(inside Asterisk it is a system-action key, §06)</span></td><td class="dim">Esc &nbsp;<span class="dim">(inside Asterisk, physical Escape is a separate system-action key, §07)</span></td></tr>
-          <tr><td><span class="key">Space</span></td><td>⇧ &nbsp;<span class="dim">(the only modifier either thumb can reach)</span></td><td class="dim">Space</td></tr>
-          <tr><td><span class="key">R-⌘</span></td><td>⌘</td><td class="dim">Japanese <code>かな</code> key code — toggles the IME's kana / alphanumeric mode, not an input-source switch</td></tr>
+          <tr><td><span class="key">Caps Lock</span></td><td>⌘ &nbsp;<span class="dim">(inside Asterisk it is a system-action key, §06)</span></td><td class="dim">Esc &nbsp;<span class="dim">(outside Asterisk)</span></td></tr>
+          <tr><td><span class="key">Space</span></td><td>⇧</td><td class="dim">Space</td></tr>
+          <tr><td><span class="key">R-⌘</span></td><td>⌘</td><td class="dim">Kana key</td></tr>
           <tr><td><span class="key">L-⌥</span></td><td>⌥</td><td class="dim">Switch to Greek input</td></tr>
           <tr><td><span class="key">fn</span></td><td>⌃ &nbsp;<span class="dim">(plain remap, not a hold action)</span></td><td class="dim">—</td></tr>
         </tbody>
@@ -873,7 +872,7 @@ body.searching .chapter-nav{ margin-top:0; }
         <p class="sec-desc">
           <span class="key">a</span><span class="key">s</span><span class="key">d</span><span class="key">f</span>
           are held, not tapped, and stack freely. Every combination gives the right hand a different,
-          consistent meaning — nothing here is an arbitrary shortcut to memorize.
+          consistent meaning.
         </p>
       </div>
     </div>
@@ -906,7 +905,7 @@ body.searching .chapter-nav{ margin-top:0; }
       <summary><span class="tier-summary-label">Show all 16 tiers</span><span class="chev">⌄</span></summary>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Act</th><th>Notation</th><th>Tier</th><th>Focus</th><th>Right-hand behaviour</th></tr></thead>
+          <thead><tr><th>Act</th><th>Notation</th><th>Tier</th><th>Concept</th><th>Right-hand behaviour</th></tr></thead>
           <tbody id="actMatrix"><!-- populated by script --></tbody>
         </table>
       </div>
@@ -952,7 +951,7 @@ body.searching .chapter-nav{ margin-top:0; }
       </table>
     </div>
 
-    <div class="sub-head">3.2 — Clipboard history, thumb and pinky only</div>
+    <div class="sub-head">3.2 — Clipboard history (Maccy)</div>
     <div class="steps">
       <div class="step">
         <span class="step-num">01</span>
@@ -960,7 +959,7 @@ body.searching .chapter-nav{ margin-top:0; }
       </div>
       <div class="step">
         <span class="step-num">02</span>
-        <span class="step-body">Keep both held. Press any <span class="key">1</span>–<span class="key">0</span> or <span class="key">a</span>–<span class="key">z</span>.<br><strong>That slot is pasted.</strong></span>
+        <span class="step-body">Keep both held. Press any <span class="key">1</span>–<span class="key">0</span> or <span class="key">a</span>–<span class="key">z</span>.<br><strong>That entry is pasted.</strong></span>
       </div>
       <div class="step">
         <span class="step-num">03</span>
@@ -982,8 +981,8 @@ body.searching .chapter-nav{ margin-top:0; }
           <span class="key">u</span><span class="key">i</span><span class="key">o</span><span class="key">p</span> are
           <strong>boundaries</strong> (page up / line start / line end / page down) — but only the four
           cursor and select tiers read that literally, and the two delete tiers as boundary-scoped deletes.
-          In the other ten tiers <span class="key">u</span><span class="key">i</span><span class="key">o</span><span class="key">p</span>
-          carry that row's own four actions (clipboard, scroll, placement, tabs, windows), so read the cells, not the column headings.
+          In the other tiers <span class="key">u</span><span class="key">i</span><span class="key">o</span><span class="key">p</span>
+          carry that tier's own actions, so read the cells, not the column headings.
           <span class="key">[</span><span class="key">]</span><span class="key">;</span><span class="key">'</span> are a
           <strong>support group</strong> in the last four columns — without <span class="key">f</span> they
           send Return in the cursor tiers, Delete in the select tiers and Select All whenever
@@ -1021,7 +1020,7 @@ body.searching .chapter-nav{ margin-top:0; }
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot on-a"></span><span class="dot on-s"></span><span class="dot"></span><span class="dot"></span></span></span></td>
             <td class="row-label">Amplified Select<span class="formula">Cmd+A+S →</span></td>
-            <td>Word ←<span class="hint">⇧⌥←</span></td><td>Paragraph ↓<span class="hint">⇧⌥↓</span></td><td>Paragraph ↑<span class="hint">⇧⌥↑</span></td><td>Word →<span class="hint">⇧⌥→</span></td>
+            <td>Word ←<span class="hint">⌥⇧←</span></td><td>Paragraph ↓<span class="hint">⌥⇧↓</span></td><td>Paragraph ↑<span class="hint">⌥⇧↑</span></td><td>Word →<span class="hint">⌥⇧→</span></td>
             <td>Doc top<span class="hint">⇧⌘↑</span></td><td>Line start<span class="hint">⇧⌘←</span></td><td>Line end<span class="hint">⇧⌘→</span></td><td>Doc end<span class="hint">⇧⌘↓</span></td>
             <td class="dim">Delete</td><td class="dim">Delete</td><td class="dim">Delete</td><td class="dim">Delete</td>
           </tr>
@@ -1037,29 +1036,29 @@ body.searching .chapter-nav{ margin-top:0; }
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot on-d"></span><span class="dot"></span></span></span></td>
             <td class="row-label">Delete<span class="formula">Cmd+D →</span></td>
-            <td>Char back</td><td>Line below<span class="hint">⇧↓ Del</span></td><td>Line above<span class="hint">⇧↑ Del</span></td><td>Char forward</td>
-            <td>Page up<span class="hint">⇧PgUp</span></td><td>Line start<span class="hint">⇧Home</span></td><td>Line end<span class="hint">⇧End</span></td><td>Page down<span class="hint">⇧PgDn</span></td>
+            <td>Char back</td><td>To line below<span class="hint">⇧↓ ⌦</span></td><td>To line above<span class="hint">⇧↑ ⌫</span></td><td>Char forward</td>
+            <td>Page up<span class="hint">⇧PgUp ⌫</span></td><td>Line start<span class="hint">⇧Home ⌫</span></td><td>Line end<span class="hint">⇧End ⌦</span></td><td>Page down<span class="hint">⇧PgDn ⌦</span></td>
             <td class="dim">Select all</td><td class="dim">Select all</td><td class="dim">Select all</td><td class="dim">Select all</td>
           </tr>
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot on-a"></span><span class="dot"></span><span class="dot on-d"></span><span class="dot"></span></span></span></td>
             <td class="row-label">Amplified Delete<span class="formula">Cmd+A+D →</span></td>
-            <td>Word ←<span class="hint">⌥Del</span></td><td>Paragraph ↓<span class="hint">⇧⌥↓ Del</span></td><td>Paragraph ↑<span class="hint">⇧⌥↑ Del</span></td><td>Word →<span class="hint">⌥FwdDel</span></td>
-            <td>Doc top<span class="hint">⇧⌘↑ Del</span></td><td>Line start<span class="hint">⇧⌘← Del</span></td><td>Line end<span class="hint">⇧⌘→ Del</span></td><td>Doc end<span class="hint">⇧⌘↓ Del</span></td>
+            <td>Word ←<span class="hint">⌥⌫</span></td><td>Paragraph ↓<span class="hint">⌥⇧↓ ⌦</span></td><td>Paragraph ↑<span class="hint">⌥⇧↑ ⌫</span></td><td>Word →<span class="hint">⌥⌦</span></td>
+            <td>Doc top<span class="hint">⇧⌘↑ ⌫</span></td><td>Line start<span class="hint">⇧⌘← ⌫</span></td><td>Line end<span class="hint">⇧⌘→ ⌦</span></td><td>Doc end<span class="hint">⇧⌘↓ ⌦</span></td>
             <td class="dim">Select all</td><td class="dim">Select all</td><td class="dim">Select all</td><td class="dim">Select all</td>
           </tr>
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot on-s"></span><span class="dot on-d"></span><span class="dot"></span></span></span></td>
             <td class="row-label">Reconvert &amp; Clipboard<span class="formula">Cmd+S+D →</span></td>
             <td>Reconvert<span class="hint">⌃⇧R</span></td><td>To hiragana<span class="hint">⌃J</span></td><td>To katakana<span class="hint">⌃K</span></td><td>To half-width<span class="hint">⌃;</span></td>
-            <td>Cut<span class="hint">⌘X</span></td><td>Copy<span class="hint">⌘C</span></td><td>Paste<span class="hint">⌘V</span></td><td>Paste &amp; match style<span class="hint">⇧⌥⌘V</span></td>
+            <td>Cut<span class="hint">⌘X</span></td><td>Copy<span class="hint">⌘C</span></td><td>Paste<span class="hint">⌘V</span></td><td>Paste &amp; match style<span class="hint">⌥⇧⌘V</span></td>
             <td class="dim">Select all</td><td class="dim">Select all</td><td class="dim">Select all</td><td class="dim">Select all</td>
           </tr>
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot on-a"></span><span class="dot on-s"></span><span class="dot on-d"></span><span class="dot"></span></span></span></td>
             <td class="row-label">Undo &amp; Line Ops<span class="formula">Cmd+A+S+D →</span></td>
             <td>Outdent<span class="hint">⌘[</span></td><td>Undo<span class="hint">⌘Z</span></td><td>Redo<span class="hint">⇧⌘Z</span></td><td>Indent<span class="hint">⌘]</span></td>
-            <td>Duplicate line up<span class="hint">⇧⌥↑</span></td><td>Move line up<span class="hint">⌥↑</span></td><td>Move line down<span class="hint">⌥↓</span></td><td>Duplicate line down<span class="hint">⇧⌥↓</span></td>
+            <td>Duplicate line up<span class="hint">⌥⇧↑</span></td><td>Move line up<span class="hint">⌥↑</span></td><td>Move line down<span class="hint">⌥↓</span></td><td>Duplicate line down<span class="hint">⌥⇧↓</span></td>
             <td class="dim">Select all</td><td class="dim">Select all</td><td class="dim">Select all</td><td class="dim">Select all</td>
           </tr>
         </tbody>
@@ -1088,13 +1087,13 @@ body.searching .chapter-nav{ margin-top:0; }
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot on-s"></span><span class="dot"></span><span class="dot on-f"></span></span></span></td>
             <td class="row-label">Placement<span class="formula">Cmd+S+F →</span></td>
-            <td>Nudge left</td><td>Nudge down</td><td>Nudge up</td><td>Nudge right</td><td>Maximize</td><td>Shrink</td><td>Grow</td><td>Almost maximize<span class="hint">≈70%</span></td>
+            <td>Nudge left</td><td>Nudge down</td><td>Nudge up</td><td>Nudge right</td><td>Maximize</td><td>Shrink</td><td>Grow</td><td>Almost maximize</td>
             <td class="dim">Top-left sixth</td><td class="dim">Top-right sixth</td><td class="dim">Bottom-left sixth</td><td class="dim">Bottom-right sixth</td>
           </tr>
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot on-a"></span><span class="dot on-s"></span><span class="dot"></span><span class="dot on-f"></span></span></span></td>
             <td class="row-label">Screen Placement<span class="formula">Cmd+A+S+F →</span></td>
-            <td>Left half<span class="hint">½ → ⅔ → ⅓</span></td><td>Bottom half<span class="hint">½ → ⅔ → ⅓</span></td><td>Top half<span class="hint">½ → ⅔ → ⅓</span></td><td>Right half<span class="hint">½ → ⅔ → ⅓</span></td><td>Previous Space</td><td>Previous display</td><td>Next display</td><td>Next Space</td>
+            <td>Left half</td><td>Bottom half</td><td>Top half</td><td>Right half</td><td>Previous Space</td><td>Previous display</td><td>Next display</td><td>Next Space</td>
             <td class="dim">Top-left quarter</td><td class="dim">Top-right quarter</td><td class="dim">Bottom-left quarter</td><td class="dim">Bottom-right quarter</td>
           </tr>
         </tbody>
@@ -1116,13 +1115,13 @@ body.searching .chapter-nav{ margin-top:0; }
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot on-a"></span><span class="dot"></span><span class="dot on-d"></span><span class="dot on-f"></span></span></span></td>
             <td class="row-label">Window<span class="formula">Cmd+A+D+F →</span></td>
-            <td>Previous window, same app<span class="hint">⇧⌘`</span></td><td>Close window<span class="hint">⇧⌘W</span></td><td>New window<span class="hint">⌘N</span></td><td>Next window, same app<span class="hint">⌘`</span></td><td>Toggle fullscreen</td><td>Previous panel<span class="hint">⇧⌃F6</span></td><td>Floating window<span class="hint">⌃F6</span></td><td>Minimize<span class="hint">⌘M</span></td>
+            <td>Previous window, same app<span class="hint">⇧⌘`</span></td><td>Close window<span class="hint">⇧⌘W</span></td><td>New window<span class="hint">⌘N</span></td><td>Next window, same app<span class="hint">⌘`</span></td><td>Toggle fullscreen</td><td>Previous panel<span class="hint">⌃⇧F6</span></td><td>Floating window<span class="hint">⌃F6</span></td><td>Minimize<span class="hint">⌘M</span></td>
             <td class="dim">Switch Windows</td><td class="dim">Switch Windows</td><td class="dim">Switch Windows</td><td class="dim">Switch Windows</td>
           </tr>
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot on-s"></span><span class="dot on-d"></span><span class="dot on-f"></span></span></span></td>
             <td class="row-label">App<span class="formula">Cmd+S+D+F →</span></td>
-            <td>Previous app<span class="hint">⇧⌘Tab</span></td><td>Quit app<span class="hint">⌘Q</span></td><td>Cancel the switcher<span class="hint">.</span></td><td>Next app<span class="hint">⌘Tab</span></td><td>Hide others<span class="hint">⌥⌘H</span></td><td>Close all windows<span class="hint">⌥⌘W</span></td><td>Focus the Dock<span class="hint">⌃F3</span></td><td>Hide app<span class="hint">⌘H</span></td>
+            <td>Previous app<span class="hint">⇧⌘Tab</span></td><td>Quit app<span class="hint">⌘Q</span></td><td>Cancel the switcher<span class="hint">⌘.</span></td><td>Next app<span class="hint">⌘Tab</span></td><td>Hide others<span class="hint">⌥⌘H</span></td><td>Close all windows<span class="hint">⌥⌘W</span></td><td>Focus the Dock<span class="hint">⌃F3</span></td><td>Hide app<span class="hint">⌘H</span></td>
             <td class="dim">Launchpad</td><td class="dim">Launchpad</td><td class="dim">Launchpad</td><td class="dim">Launchpad</td>
           </tr>
           <tr>
@@ -1134,7 +1133,6 @@ body.searching .chapter-nav{ margin-top:0; }
         </tbody>
       </table>
     </div>
-    <p class="note">The half-placement cycle is a Raycast setting, not something this keymap does.</p>
 
     <div class="sub-head">4.5 — Literal space</div>
     <div class="table-wrap">
@@ -1145,14 +1143,11 @@ body.searching .chapter-nav{ margin-top:0; }
         </tbody>
       </table>
     </div>
-    <p class="note">The real Space bar is <strong>⇧</strong> on hold, so it cannot produce a held or modified space. This is where that space lives.</p>
 
     <div class="sub-head">4.6 — Inside iTerm2</div>
     <p class="sec-desc">
-      A shell line has no selection and no paragraphs, so the eight text tiers
-      send shell control sequences there instead of macOS editing keys. Only
-      the cells below change; everything not listed behaves as it does
-      everywhere else.
+      In iTerm2 the eight text tiers send shell control sequences instead of
+      macOS editing keys. Keys not listed below behave as elsewhere.
     </p>
     <div class="table-wrap">
       <table>
@@ -1162,15 +1157,15 @@ body.searching .chapter-nav{ margin-top:0; }
           <tr><td class="dim">a</td><td><span class="key">h</span> <span class="key">l</span></td><td>Word back <span class="hint">⌥B</span> · word forward <span class="hint">⌥F</span></td></tr>
           <tr><td class="dim">a</td><td><span class="key">j</span> <span class="key">k</span></td><td>History search forward <span class="hint">⌥N</span> · backward <span class="hint">⌥P</span></td></tr>
           <tr><td class="dim">a</td><td><span class="key">u</span> <span class="key">i</span> <span class="key">o</span> <span class="key">p</span></td><td>History top <span class="hint">⌥&lt;</span> · line start · line end · history end <span class="hint">⌥&gt;</span></td></tr>
-          <tr><td class="dim">d</td><td><span class="key">i</span> <span class="key">o</span></td><td>Kill line <span class="hint">⌃U</span> · kill to end <span class="hint">⌃K</span></td></tr>
+          <tr><td class="dim">d</td><td><span class="key">i</span> <span class="key">o</span></td><td>Kill to start <span class="hint">⌃U</span> · kill to end <span class="hint">⌃K</span></td></tr>
           <tr><td class="dim">a+d</td><td><span class="key">h</span> <span class="key">l</span></td><td>Kill word back <span class="hint">⌃W</span> · kill word forward <span class="hint">⌥D</span></td></tr>
-          <tr><td class="dim">a+d</td><td><span class="key">i</span> <span class="key">o</span></td><td>Kill line <span class="hint">⌃U</span> · kill to end <span class="hint">⌃K</span></td></tr>
+          <tr><td class="dim">a+d</td><td><span class="key">i</span> <span class="key">o</span></td><td>Kill to start <span class="hint">⌃U</span> · kill to end <span class="hint">⌃K</span></td></tr>
           <tr><td class="dim">a+s+d</td><td><span class="key">j</span> <span class="key">k</span></td><td>Undo <span class="hint">⌃_</span> · redo <span class="hint">⌥R</span></td></tr>
         </tbody>
       </table>
     </div>
-    <p class="note"><strong>Inert in iTerm2:</strong> both select tiers entirely (<span class="key">s</span> and <span class="key">a+s</span>, all eight keys each), the multi-line deletes on <span class="key">d</span> and <span class="key">a+d</span>, the reconversion row on <span class="key">s+d</span>, and the line operations on <span class="key">a+s+d</span>. They are silenced rather than left to fall through, because what would fall through is a macOS editing key the shell mangles.</p>
-    <p class="note">Word motion and word delete need iTerm2's <strong>Left Option Key = Esc+</strong> (Settings → Profiles → Keys). That setting is the one part of this feature that does not live in this repo. The switch applies to iTerm2 alone — other terminal apps, and terminals embedded in editors, get the ordinary tiers.</p>
+    <p class="note"><strong>Inert in iTerm2:</strong> both select tiers entirely (<span class="key">s</span> and <span class="key">a+s</span>, all eight keys each), the multi-line deletes on <span class="key">d</span> and <span class="key">a+d</span>, the reconversion row on <span class="key">s+d</span>, and the indent and line operations on <span class="key">a+s+d</span>.</p>
+    <p class="note">Word motion and word delete need iTerm2's <strong>Left Option Key = Esc+</strong> (Settings → Profiles → Keys). The switch applies to iTerm2 alone — other terminal apps, and terminals embedded in editors, get the ordinary tiers.</p>
 
   </section>
 
@@ -1207,7 +1202,7 @@ body.searching .chapter-nav{ margin-top:0; }
 
     <div class="sub-head">5.2 — Clip slots 0–11</div>
     <p class="sec-desc" style="margin-bottom:12px">
-      Twelve named clipboard buffers, separate from Maccy's history. Hold <span class="key">s</span> to
+      Twelve numbered clip slots. Hold <span class="key">s</span> to
       <strong>store</strong>, hold <span class="key">d</span> to <strong>paste</strong>.
     </p>
     <div class="table-wrap">
@@ -1225,7 +1220,7 @@ body.searching .chapter-nav{ margin-top:0; }
         </tbody>
       </table>
     </div>
-    <p class="note"><strong>Save</strong> copies the current selection into the slot; <strong>Paste</strong> puts that slot back on the clipboard and pastes it.</p>
+    <p class="note"><strong>Save</strong> copies the current selection into the slot; <strong>Paste</strong> puts that slot back on the clipboard and pastes it. Both replace the system clipboard.</p>
 
     <div class="sub-head">5.3 — Function keys</div>
     <div class="table-wrap">
@@ -1261,13 +1256,13 @@ body.searching .chapter-nav{ margin-top:0; }
             <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span></span></td>
             <td><code>Cmd → Caps</code></td>
             <td class="row-label">Clipboard history</td>
-            <td class="dim">Opens Maccy — see <strong>3.2</strong> for pasting a slot</td>
+            <td class="dim">Opens Maccy — see <strong>3.2</strong></td>
           </tr>
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot on-a"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span></span></td>
             <td><code>Cmd+A → Caps</code></td>
             <td class="row-label">Dictation</td>
-            <td class="dim">Starts voice input</td>
+            <td class="dim">Sends F13 — Amical's dictation key</td>
           </tr>
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot on-s"></span><span class="dot"></span><span class="dot"></span></span></span></td>
@@ -1299,7 +1294,7 @@ body.searching .chapter-nav{ margin-top:0; }
       <div>
         <h2>Escape — System Actions</h2>
         <p class="sec-desc">
-          Inside Asterisk, Escape is the destructive-action key — session-ending, irreversible.
+          Inside Asterisk, Escape runs system actions.
           Outside it, Escape is unassigned (plain Escape key).
         </p>
       </div>
@@ -1312,7 +1307,7 @@ body.searching .chapter-nav{ margin-top:0; }
             <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span></span></td>
             <td><code>Cmd → Esc</code></td>
             <td class="row-label">Lock screen</td>
-            <td class="dim">⌃⌘Q</td>
+            <td class="dim">⌃⌘Q — locks the screen</td>
           </tr>
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot on-a"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></span></span></td>
@@ -1345,8 +1340,6 @@ body.searching .chapter-nav{ margin-top:0; }
         <h2>Tab — Focus Jump</h2>
         <p class="sec-desc">
           Inside Asterisk, Tab moves focus — to the next window, or to the menu bar.
-          These actions are meant to be fired and immediately followed by more typing — home
-          position is preserved throughout.
         </p>
       </div>
     </div>
@@ -1363,8 +1356,8 @@ body.searching .chapter-nav{ margin-top:0; }
           <tr>
             <td><span class="act-badge"><span class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot on-f"></span></span></span></td>
             <td><code>Cmd+F → Tab</code></td>
-            <td class="row-label">⌃F2</td>
-            <td class="dim">move focus to the menu bar</td>
+            <td class="row-label">Menu bar</td>
+            <td class="dim">⌃F2 — moves focus to the menu bar</td>
           </tr>
         </tbody>
       </table>
@@ -1384,7 +1377,7 @@ body.searching .chapter-nav{ margin-top:0; }
       <table>
         <thead><tr><th>Input</th><th>Answer</th><th>Translate</th><th>Format</th><th>Rewrite</th></tr></thead>
         <tbody>
-          <tr><td class="row-label">Attachment<span class="hint">runs at once</span></td><td><span class="key">q</span> Explain, summarize</td><td><span class="key">w</span> JA → EN, else → JA</td><td><span class="key">e</span> Tidy; text from an image</td><td><span class="key">r</span> Polish</td></tr>
+          <tr><td class="row-label">Attachment<span class="hint">runs at once</span></td><td><span class="key">q</span> Explain or summarize</td><td><span class="key">w</span> JA → EN, else → JA</td><td><span class="key">e</span> Tidy; text from an image</td><td><span class="key">r</span> Polish</td></tr>
           <tr><td class="row-label">Typed<span class="hint">Return to send</span></td><td><span class="key">a</span> Web search</td><td><span class="key">s</span> Translate it</td><td><span class="key">d</span> Format it</td><td><span class="key">f</span> Fix it</td></tr>
           <tr><td class="row-label">Attachment + typed<span class="hint">Return to send</span></td><td><span class="key">z</span> Ask about it</td><td><span class="key">x</span> With an instruction</td><td><span class="key">c</span> Into a given shape</td><td><span class="key">v</span> Tone and the like</td></tr>
         </tbody>
@@ -1399,7 +1392,7 @@ body.searching .chapter-nav{ margin-top:0; }
       <span class="sec-num">10</span>
       <div>
         <h2>Cket Layer — Media &amp; Hardware</h2>
-        <p class="sec-desc">Hold <span class="key">R-⇧</span>. Right-hand keys only; nothing else lives on this layer.</p>
+        <p class="sec-desc">Hold <span class="key">R-⇧</span>.</p>
       </div>
     </div>
     <div class="table-wrap">
@@ -1448,7 +1441,7 @@ body.searching .chapter-nav{ margin-top:0; }
       <div class="virt-key-card"><span class="key">f</span><span>3</span></div>
       <div class="virt-key-card"><span class="key">g</span><span>-</span></div>
       <div></div>
-      <div class="virt-key-card"><span class="key">z</span><span>Delete line</span></div>
+      <div class="virt-key-card"><span class="key">z</span><span>End, ⇧Home, ⌫</span></div>
       <div class="virt-key-card"><span class="key">x</span><span>Backspace</span></div>
       <div class="virt-key-card"><span class="key">c</span><span>0</span></div>
       <div class="virt-key-card"><span class="key">v</span><span>=</span></div>
@@ -1480,7 +1473,7 @@ body.searching .chapter-nav{ margin-top:0; }
     <div class="glossary-grid">
       <div class="glossary-item">
         <div class="glossary-term">Layer</div>
-        <p class="glossary-def">A whole alternate keyboard that is live only while its trigger key is held. Release the trigger and it's gone — nothing is ever "left on".</p>
+        <p class="glossary-def">A whole alternate keyboard that is live only while its trigger key is held. Release the trigger and it's gone.</p>
       </div>
       <div class="glossary-item">
         <div class="glossary-term">Asterisk / Bra / Cket</div>
@@ -1496,27 +1489,27 @@ body.searching .chapter-nav{ margin-top:0; }
       </div>
       <div class="glossary-item">
         <div class="glossary-term">Amplify (a)</div>
-        <p class="glossary-def">Same action, larger unit — character to word, line to paragraph, line end to document end, nudge to half-screen.</p>
+        <p class="glossary-def">Same action, larger unit.</p>
       </div>
       <div class="glossary-item">
         <div class="glossary-term">Select (s)</div>
-        <p class="glossary-def">The tier acts on a range rather than a point — text gets selected instead of traversed, and a window gets placed instead of a pointer moved.</p>
+        <p class="glossary-def">The tier acts on a range rather than a point.</p>
       </div>
       <div class="glossary-item">
         <div class="glossary-term">Delete (d)</div>
-        <p class="glossary-def">Removes what the movement covered; with <b>s</b>, becomes clipboard and undo territory.</p>
+        <p class="glossary-def">Removes what the movement covered.</p>
       </div>
       <div class="glossary-item">
         <div class="glossary-term">Focus (f)</div>
-        <p class="glossary-def">Moves attention rather than text — mouse pointer, tab, application, window.</p>
+        <p class="glossary-def">Moves attention rather than text.</p>
       </div>
       <div class="glossary-item">
         <div class="glossary-term">Clip slot</div>
-        <p class="glossary-def">One of 12 named clipboard buffers on the bottom row, stored on disk. Independent of Maccy's rolling history.</p>
+        <p class="glossary-def">One of 12 numbered clip slots on the bottom row, stored on disk.</p>
       </div>
       <div class="glossary-item">
-        <div class="glossary-term">Alone / tap</div>
-        <p class="glossary-def">Pressing and releasing a hold-key without touching anything else. Most trigger keys carry a tap action too, so few keys are spent on holding alone.</p>
+        <div class="glossary-term">Tap alone</div>
+        <p class="glossary-def">Pressing and releasing a hold-key without touching anything else.</p>
       </div>
     </div>
   </section>
