@@ -15,8 +15,7 @@ as a backup of the configuration in active use and an archive of past drafts.
 
 Three hold-keys open three layers. Inside the main layer, four Act keys under the
 left hand — `a` `s` `d` `f` — are held, not tapped, and stack freely into 16 tiers
-that each give the right hand a different, consistent meaning. The fingers never
-leave the home row.
+that each give the right hand a different, consistent meaning.
 
 <a href="https://soh-arch.github.io/goku-karabiner-config/#act">
   <img src="assets/act-tiers.png" alt="The 16 Act tiers, from the ground state through every combination of a, s, d and f — text cursor, select, delete, mouse cursor, placement, tab, window, app and space">
@@ -28,11 +27,8 @@ leave the home row.
   — illustrated and searchable, with an interactive explorer for all 16 tiers.
   Published via GitHub Pages; the source is the single self-contained file
   [`docs/index.html`](./docs/index.html).
-- **[`NOTES.md`](./NOTES.md)** (English) — the Karabiner/Goku gotchas found while
-  building this config: why multi-entry `to` arrays can't hold a modifier, why only
-  the first matching manipulator fires, why `select_input_source` was abandoned for
-  Japanese input, and more. Written for my future self, but most of it applies to
-  any Goku setup.
+- **[`NOTES.md`](./NOTES.md)** (English) — records of gotchas, abandoned attempts
+  and design decisions behind this config, kept as written at the time.
 
 ## Keymaps
 
@@ -55,6 +51,12 @@ leave the home row.
 ln -s /path/to/AbcAct.edn ~/.config/karabiner.edn
 goku
 ```
+
+The Bra keys run `scripts/bra.js` by an absolute path and call Claude Code at
+`/opt/homebrew/bin/claude`. Change the `:bra` template in `AbcAct.edn` and `CLAUDE`
+in `scripts/bra.js` to match your machine. Other apps the config expects, such as
+Raycast and Maccy, are listed under "External dependencies" in
+[`NOTES.md`](./NOTES.md).
 
 ## Contributing
 
