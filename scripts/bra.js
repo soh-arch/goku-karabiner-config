@@ -78,9 +78,13 @@ function buildSystem(fn) {
   return s.join('\n');
 }
 
+function usesWeb(fn) {
+  return fn.id === 'direct-answer' || fn.id === 'attach-answer';
+}
+
 function toolArgs(fn, att) {
   var tools = [];
-  if (fn.id === 'direct-answer' || fn.id === 'attach-answer') tools.push('WebSearch', 'WebFetch');
+  if (usesWeb(fn)) tools.push('WebSearch', 'WebFetch');
   if (att && att.kind === 'image') tools.push('Read');
   if (!tools.length) return ['--tools', ''];
   var args = ['--tools', tools.join(','), '--allowedTools', tools.join(',')];
@@ -88,7 +92,7 @@ function toolArgs(fn, att) {
 }
 
 function claudeArgs(fn, input, att) {
-  return ['-p', buildPrompt(fn, input, att), '--append-system-prompt', buildSystem(fn), '--model', 'sonnet', '--effort', 'low']
+  return ['-p', buildPrompt(fn, input, att), '--append-system-prompt', buildSystem(fn), '--model', 'sonnet', '--effort', 'low', '--safe-mode', '--strict-mcp-config']
     .concat(toolArgs(fn, att))
     .concat(['--output-format', 'stream-json', '--verbose', '--include-partial-messages']);
 }
@@ -373,6 +377,11 @@ function run(argv) {
     task.executableURL = $.NSURL.fileURLWithPath(CLAUDE);
     task.currentDirectoryURL = $.NSURL.fileURLWithPath($.NSHomeDirectory());
     task.arguments = $(claudeArgs(fn, input, att));
+    if (!usesWeb(fn)) {
+      var env = $.NSProcessInfo.processInfo.environment.mutableCopy;
+      env.setObjectForKey('1', 'CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC');
+      task.environment = env;
+    }
     task.standardInput = $.NSFileHandle.fileHandleWithNullDevice;
     fm.createFileAtPathContentsAttributes(out, $(), $());
     task.standardOutput = $.NSFileHandle.fileHandleForWritingAtPath(out);
