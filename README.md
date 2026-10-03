@@ -17,6 +17,9 @@ Three hold-keys open three layers. Inside the main layer, four Act keys under th
 left hand — `a` `s` `d` `f` — are held, not tapped, and stack freely into 16 tiers
 that each give the right hand a different, consistent meaning.
 
+The name **AbcAct** spells this out: **A**sterisk, **B**ra and **C**ket are the three
+layers, and **Act** is the tier system inside the main one.
+
 <a href="https://soh-arch.github.io/goku-karabiner-config/#act">
   <img src="assets/act-tiers.png" alt="The 16 Act tiers, from the ground state through every combination of a, s, d and f — text cursor, select, delete, mouse cursor, placement, tab, window, app and space">
 </a>
