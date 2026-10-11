@@ -61,7 +61,7 @@
 ;; asdF: Function Keys
 
 ;; ### Bra Suite
-;; Delegation: answer / translate / format / rewrite
+;; Delegation: rewrite / format / translate / answer
 
 ;; ### Cket Suites
 ;; Media: volume / brightness / illumination / playback
@@ -664,18 +664,18 @@
 
   {:des "Bra: Delegation"
    :rules [
-    [:q [:bra "attach-answer"] [:layer-bra :!layer-ast :!layer-cket]]
-    [:w [:bra "attach-translate"] [:layer-bra :!layer-ast :!layer-cket]]
-    [:e [:bra "attach-format"] [:layer-bra :!layer-ast :!layer-cket]]
-    [:r [:bra "attach-rewrite"] [:layer-bra :!layer-ast :!layer-cket]]
-    [:a [:bra "direct-answer"] [:layer-bra :!layer-ast :!layer-cket]]
-    [:s [:bra "direct-translate"] [:layer-bra :!layer-ast :!layer-cket]]
-    [:d [:bra "direct-format"] [:layer-bra :!layer-ast :!layer-cket]]
-    [:f [:bra "direct-rewrite"] [:layer-bra :!layer-ast :!layer-cket]]
-    [:z [:bra "both-answer"] [:layer-bra :!layer-ast :!layer-cket]]
-    [:x [:bra "both-translate"] [:layer-bra :!layer-ast :!layer-cket]]
-    [:c [:bra "both-format"] [:layer-bra :!layer-ast :!layer-cket]]
-    [:v [:bra "both-rewrite"] [:layer-bra :!layer-ast :!layer-cket]]
+    [:q [:bra "attach-rewrite"] [:layer-bra :!layer-ast :!layer-cket]]
+    [:w [:bra "attach-format"] [:layer-bra :!layer-ast :!layer-cket]]
+    [:e [:bra "attach-translate"] [:layer-bra :!layer-ast :!layer-cket]]
+    [:r [:bra "attach-answer"] [:layer-bra :!layer-ast :!layer-cket]]
+    [:a [:bra "direct-rewrite"] [:layer-bra :!layer-ast :!layer-cket]]
+    [:s [:bra "direct-format"] [:layer-bra :!layer-ast :!layer-cket]]
+    [:d [:bra "direct-translate"] [:layer-bra :!layer-ast :!layer-cket]]
+    [:f [:bra "direct-answer"] [:layer-bra :!layer-ast :!layer-cket]]
+    [:z [:bra "both-rewrite"] [:layer-bra :!layer-ast :!layer-cket]]
+    [:x [:bra "both-format"] [:layer-bra :!layer-ast :!layer-cket]]
+    [:c [:bra "both-translate"] [:layer-bra :!layer-ast :!layer-cket]]
+    [:v [:bra "both-answer"] [:layer-bra :!layer-ast :!layer-cket]]
    ]}
 
   {:des "Numpad-a: Virtual Numpad (Simlayer, experimental)"
