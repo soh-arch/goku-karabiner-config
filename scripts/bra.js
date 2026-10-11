@@ -12,6 +12,7 @@ var CLAUDE = '/opt/homebrew/bin/claude';
 var SLOT_DIR = 'bra-panel';
 var COPY_ALL = {keyCode: 8, mods: 0x120000}; // ⌘⇧C
 var TRANSIENT = 'org.nspasteboard.TransientType';
+var TOKEN_SERVICE = 'bra-claude-oauth-token';
 
 // ---- Prompts ----
 // {input} is what was typed in the panel; the attachment is appended after the prompt.
@@ -120,6 +121,22 @@ function claimSlot(base, pid) {
     p = p.isNil() ? NaN : parseInt(p.js, 10);
     if (p > 0 && $.kill(p, 0) !== 0 && fm.removeItemAtPathError(dir, $())) n--;
   }
+}
+
+// ---- Keychain ----
+
+function keychainToken() {
+  var t = $.NSTask.alloc.init, pipe = $.NSPipe.pipe;
+  t.executableURL = $.NSURL.fileURLWithPath('/usr/bin/security');
+  t.arguments = $(['find-generic-password', '-a', $.NSUserName().js, '-s', TOKEN_SERVICE, '-w']);
+  t.standardOutput = pipe;
+  t.standardError = $.NSFileHandle.fileHandleWithNullDevice;
+  if (!t.launchAndReturnError($())) return '';
+  var d = pipe.fileHandleForReading.readDataToEndOfFile;
+  t.waitUntilExit;
+  if (Number(t.terminationStatus) !== 0) return '';
+  var s = $.NSString.alloc.initWithDataEncoding(d, 4);
+  return s.isNil() ? '' : s.js.trim();
 }
 
 // ---- Pasteboard ----
@@ -377,11 +394,11 @@ function run(argv) {
     task.executableURL = $.NSURL.fileURLWithPath(CLAUDE);
     task.currentDirectoryURL = $.NSURL.fileURLWithPath($.NSHomeDirectory());
     task.arguments = $(claudeArgs(fn, input, att));
-    if (!usesWeb(fn)) {
-      var env = $.NSProcessInfo.processInfo.environment.mutableCopy;
-      env.setObjectForKey('1', 'CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC');
-      task.environment = env;
-    }
+    var env = $.NSProcessInfo.processInfo.environment.mutableCopy;
+    var token = keychainToken();
+    if (token) env.setObjectForKey(token, 'CLAUDE_CODE_OAUTH_TOKEN');
+    if (!usesWeb(fn)) env.setObjectForKey('1', 'CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC');
+    task.environment = env;
     task.standardInput = $.NSFileHandle.fileHandleWithNullDevice;
     fm.createFileAtPathContentsAttributes(out, $(), $());
     task.standardOutput = $.NSFileHandle.fileHandleForWritingAtPath(out);
