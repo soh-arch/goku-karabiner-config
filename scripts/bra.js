@@ -389,9 +389,9 @@ function run(argv) {
     task.standardError = $.NSFileHandle.fileHandleForWritingAtPath(ep);
     failed = !task.launchAndReturnError($());
   }
-  function flash(msg) {
+  function flash(msg, ms) {
     info.stringValue = msg;
-    infoUntil = Date.now() + 1500;
+    infoUntil = Date.now() + (ms || 1500);
   }
   function copyAll() {
     if (!result) return flash('Nothing to copy yet');
@@ -401,7 +401,7 @@ function run(argv) {
     pb.clearContents;
     pb.setStringForType($(result), $.NSPasteboardTypeString);
     if (!rtf.isNil()) pb.setDataForType(rtf, $.NSPasteboardTypeRTF);
-    flash('Copied the whole result');
+    flash('Copied the whole result', 3000);
   }
 
   if (noAttachment) {
