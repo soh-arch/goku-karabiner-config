@@ -80,7 +80,7 @@ function buildSystem(fn) {
 }
 
 function usesWeb(fn) {
-  return fn.id === 'direct-answer' || fn.id === 'attach-answer';
+  return fn.purpose === 'answer';
 }
 
 function model(fn) {
