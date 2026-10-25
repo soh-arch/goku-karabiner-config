@@ -80,7 +80,11 @@ function buildSystem(fn) {
 }
 
 function usesWeb(fn) {
-  return fn.id === 'direct-answer' || fn.id === 'attach-answer';
+  return fn.purpose === 'answer';
+}
+
+function model(fn) {
+  return fn.purpose === 'translate' ? 'sonnet' : 'haiku';
 }
 
 function toolArgs(fn, att) {
@@ -93,7 +97,7 @@ function toolArgs(fn, att) {
 }
 
 function claudeArgs(fn, input, att) {
-  return ['-p', buildPrompt(fn, input, att), '--append-system-prompt', buildSystem(fn), '--model', 'sonnet', '--effort', 'low', '--safe-mode', '--strict-mcp-config']
+  return ['-p', buildPrompt(fn, input, att), '--append-system-prompt', buildSystem(fn), '--model', model(fn), '--effort', 'low', '--safe-mode', '--strict-mcp-config']
     .concat(toolArgs(fn, att))
     .concat(['--output-format', 'stream-json', '--verbose', '--include-partial-messages']);
 }
